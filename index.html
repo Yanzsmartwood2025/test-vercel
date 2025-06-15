@@ -87,6 +87,7 @@
 </head>
 <body class="antialiased">
 
+    <!-- PRELOADER CON VIDEO -->
     <div id="preloader">
         <video id="intro-video" autoplay muted playsinline class="w-full h-full object-cover">
             <source src="/assets/videos/intro.mp4" type="video/mp4">
@@ -185,14 +186,9 @@
         </footer>
     </div>
     
-    <!-- BOTÓN DE WHATSAPP CON VIDEO LOGO -->
-    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos%20YAN'Z%20SMART%20WOOD." 
-       class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-green-500 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center overflow-hidden" 
-       target="_blank" 
-       aria-label="Contactar por WhatsApp">
-        <video autoplay loop muted playsinline class="w-full h-full object-cover">
-            <source src="/assets/videos/videologo4segundos.mp4" type="video/mp4">
-        </video>
+    <!-- REVERTIDO: Botón de WhatsApp con imagen estática -->
+    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos%20YAN'Z%20SMART%20WOOD." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full p-3 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center" target="_blank" aria-label="Contactar por WhatsApp">
+        <img src="/assets/images/whatsapp-logo.png" alt="WhatsApp" class="h-8 w-8">
     </a>
     
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden animate-fade-in">
