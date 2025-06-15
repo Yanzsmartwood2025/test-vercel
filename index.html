@@ -38,7 +38,6 @@
         }
         .section-bg { background-color: var(--yanz-bg-alt); }
         html { scroll-behavior: smooth; }
-
         #main-header {
             transform: translateY(-100%);
             transition: transform 0.4s ease-out, background-color 0.4s ease-out, box-shadow 0.4s ease-out;
@@ -91,7 +90,7 @@
     <!-- PRELOADER CON VIDEO -->
     <div id="preloader">
         <video id="intro-video" autoplay muted playsinline class="w-full h-full object-cover">
-            <source src="assets/videos/intro.mp4" type="video/mp4">
+            <source src="/assets/videos/intro.mp4" type="video/mp4">
             Tu navegador no soporta videos.
         </video>
     </div>
@@ -99,9 +98,9 @@
     <div id="page-content">
         <header id="main-header" class="fixed top-0 left-0 right-0 z-40">
              <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-                <a href="index.html">
+                <a href="/index.html">
                     <video autoplay loop muted playsinline class="h-12 w-auto">
-                        <source src="assets/videos/logo_animado.mp4" type="video/mp4">
+                        <source src="/assets/videos/logo_animado.mp4" type="video/mp4">
                     </video>
                 </a>
                 <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
@@ -136,10 +135,10 @@
             <section id="hero" class="relative h-screen flex items-center justify-center text-white">
                 <div class="absolute inset-0 bg-black/60 z-10"></div>
                 <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-                    <source src="assets/videos/hero_background.mp4" type="video/mp4">
+                    <source src="/assets/videos/hero_background.mp4" type="video/mp4">
                 </video>
                 <div class="relative z-20 text-center px-4">
-                    <img src="assets/images/logo.png" alt="YAN'Z SMART WOOD Logo" class="w-48 md:w-64 mx-auto mb-6">
+                    <img src="/assets/images/logo.png" alt="YAN'Z SMART WOOD Logo" class="w-48 md:w-64 mx-auto mb-6">
                     <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">YAN'Z SMART WOOD</h1>
                     <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.</p>
                 </div>
@@ -176,11 +175,11 @@
                  <div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400">
                     <p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p>
                     <div class="mt-4 space-x-4">
-                        <a href="como-trabajamos.html" class="text-[var(--yanz-primary)] hover:underline">Cómo Trabajamos y Tiempos de Entrega</a>
+                        <a href="/como-trabajamos.html" class="text-[var(--yanz-primary)] hover:underline">Cómo Trabajamos y Tiempos de Entrega</a>
                         <span class="text-gray-500">|</span>
-                        <a href="privacidad.html" class="text-[var(--yanz-primary)] hover:underline">Políticas de Privacidad</a>
+                        <a href="/privacidad.html" class="text-[var(--yanz-primary)] hover:underline">Políticas de Privacidad</a>
                         <span class="text-gray-500">|</span>
-                        <a href="terminos.html" class="text-[var(--yanz-primary)] hover:underline">Términos de Servicio</a>
+                        <a href="/terminos.html" class="text-[var(--yanz-primary)] hover:underline">Términos de Servicio</a>
                     </div>
                 </div>
             </div>
@@ -204,33 +203,33 @@
         </div>
     </div>
     
-    <script src="js/cart.js" defer></script>
+    <script src="/js/cart.js" defer></script>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
         const products = [
-            { id: 'cocinas', title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'Creamos el corazón de tu hogar con diseños funcionales, acabados de lujo y la última tecnología.', link: 'cocinas.html' },
-            { id: 'closets', title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Soluciones de almacenamiento personalizadas que maximizan tu espacio con estilo y orden.', link: 'closets.html' },
-            { id: 'puertas', title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'Diseños que impactan y brindan seguridad. La primera impresión de tu hogar, hecha a la perfección.', link: 'puertas.html' },
-            { id: 'pisos', title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La belleza de la madera con la durabilidad y el fácil mantenimiento que necesitas.', link: 'pisos.html' },
-            { id: 'banos', title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Crea un oasis de relajación con nuestros diseños funcionales y elegantes.', link: 'banos.html' },
-            { id: 'gypsum', title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Transforma tus espacios con diseños de cielo raso, paredes falsas e iluminación LED integrada.', link: 'gypsum.html' },
-            { id: 'accesorios', title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Optimiza cada rincón con soluciones inteligentes: condimenteros, basureros integrados y más.', link: 'accesorios.html' },
-            { id: 'aria', title: 'Diseño con IA "Aria"', link: 'aria.html', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Usa nuestra IA para visualizar conceptos para tu espacio ideal.' }
+            { id: 'cocinas', title: 'Cocinas de Vanguardia', video: '/assets/videos/cocinas.mp4', description: 'Creamos el corazón de tu hogar con diseños funcionales, acabados de lujo y la última tecnología.', link: '/cocinas.html' },
+            { id: 'closets', title: 'Clósets', video: '/assets/videos/closets.mp4', description: 'Soluciones de almacenamiento personalizadas que maximizan tu espacio con estilo y orden.', link: '/closets.html' },
+            { id: 'puertas', title: 'Puertas Modernas', video: '/assets/videos/puertas.mp4', description: 'Diseños que impactan y brindan seguridad. La primera impresión de tu hogar, hecha a la perfección.', link: '/puertas.html' },
+            { id: 'pisos', title: 'Pisos de Madera Sintética', video: '/assets/videos/pisos.mp4', description: 'La belleza de la madera con la durabilidad y el fácil mantenimiento que necesitas.', link: '/pisos.html' },
+            { id: 'banos', title: 'Muebles de Baño', video: '/assets/videos/banos.mp4', description: 'Crea un oasis de relajación con nuestros diseños funcionales y elegantes.', link: '/banos.html' },
+            { id: 'gypsum', title: 'Gypsum y Luz', video: '/assets/videos/gypsum.mp4', description: 'Transforma tus espacios con diseños de cielo raso, paredes falsas e iluminación LED integrada.', link: '/gypsum.html' },
+            { id: 'accesorios', title: 'Accesorios y Organizadores', video: '/assets/videos/accesorios.mp4', description: 'Optimiza cada rincón con soluciones inteligentes: condimenteros, basureros integrados y más.', link: '/accesorios.html' },
+            { id: 'aria', title: 'Diseño con IA "Aria"', link: '/aria.html', video: '/assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Usa nuestra IA para visualizar conceptos para tu espacio ideal.' }
         ];
 
         const services = [
-             { id: 'renovacion', title: 'Renovación y Cuidado del Hogar', icon: 'wrench', video: 'assets/videos/servicio_renovacion.mp4', description: 'El tiempo deja su huella. Devolvemos la vida y funcionalidad a tus espacios con un servicio integral para pisos, herrajes y esos pequeños detalles que marcan la diferencia.', link: '#contacto' },
-             { id: 'ferreteria', title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'Encuentra los herrajes, materiales y herramientas de la más alta calidad para tus proyectos.', link: 'ferreteria.html' },
-             { id: 'consultoria', title: 'Consultoría e Integración de IA', icon: 'cloud', video: 'assets/videos/servicio_ia.mp4', description: 'Implementamos asistentes de IA como "Aria" en tu web para potenciar tus ventas y mejorar la interacción con tus clientes. Contáctanos.', link: '#contacto' }
+             { id: 'renovacion', title: 'Renovación y Cuidado del Hogar', icon: 'wrench', video: '/assets/videos/servicio_renovacion.mp4', description: 'El tiempo deja su huella. Devolvemos la vida y funcionalidad a tus espacios con un servicio integral para pisos, herrajes y esos pequeños detalles que marcan la diferencia.', link: '#contacto' },
+             { id: 'ferreteria', title: 'Herrajes y Ferretería Profesional', video: '/assets/videos/ferreteria.mp4', description: 'Encuentra los herrajes, materiales y herramientas de la más alta calidad para tus proyectos.', link: '/ferreteria.html' },
+             { id: 'consultoria', title: 'Consultoría e Integración de IA', icon: 'cloud', video: '/assets/videos/servicio_ia.mp4', description: 'Implementamos asistentes de IA como "Aria" en tu web para potenciar tus ventas y mejorar la interacción con tus clientes. Contáctanos.', link: '#contacto' }
         ];
 
         const paymentMethods = [
-             { name: 'PeiGo', image: 'assets/images/peigo.png' }, { name: 'Mastercard', image: 'assets/images/mastercard.png' },
-             { name: 'Visa', image: 'assets/images/visa.png' }, { name: 'American Express', image: 'assets/images/amex.png' },
-             { name: 'Discover', image: 'assets/images/discover.png' }, { name: 'JCB', image: 'assets/images/jcb.png' },
-             { name: 'Diners Club', image: 'assets/images/diners.png' }, { name: 'PayPal', image: 'assets/images/paypal.png' },
-             { name: 'Binance Pay', image: 'assets/images/binance.jpg' }, { name: 'Logo O', image: 'assets/images/logo_o.png' }
+             { name: 'PeiGo', image: '/assets/images/peigo.png' }, { name: 'Mastercard', image: '/assets/images/mastercard.png' },
+             { name: 'Visa', image: '/assets/images/visa.png' }, { name: 'American Express', image: '/assets/images/amex.png' },
+             { name: 'Discover', image: '/assets/images/discover.png' }, { name: 'JCB', image: '/assets/images/jcb.png' },
+             { name: 'Diners Club', image: '/assets/images/diners.png' }, { name: 'PayPal', image: '/assets/images/paypal.png' },
+             { name: 'Binance Pay', image: '/assets/images/binance.jpg' }, { name: 'Logo O', image: '/assets/images/logo_o.png' }
         ];
 
         const productGrid = document.getElementById('product-grid');
@@ -307,37 +306,31 @@
 
         document.getElementById('year').textContent = new Date().getFullYear();
         
-        // CORREGIDO: Lógica del Preloader a prueba de fallos
+        // Lógica segura del Preloader
         const preloader = document.getElementById('preloader');
         const pageContent = document.getElementById('page-content');
         const introVideo = document.getElementById('intro-video');
-        let appStarted = false; // Variable para evitar que se ejecute dos veces
+        let appStarted = false;
 
         function startApp() {
-            if (appStarted) return; // Si la app ya inició, no hacer nada
+            if (appStarted) return;
             appStarted = true;
             if (preloader) preloader.classList.add('hidden');
             if (pageContent) pageContent.classList.add('loaded');
         }
 
         if (introVideo) {
-            // Intenta iniciar la app cuando el video termina
             introVideo.addEventListener('ended', startApp);
-            
-            // Un seguro por si el video falla en cargar o reproducirse
             introVideo.addEventListener('error', startApp);
-
-            // Un SEGUNDO seguro: si después de 5 segundos no ha pasado nada, fuerza el inicio
             setTimeout(startApp, 5000); 
         } else {
-            // Si el elemento de video no existe, usa un tiempo corto por defecto
             setTimeout(startApp, 1500); 
         }
 
     });
     </script>
 
-    <!-- Script para registrar el Service Worker para la PWA -->
+    <!-- Script para registrar el Service Worker -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
