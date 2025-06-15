@@ -8,12 +8,12 @@
   "description": "Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.",
   "icons": [
     {
-      "src": "assets/images/logo_192.png",
+      "src": "/assets/images/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/images/logo_512.png",
+      "src": "/assets/images/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
