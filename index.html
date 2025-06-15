@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAN'Z SMART WOOD - Diseño, Servicios y Tecnología IA</title>
     
+    <!-- Enlaces para que funcione como App (PWA) -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#1A202C">
 
@@ -62,15 +63,6 @@
             visibility: visible;
         }
         #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        #preloader img { 
-            max-width: 450px; width: 80%; height: auto; 
-            object-fit: contain; animation: pulse 2s infinite ease-in-out;
-        }
-        @keyframes pulse {
-            0%   { transform: scale(1); opacity: 0.8; }
-            50%  { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
         #page-content { opacity: 0; transition: opacity 0.5s ease-in; }
         #page-content.loaded { opacity: 1; }
         
@@ -96,13 +88,17 @@
 </head>
 <body class="antialiased">
 
-    <div id="preloader"> 
-        <img src="assets/images/logo.png" alt="Cargando YAN'Z SMART WOOD...">
+    <!-- PRELOADER CON VIDEO -->
+    <div id="preloader">
+        <video id="intro-video" autoplay muted playsinline class="w-full h-full object-cover">
+            <source src="assets/videos/intro.mp4" type="video/mp4">
+            Tu navegador no soporta videos.
+        </video>
     </div>
 
     <div id="page-content">
         <header id="main-header" class="fixed top-0 left-0 right-0 z-40">
-            <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+             <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
                 <a href="index.html">
                     <video autoplay loop muted playsinline class="h-12 w-auto">
                         <source src="assets/videos/logo_animado.mp4" type="video/mp4">
@@ -154,14 +150,194 @@
         </main>
         
         <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8">
-            </footer>
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3>
+                        <p class="text-gray-400">Quito, Ecuador</p>
+                        <p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-[var(--yanz-primary)] hover:underline">yanzsmartwood@gmail.com</a></p>
+                        <p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-[var(--yanz-primary)] hover:underline">+593 99 648 0843</a></p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3>
+                        <div class="flex justify-center md:justify-start space-x-4" id="social-links">
+                            <a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="text-gray-400 hover:text-white transition-colors" aria-label="Facebook"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z" /></svg></a>
+                            <a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="text-gray-400 hover:text-white transition-colors" aria-label="TikTok"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.05-4.84-.94-6.37-2.96-2.2-2.95-2.2-6.87 0-9.85 1.59-2.12 4.19-3.29 6.78-2.91 1.29.19 2.59.5 3.82.93v-4.04c-.45-.13-1.01-.2-1.52-.27-1.16-.17-2.34-.1-3.5.08Z"/></svg></a>
+                            <a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.85-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98C15.667.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg></a>
+                            <a href="https://youtube.com/@yanzsmartwood" target="_blank" class="text-gray-400 hover:text-white transition-colors" aria-label="YouTube"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.707v-8.16l6.536 4.08-6.536 4.08z"/></svg></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3>
+                        <div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div>
+                        <p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p>
+                    </div>
+                </div>
+                 <div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400">
+                    <p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p>
+                    <div class="mt-4 space-x-4">
+                        <a href="como-trabajamos.html" class="text-[var(--yanz-primary)] hover:underline">Cómo Trabajamos y Tiempos de Entrega</a>
+                        <span class="text-gray-500">|</span>
+                        <a href="privacidad.html" class="text-[var(--yanz-primary)] hover:underline">Políticas de Privacidad</a>
+                        <span class="text-gray-500">|</span>
+                        <a href="terminos.html" class="text-[var(--yanz-primary)] hover:underline">Términos de Servicio</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos%20YAN'Z%20SMART%20WOOD." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full p-4 shadow-lg hover:bg-green-600 transition-transform hover:scale-110" target="_blank" aria-label="Contactar por WhatsApp">
+        <svg class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.33 3.43 16.79L2.06 21.94L7.39 20.58C8.78 21.34 10.36 21.79 12.04 21.79C17.5 21.79 21.95 17.34 21.95 11.88C21.95 6.42 17.5 2 12.04 2ZM17.24 14.44C17.04 14.34 15.87 13.77 15.61 13.67C15.36 13.57 15.19 13.52 15.02 13.77C14.85 14.01 14.31 14.64 14.16 14.81C14.01 14.98 13.86 15.01 13.61 14.91C13.36 14.81 12.48 14.52 11.43 13.59C10.61 12.86 10.01 12.01 9.83 11.74C9.68 11.5 9.56 11.33 9.73 11.15C9.88 10.99 10.01 10.82 10.15 10.65C10.29 10.49 10.34 10.36 10.44 10.19C10.54 10.01 10.49 9.87 10.42 9.74C10.34 9.62 9.83 8.41 9.63 7.94C9.44 7.47 9.24 7.52 9.09 7.52C8.97 7.52 8.79 7.52 8.62 7.52C8.45 7.52 8.19 7.59 7.99 7.84C7.79 8.08 7.25 8.57 7.25 9.74C7.25 10.91 8.02 12.01 8.14 12.18C8.27 12.35 9.86 14.81 12.3 15.81C12.86 16.04 13.29 16.16 13.62 16.25C14.21 16.41 14.72 16.37 15.12 16.3C15.57 16.23 16.74 15.59 16.99 14.96C17.24 14.34 17.24 13.84 17.17 13.72C17.09 13.6 16.94 13.55 16.74 13.45L17.24 14.44Z"/></svg>
+    </a>
+    
+    <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden animate-fade-in">
+        <div class="w-full max-w-md bg-[var(--yanz-bg-alt)] rounded-2xl shadow-2xl p-6 text-center">
+            <h2 class="text-2xl font-bold mb-4">Cesta de Cotización</h2>
+            <div id="cart-items" class="max-h-64 overflow-y-auto divide-y divide-[var(--yanz-border)] text-left"></div>
+            <p id="cart-empty-message" class="text-[var(--yanz-text-alt)] py-8">Tu cesta está vacía.</p>
+            <a id="cart-whatsapp-button" href="#" target="_blank" class="hidden mt-6 w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all">
+                <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.33 3.43 16.79L2.06 21.94L7.39 20.58C8.78 21.34 10.36 21.79 12.04 21.79C17.5 21.79 21.95 17.34 21.95 11.88C21.95 6.42 17.5 2 12.04 2ZM17.24 14.44C17.04 14.34 15.87 13.77 15.61 13.67C15.36 13.57 15.19 13.52 15.02 13.77C14.85 14.01 14.31 14.64 14.16 14.81C14.01 14.98 13.86 15.01 13.61 14.91C13.36 14.81 12.48 14.52 11.43 13.59C10.61 12.86 10.01 12.01 9.83 11.74C9.68 11.5 9.56 11.33 9.73 11.15C9.88 10.99 10.01 10.82 10.15 10.65C10.29 10.49 10.34 10.36 10.44 10.19C10.54 10.01 10.49 9.87 10.42 9.74C10.34 9.62 9.83 8.41 9.63 7.94C9.44 7.47 9.24 7.52 9.09 7.52C8.97 7.52 8.79 7.52 8.62 7.52C8.45 7.52 8.19 7.59 7.99 7.84C7.79 8.08 7.25 8.57 7.25 9.74C7.25 10.91 8.02 12.01 8.14 12.18C8.27 12.35 9.86 14.81 12.3 15.81C12.86 16.04 13.29 16.16 13.62 16.25C14.21 16.41 14.72 16.37 15.12 16.3C15.57 16.23 16.74 15.59 16.99 14.96C17.24 14.34 17.24 13.84 17.17 13.72C17.09 13.6 16.94 13.55 16.74 13.45L17.24 14.44Z"/></svg>
+                <span>Solicitar Cotización</span>
+            </a>
+            <button id="close-cart-button" class="mt-4 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Cerrar</button>
+        </div>
     </div>
     
     <script src="js/cart.js" defer></script>
     <script>
-        // ... Todo tu script principal no cambia ...
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const products = [
+            { id: 'cocinas', title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'Creamos el corazón de tu hogar con diseños funcionales, acabados de lujo y la última tecnología.', link: 'cocinas.html' },
+            { id: 'closets', title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Soluciones de almacenamiento personalizadas que maximizan tu espacio con estilo y orden.', link: 'closets.html' },
+            { id: 'puertas', title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'Diseños que impactan y brindan seguridad. La primera impresión de tu hogar, hecha a la perfección.', link: 'puertas.html' },
+            { id: 'pisos', title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La belleza de la madera con la durabilidad y el fácil mantenimiento que necesitas.', link: 'pisos.html' },
+            { id: 'banos', title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Crea un oasis de relajación con nuestros diseños funcionales y elegantes.', link: 'banos.html' },
+            { id: 'gypsum', title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Transforma tus espacios con diseños de cielo raso, paredes falsas e iluminación LED integrada.', link: 'gypsum.html' },
+            { id: 'accesorios', title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Optimiza cada rincón con soluciones inteligentes: condimenteros, basureros integrados y más.', link: 'accesorios.html' },
+            { id: 'aria', title: 'Diseño con IA "Aria"', link: 'aria.html', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Usa nuestra IA para visualizar conceptos para tu espacio ideal.' }
+        ];
+
+        const services = [
+             { id: 'renovacion', title: 'Renovación y Cuidado del Hogar', icon: 'wrench', video: 'assets/videos/servicio_renovacion.mp4', description: 'El tiempo deja su huella. Devolvemos la vida y funcionalidad a tus espacios con un servicio integral para pisos, herrajes y esos pequeños detalles que marcan la diferencia.', link: '#contacto' },
+             { id: 'ferreteria', title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'Encuentra los herrajes, materiales y herramientas de la más alta calidad para tus proyectos.', link: 'ferreteria.html' },
+             { id: 'consultoria', title: 'Consultoría e Integración de IA', icon: 'cloud', video: 'assets/videos/servicio_ia.mp4', description: 'Implementamos asistentes de IA como "Aria" en tu web para potenciar tus ventas y mejorar la interacción con tus clientes. Contáctanos.', link: '#contacto' }
+        ];
+
+        const paymentMethods = [
+             { name: 'PeiGo', image: 'assets/images/peigo.png' }, { name: 'Mastercard', image: 'assets/images/mastercard.png' },
+             { name: 'Visa', image: 'assets/images/visa.png' }, { name: 'American Express', image: 'assets/images/amex.png' },
+             { name: 'Discover', image: 'assets/images/discover.png' }, { name: 'JCB', image: 'assets/images/jcb.png' },
+             { name: 'Diners Club', image: 'assets/images/diners.png' }, { name: 'PayPal', image: 'assets/images/paypal.png' },
+             { name: 'Binance Pay', image: 'assets/images/binance.jpg' }, { name: 'Logo O', image: 'assets/images/logo_o.png' }
+        ];
+
+        const productGrid = document.getElementById('product-grid');
+        const serviceGrid = document.getElementById('service-grid');
+        const paymentLogosContainer = document.getElementById('payment-logos');
+
+        const createCard = (item) => {
+            const mediaElement = item.video 
+                ? `<video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${item.video}" type="video/mp4"></video>`
+                : `<img src="${item.image}" alt="${item.title}" class="w-full h-48 object-cover">`;
+
+            let titleElement = `<h3 class="text-xl font-bold mb-2">${item.title}</h3>`;
+            if (item.icon === 'cloud') {
+                titleElement = `<div class="flex items-center gap-2 mb-2"><span class="bg-blue-100 dark:bg-cyan-900/50 p-1.5 rounded-full"><svg class="h-4 w-4 text-blue-600 dark:text-cyan-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7 2.5a.5.5 0 01.5.5v1.25a.75.75 0 001.5 0V3a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v1.25a.75.75 0 001.5 0V3a.5.5 0 01.5-.5h2.5a.5.5 0 010 1h-2.25a.25.25 0 00-.25.25v1.25a2.25 2.25 0 01-4.5 0V3.25A.25.25 0 0010.25 3H8a.5.5 0 01-.5-.5z" clip-rule="evenodd"/><path d="M3.105 6.337a.75.75 0 01.044 1.06l-1.5 2.25a.75.75 0 11-1.298-.867l1.5-2.25a.75.75 0 011.254-.202zM18.395 6.337a.75.75 0 00-.044 1.06l1.5 2.25a.75.75 0 101.298-.867l-1.5-2.25a.75.75 0 00-1.254-.202zM6.5 10a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 016.5 10zM13.5 10a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0113.5 10zM10 12.5a2 2 0 100-4 2 2 0 000 4z"/></svg></span><h3 class="text-xl font-bold">${item.title}</h3></div>`;
+            }
+            
+            const card = document.createElement('div');
+            card.className = "bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2";
+            card.innerHTML = `
+                <a href="${item.link || '#'}" ${item.link && (item.link.startsWith('http') || item.link.endsWith('.html')) ? 'target="_self"' : ''} class="flex flex-col flex-grow group">
+                    <div class="overflow-hidden">${mediaElement}</div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        ${titleElement}
+                        <p class="text-sm text-[var(--yanz-text-alt)] flex-grow mb-4">${item.description}</p>
+                    </div>
+                </a>
+                <div class="px-6 pb-6 mt-auto">
+                    <button class="add-to-cart-btn w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors" data-id="${item.id}">
+                        Añadir a Cotización
+                    </button>
+                </div>
+            `;
+            return card;
+        };
+
+        if (productGrid) products.forEach(p => { productGrid.appendChild(createCard(p)); });
+        if (serviceGrid) services.forEach(s => { serviceGrid.appendChild(createCard(s)); });
+        if (paymentLogosContainer) paymentMethods.forEach(m => { paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded p-1">`; });
+        
+        const mainHeader = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+             if (window.scrollY > 50) mainHeader.classList.add('visible');
+             else mainHeader.classList.remove('visible');
+        });
+        
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-icon-sun');
+        const moonIcon = document.getElementById('theme-icon-moon');
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                sunIcon.classList.remove('hidden'); moonIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                sunIcon.classList.add('hidden'); moonIcon.classList.remove('hidden');
+            }
+        };
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
+        });
+        
+        menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileNavLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+        const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(savedTheme);
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // CORREGIDO: Lógica del Preloader a prueba de fallos
+        const preloader = document.getElementById('preloader');
+        const pageContent = document.getElementById('page-content');
+        const introVideo = document.getElementById('intro-video');
+        let appStarted = false; // Variable para evitar que se ejecute dos veces
+
+        function startApp() {
+            if (appStarted) return; // Si la app ya inició, no hacer nada
+            appStarted = true;
+            if (preloader) preloader.classList.add('hidden');
+            if (pageContent) pageContent.classList.add('loaded');
+        }
+
+        if (introVideo) {
+            // Intenta iniciar la app cuando el video termina
+            introVideo.addEventListener('ended', startApp);
+            
+            // Un seguro por si el video falla en cargar o reproducirse
+            introVideo.addEventListener('error', startApp);
+
+            // Un SEGUNDO seguro: si después de 5 segundos no ha pasado nada, fuerza el inicio
+            setTimeout(startApp, 5000); 
+        } else {
+            // Si el elemento de video no existe, usa un tiempo corto por defecto
+            setTimeout(startApp, 1500); 
+        }
+
+    });
     </script>
 
+    <!-- Script para registrar el Service Worker para la PWA -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
