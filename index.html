@@ -66,12 +66,12 @@
         
         #cart-badge {
             position: absolute;
-            top: -5px; right: -8px;
+            top: 0px; right: 0px; 
             background-color: var(--yanz-secondary);
             color: white;
             border-radius: 50%;
-            width: 20px; height: 20px;
-            font-size: 12px;
+            width: 18px; height: 18px; 
+            font-size: 11px;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -86,9 +86,8 @@
 </head>
 <body class="antialiased">
 
-    <!-- PRELOADER CON VIDEO -->
     <div id="preloader">
-        <video id="intro-video" autoplay muted playsinline class="w-full h-full object-cover">
+        <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain">
             <source src="/assets/videos/intro.mp4" type="video/mp4">
             Tu navegador no soporta videos.
         </video>
@@ -97,12 +96,11 @@
     <div id="page-content">
         <header id="main-header" class="fixed top-0 left-0 right-0 z-40">
              <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-                 <!-- ===== INICIO CAMBIO: LOGO DE LA EMPRESA ===== -->
-                 <!-- Se cambió el video por una imagen para que sea el logo estático de la empresa -->
                  <a href="/index.html">
-                     <img src="/assets/images/logo.png" alt="YAN'Z SMART WOOD Logo" class="h-10 w-auto">
+                     <video autoplay loop muted playsinline class="h-12 w-auto">
+                         <source src="/assets/videos/videologo-header.mp4" type="video/mp4">
+                     </video>
                  </a>
-                 <!-- ===== FIN CAMBIO: LOGO DE LA EMPRESA ===== -->
                  <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
                      <a href="#productos" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
                      <a href="#servicios" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
@@ -111,7 +109,9 @@
                  </div>
                  <div class="flex items-center">
                      <button id="open-cart-button" class="relative p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Abrir cesta de cotización">
-                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <video autoplay loop muted playsinline class="w-8 h-8">
+                            <source src="/assets/videos/video-carrito.mp4" type="video/mp4">
+                        </video>
                          <span id="cart-badge">0</span>
                      </button>
                      <button id="theme-toggle" class="ml-2 p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Cambiar tema">
@@ -138,7 +138,9 @@
                     <source src="/assets/videos/hero_background.mp4" type="video/mp4">
                 </video>
                 <div class="relative z-20 text-center px-4">
-                    <img src="/assets/images/logo.png" alt="YAN'Z SMART WOOD Logo" class="w-48 md:w-64 mx-auto mb-6">
+                    <video autoplay loop muted playsinline class="w-48 md:w-64 mx-auto mb-6">
+                        <source src="/assets/videos/videologo-principal.mp4" type="video/mp4">
+                    </video>
                     <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">YAN'Z SMART WOOD</h1>
                     <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.</p>
                 </div>
@@ -194,8 +196,10 @@
         </footer>
     </div>
     
-    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos%20YAN'Z%20SMART%20WOOD." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full p-3 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center" target="_blank" aria-label="Contactar por WhatsApp">
-        <img src="/assets/images/whatsapp-logo.png" alt="WhatsApp" class="h-8 w-8">
+    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos%20YAN'Z%20SMART%20WOOD." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank" aria-label="Contactar por WhatsApp">
+        <video autoplay loop muted playsinline class="w-full h-full object-cover">
+            <source src="/assets/videos/video-whatsapp.mp4" type="video/mp4">
+        </video>
     </a>
     
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden animate-fade-in">
@@ -232,7 +236,6 @@
              { id: 'consultoria', title: 'Consultoría e Integración de IA', icon: 'cloud', video: '/assets/videos/servicio_ia.mp4', description: 'Implementamos asistentes de IA como "Aria" en tu web para potenciar tus ventas y mejorar la interacción con tus clientes. Contáctanos.', link: '#contacto' }
         ];
 
-        // ===== INICIO CAMBIO: LISTA DE FORMAS DE PAGO ACTUALIZADA =====
         const paymentMethods = [
             { name: 'PeiGo', image: '/assets/images/pago-peigo.png' },
             { name: 'Mastercard', image: '/assets/images/pago-mastercard.png' },
@@ -244,11 +247,10 @@
             { name: 'PayPal', image: '/assets/images/pago-paypal.png' },
             { name: 'Binance Pay', image: '/assets/images/pago-binance-pay.png' },
             { name: 'Banco Guayaquil', image: '/assets/images/pago-banco-guayaquil.png' },
-            { name: 'Banco Pichincha', image: '/assets/images/pago-banco-pichincha.png' }, // NUEVO
-            { name: 'DeUna', image: '/assets/images/pago-deuna.png' } // NUEVO
+            { name: 'Banco Pichincha', image: '/assets/images/pago-banco-pichincha.png' },
+            { name: 'DeUna', image: '/assets/images/pago-deuna.png' }
         ];
-        // ===== FIN CAMBIO: LISTA DE FORMAS DE PAGO ACTUALIZADA =====
-
+        
         const productGrid = document.getElementById('product-grid');
         const serviceGrid = document.getElementById('service-grid');
         const paymentLogosContainer = document.getElementById('payment-logos');
@@ -361,4 +363,3 @@
     </script>
 </body>
 </html>
-
