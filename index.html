@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAN'Z SMART WOOD - Diseño, Servicios y Tecnología IA</title>
     
-    <!-- Enlaces para que funcione como App (PWA) -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#1A202C">
 
@@ -98,11 +97,12 @@
     <div id="page-content">
         <header id="main-header" class="fixed top-0 left-0 right-0 z-40">
              <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+                 <!-- ===== INICIO CAMBIO: LOGO DE LA EMPRESA ===== -->
+                 <!-- Se cambió el video por una imagen para que sea el logo estático de la empresa -->
                  <a href="/index.html">
-                     <video autoplay loop muted playsinline class="h-12 w-auto">
-                         <source src="/assets/videos/videologo4segundos.mp4" type="video/mp4">
-                     </video>
+                     <img src="/assets/images/logo.png" alt="YAN'Z SMART WOOD Logo" class="h-10 w-auto">
                  </a>
+                 <!-- ===== FIN CAMBIO: LOGO DE LA EMPRESA ===== -->
                  <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
                      <a href="#productos" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
                      <a href="#servicios" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
@@ -159,7 +159,6 @@
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3>
-                        <!-- ===== INICIO CAMBIO: SECCIÓN REDES SOCIALES ===== -->
                         <div class="flex justify-center md:justify-start space-x-4">
                             <a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110" aria-label="Facebook">
                                 <img src="/assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto">
@@ -174,7 +173,6 @@
                                 <img src="/assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto">
                             </a>
                         </div>
-                        <!-- ===== FIN CAMBIO: SECCIÓN REDES SOCIALES ===== -->
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3>
@@ -196,7 +194,6 @@
         </footer>
     </div>
     
-    <!-- Botón de WhatsApp con imagen estática -->
     <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos%20YAN'Z%20SMART%20WOOD." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full p-3 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center" target="_blank" aria-label="Contactar por WhatsApp">
         <img src="/assets/images/whatsapp-logo.png" alt="WhatsApp" class="h-8 w-8">
     </a>
@@ -235,7 +232,7 @@
              { id: 'consultoria', title: 'Consultoría e Integración de IA', icon: 'cloud', video: '/assets/videos/servicio_ia.mp4', description: 'Implementamos asistentes de IA como "Aria" en tu web para potenciar tus ventas y mejorar la interacción con tus clientes. Contáctanos.', link: '#contacto' }
         ];
 
-        // ===== INICIO CAMBIO: LISTA DE FORMAS DE PAGO =====
+        // ===== INICIO CAMBIO: LISTA DE FORMAS DE PAGO ACTUALIZADA =====
         const paymentMethods = [
             { name: 'PeiGo', image: '/assets/images/pago-peigo.png' },
             { name: 'Mastercard', image: '/assets/images/pago-mastercard.png' },
@@ -246,9 +243,11 @@
             { name: 'Diners Club', image: '/assets/images/pago-diners-club.png' },
             { name: 'PayPal', image: '/assets/images/pago-paypal.png' },
             { name: 'Binance Pay', image: '/assets/images/pago-binance-pay.png' },
-            { name: 'Banco Guayaquil', image: '/assets/images/pago-banco-guayaquil.png' }
+            { name: 'Banco Guayaquil', image: '/assets/images/pago-banco-guayaquil.png' },
+            { name: 'Banco Pichincha', image: '/assets/images/pago-banco-pichincha.png' }, // NUEVO
+            { name: 'DeUna', image: '/assets/images/pago-deuna.png' } // NUEVO
         ];
-        // ===== FIN CAMBIO: LISTA DE FORMAS DE PAGO =====
+        // ===== FIN CAMBIO: LISTA DE FORMAS DE PAGO ACTUALIZADA =====
 
         const productGrid = document.getElementById('product-grid');
         const serviceGrid = document.getElementById('service-grid');
@@ -324,7 +323,6 @@
 
         document.getElementById('year').textContent = new Date().getFullYear();
         
-        // Lógica segura del Preloader
         const preloader = document.getElementById('preloader');
         const pageContent = document.getElementById('page-content');
         const introVideo = document.getElementById('intro-video');
@@ -348,7 +346,6 @@
     });
     </script>
 
-    <!-- Script para registrar el Service Worker -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -364,3 +361,4 @@
     </script>
 </body>
 </html>
+
