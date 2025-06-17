@@ -254,17 +254,11 @@
         const serviceGrid = document.getElementById('service-grid');
         const paymentLogosContainer = document.getElementById('payment-logos');
 
-        // ===== INICIO CAMBIO: Función createCard corregida =====
+        // ===== INICIO CORRECCIÓN FINAL: Lógica de la Tarjeta =====
         const createCard = (item) => {
-            const cardWrapper = document.createElement('div'); // Contenedor principal
-            
-            // La tarjeta entera es un enlace
             const cardLink = document.createElement('a');
             cardLink.href = item.link || '#';
-            if (item.link && (item.link.startsWith('http') || item.link.endsWith('.html'))) {
-                cardLink.target = '_self';
-            }
-            cardLink.className = "bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2 h-full";
+            cardLink.className = "bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2";
             
             const mediaElement = item.video 
                 ? `<div class="overflow-hidden"><video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${item.video}" type="video/mp4"></video></div>`
@@ -275,38 +269,40 @@
                 titleElement = `<div class="flex items-center gap-2 mb-2"><span class="bg-blue-100 dark:bg-cyan-900/50 p-1.5 rounded-full"><svg class="h-4 w-4 text-blue-600 dark:text-cyan-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7 2.5a.5.5 0 01.5.5v1.25a.75.75 0 001.5 0V3a.5.5 0 01.5-.5h2a.5.5 0 01.5.5v1.25a.75.75 0 001.5 0V3a.5.5 0 01.5-.5h2.5a.5.5 0 010 1h-2.25a.25.25 0 00-.25.25v1.25a2.25 2.25 0 01-4.5 0V3.25A.25.25 0 0010.25 3H8a.5.5 0 01-.5-.5z" clip-rule="evenodd"/><path d="M3.105 6.337a.75.75 0 01.044 1.06l-1.5 2.25a.75.75 0 11-1.298-.867l1.5-2.25a.75.75 0 011.254-.202zM18.395 6.337a.75.75 0 00-.044 1.06l1.5 2.25a.75.75 0 101.298-.867l-1.5-2.25a.75.75 0 00-1.254-.202zM6.5 10a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 016.5 10zM13.5 10a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0113.5 10zM10 12.5a2 2 0 100-4 2 2 0 000 4z"/></svg></span><h3 class="text-xl font-bold">${item.title}</h3></div>`;
             }
 
-            // Se construye el contenido de la tarjeta
             cardLink.innerHTML = `
                 ${mediaElement}
                 <div class="p-6 flex flex-col flex-grow">
                     ${titleElement}
                     <p class="text-sm text-[var(--yanz-text-alt)] flex-grow mb-4">${item.description}</p>
                     <div class="mt-auto">
-                         <div class="add-to-cart-div w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">
-                            Añadir a Cotización
+                         <div class="w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">
+                            Ver Detalles
                         </div>
                     </div>
                 </div>
             `;
             
-            // Añadimos un listener al botón para que no propague el clic al enlace
-            const addToCartDiv = cardLink.querySelector('.add-to-cart-div');
-            addToCartDiv.addEventListener('click', (e) => {
-                e.preventDefault(); // Evita que el enlace se active
-                e.stopPropagation(); // Detiene el evento aquí
-                
-                // Aquí iría la lógica para añadir al carrito, que ya tienes en cart.js
-                // Por ejemplo, disparar un evento personalizado o llamar a una función global.
-                // Simulamos el comportamiento del botón original.
-                const cartButtonEvent = new CustomEvent('add-to-cart', { detail: { id: item.id } });
-                document.dispatchEvent(cartButtonEvent);
-                console.log(`Añadir a cotización: ${item.id}`);
+            // Listener para el botón de cotización que NO es un enlace
+            cardLink.addEventListener('click', function(e) {
+                // Si el clic fue sobre el área del botón, lo prevenimos para llamar a la lógica del carrito
+                if (e.target.closest('.add-to-cart-area')) {
+                    e.preventDefault();
+                    
+                    const cartButtonEvent = new CustomEvent('add-to-cart', { detail: { id: item.id } });
+                    document.dispatchEvent(cartButtonEvent);
+                    console.log(`Añadir a cotización: ${item.id}`);
+                    
+                    const buttonDiv = e.target.closest('.add-to-cart-area');
+                    buttonDiv.textContent = '¡Añadido!';
+                    setTimeout(() => {
+                        buttonDiv.textContent = 'Ver Detalles';
+                    }, 2000);
+                }
             });
             
-            cardWrapper.appendChild(cardLink);
-            return cardWrapper;
+            return cardLink;
         };
-        // ===== FIN CAMBIO =====
+        // ===== FIN CORRECCIÓN =====
 
         if (productGrid) products.forEach(p => { productGrid.appendChild(createCard(p)); });
         if (serviceGrid) services.forEach(s => { serviceGrid.appendChild(createCard(s)); });
