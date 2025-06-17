@@ -42,15 +42,17 @@
             transition: transform 0.4s ease-out, background-color 0.4s ease-out, box-shadow 0.4s ease-out;
         }
 
-        /* ===== INICIO CAMBIO: Header Sólido ===== */
-        /* Se eliminó la transparencia (rgba) y el backdrop-filter */
+        /* ===== INICIO CAMBIO: Color de Header Corregido ===== */
+        /* Ahora la barra tendrá un color de fondo sólido específico que coincide con el video */
         #main-header.visible {
             transform: translateY(0);
-            background-color: var(--yanz-bg); /* Fondo sólido */
-            box-shadow: 0 2px 8px var(--yanz-shadow);
+            background-color: #FFFFFF; /* Fondo sólido para modo claro */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         }
-        /* El modo oscuro es manejado automáticamente por la variable --yanz-bg */
-        /* Ya no se necesita una regla específica .dark #main-header.visible */
+        .dark #main-header.visible {
+            background-color: #0f111a; /* Fondo negro profundo para modo oscuro */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
         /* ===== FIN CAMBIO ===== */
         
         #preloader {
