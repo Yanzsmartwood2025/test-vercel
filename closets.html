@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clósets y Vestidores a Medida - YAN'Z SMART WOOD</title>
+    
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#1A202C">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --yanz-bg: #FFFFFF; --yanz-bg-alt: #F7F8FC; --yanz-text: #2D3748;
+            --yanz-text-alt: #718096; --yanz-heading: #1A202C; --yanz-primary: #0072CE;
+            --yanz-secondary: #00AEEF; --yanz-border: #E2E8F0; --yanz-shadow: rgba(0,0,0,0.05);
+        }
+        .dark {
+            --yanz-bg: #1A202C; --yanz-bg-alt: #2D3748; --yanz-text: #E2E8F0;
+            --yanz-text-alt: #A0AEC0; --yanz-heading: #FFFFFF; --yanz-primary: #38B2AC;
+            --yanz-secondary: #4FD1C5; --yanz-border: #4A5568; --yanz-shadow: rgba(0,0,0,0.2);
+        }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--yanz-bg);
+            color: var(--yanz-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        h1, h2, h3, h4 { 
+            font-family: 'Roboto Slab', serif;
+            color: var(--yanz-heading);
+        }
+        .section-bg { background-color: var(--yanz-bg-alt); }
+        html { scroll-behavior: smooth; }
+
+        .tab-button.active {
+            background-color: var(--yanz-primary);
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header (idéntico al de index.html para mantener la navegación) -->
+    <header class="sticky top-0 left-0 right-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-md">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="/index.html">
+                <video autoplay loop muted playsinline class="h-12 w-auto">
+                    <source src="/assets/videos/videologo-header.mp4" type="video/mp4">
+                </video>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                <a href="/index.html#productos" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
+                <a href="/index.html#servicios" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
+                <a href="/index.html#nosotros" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Nosotros</a>
+                <a href="/index.html#contacto" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
+            </div>
+            <div class="flex items-center">
+                 <button id="theme-toggle" class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Cambiar tema">
+                    <svg id="theme-icon-sun" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
+                    <svg id="theme-icon-moon" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section para Clósets -->
+        <section class="relative h-[50vh] flex items-center justify-center text-white">
+            <div class="absolute inset-0 bg-black/60 z-10"></div>
+            <img src="https://placehold.co/1200x600/4a5568/e2e8f0?text=Clóset+Elegante" alt="[Banner de un clóset a medida bien organizado]" class="absolute inset-0 w-full h-full object-cover">
+            <div class="relative z-20 text-center px-4">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Clósets y Vestidores</h1>
+                <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90 mt-4">Soluciones de almacenamiento que combinan orden, estilo y personalidad.</p>
+            </div>
+        </section>
+
+        <!-- Galería de Fotos y Videos -->
+        <section id="galeria" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Nuestros Diseños</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Las fotos de tus clósets irían aquí -->
+                    <img src="https://placehold.co/600x400/2d3748/ffffff?text=Vestidor+Walk-in" alt="[Foto de un vestidor walk-in]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/718096/ffffff?text=Clóset+con+Puertas+Corredizas" alt="[Foto de un clóset con puertas de espejo]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/4a5568/ffffff?text=Organizador+Interior" alt="[Foto de detalle de organizadores de clóset]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                </div>
+                <!-- Bandeja de Videos -->
+                <div class="mt-16 text-center">
+                    <h3 class="text-2xl font-bold mb-6">Detalles en Movimiento</h3>
+                    <video autoplay loop muted playsinline class="rounded-lg shadow-xl w-full max-w-4xl mx-auto">
+                        <source src="/assets/videos/closets.mp4" type="video/mp4">
+                        Tu navegador no soporta el video.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Materiales -->
+        <section id="materiales" class="py-20 section-bg">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Materiales y Acabados</h2>
+                
+                <div id="tabs-container" class="flex flex-wrap justify-center gap-2 mb-8">
+                    <button class="tab-button active py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="melaminico">Melamínico</button>
+                    <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="mdf">MDF Lacado</button>
+                    <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="enchapado">MDF Enchapado</button>
+                    <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="accesorios">Accesorios</button>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <!-- Melamínico -->
+                    <div id="melaminico" class="tab-content active">
+                        <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
+                            <h3 class="text-2xl font-bold mb-4">Melamínico: Versatilidad y Durabilidad</h3>
+                            <p class="text-[var(--yanz-text-alt)] mb-4">Ideal para las estructuras internas y externas de los clósets. Ofrece una superficie resistente a rayones y humedad, disponible en una vasta gama de colores y texturas, incluyendo imitaciones de madera muy realistas.</p>
+                            <h4 class="font-bold mt-6 mb-2">Ventajas:</h4>
+                            <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
+                                <li>Excelente relación calidad-precio.</li>
+                                <li>Fácil de limpiar y mantener.</li>
+                                <li>Gran variedad de acabados para cualquier estilo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- MDF Lacado -->
+                    <div id="mdf" class="tab-content">
+                        <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
+                            <h3 class="text-2xl font-bold mb-4">MDF Lacado: Elegancia Pura</h3>
+                            <p class="text-[var(--yanz-text-alt)] mb-4">Perfecto para puertas y frentes visibles, el lacado sobre MDF proporciona un acabado sedoso, uniforme y de alta gama. Permite una personalización de color infinita y acabados que van desde el mate profundo hasta el alto brillo.</p>
+                             <h4 class="font-bold mt-6 mb-2">Ventajas:</h4>
+                            <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
+                                <li>Superficie lisa y sin poros, de estética minimalista.</li>
+                                <li>Posibilidad de crear diseños con molduras y bajo relieves.</li>
+                                <li>Tacto suave y aspecto lujoso.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- MDF Enchapado -->
+                    <div id="enchapado" class="tab-content">
+                        <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
+                            <h3 class="text-2xl font-bold mb-4">MDF Enchapado: La Calidez de la Madera</h3>
+                            <p class="text-[var(--yanz-text-alt)] mb-4">Combina lo mejor de dos mundos: la estabilidad del tablero MDF con la belleza y calidez de una fina lámina de madera natural. Cada chapa es única, ofreciendo la veta y el carácter de la madera real a un costo más accesible.</p>
+                             <h4 class="font-bold mt-6 mb-2">Ventajas:</h4>
+                            <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
+                                <li>Apariencia y tacto de madera maciza.</li>
+                                <li>Más estable que la madera maciza, resistiendo mejor los cambios de temperatura.</li>
+                                <li>Opción sostenible que aprovecha mejor el recurso maderero.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Accesorios -->
+                    <div id="accesorios" class="tab-content">
+                        <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
+                            <h3 class="text-2xl font-bold mb-4">Accesorios y Herrajes: La Magia Interior</h3>
+                            <p class="text-[var(--yanz-text-alt)] mb-4">Un gran clóset se define por su funcionalidad. Integramos soluciones inteligentes para maximizar cada centímetro: sistemas de colgado, pantaloneras extraíbles, zapateras, organizadores de joyas, e iluminación LED integrada con sensores que hacen tu vida más fácil.</p>
+                             <h4 class="font-bold mt-6 mb-2">Ventajas:</h4>
+                            <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
+                                <li>Optimización máxima del espacio de almacenamiento.</li>
+                                <li>Acceso fácil y cómodo a todas tus pertenencias.</li>
+                                <li>Herrajes de alta calidad (bisagras y rieles con cierre suave) que garantizan durabilidad y un uso silencioso.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nota sobre Colores -->
+                <div class="mt-12 p-4 bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 rounded-lg text-center max-w-4xl mx-auto">
+                    <p class="font-semibold">Nota Importante Sobre los Colores:</p>
+                    <p class="text-sm">Las muestras de colores y texturas de nuestros materiales son una guía de referencia. Debido a variaciones naturales en la madera y procesos de fabricación, los tonos pueden cambiar ligeramente con el tiempo o entre diferentes lotes. Recomendamos ver muestras físicas para la selección final.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer (idéntico al de index.html) -->
+    <footer id="contacto-footer" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8">
+        <!-- El contenido se podría copiar dinámicamente o pegar aquí directamente -->
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lógica para el Theme Toggle (modo oscuro/claro)
+            const themeToggle = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('theme-icon-sun');
+            const moonIcon = document.getElementById('theme-icon-moon');
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                }
+            };
+
+            themeToggle.addEventListener('click', () => {
+                const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            applyTheme(savedTheme);
+
+            // Lógica para las pestañas de materiales
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    button.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Copiar el footer del index.html
+            fetch('/index.html')
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const footerContent = doc.querySelector('#contacto').innerHTML;
+                    document.getElementById('contacto-footer').innerHTML = footerContent;
+                });
+        });
+    </script>
+</body>
+</html>
