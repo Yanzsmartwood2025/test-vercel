@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cocinas Modernas a Medida - YAN'Z SMART WOOD</title>
     
-    <!-- Se mantienen los mismos enlaces para consistencia visual -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#1A202C">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -37,7 +36,6 @@
         .section-bg { background-color: var(--yanz-bg-alt); }
         html { scroll-behavior: smooth; }
 
-        /* Estilos para las pestañas de materiales */
         .tab-button.active {
             background-color: var(--yanz-primary);
             color: white;
@@ -69,7 +67,7 @@
                 <a href="/index.html#productos" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
                 <a href="/index.html#servicios" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
                 <a href="/index.html#nosotros" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Nosotros</a>
-                <a href="/index.html#contacto" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
+                <a href="#contacto-footer" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
             </div>
             <div class="flex items-center">
                  <button id="theme-toggle" class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Cambiar tema">
@@ -81,7 +79,6 @@
     </header>
 
     <main>
-        <!-- Hero Section para Cocinas -->
         <section class="relative h-[50vh] flex items-center justify-center text-white">
             <div class="absolute inset-0 bg-black/60 z-10"></div>
             <img src="https://placehold.co/1200x600/1a202c/e2e8f0?text=Cocina+Moderna" alt="[Banner de una cocina moderna y elegante]" class="absolute inset-0 w-full h-full object-cover">
@@ -91,17 +88,14 @@
             </div>
         </section>
 
-        <!-- Galería de Fotos y Videos -->
         <section id="galeria" class="py-20">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Nuestros Proyectos</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Las fotos de tus cocinas irían aquí -->
                     <img src="https://placehold.co/600x400/2d3748/ffffff?text=Proyecto+1" alt="[Foto de una cocina moderna]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
                     <img src="https://placehold.co/600x400/718096/ffffff?text=Proyecto+2" alt="[Foto de una cocina con isla central]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
                     <img src="https://placehold.co/600x400/4a5568/ffffff?text=Proyecto+3" alt="[Foto de detalle de acabados de cocina]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
                 </div>
-                <!-- Bandeja de Videos -->
                 <div class="mt-16 text-center">
                     <h3 class="text-2xl font-bold mb-6">Explora en Movimiento</h3>
                     <video autoplay loop muted playsinline class="rounded-lg shadow-xl w-full max-w-4xl mx-auto">
@@ -112,12 +106,10 @@
             </div>
         </section>
 
-        <!-- Sección de Materiales -->
         <section id="materiales" class="py-20 section-bg">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Materiales con los que Trabajamos</h2>
                 
-                <!-- Pestañas para seleccionar material -->
                 <div id="tabs-container" class="flex flex-wrap justify-center gap-2 mb-8">
                     <button class="tab-button active py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="melaminico">Melamínico</button>
                     <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="mdf">MDF Lacado</button>
@@ -125,9 +117,7 @@
                     <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="mesones">Mesones</button>
                 </div>
 
-                <!-- Contenido de cada pestaña -->
                 <div class="max-w-4xl mx-auto">
-                    <!-- Melamínico -->
                     <div id="melaminico" class="tab-content active">
                         <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
                             <h3 class="text-2xl font-bold mb-4">Melamínico de Alta Resistencia</h3>
@@ -141,7 +131,6 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- MDF Lacado -->
                     <div id="mdf" class="tab-content">
                         <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
                             <h3 class="text-2xl font-bold mb-4">MDF Lacado: Acabado Premium</h3>
@@ -155,7 +144,6 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- Termoformado -->
                     <div id="termoformado" class="tab-content">
                         <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
                             <h3 class="text-2xl font-bold mb-4">Termoformado: Diseño Sin Juntas</h3>
@@ -169,7 +157,6 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- Mesones -->
                     <div id="mesones" class="tab-content">
                         <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
                             <h3 class="text-2xl font-bold mb-4">Mesones: Granito y Cuarzo</h3>
@@ -185,7 +172,6 @@
                     </div>
                 </div>
 
-                <!-- Nota sobre Colores -->
                 <div class="mt-12 p-4 bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 rounded-lg text-center max-w-4xl mx-auto">
                     <p class="font-semibold">Nota Importante Sobre los Colores:</p>
                     <p class="text-sm">Las muestras de colores y texturas de nuestros materiales son una guía de referencia. Debido a variaciones naturales en la madera y procesos de fabricación, los tonos pueden cambiar ligeramente con el tiempo o entre diferentes lotes. Recomendamos ver muestras físicas para la selección final.</p>
@@ -196,14 +182,65 @@
 
     </main>
 
-    <!-- Footer (idéntico al de index.html) -->
+    <!-- ===== INICIO CAMBIO: Footer Estático y Completo ===== -->
     <footer id="contacto-footer" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8">
-        <!-- Contenido del footer copiado del index.html -->
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3>
+                    <p class="text-gray-400">Quito, Ecuador</p>
+                    <p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-[var(--yanz-primary)] hover:underline">yanzsmartwood@gmail.com</a></p>
+                    <p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-[var(--yanz-primary)] hover:underline">+593 99 648 0843</a></p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110" aria-label="Facebook">
+                            <img src="/assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto">
+                        </a>
+                        <a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110" aria-label="TikTok">
+                            <img src="/assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto">
+                        </a>
+                        <a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110" aria-label="Instagram">
+                            <img src="/assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto">
+                        </a>
+                        <a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110" aria-label="YouTube">
+                            <img src="/assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto">
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3>
+                    <div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2">
+                         <!-- Los logos se llenan con JS, pero el div está aquí -->
+                    </div>
+                    <p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p>
+                </div>
+            </div>
+             <div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400">
+                 <p>&copy; <span id="year">2025</span> YAN'Z SMART WOOD. Todos los derechos reservados.</p>
+                 <div class="mt-4 space-x-4">
+                     <a href="/como-trabajamos.html" class="text-[var(--yanz-primary)] hover:underline">Cómo Trabajamos y Tiempos de Entrega</a>
+                     <span class="text-gray-500">|</span>
+                     <a href="/privacidad.html" class="text-[var(--yanz-primary)] hover:underline">Políticas de Privacidad</a>
+                     <span class="text-gray-500">|</span>
+                     <a href="/terminos.html" class="text-[var(--yanz-primary)] hover:underline">Términos de Servicio</a>
+                 </div>
+             </div>
+        </div>
     </footer>
+    <!-- ===== FIN CAMBIO ===== -->
+
+    <!-- ===== INICIO CAMBIO: Botón de WhatsApp Flotante ===== -->
+    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20cocinas." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank" aria-label="Contactar por WhatsApp">
+        <video autoplay loop muted playsinline class="w-full h-full object-cover">
+            <source src="/assets/videos/video-whatsapp.mp4" type="video/mp4">
+        </video>
+    </a>
+    <!-- ===== FIN CAMBIO ===== -->
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Lógica para el Theme Toggle (modo oscuro/claro)
             const themeToggle = document.getElementById('theme-toggle');
             const sunIcon = document.getElementById('theme-icon-sun');
             const moonIcon = document.getElementById('theme-icon-moon');
@@ -229,37 +266,41 @@
             const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             applyTheme(savedTheme);
 
-            // Lógica para las pestañas de materiales
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
 
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const tabId = button.dataset.tab;
-
-                    // Desactivar todos los botones y contenidos
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-
-                    // Activar el botón y contenido seleccionado
                     button.classList.add('active');
                     document.getElementById(tabId).classList.add('active');
                 });
             });
 
-             // Copiar el footer del index.html si no está presente
-            if(document.getElementById('contacto-footer') && !document.getElementById('contacto-footer').innerHTML.trim()){
-                 // Esto es un placeholder. Lo ideal es tener el footer directamente en el HTML
-                 // para evitar problemas de SEO y carga. Pero para el ejemplo, funciona.
-                fetch('/index.html')
-                    .then(response => response.text())
-                    .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        const footerContent = doc.querySelector('#contacto').innerHTML;
-                        document.getElementById('contacto-footer').innerHTML = footerContent;
-                    });
+            // Llenar logos de pago
+            const paymentMethods = [
+                 { name: 'PeiGo', image: '/assets/images/pago-peigo.png' },
+                 { name: 'Mastercard', image: '/assets/images/pago-mastercard.png' },
+                 { name: 'Visa', image: '/assets/images/pago-visa.png' },
+                 { name: 'American Express', image: '/assets/images/pago-american-express.png' },
+                 { name: 'Discover', image: '/assets/images/pago-discover.png' },
+                 { name: 'JCB', image: '/assets/images/pago-jcb.png' },
+                 { name: 'Diners Club', image: '/assets/images/pago-diners-club.png' },
+                 { name: 'PayPal', image: '/assets/images/pago-paypal.png' },
+                 { name: 'Binance Pay', image: '/assets/images/pago-binance-pay.png' },
+                 { name: 'Banco Guayaquil', image: '/assets/images/pago-banco-guayaquil.png' },
+                 { name: 'Banco Pichincha', image: '/assets/images/pago-banco-pichincha.png' },
+                 { name: 'DeUna', image: '/assets/images/pago-deuna.png' }
+            ];
+            const paymentLogosContainer = document.getElementById('payment-logos');
+            if(paymentLogosContainer) {
+                paymentMethods.forEach(m => {
+                    paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`;
+                });
             }
+             document.getElementById('year').textContent = new Date().getFullYear();
         });
     </script>
 </body>
