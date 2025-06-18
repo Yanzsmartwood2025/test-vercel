@@ -1,184 +1,67 @@
 <!DOCTYPE html>
-<html lang="es" class="dark"> <!-- Inicia en modo oscuro para consistencia -->
+<html lang="es" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferretería Profesional - YAN'Z SMART WOOD</title>
-    
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#1A202C">
-
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-
     <style>
         :root {
             --yanz-bg: #FFFFFF; --yanz-bg-alt: #F7F8FC; --yanz-text: #2D3748;
             --yanz-text-alt: #718096; --yanz-heading: #1A202C; --yanz-primary: #0072CE;
             --yanz-secondary: #00AEEF; --yanz-border: #E2E8F0; --yanz-shadow: rgba(0,0,0,0.05);
             --yanz-header-bg: #141821;
-            /* Nuevo color para el botón de acción, basado en la imagen */
-            --yanz-cta-green: #34D399; 
-            --yanz-cta-green-hover: #10B981;
+            --yanz-cta-green: #34D399; --yanz-cta-green-hover: #10B981;
         }
-
         html.dark {
             --yanz-bg: #1A202C; --yanz-bg-alt: #2D3748; --yanz-text: #E2E8F0;
             --yanz-text-alt: #A0AEC0; --yanz-heading: #FFFFFF; --yanz-primary: #38B2AC;
             --yanz-secondary: #4FD1C5; --yanz-header-bg: #141821;
         }
-
-        body {  
-            font-family: 'Poppins', sans-serif;   
-            background-color: var(--yanz-bg);
-            color: var(--yanz-text);
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        h1, h2, h3, h4, h5, h6 {  
-            font-family: 'Roboto Slab', serif;
-            color: var(--yanz-heading);
-        }
-
-        .section-bg { background-color: var(--yanz-bg-alt); }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--yanz-bg); color: var(--yanz-text); transition: background-color 0.3s, color 0.3s; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Roboto Slab', serif; color: var(--yanz-heading); }
         html { scroll-behavior: smooth; }
-        
-        #main-header {
-            background-color: var(--yanz-header-bg);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
+        #main-header { background-color: var(--yanz-header-bg); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         #mobile-menu { background-color: var(--yanz-header-bg); }
-
-        #cart-icon-wrapper {
-            padding: 2px; border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            transition: border-color 0.3s ease-in-out;
-            width: 48px; height: 48px;
-            display: flex; align-items: center; justify-content: center;
-        }
+        #cart-icon-wrapper { padding: 2px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.2); transition: border-color 0.3s ease-in-out; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; }
         #cart-icon-wrapper.has-items { border-color: var(--yanz-primary); }
         #cart-icon-wrapper video { width: 32px; height: 32px; }
-        
-        .toast-notification {
-            position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%);
-            background-color: var(--yanz-primary); color: white; padding: 12px 24px;
-            border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: bottom 0.5s ease-in-out; z-index: 9999; font-size: 14px;
-        }
+        .toast-notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--yanz-primary); color: white; padding: 12px 24px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: bottom 0.5s ease-in-out; z-index: 9999; font-size: 14px; }
         .toast-notification.show { bottom: 30px; }
-
-        #turbo-icon {
-            position: fixed; bottom: 24px; left: 24px; z-index: 50;
-            width: 72px; height: 72px; border-radius: 50%;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.25); cursor: pointer;
-            transition: transform 0.2s ease; overflow: hidden;
-            border: 4px solid #FBBF24;
-        }
+        #turbo-icon { position: fixed; bottom: 24px; left: 24px; z-index: 50; width: 72px; height: 72px; border-radius: 50%; box-shadow: 0 4px 14px rgba(0,0,0,0.25); cursor: pointer; transition: transform 0.2s ease; overflow: hidden; border: 4px solid #FBBF24; }
         #turbo-icon:hover { transform: scale(1.1); }
         #turbo-icon video { width: 100%; height: 100%; object-fit: cover; }
-        
-        .product-highlight {
-            box-shadow: 0 0 0 4px var(--yanz-cta-green);
-            transform: scale(1.03);
-            transition: all 0.4s ease-in-out;
-        }
-
-        .payment-logo-footer {
-            height: 40px; width: auto; object-fit: contain;
-            background-color: white; padding: 4px; border-radius: 6px;
-        }
-        
-        /* ESTILOS PARA EL ACORDEÓN DE PASILLOS */
-        .accordion-button {
-            background-color: var(--yanz-bg-alt);
-            transition: background-color 0.3s;
-        }
-        html.dark .accordion-button {
-            background-color: #2D3748; /* Color oscuro sólido como en la foto */
-        }
-        .accordion-button:hover {
-             background-color: var(--yanz-border);
-        }
-        html.dark .accordion-button:hover {
-            background-color: #4A5568;
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.7s ease-in-out;
-            background-color: var(--yanz-bg);
-        }
-
-        /* ESTILO PARA EL NUEVO BOTÓN DE ACORDEÓN */
-        .accordion-toggle-btn {
-            background-color: var(--yanz-cta-green);
-            color: #1A202C; /* Texto oscuro para contraste */
-            font-weight: 600;
-            font-size: 0.875rem; /* text-sm */
-            border-radius: 9999px; /* rounded-full */
-            padding: 0.5rem 1.25rem;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap; /* Prevenir que el texto se parta */
-        }
-        .accordion-toggle-btn:hover {
-            background-color: var(--yanz-cta-green-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-        }
-
-        .accordion-toggle-btn .accordion-icon {
-            transition: transform 0.3s ease-in-out;
-            margin-left: 0.5rem; /* ml-2 */
-        }
-        .accordion-button.active .accordion-toggle-btn .accordion-icon {
-            transform: rotate(180deg);
-        }
-        
-        /* ESTILO PARA EL NUEVO BOTÓN DE AÑADIR */
-        .add-to-cart-btn-new {
-            background-color: var(--yanz-cta-green);
-            color: #1A202C; /* Texto oscuro para contraste */
-            font-weight: 700;
-            border-radius: 9999px; /* rounded-full */
-            padding: 0.75rem 1.5rem;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-        }
-        .add-to-cart-btn-new:hover {
-            background-color: var(--yanz-cta-green-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-        }
-
+        .payment-logo-footer { height: 40px; width: auto; object-fit: contain; background-color: white; padding: 4px; border-radius: 6px; }
+        .social-icon-footer { height: 32px; width: 32px; object-fit: contain; transition: transform 0.2s ease-in-out; }
+        .social-icon-footer:hover { transform: scale(1.1); }
+        .accordion-button { background-color: var(--yanz-bg-alt); transition: background-color 0.3s; }
+        html.dark .accordion-button { background-color: #2D3748; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.7s ease-in-out; background-color: var(--yanz-bg); }
+        .accordion-toggle-btn { background-color: var(--yanz-cta-green); color: #1A202C; font-weight: 600; font-size: 0.875rem; border-radius: 9999px; padding: 0.5rem 1.25rem; transition: all 0.2s ease-in-out; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; white-space: nowrap; }
+        .accordion-toggle-btn .accordion-icon { transition: transform 0.3s ease-in-out; margin-left: 0.5rem; }
+        .accordion-button.active .accordion-toggle-btn .accordion-icon { transform: rotate(180deg); }
+        .add-to-cart-btn-new { background-color: var(--yanz-cta-green); color: #1A202C; font-weight: 700; border-radius: 9999px; padding: 0.75rem 1.5rem; transition: all 0.2s ease-in-out; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); }
+        .quantity-control { background-color: var(--yanz-primary); color: white; width: 28px; height: 28px; border-radius: 50%; font-weight: bold; }
     </style>
 </head>
 <body class="antialiased dark">
-
     <div id="page-content">
-        <!-- HEADER COMPARTIDO -->
         <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
             <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
-                <a href="/index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-a-man-with-a-logo-32049-480.mp4" type="video/mp4"></video></a>
+                <a href="index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="videos/videologo-header.mp4" type="video/mp4"></video></a>
                 <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
-                    <a href="/index.html#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
-                    <a href="/index.html#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
-                    <a href="/index.html#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Testimonios</a>
+                    <a href="#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
+                    <a href="#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
+                    <a href="#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Testimonios</a>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <div class="flex items-center space-x-3">
-                        <div id="cart-icon-wrapper"><button id="open-cart-button" class="relative rounded-full text-gray-300"><video autoplay loop muted playsinline><source src="https://assets.mixkit.co/videos/preview/mixkit-a-coin-with-a-shopping-cart-symbol-32044-480.mp4" type="video/mp4"></video></button></div>
-                        <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center relative">
+                        <div id="cart-icon-wrapper"><button id="open-cart-button" class="relative rounded-full text-gray-300"><video autoplay loop muted playsinline><source src="videos/video-carrito.mp4" type="video/mp4"></video></button></div>
+                        <span id="cart-counter" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
                     </div>
                     <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
                         <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
@@ -188,43 +71,27 @@
                 </div>
             </nav>
             <div id="mobile-menu" class="hidden md:hidden">
-                <a href="/index.html#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a>
-                <a href="/index.html#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a>
-                <a href="/index.html#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a>
+                <a href="#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a>
+                <a href="#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a>
+                <a href="#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a>
             </div>
         </header>
 
         <main>
             <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white">
                 <div class="absolute inset-0 bg-black/60 z-10"></div>
-                <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="https://assets.mixkit.co/videos/preview/mixkit-carpenter-sanding-a-piece-of-wood-3209-480.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="videos/intro.mp4" type="video/mp4"></video>
                 <div class="relative z-20 text-center px-4">
                     <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">Ferretería Profesional</h1>
-                    <p class="max-w-3xl mx-auto text-lg md:text-xl opacity-90">Explora nuestros pasillos y encuentra todo lo que necesitas para tu próximo gran proyecto.</p>
-                </div>
-            </section>
-            
-            <section id="aria-assistant" class="py-16 section-bg">
-                <div class="container mx-auto px-6 text-center">
-                    <h2 class="text-3xl font-bold mb-4">¿Buscas algo específico? ¡Pregúntale a Aria!</h2>
-                    <p class="text-[var(--yanz-text-alt)] max-w-2xl mx-auto mb-6">Soy tu asistente de ferretería. Dime qué necesitas y te ayudaré a encontrarlo en nuestro catálogo.</p>
-                    <div class="max-w-2xl mx-auto flex gap-2">
-                        <input type="text" id="aria-query-input" placeholder="Ej: 'taladro percutor' o 'sellador de silicona'" class="w-full px-4 py-3 rounded-lg border border-[var(--yanz-border)] focus:ring-2 focus:ring-[var(--yanz-primary)] focus:outline-none bg-[var(--yanz-bg)] text-[var(--yanz-text)]">
-                        <button id="aria-ask-button" class="bg-[var(--yanz-primary)] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[var(--yanz-secondary)] transition-colors flex-shrink-0">Buscar</button>
-                    </div>
-                    <div id="aria-response" class="mt-4 text-left text-sm p-4 bg-[var(--yanz-bg)] rounded-lg min-h-[50px] border border-[var(--yanz-border)] hidden"></div>
                 </div>
             </section>
 
-            <!-- CONTENEDOR DE PRODUCTOS (ACORDEÓN) -->
-            <div id="product-container" class="container mx-auto px-6 py-10 space-y-2">
-                <!-- Los pasillos/categorías se insertarán aquí dinámicamente -->
-            </div>
+            <div id="product-container" class="container mx-auto px-6 py-10 space-y-2"></div>
         </main>
         
         <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8">
             <div class="container mx-auto px-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3>
                         <p class="text-gray-400">Quito, Ecuador</p>
@@ -234,28 +101,28 @@
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3>
                         <div class="flex justify-center md:justify-start space-x-4">
-                            <a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="text-2xl hover:text-blue-500"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="text-2xl hover:text-white"><i class="fab fa-tiktok"></i></a>
-                            <a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="text-2xl hover:text-pink-500"><i class="fab fa-instagram"></i></a>
-                            <a href="https://youtube.com/@yanzsmartwood" target="_blank" class="text-2xl hover:text-red-500"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank"><img src="img/icono-facebook.png" alt="Facebook" class="social-icon-footer"></a>
+                            <a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank"><img src="img/icono-tiktok.png" alt="TikTok" class="social-icon-footer"></a>
+                            <a href="https://www.instagram.com/yanz_smart_wood" target="_blank"><img src="img/icono-instagram.png" alt="Instagram" class="social-icon-footer"></a>
+                            <a href="https://youtube.com/@yanzsmartwood" target="_blank"><img src="img/icono-youtube.png" alt="YouTube" class="social-icon-footer"></a>
                         </div>
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3>
                         <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 max-w-xs mx-auto md:mx-0">
-                           <img src="https://i.imgur.com/k2tBvJv.png" alt="Pago Efectivo" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=Efectivo';">
-                           <img src="https://i.imgur.com/sIARJmJ.png" alt="Mastercard" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=Mastercard';">
-                           <img src="https://i.imgur.com/O84829v.png" alt="Visa" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=Visa';">
-                           <img src="https://i.imgur.com/28Kcv9D.png" alt="American Express" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=Amex';">
-                           <img src="https://i.imgur.com/pfNqs4O.png" alt="Discover" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=Discover';">
-                           <img src="https://i.imgur.com/v2T82do.png" alt="Banco Pichincha" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=Pichincha';">
-                           <img src="https://i.imgur.com/28C0yCo.png" alt="Diners Club" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=Diners';">
-                           <img src="https://i.imgur.com/P4j4xS0.png" alt="Paypal" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=PayPal';">
-                           <img src="https://i.imgur.com/1EXgYJt.png" alt="Binance Pay" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=Binance';">
-                           <img src="https://i.imgur.com/sB11S5k.png" alt="Instagram" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=Instagram';">
-                           <img src="https://i.imgur.com/7l1c1bB.png" alt="DeUna" class="payment-logo-footer" onerror="this.onerror=null;this.src='https://placehold.co/80x50/ffffff/333333?text=DeUna';">
+                           <img src="img/pago-peigo.png" alt="Peigo" class="payment-logo-footer">
+                           <img src="img/pago-mastercard.png" alt="Mastercard" class="payment-logo-footer">
+                           <img src="img/pago-visa.png" alt="Visa" class="payment-logo-footer">
+                           <img src="img/pago-american-express.png" alt="American Express" class="payment-logo-footer">
+                           <img src="img/pago-discover.png" alt="Discover" class="payment-logo-footer">
+                           <img src="img/pago-banco-pichincha.png" alt="Banco Pichincha" class="payment-logo-footer">
+                           <img src="img/pago-diners-club.png" alt="Diners Club" class="payment-logo-footer">
+                           <img src="img/pago-paypal.png" alt="Paypal" class="payment-logo-footer">
+                           <img src="img/pago-binance-pay.png" alt="Binance Pay" class="payment-logo-footer">
+                           <img src="img/pago-banco-guayaquil.png" alt="Banco Guayaquil" class="payment-logo-footer">
+                           <img src="img/pago-deuna.png" alt="DeUna" class="payment-logo-footer">
                         </div>
-                         <p class="text-xs text-gray-400 mt-2">Coordina tu pago directamente con nosotros.</p>
+                         <p class="text-xs text-gray-400 mt-2">Pagos mediante transferencia bancaria.</p>
                     </div>
                 </div>
                 <div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400">
@@ -270,22 +137,41 @@
     
     <!-- ÍCONOS Y MODALES -->
     <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank">
-        <video autoplay loop muted playsinline class="w-full h-full object-cover">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-whatsapp-icon-in-a-circle-33219-480.mp4" type="video/mp4">
-        </video>
+        <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="videos/video-whatsapp.mp4" type="video/mp4"></video>
     </a>
-    <button id="turbo-icon" aria-label="Información de Entrega"><video autoplay loop muted playsinline><source src="https://assets.mixkit.co/videos/preview/mixkit-dog-in-a-helmet-in-a-motorcycle-4122-480.mp4" type="video/mp4"></video></button>
-    <div id="cart-modal" class="fixed inset-0 z-[100] flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden">
-        <div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col transform transition-transform duration-300">
-             <div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold text-white">Cotización</h2><button id="close-cart-button" class="text-gray-400 hover:text-white text-2xl">&times;</button></div>
-            <div id="cart-items" class="flex-grow overflow-y-auto max-h-[50vh] pr-2"></div><div id="cart-empty-message" class="text-center py-8 text-gray-400 hidden"><p>Aún no has añadido nada a tu cotización.</p></div>
-            <div class="mt-6"><a id="cart-whatsapp-button" href="#" target="_blank" class="block w-full text-center bg-green-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-600 transition-colors"><i class="fab fa-whatsapp"></i> Enviar Cotización por WhatsApp</a></div>
+    <button id="turbo-icon" aria-label="Información de Entrega"><video autoplay loop muted playsinline><source src="videos/perrito_en_moto.mp4" type="video/mp4"></video></button>
+    
+    <!-- MODAL DEL CARRITO / COTI -->
+    <div id="cart-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+        <div class="w-full max-w-sm bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center transform transition-transform duration-300">
+            <div class="w-24 h-24 mx-auto mb-4 bg-blue-500 rounded-full flex items-center justify-center border-4 border-white overflow-hidden">
+                <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="videos/video-carrito.mp4" type="video/mp4"></video>
+            </div>
+            <h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2>
+            <p class="text-sm text-gray-400 mt-1 mb-4">Tu asistente de proyectos. ¡Aquí guardaré todas las ideas geniales que elijas para tu cotización!</p>
+            <div class="border-t border-gray-700 pt-4">
+                <div id="cart-items" class="flex-grow overflow-y-auto max-h-[40vh] pr-2 text-left"></div>
+                <div id="cart-empty-message" class="py-4 text-gray-400 hidden">Tu cesta de ideas está vacía.</div>
+            </div>
+             <div id="checkout-section" class="mt-6">
+                <button id="checkout-button" class="block w-full text-center bg-green-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-600 transition-colors">
+                    <i class="fas fa-credit-card"></i> Proceder al Pago
+                </button>
+            </div>
+            <button id="close-cart-button" class="mt-4 text-sm text-gray-500 hover:text-white">Cerrar</button>
         </div>
     </div>
+
+    <!-- MODAL DE TURBO -->
     <div id="turbo-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
         <div class="w-full max-w-lg bg-[var(--yanz-header-bg)] text-white rounded-2xl shadow-2xl p-6 relative">
             <button id="close-turbo-button" class="absolute top-3 right-4 text-gray-400 hover:text-white text-3xl">&times;</button>
-            <div class="text-center"><div class="w-24 h-24 mx-auto mb-4 bg-yellow-400 rounded-full flex items-center justify-center border-4 border-white"><i class="fas fa-shipping-fast text-5xl text-gray-900"></i></div><h2 class="text-3xl font-bold">¡Hola, soy Turbo!</h2><p class="text-yellow-300 font-semibold mb-6">Tu Repartidor a toda velocidad</p></div>
+            <div class="text-center">
+                <div class="w-24 h-24 mx-auto mb-4 bg-yellow-400 rounded-full flex items-center justify-center border-4 border-white overflow-hidden">
+                    <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="videos/perrito_en_moto.mp4" type="video/mp4"></video>
+                </div>
+                <h2 class="text-3xl font-bold">¡Hola, soy Turbo!</h2><p class="text-yellow-300 font-semibold mb-6">Tu Repartidor a toda velocidad</p>
+            </div>
             <div class="text-sm text-left space-y-4">
                 <p><strong class="text-white">Nuestro Compromiso:</strong> Para darte el catálogo más grande, muchos productos los traemos de nuestros socios proveedores. ¡Así garantizamos tu entrega en 24h una vez confirmado tu pago!</p>
                 <div class="border-t border-gray-600 pt-4"><h4 class="font-bold text-center mb-2 text-lg">Plan de Entregas:</h4><ul class="list-none space-y-2"><li class="bg-gray-700/50 p-3 rounded-lg"><i class="fas fa-map-marker-alt text-yellow-400 mr-2"></i><strong>Dentro de Quito:</strong><br><span class="pl-5">Compras de $50 o más: <span class="font-bold text-green-400">¡GRATIS!</span></span><br><span class="pl-5">Pedidos menores: $3.50</span></li><li class="bg-gray-700/50 p-3 rounded-lg"><i class="fas fa-map-marked-alt text-yellow-400 mr-2"></i><strong>Valles (Cumbayá, Tumbaco, etc.):</strong><br><span class="pl-5">Compras de $100 o más: <span class="font-bold text-green-400">¡GRATIS!</span></span><br><span class="pl-5">Pedidos menores: $6.00</span></li><li class="bg-gray-700/50 p-3 rounded-lg"><i class="fas fa-globe-americas text-yellow-400 mr-2"></i><strong>Resto del País:</strong><br><span class="pl-5">Envío por courier, ¡contáctanos para coordinar!</span></li></ul></div>
@@ -297,29 +183,21 @@
     
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-
         const inventarioFerreteria = [
-            // Herramientas Manuales
             { id: 'HM01', nombre: 'Martillo de Uña, Mango de Goma', categoria: 'Herramientas Manuales', precio: 12.50, palabrasClave: ['martillo', 'clavo', 'uña', 'herramienta', 'manual', 'carpintero', 'goma'], imagen: 'https://placehold.co/400x300/F87171/FFFFFF?text=Martillo' },
             { id: 'HM02', nombre: 'Juego de Destornilladores Pro (8 Pzs)', categoria: 'Herramientas Manuales', precio: 25.00, palabrasClave: ['destornillador', 'desarmador', 'plano', 'estrella', 'phillips', 'set'], imagen: 'https://placehold.co/400x300/FDBA74/FFFFFF?text=Destornilladores' },
-            // Tornillería y Anclajes
             { id: 'TA01', nombre: 'Clavos de Acero 1" (Caja)', categoria: 'Tornillería y Anclajes', precio: 4.75, palabrasClave: ['clavo', 'clavos', 'acero', 'pulgada', 'madera', 'fijar'], imagen: 'https://placehold.co/400x300/9CA3AF/FFFFFF?text=Clavos' },
             { id: 'TA02', nombre: 'Tornillos de Madera 3/4" (Caja 100u)', categoria: 'Tornillería y Anclajes', precio: 6.20, palabrasClave: ['tornillo', 'tornillos', 'madera', 'autorroscante', 'fijar', 'estrella'], imagen: 'https://placehold.co/400x300/A1A1AA/FFFFFF?text=Tornillos' },
-            // Herramientas Eléctricas
             { id: 'HE01', nombre: 'Taladro Percutor Inalámbrico 20V', categoria: 'Herramientas Eléctricas', precio: 125.00, palabrasClave: ['taladro', 'inalambrico', 'percutor', 'bateria', 'electrica', 'rotomartillo'], imagen: 'https://placehold.co/400x300/FBBF24/333333?text=Taladro' },
             { id: 'HE02', nombre: 'Amoladora Angular 4-1/2"', categoria: 'Herramientas Eléctricas', precio: 65.50, palabrasClave: ['amoladora', 'pulidora', 'cortar', 'metal', 'disco', 'electrica'], imagen: 'https://placehold.co/400x300/F59E0B/FFFFFF?text=Amoladora' },
-            // Adhesivos y Selladores
             { id: 'AS01', nombre: 'Silicona Transparente Multiuso', categoria: 'Adhesivos y Selladores', precio: 5.80, palabrasClave: ['silicona', 'sellador', 'adhesivo', 'transparente', 'baño', 'cocina'], imagen: 'https://placehold.co/400x300/EC4899/FFFFFF?text=Silicona' },
             { id: 'AS02', nombre: 'Pegamento Epóxico Extra Fuerte', categoria: 'Adhesivos y Selladores', precio: 8.00, palabrasClave: ['epoxico', 'pegamento', 'adhesivo', 'soldadura', 'fria', 'jeringa'], imagen: 'https://placehold.co/400x300/D946EF/FFFFFF?text=Pegamento' },
-            // Obra Gris y Construcción
             { id: 'OG01', nombre: 'Funda de Cemento Holcim Fuerte', categoria: 'Obra Gris y Construcción', precio: 8.50, palabrasClave: ['cemento', 'holcim', 'fuerte', 'construccion', 'obra', 'gris', 'funda'], imagen: 'https://placehold.co/400x300/6B7280/FFFFFF?text=Cemento' },
-            // Pintura y Acabados
             { id: 'PA01', nombre: 'Pintura de Caucho Blanca (Galón)', categoria: 'Pintura y Acabados', precio: 18.00, palabrasClave: ['pintura', 'blanco', 'caucho', 'galon', 'pared', 'exterior', 'interior'], imagen: 'https://placehold.co/400x300/60A5FA/FFFFFF?text=Pintura' },
             { id: 'PA02', nombre: 'Brocha Profesional 4 pulgadas', categoria: 'Pintura y Acabados', precio: 5.50, palabrasClave: ['brocha', 'pintar', 'pelo', 'cerda', 'profesional'], imagen: 'https://placehold.co/400x300/34D399/FFFFFF?text=Brocha' }
         ];
 
         const productContainer = document.getElementById('product-container');
-        
         const renderProductsAsAccordion = () => {
             if (!productContainer) return;
             productContainer.innerHTML = '';
@@ -328,9 +206,7 @@
             categorias.forEach(categoria => {
                 const accordionItem = document.createElement('div');
                 accordionItem.className = 'accordion-item rounded-lg overflow-hidden shadow-md';
-                
                 const productosCategoria = inventarioFerreteria.filter(p => p.categoria === categoria);
-
                 accordionItem.innerHTML = `
                     <button class="accordion-button w-full flex justify-between items-center text-left py-4 px-6">
                         <h2 class="text-xl md:text-2xl font-bold text-[var(--yanz-heading)]">${categoria}</h2>
@@ -343,21 +219,14 @@
                         <div class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             ${productosCategoria.map(producto => `
                                 <div id="product-${producto.id}" class="product-card bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg flex flex-col transition-all duration-300">
-                                    <div class="relative">
-                                        <img src="${producto.imagen}" alt="${producto.nombre}" class="w-full h-48 object-cover">
-                                        <div class="absolute top-2 right-2 bg-black/50 text-white text-lg font-bold p-2 rounded-lg">$${producto.precio.toFixed(2)}</div>
-                                    </div>
+                                    <div class="relative"><img src="${producto.imagen}" alt="${producto.nombre}" class="w-full h-48 object-cover"><div class="absolute top-2 right-2 bg-black/50 text-white text-lg font-bold p-2 rounded-lg">$${producto.precio.toFixed(2)}</div></div>
                                     <div class="p-4 flex flex-col flex-grow items-center text-center">
                                         <h3 class="text-md font-bold flex-grow text-[var(--yanz-heading)] mb-4">${producto.nombre}</h3>
-                                        <button class="add-to-cart-btn-new mt-auto" data-product-id="${producto.id}">
-                                            Añadir a Cotización
-                                        </button>
+                                        <button class="add-to-cart-btn-new mt-auto" data-product-id="${producto.id}">Añadir al Pedido</button>
                                     </div>
-                                </div>
-                            `).join('')}
+                                </div>`).join('')}
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 productContainer.appendChild(accordionItem);
             });
         };
@@ -365,114 +234,168 @@
         const handleAccordion = (e) => {
             const button = e.target.closest('.accordion-button');
             if (!button) return;
-
-            const allButtons = document.querySelectorAll('.accordion-button');
-            const allContents = document.querySelectorAll('.accordion-content');
-            
             const content = button.nextElementSibling;
-            const wasActive = button.classList.contains('active');
-
-            // Primero, resetea todos los acordeones a su estado cerrado
-            allButtons.forEach(btn => {
-                btn.classList.remove('active');
-                const textSpan = btn.querySelector('.toggle-text');
-                if (textSpan) textSpan.textContent = 'Ver Productos';
+            const isActive = button.classList.contains('active');
+            document.querySelectorAll('.accordion-button').forEach(btn => {
+                if (btn !== button) {
+                    btn.classList.remove('active');
+                    btn.querySelector('.toggle-text').textContent = 'Ver Productos';
+                    btn.nextElementSibling.style.maxHeight = null;
+                }
             });
-            allContents.forEach(cont => cont.style.maxHeight = null);
-
-            // Si el que se clickeó NO estaba activo, ábrelo.
-            // Si estaba activo, el paso anterior ya lo cerró.
-            if (!wasActive) {
-                button.classList.add('active');
-                content.style.maxHeight = content.scrollHeight + "px";
-                const textSpan = button.querySelector('.toggle-text');
-                if (textSpan) textSpan.textContent = 'Ocultar';
-            }
-        };
-
-        const handleAriaSearch = () => {
-            const ariaQueryInput = document.getElementById('aria-query-input');
-            const ariaResponseDiv = document.getElementById('aria-response');
-            const query = ariaQueryInput.value.toLowerCase().trim();
-            if (!query) return;
-
-            const highlighted = document.querySelector('.product-highlight');
-            if(highlighted) highlighted.classList.remove('product-highlight');
-
-            const keywords = query.split(' ').filter(kw => kw.length > 0);
-            let foundProduct = null;
-
-            for (const product of inventarioFerreteria) {
-                const searchCorpus = [product.nombre.toLowerCase(), ...product.palabrasClave].join(' ');
-                if (keywords.every(kw => searchCorpus.includes(kw))) {
-                    foundProduct = product;
-                    break;
-                }
-            }
-            
-            ariaResponseDiv.classList.remove('hidden');
-            if (foundProduct) {
-                ariaResponseDiv.innerHTML = `¡Claro! Encontré esto: <strong class="text-[var(--yanz-primary)]">${foundProduct.nombre}</strong>. Abriendo el pasillo correspondiente...`;
-                const productCard = document.getElementById(`product-${foundProduct.id}`);
-                if (productCard) {
-                    const accordionContent = productCard.closest('.accordion-content');
-                    const accordionButton = accordionContent.previousElementSibling;
-                    
-                    if (!accordionButton.classList.contains('active')) {
-                        accordionButton.click(); 
-                    }
-
-                    setTimeout(() => {
-                        productCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        productCard.classList.add('product-highlight');
-                    }, 500);
-                }
-            } else {
-                ariaResponseDiv.innerHTML = "Hola, he revisado nuestro inventario y no encontré una coincidencia exacta. ¿Puedes intentar con otras palabras? O si prefieres, explora las categorías de abajo.";
-            }
+            button.classList.toggle('active', !isActive);
+            button.querySelector('.toggle-text').textContent = !isActive ? 'Ocultar' : 'Ver Productos';
+            content.style.maxHeight = !isActive ? content.scrollHeight + "px" : null;
         };
 
         productContainer.addEventListener('click', (e) => {
-            handleAccordion(e); 
-            if (e.target.classList.contains('add-to-cart-btn-new')) {
-                const productId = e.target.dataset.productId;
+            handleAccordion(e);
+            const addToCartButton = e.target.closest('.add-to-cart-btn-new');
+            if (addToCartButton) {
+                const productId = addToCartButton.dataset.productId;
                 const product = inventarioFerreteria.find(p => p.id === productId);
                 if (product) window.addToCart(product);
             }
         });
-
-        document.getElementById('aria-ask-button').addEventListener('click', handleAriaSearch);
-        document.getElementById('aria-query-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') handleAriaSearch(); });
-        document.getElementById('turbo-icon').addEventListener('click', () => document.getElementById('turbo-modal').classList.remove('hidden'));
-        document.getElementById('close-turbo-button').addEventListener('click', () => document.getElementById('turbo-modal').classList.add('hidden'));
+        
         document.getElementById('open-cart-button').addEventListener('click', () => { renderCartItems(); document.getElementById('cart-modal').classList.remove('hidden'); });
         document.getElementById('close-cart-button').addEventListener('click', () => document.getElementById('cart-modal').classList.add('hidden'));
-        document.getElementById('menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
-        document.querySelectorAll('.mobile-nav-link').forEach(link => { link.addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden')) });
+        document.getElementById('checkout-button').addEventListener('click', () => {
+            const orderId = generateOrderId();
+            localStorage.setItem('yanz_order_id', orderId);
+            window.location.href = 'caja.html';
+        });
+
+        document.getElementById('turbo-icon').addEventListener('click', () => document.getElementById('turbo-modal').classList.remove('hidden'));
+        document.getElementById('close-turbo-button').addEventListener('click', () => document.getElementById('turbo-modal').classList.add('hidden'));
 
         const themeToggle = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('theme-icon-sun');
         const moonIcon = document.getElementById('theme-icon-moon');
-        const applyTheme = (theme) => { document.documentElement.classList.toggle('dark', theme === 'dark'); sunIcon.classList.toggle('hidden', theme === 'dark'); moonIcon.classList.toggle('hidden', theme !== 'dark'); };
-        themeToggle.addEventListener('click', () => { const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); });
+        const applyTheme = (theme) => { 
+            document.documentElement.classList.toggle('dark', theme === 'dark'); 
+            sunIcon.classList.toggle('hidden', theme === 'dark'); 
+            moonIcon.classList.toggle('hidden', theme !== 'dark'); 
+        };
+        themeToggle.addEventListener('click', () => { 
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'; 
+            localStorage.setItem('theme', newTheme); 
+            applyTheme(newTheme); 
+        });
+        
+        document.getElementById('menu-button').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+        document.querySelectorAll('.mobile-nav-link').forEach(link => { 
+            link.addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden')) 
+        });
         
         renderProductsAsAccordion();
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        applyTheme(savedTheme);
+        applyTheme(localStorage.getItem('theme') || 'dark');
         document.getElementById('year').textContent = new Date().getFullYear();
+        updateCartStatus();
     });
 
-    // --- FUNCIONES GLOBALES DEL CARRITO Y UTILIDADES ---
     function showToast(message) { const toast = document.getElementById('toast-notification'); if (!toast) return; toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3000); }
     function generateOrderId() { const now = new Date(); const date = now.toISOString().slice(2, 10).replace(/-/g, ""); const random = Math.random().toString(36).substring(2, 5).toUpperCase(); return `YZ-${date}-${random}`; }
-    window.addToCart = function(product) { let cart = JSON.parse(localStorage.getItem('yanz_cart')) || []; if (!cart.some(item => item.id === product.id)) { cart.push({ id: product.id, name: product.nombre, price: product.precio }); localStorage.setItem('yanz_cart', JSON.stringify(cart)); showToast(`"${product.nombre}" añadido.`); } else { showToast(`"${product.nombre}" ya está en la cotización.`); } document.dispatchEvent(new CustomEvent('cart-updated')); }
-    window.removeFromCart = function(productId) { let cart = JSON.parse(localStorage.getItem('yanz_cart')) || []; cart = cart.filter(item => item.id !== productId); localStorage.setItem('yanz_cart', JSON.stringify(cart)); renderCartItems(); document.dispatchEvent(new CustomEvent('cart-updated')); }
-    window.renderCartItems = function() { const cart = JSON.parse(localStorage.getItem('yanz_cart')) || []; const cartItemsContainer = document.querySelector('#cart-modal #cart-items'); const emptyMessage = document.querySelector('#cart-modal #cart-empty-message'); const whatsappButton = document.querySelector('#cart-modal #cart-whatsapp-button'); if (!cartItemsContainer || !emptyMessage || !whatsappButton) return; cartItemsContainer.innerHTML = ''; if (cart.length === 0) { emptyMessage.classList.remove('hidden'); whatsappButton.classList.add('hidden'); } else { emptyMessage.classList.remove('hidden'); whatsappButton.classList.remove('hidden'); const orderId = generateOrderId(); let message = `¡Hola YAN'Z! Me gustaría una cotización.\n\n*Mi código de pedido es: ${orderId}*\n\n*Productos:*\n`; let total = 0; cart.forEach(item => { message += `- ${item.name} ($${item.price.toFixed(2)})\n`; total += item.price; const itemElement = document.createElement('div'); itemElement.className = 'flex items-center justify-between py-3 text-white border-b border-gray-700'; itemElement.innerHTML = `<div class="flex-grow"><span class="text-sm">${item.name}</span><p class="text-xs text-gray-400">$${item.price.toFixed(2)}</p></div><button onclick="removeFromCart('${item.id}')" class="text-red-400 hover:text-red-500 font-bold px-2 py-1 rounded-md text-sm">QUITAR</button>`; cartItemsContainer.appendChild(itemElement); }); const totalElement = document.createElement('div'); totalElement.className = 'flex items-center justify-between pt-4 font-bold text-lg'; totalElement.innerHTML = `<span>Total Estimado:</span><span>$${total.toFixed(2)}</span>`; cartItemsContainer.appendChild(totalElement); message += `\n*Total Estimado: $${total.toFixed(2)}*`; whatsappButton.href = `https://wa.me/593996480843?text=${encodeURIComponent(message)}`; } }
-    function updateCartStatus() { const cart = JSON.parse(localStorage.getItem('yanz_cart')) || []; const cartCounter = document.getElementById('cart-counter'); const cartIconWrapper = document.getElementById('cart-icon-wrapper'); if (cartCounter && cartIconWrapper) { const itemCount = cart.length; cartCounter.textContent = itemCount; if (itemCount > 0) { cartCounter.classList.remove('hidden'); cartIconWrapper.classList.add('has-items'); } else { cartCounter.classList.add('hidden'); cartIconWrapper.classList.remove('has-items'); } } }
-    document.addEventListener('cart-updated', updateCartStatus);
-    window.addEventListener('storage', updateCartStatus);
+    
+    function getCart() { return JSON.parse(localStorage.getItem('yanz_cart')) || []; }
+    function saveCart(cart) { localStorage.setItem('yanz_cart', JSON.stringify(cart)); document.dispatchEvent(new CustomEvent('cart-updated')); }
+
+    window.addToCart = function(product) { 
+        let cart = getCart();
+        const itemIndex = cart.findIndex(item => item.id === product.id);
+        if (itemIndex > -1) {
+            cart[itemIndex].cantidad++;
+        } else {
+            cart.push({ id: product.id, nombre: product.nombre, precio: product.precio, cantidad: 1 });
+        }
+        showToast(`"${product.nombre}" añadido.`);
+        saveCart(cart);
+    };
+
+    window.decreaseQuantity = function(productId) {
+        let cart = getCart();
+        const itemIndex = cart.findIndex(item => item.id === productId);
+        if (itemIndex > -1) {
+            cart[itemIndex].cantidad--;
+            if (cart[itemIndex].cantidad === 0) {
+                cart.splice(itemIndex, 1);
+            }
+        }
+        saveCart(cart);
+    }
+
+    window.increaseQuantity = function(productId) {
+        let cart = getCart();
+        const itemIndex = cart.findIndex(item => item.id === productId);
+        if (itemIndex > -1) {
+            cart[itemIndex].cantidad++;
+        }
+        saveCart(cart);
+    }
+
+    window.renderCartItems = function() {
+        const cart = getCart();
+        const cartItemsContainer = document.getElementById('cart-items');
+        const emptyMessage = document.getElementById('cart-empty-message');
+        const checkoutSection = document.getElementById('checkout-section');
+
+        cartItemsContainer.innerHTML = '';
+        if (cart.length === 0) {
+            emptyMessage.classList.remove('hidden');
+            checkoutSection.classList.add('hidden');
+            cartItemsContainer.classList.add('hidden');
+        } else {
+            emptyMessage.classList.add('hidden');
+            checkoutSection.classList.remove('hidden');
+            cartItemsContainer.classList.remove('hidden');
+            let total = 0;
+            cart.forEach(item => {
+                total += item.precio * item.cantidad;
+                const itemElement = document.createElement('div');
+                itemElement.className = 'flex items-center justify-between py-2 text-white border-b border-gray-700/50';
+                itemElement.innerHTML = `
+                    <div class="flex-grow">
+                        <span class="text-sm">${item.nombre}</span>
+                        <p class="text-xs text-gray-400">$${item.precio.toFixed(2)}</p>
+                    </div>
+                    <div class="flex items-center gap-3 text-white">
+                        <button class="quantity-control text-xs" onclick="decreaseQuantity('${item.id}')">-</button>
+                        <span class="text-sm">${item.cantidad}</span>
+                        <button class="quantity-control text-xs" onclick="increaseQuantity('${item.id}')">+</button>
+                    </div>`;
+                cartItemsContainer.appendChild(itemElement);
+            });
+            
+            const totalElement = document.createElement('div');
+            totalElement.className = 'flex items-center justify-between pt-3 font-bold text-lg';
+            totalElement.innerHTML = `<span>Total:</span><span>$${total.toFixed(2)}</span>`;
+            
+            // Insert total before the items for better layout
+            cartItemsContainer.insertAdjacentElement('afterend', totalElement);
+
+             // Since we rebuild this, remove old one if exists
+            const oldTotal = document.getElementById('cart-total-display');
+            if(oldTotal) oldTotal.remove();
+            totalElement.id = 'cart-total-display';
+        }
+    };
+    function updateCartStatus() { 
+        const cart = getCart(); 
+        const cartCounter = document.getElementById('cart-counter'); 
+        const totalItems = cart.reduce((sum, item) => sum + item.cantidad, 0);
+        cartCounter.textContent = totalItems;
+        cartCounter.classList.toggle('hidden', totalItems === 0);
+        document.getElementById('cart-icon-wrapper').classList.toggle('has-items', cart.length > 0);
+    }
+    document.addEventListener('cart-updated', () => {
+        if(document.getElementById('cart-modal').classList.contains('hidden') === false) {
+            renderCartItems();
+        }
+        updateCartStatus();
+    });
+    
+    // Initial Load
     updateCartStatus();
-    if (document.querySelector('#cart-modal #cart-items')) { renderCartItems(); }
     </script>
 </body>
 </html>
