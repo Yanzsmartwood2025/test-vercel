@@ -19,11 +19,12 @@
             --yanz-bg: #FFFFFF; --yanz-bg-alt: #F7F8FC; --yanz-text: #2D3748;
             --yanz-text-alt: #718096; --yanz-heading: #1A202C; --yanz-primary: #0072CE;
             --yanz-secondary: #00AEEF; --yanz-border: #E2E8F0; --yanz-shadow: rgba(0,0,0,0.05);
+            --yanz-header-bg: #141821; /* Color oscuro sólido y permanente para el header */
         }
         .dark {
             --yanz-bg: #1A202C; --yanz-bg-alt: #2D3748; --yanz-text: #E2E8F0;
             --yanz-text-alt: #A0AEC0; --yanz-heading: #FFFFFF; --yanz-primary: #38B2AC;
-            --yanz-secondary: #4FD1C5; --yanz-border: #4A5568; --yanz-shadow: rgba(0,0,0,0.2);
+            --yanz-secondary: #4FD1C5;
         }
         body { 
             font-family: 'Poppins', sans-serif; 
@@ -37,20 +38,18 @@
         }
         .section-bg { background-color: var(--yanz-bg-alt); }
         html { scroll-behavior: smooth; }
+
+        /* --- ESTILOS DEL HEADER CORREGIDOS --- */
         #main-header {
-            transform: translateY(-100%);
-            transition: transform 0.4s ease-out, background-color 0.4s ease-out, box-shadow 0.4s ease-out;
-        }
-        #main-header.visible {
-            transform: translateY(0);
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-        }
-        .dark #main-header.visible {
-            background-color: rgba(15, 17, 26, 0.8);
+            background-color: var(--yanz-header-bg); /* Color oscuro permanente */
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            /* Se elimina la animación de entrada para que siempre esté visible */
         }
+
+        #mobile-menu {
+            background-color: var(--yanz-header-bg); /* Mismo color oscuro para el menú móvil */
+        }
+        
         #preloader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: var(--yanz-bg);
@@ -80,25 +79,25 @@
     </div>
 
     <div id="page-content">
-        <header id="main-header" class="fixed top-0 left-0 right-0 z-40">
+        <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
              <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
                  <a href="/index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="/assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
                  <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
-                     <a href="#productos" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)]">Productos</a>
-                     <a href="#servicios" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)]">Servicios</a>
-                     <a href="#testimonios" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)]">Testimonios</a>
-                     <a href="#juegos" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)]">Juegos</a>
-                     <a href="#caja" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)]">Caja</a>
-                     <a href="#contacto" class="text-gray-700 dark:text-gray-300 hover:text-[var(--yanz-primary)]">Contacto</a>
+                     <a href="#productos" class="text-gray-300 hover:text-[var(--yanz-primary)]">Productos</a>
+                     <a href="#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)]">Servicios</a>
+                     <a href="#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)]">Testimonios</a>
+                     <a href="#juegos" class="text-gray-300 hover:text-[var(--yanz-primary)]">Juegos</a>
+                     <a href="#caja" class="text-gray-300 hover:text-[var(--yanz-primary)]">Caja</a>
+                     <a href="#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)]">Contacto</a>
                  </div>
                  <div class="flex items-center">
-                     <button id="open-cart-button" class="relative p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"><video autoplay loop muted playsinline class="w-8 h-8"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video><span id="cart-badge">0</span></button>
-                     <button id="theme-toggle" class="ml-2 p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"><svg id="theme-icon-sun" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg><svg id="theme-icon-moon" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg></button>
-                     <button class="ml-4 md:hidden text-gray-700 dark:text-gray-300" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                     <button id="open-cart-button" class="relative p-2 rounded-full text-gray-300 hover:bg-gray-700"><video autoplay loop muted playsinline class="w-8 h-8"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video><span id="cart-badge">0</span></button>
+                     <button id="theme-toggle" class="ml-2 p-2 rounded-full text-gray-300 hover:bg-gray-700"><svg id="theme-icon-sun" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg><svg id="theme-icon-moon" class="h-5 w-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg></button>
+                     <button class="ml-4 md:hidden text-gray-300" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                  </div>
              </nav>
-             <div id="mobile-menu" class="hidden md:hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
-                 <a href="#productos" class="mobile-nav-link block py-2 px-6 text-sm">Productos</a><a href="#servicios" class="mobile-nav-link block py-2 px-6 text-sm">Servicios</a><a href="#testimonios" class="mobile-nav-link block py-2 px-6 text-sm">Testimonios</a><a href="#juegos" class="mobile-nav-link block py-2 px-6 text-sm">Juegos</a><a href="#caja" class="mobile-nav-link block py-2 px-6 text-sm">Caja</a><a href="#contacto" class="mobile-nav-link block py-2 px-6 text-sm">Contacto</a>
+             <div id="mobile-menu" class="hidden md:hidden">
+                 <a href="#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a><a href="#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a><a href="#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a><a href="#juegos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Juegos</a><a href="#caja" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Caja</a><a href="#contacto" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contacto</a>
              </div>
         </header>
 
@@ -123,7 +122,6 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        // Lógica del Carrito (Modal y funcionalidad básica)
         const cartModal = document.getElementById('cart-modal');
         const openCartButton = document.getElementById('open-cart-button');
         const closeCartButton = document.getElementById('close-cart-button');
@@ -135,8 +133,6 @@
             });
         }
         
-        // --- LÓGICA PARA CREAR TARJETAS DE NAVEGACIÓN (NICHOS) ---
-        // Esta función crea las tarjetas de la página principal, que solo sirven para navegar.
         const createCategoryCard = (category) => {
             const cardLink = document.createElement('a');
             cardLink.href = category.link;
@@ -167,9 +163,7 @@
         const productGrid = document.getElementById('product-grid');
         const serviceGrid = document.getElementById('service-grid');
 
-        // Se usan los nombres y descripciones correctos y atractivos
         const categories = [
-            // Productos
             { title: 'Cocinas de Vanguardia', video: '/assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: '/cocinas.html', type: 'product' },
             { title: 'Clósets', video: '/assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: '/closets.html', type: 'product' },
             { title: 'Puertas Modernas', video: '/assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: '/puertas.html', type: 'product' },
@@ -178,7 +172,6 @@
             { title: 'Gypsum y Luz', video: '/assets/videos/gypsum.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: '/gypsum.html', type: 'product' },
             { title: 'Accesorios y Organizadores', video: '/assets/videos/accesorios.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: '/accesorios.html', type: 'product' },
             { title: 'Diseño con IA "Aria"', video: '/assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: '/aria.html', type: 'product' },
-            // Servicios
             { title: 'Renovación y Cuidado del Hogar', video: '/assets/videos/servicio_renovacion.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' },
             { title: 'Herrajes y Ferretería Profesional', video: '/assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: '/ferreteria.html', type: 'service' },
             { title: 'Consultoría e Integración de IA', video: '/assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' }
@@ -190,7 +183,7 @@
             if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card);
         });
 
-        // --- LÓGICA GENERAL DE LA PÁGINA (MENÚ, TEMA, ETC) ---
+        // --- LÓGICA GENERAL DE LA PÁGINA ---
         const mainHeader = document.getElementById('main-header'); window.addEventListener('scroll', () => { if (window.scrollY > 50) mainHeader.classList.add('visible'); else mainHeader.classList.remove('visible'); });
         const themeToggle = document.getElementById('theme-toggle'); const sunIcon = document.getElementById('theme-icon-sun'); const moonIcon = document.getElementById('theme-icon-moon');
         const menuButton = document.getElementById('menu-button'); const mobileMenu = document.getElementById('mobile-menu'); const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
