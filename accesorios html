@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accesorios y Organizadores - YAN'Z SMART WOOD</title>
+    
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#1A202C">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --yanz-bg: #FFFFFF; --yanz-bg-alt: #F7F8FC; --yanz-text: #2D3748;
+            --yanz-text-alt: #718096; --yanz-heading: #1A202C; --yanz-primary: #0072CE;
+            --yanz-secondary: #00AEEF; --yanz-border: #E2E8F0; --yanz-shadow: rgba(0,0,0,0.05);
+            --yanz-header-bg: #141821;
+        }
+
+        html.dark {
+            --yanz-bg: #1A202C; --yanz-bg-alt: #2D3748; --yanz-text: #E2E8F0;
+            --yanz-text-alt: #A0AEC0; --yanz-heading: #FFFFFF; --yanz-primary: #38B2AC;
+            --yanz-secondary: #4FD1C5;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--yanz-bg);
+            color: var(--yanz-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3 { 
+            font-family: 'Roboto Slab', serif;
+            color: var(--yanz-heading);
+            transition: color 0.3s ease;
+        }
+
+        .section-bg { 
+            background-color: var(--yanz-bg-alt);
+            transition: background-color 0.3s ease;
+        }
+
+        html { scroll-behavior: smooth; }
+        
+        #main-header {
+            background-color: var(--yanz-header-bg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        #mobile-menu {
+            background-color: var(--yanz-header-bg);
+        }
+
+        #cart-icon-wrapper {
+            padding: 2px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: border-color 0.3s ease-in-out;
+        }
+        #cart-icon-wrapper.has-items {
+            border-color: var(--yanz-primary);
+        }
+        
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #1A202C;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 10000;
+            opacity: 1; transition: opacity 0.75s ease-out; 
+            visibility: visible;
+        }
+        #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        #page-content { opacity: 0; transition: opacity 0.5s ease-in; }
+        #page-content.loaded { opacity: 1; }
+
+        .toast-notification {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--yanz-primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: bottom 0.5s ease-in-out;
+            z-index: 9999;
+            font-size: 14px;
+        }
+
+        .toast-notification.show {
+            bottom: 30px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="preloader">
+      <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain"><source src="/assets/videos/intro.mp4" type="video/mp4"></video>
+    </div>
+
+    <div id="page-content">
+        <!-- HEADER COMPARTIDO -->
+        <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
+             <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
+                 <a href="/index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="/assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
+                 <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                     <a href="/index.html#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
+                     <a href="/index.html#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
+                     <a href="/index.html#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Testimonios</a>
+                 </div>
+                 <div class="flex items-center space-x-2">
+                     <div class="flex items-center space-x-3">
+                         <div id="cart-icon-wrapper">
+                             <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
+                                 <video autoplay loop muted playsinline class="w-8 h-8"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
+                             </button>
+                         </div>
+                         <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
+                     </div>
+                     <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
+                        <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
+                        <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                     </button>
+                     <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                 </div>
+             </nav>
+             <div id="mobile-menu" class="hidden md:hidden">
+                 <a href="/index.html#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a>
+                 <a href="/index.html#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a>
+                 <a href="/index.html#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a>
+             </div>
+        </header>
+
+        <main>
+            <!-- HERO SECTION PARA ACCESORIOS -->
+            <section id="hero-accesorios" class="relative h-[50vh] flex items-center justify-center text-white">
+                <div class="absolute inset-0 bg-black/60 z-10"></div>
+                <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+                    <source src="/assets/videos/accesorios.mp4" type="video/mp4">
+                    Tu navegador no soporta videos.
+                </video>
+                <div class="relative z-20 text-center px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">Accesorios y Organizadores</h1>
+                    <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Los detalles que transforman un mueble en una solución inteligente y un espacio en un hogar funcional.</p>
+                </div>
+            </section>
+
+            <!-- NICHO 1: SOLUCIONES PARA TU COCINA -->
+            <section id="nicho-cocina" class="py-20 section-bg">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">Soluciones para tu Cocina</h2>
+                    <p class="text-center text-[var(--yanz-text-alt)] max-w-3xl mx-auto mb-12">Maximiza cada centímetro y haz que tu cocina trabaje para ti con accesorios que combinan diseño y funcionalidad.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg flex flex-col">
+                            <img src="https://placehold.co/600x400/94A3B8/1E293B?text=Rinconero+Mágico" alt="Rinconero mágico para cocinas" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-xl font-bold mb-2">Rinconero Mágico (Magic Corner)</h3>
+                                <p class="text-sm text-[var(--yanz-text-alt)] flex-grow mb-4">Aprovecha el 100% de las esquinas ciegas. Este sistema extrae completamente las canastas fuera del mueble, dándote acceso total y sin esfuerzo a todo lo que guardas.</p>
+                                <button onclick="addToCart({id: 'ACC-COC-01', name: 'Accesorio Rinconero Mágico'})" class="mt-auto w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-[var(--yanz-secondary)] transition-colors">Añadir a Cotización</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg flex flex-col">
+                             <img src="https://placehold.co/600x400/F87171/450A0A?text=Condimentero" alt="Condimentero y botellero extraíble" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-xl font-bold mb-2">Condimentero y Botellero Extraíble</h3>
+                                <p class="text-sm text-[var(--yanz-text-alt)] flex-grow mb-4">Mantén aceites, vinagres y especias organizados y siempre a la mano. Se instala en muebles bajos y estrechos, optimizando espacios que suelen desperdiciarse.</p>
+                                <button onclick="addToCart({id: 'ACC-COC-02', name: 'Accesorio Condimentero Extraíble'})" class="mt-auto w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-[var(--yanz-secondary)] transition-colors">Añadir a Cotización</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg flex flex-col">
+                             <img src="https://placehold.co/600x400/A3E635/1A2E05?text=Basurero+Integrado" alt="Cubo de basura integrado en mueble" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-xl font-bold mb-2">Cubo de Basura Integrado</h3>
+                                <p class="text-sm text-[var(--yanz-text-alt)] flex-grow mb-4">Oculta los desperdicios y mantiene la estética de tu cocina. Sistemas extraíbles, a menudo con separación para reciclaje, que se integran perfectamente en tus muebles bajos.</p>
+                                <button onclick="addToCart({id: 'ACC-COC-03', name: 'Accesorio Cubo de Basura Integrado'})" class="mt-auto w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-[var(--yanz-secondary)] transition-colors">Añadir a Cotización</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- NICHO 2: ORGANIZADORES PARA TU CLÓSET -->
+            <section id="nicho-closet" class="py-20">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-2">El Clóset Perfecto</h2>
+                    <p class="text-center text-[var(--yanz-text-alt)] max-w-3xl mx-auto mb-12">Un lugar para cada cosa y cada cosa en su lugar. Transforma tu clóset en un espacio de orden y eficiencia.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        
+                        <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg flex flex-col">
+                             <img src="https://placehold.co/600x400/38BDF8/0C4A6E?text=Pantalonero" alt="Pantalonero extraíble para clóset" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-xl font-bold mb-2">Pantalonero Extraíble</h3>
+                                <p class="text-sm text-[var(--yanz-text-alt)] flex-grow mb-4">Mantén tus pantalones sin arrugas y a la vista. Este accesorio te permite colgar múltiples pantalones de forma ordenada y extraerlos suavemente para elegir el que necesitas.</p>
+                                <button onclick="addToCart({id: 'ACC-CLO-01', name: 'Accesorio Pantalonero Extraíble'})" class="mt-auto w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-[var(--yanz-secondary)] transition-colors">Añadir a Cotización</button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg flex flex-col">
+                             <img src="https://placehold.co/600x400/FBCFE8/831843?text=Perchero+Abatible" alt="Perchero abatible para clóset" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-xl font-bold mb-2">Perchero Abatible (Elevador de Ropa)</h3>
+                                <p class="text-sm text-[var(--yanz-text-alt)] flex-grow mb-4">Aprovecha la altura de tu clóset. Este sistema con brazo hidráulico te permite bajar la barra de colgar a una altura cómoda y volver a subirla sin esfuerzo, duplicando tu espacio útil.</p>
+                                <button onclick="addToCart({id: 'ACC-CLO-02', name: 'Accesorio Perchero Abatible'})" class="mt-auto w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-[var(--yanz-secondary)] transition-colors">Añadir a Cotización</button>
+                            </div>
+                        </div>
+
+                        <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg flex flex-col">
+                             <img src="https://placehold.co/600x400/C4B5FD/4C1D95?text=Zapatera+Extraíble" alt="Zapatera extraíble para clóset" class="w-full h-48 object-cover">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-xl font-bold mb-2">Zapatera Extraíble</h3>
+                                <p class="text-sm text-[var(--yanz-text-alt)] flex-grow mb-4">Organiza tu calzado de forma elegante y accesible. Las zapateras extraíbles, ya sea en bandejas o de varillas, mantienen tus zapatos ordenados, ventilados y fáciles de encontrar.</p>
+                                <button onclick="addToCart({id: 'ACC-CLO-03', name: 'Accesorio Zapatera Extraíble'})" class="mt-auto w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full hover:bg-[var(--yanz-secondary)] transition-colors">Añadir a Cotización</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- FOOTER COMPARTIDO -->
+        <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3>
+                        <p class="text-gray-400">Quito, Ecuador</p>
+                        <p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p>
+                        <p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3>
+                        <div class="flex justify-center md:justify-start space-x-4">
+                            <a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a>
+                            <a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a>
+                            <a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a>
+                            <a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3>
+                        <div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div>
+                        <p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400">
+                    <p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p>
+                    <div class="mt-4 space-x-4">
+                        <a href="/como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="/privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="/terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank"><video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="/assets/videos/video-whatsapp.mp4" type="video/mp4"></video></a>
+    
+    <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden animate-fade-in"><div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2><p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. ¡Aquí guardaré todas las ideas geniales que elijas para tu cotización!</p></div><div class="border-t border-gray-700 pt-4"><div id="cart-items" class="max-h-64 overflow-y-auto divide-y divide-gray-700 text-left"></div><p id="cart-empty-message" class="text-gray-400 py-8 text-center">Tu cesta de ideas está vacía.</p></div><div class="mt-auto pt-4"><a id="cart-whatsapp-button" href="#" target="_blank" class="hidden w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all"><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.33 3.43 16.79L2.06 21.94L7.39 20.58C8.78 21.34 10.36 21.79 12.04 21.79C17.5 21.79 21.95 17.34 21.95 11.88C21.95 6.42 17.5 2 12.04 2ZM17.24 14.44C17.04 14.34 15.87 13.77 15.61 13.67C15.36 13.57 15.19 13.52 15.02 13.77C14.85 14.01 14.31 14.64 14.16 14.81C14.01 14.98 13.86 15.01 13.61 14.91C13.36 14.81 12.48 14.52 11.43 13.59C10.61 12.86 10.01 12.01 9.83 11.74C9.68 11.5 9.56 11.33 9.73 11.15C9.88 10.99 10.01 10.82 10.15 10.65C10.29 10.49 10.34 10.36 10.44 10.19C10.54 10.01 10.49 9.87 10.42 9.74C10.34 9.62 9.83 8.41 9.63 7.94C9.44 7.47 9.24 7.52 9.09 7.52C8.97 7.52 8.79 7.52 8.62 7.52C8.45 7.52 8.19 7.59 7.99 7.84C7.79 8.08 7.25 8.57 7.25 9.74C7.25 10.91 8.02 12.01 8.14 12.18C8.27 12.35 9.86 14.81 12.3 15.81C12.86 16.04 13.29 16.16 13.62 16.25C14.21 16.41 14.72 16.37 15.12 16.3C15.57 16.23 16.74 15.59 16.99 14.96C17.24 14.34 17.24 13.84 17.17 13.72C17.09 13.6 16.94 13.55 16.74 13.45L17.24 14.44Z"/></svg><span>Solicitar Cotización</span></a><button id="close-cart-button" class="mt-4 text-sm text-gray-400 hover:text-white w-full">Cerrar</button></div></div></div>
+
+    <div id="toast-notification" class="toast-notification"></div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const cartModal = document.getElementById('cart-modal');
+        const openCartButton = document.getElementById('open-cart-button');
+        const closeCartButton = document.getElementById('close-cart-button');
+        
+        if (cartModal && openCartButton && closeCartButton) {
+            openCartButton.addEventListener('click', () => {
+                renderCartItems();
+                cartModal.classList.remove('hidden');
+            });
+            closeCartButton.addEventListener('click', () => {
+                cartModal.classList.add('hidden');
+            });
+        }
+        
+        const themeToggle = document.getElementById('theme-toggle'); 
+        const sunIcon = document.getElementById('theme-icon-sun'); 
+        const moonIcon = document.getElementById('theme-icon-moon');
+
+        const applyTheme = (theme) => { 
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            sunIcon.classList.toggle('hidden', theme !== 'dark');
+            moonIcon.classList.toggle('hidden', theme === 'dark');
+        };
+
+        themeToggle.addEventListener('click', () => { 
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme); 
+            applyTheme(newTheme); 
+        });
+        
+        const menuButton = document.getElementById('menu-button'); 
+        const mobileMenu = document.getElementById('mobile-menu'); 
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            mobileNavLinks.forEach(link => { link.addEventListener('click', () => mobileMenu.classList.add('hidden')) });
+        }
+        
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme);
+
+        const paymentLogosContainer = document.getElementById('payment-logos'); 
+        if(paymentLogosContainer) { 
+            const paymentMethods = [
+                { name: 'PeiGo', image: '/assets/images/pago-peigo.png' },
+                { name: 'Mastercard', image: '/assets/images/pago-mastercard.png' },
+                { name: 'Visa', image: '/assets/images/pago-visa.png' },
+                { name: 'American Express', image: '/assets/images/pago-american-express.png' },
+                { name: 'Discover', image: '/assets/images/pago-discover.png' },
+                { name: 'JCB', image: '/assets/images/pago-jcb.png' },
+                { name: 'Diners Club', image: '/assets/images/pago-diners-club.png' },
+                { name: 'PayPal', image: '/assets/images/pago-paypal.png' },
+                { name: 'Binance Pay', image: '/assets/images/pago-binance-pay.png' },
+                { name: 'Banco Guayaquil', image: '/assets/images/pago-banco-guayaquil.png' },
+                { name: 'Banco Pichincha', image: '/assets/images/pago-banco-pichincha.png' },
+                { name: 'DeUna', image: '/assets/images/pago-deuna.png' }
+            ];
+            paymentMethods.forEach(m => { paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`; }); 
+        }
+        
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        const preloader = document.getElementById('preloader'); 
+        const pageContent = document.getElementById('page-content'); 
+        const introVideo = document.getElementById('intro-video'); 
+        let appStarted = false;
+        function startApp() { 
+            if (appStarted) return; 
+            appStarted = true; 
+            if (preloader) preloader.classList.add('hidden'); 
+            if (pageContent) pageContent.classList.add('loaded'); 
+        }
+        if (introVideo) { 
+            introVideo.onended = startApp;
+            setTimeout(startApp, 4000);
+        } else {
+             startApp(); 
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        window.addToCart = function(product) {
+            let cart = JSON.parse(localStorage.getItem('yanz_cart')) || [];
+            if (!cart.some(item => item.id === product.id)) {
+                cart.push(product);
+                localStorage.setItem('yanz_cart', JSON.stringify(cart));
+                showToast(`"${product.name}" añadido a la cotización.`);
+            } else {
+                showToast(`"${product.name}" ya está en la cotización.`);
+            }
+            document.dispatchEvent(new CustomEvent('cart-updated'));
+        }
+
+        window.removeFromCart = function(productId) {
+            let cart = JSON.parse(localStorage.getItem('yanz_cart')) || [];
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('yanz_cart', JSON.stringify(cart));
+            renderCartItems();
+            document.dispatchEvent(new CustomEvent('cart-updated'));
+        }
+
+        window.renderCartItems = function() {
+            const cart = JSON.parse(localStorage.getItem('yanz_cart')) || [];
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyMessage = document.getElementById('cart-empty-message');
+            const whatsappButton = document.getElementById('cart-whatsapp-button');
+
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                emptyMessage.classList.remove('hidden');
+                whatsappButton.classList.add('hidden');
+            } else {
+                emptyMessage.classList.add('hidden');
+                whatsappButton.classList.remove('hidden');
+                
+                let message = "¡Hola YAN'Z! Estoy interesado/a en una cotización para los siguientes servicios/productos:\n\n";
+                cart.forEach(item => {
+                    message += `- ${item.name}\n`;
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'flex items-center justify-between py-3 text-white';
+                    itemElement.innerHTML = `
+                        <span class="text-sm">${item.name}</span>
+                        <button onclick="removeFromCart('${item.id}')" class="text-red-400 hover:text-red-600 text-xs font-bold px-2">QUITAR</button>
+                    `;
+                    cartItemsContainer.appendChild(itemElement);
+                });
+
+                whatsappButton.href = `https://wa.me/593996480843?text=${encodeURIComponent(message)}`;
+            }
+        }
+
+        function updateCartStatus() {
+            const cart = JSON.parse(localStorage.getItem('yanz_cart')) || [];
+            const cartCounter = document.getElementById('cart-counter');
+            const cartIconWrapper = document.getElementById('cart-icon-wrapper');
+            
+            if (cartCounter && cartIconWrapper) {
+                const itemCount = cart.length;
+                cartCounter.textContent = itemCount;
+
+                if (itemCount > 0) {
+                    cartCounter.classList.remove('hidden');
+                    cartIconWrapper.classList.add('has-items');
+                } else {
+                    cartCounter.classList.add('hidden');
+                    cartIconWrapper.classList.remove('has-items');
+                }
+            }
+        }
+        
+        updateCartStatus();
+        window.addEventListener('storage', updateCartStatus);
+        document.addEventListener('cart-updated', updateCartStatus);
+    });
+    </script>
+</body>
+</html>
