@@ -35,6 +35,7 @@
         #turbo-icon { position: fixed; bottom: 24px; left: 24px; z-index: 50; width: 72px; height: 72px; border-radius: 50%; box-shadow: 0 4px 14px rgba(0,0,0,0.25); cursor: pointer; transition: transform 0.2s ease; overflow: hidden; border: 4px solid #FBBF24; }
         #turbo-icon:hover { transform: scale(1.1); }
         #turbo-icon video { width: 100%; height: 100%; object-fit: cover; }
+        .product-highlight { box-shadow: 0 0 0 4px var(--yanz-cta-green); transform: scale(1.03); transition: all 0.4s ease-in-out; }
         .payment-logo-footer { height: 40px; width: auto; object-fit: contain; background-color: white; padding: 4px; border-radius: 6px; }
         .social-icon-footer { height: 32px; width: 32px; object-fit: contain; transition: transform 0.2s ease-in-out; }
         .social-icon-footer:hover { transform: scale(1.1); }
@@ -52,7 +53,7 @@
     <div id="page-content">
         <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
             <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
-                <a href="index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="videos/videologo-header.mp4" type="video/mp4"></video></a>
+                <a href="index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="assets/videologo-header.mp4" type="video/mp4"></video></a>
                 <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
                     <a href="#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
                     <a href="#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
@@ -60,7 +61,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="flex items-center relative">
-                        <div id="cart-icon-wrapper"><button id="open-cart-button" class="relative rounded-full text-gray-300"><video autoplay loop muted playsinline><source src="videos/video-carrito.mp4" type="video/mp4"></video></button></div>
+                        <div id="cart-icon-wrapper"><button id="open-cart-button" class="relative rounded-full text-gray-300"><video autoplay loop muted playsinline><source src="assets/video-carrito.mp4" type="video/mp4"></video></button></div>
                         <span id="cart-counter" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
                     </div>
                     <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
@@ -80,9 +81,21 @@
         <main>
             <section class="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white">
                 <div class="absolute inset-0 bg-black/60 z-10"></div>
-                <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="videos/intro.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="assets/intro.mp4" type="video/mp4"></video>
                 <div class="relative z-20 text-center px-4">
                     <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">Ferretería Profesional</h1>
+                </div>
+            </section>
+            
+            <section id="aria-assistant" class="py-16 bg-[var(--yanz-bg-alt)]">
+                <div class="container mx-auto px-6 text-center">
+                    <h2 class="text-3xl font-bold mb-4">¿Buscas algo específico? ¡Pregúntale a Aria!</h2>
+                    <p class="text-[var(--yanz-text-alt)] max-w-2xl mx-auto mb-6">Soy tu asistente de ferretería. Dime qué necesitas y te ayudaré a encontrarlo en nuestro catálogo.</p>
+                    <div class="max-w-2xl mx-auto flex gap-2">
+                        <input type="text" id="aria-query-input" placeholder="Ej: 'taladro percutor' o 'sellador de silicona'" class="w-full px-4 py-3 rounded-lg border border-[var(--yanz-border)] focus:ring-2 focus:ring-[var(--yanz-primary)] focus:outline-none bg-[var(--yanz-bg)] text-[var(--yanz-text)]">
+                        <button id="aria-ask-button" class="bg-[var(--yanz-primary)] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[var(--yanz-secondary)] transition-colors flex-shrink-0">Buscar</button>
+                    </div>
+                    <div id="aria-response" class="mt-4 text-left text-sm p-4 bg-[var(--yanz-bg)] rounded-lg min-h-[50px] border border-[var(--yanz-border)] hidden"></div>
                 </div>
             </section>
 
@@ -101,26 +114,26 @@
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3>
                         <div class="flex justify-center md:justify-start space-x-4">
-                            <a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank"><img src="img/icono-facebook.png" alt="Facebook" class="social-icon-footer"></a>
-                            <a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank"><img src="img/icono-tiktok.png" alt="TikTok" class="social-icon-footer"></a>
-                            <a href="https://www.instagram.com/yanz_smart_wood" target="_blank"><img src="img/icono-instagram.png" alt="Instagram" class="social-icon-footer"></a>
-                            <a href="https://youtube.com/@yanzsmartwood" target="_blank"><img src="img/icono-youtube.png" alt="YouTube" class="social-icon-footer"></a>
+                            <a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank"><img src="assets/icono-facebook.png" alt="Facebook" class="social-icon-footer"></a>
+                            <a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank"><img src="assets/icono-tiktok.png" alt="TikTok" class="social-icon-footer"></a>
+                            <a href="https://www.instagram.com/yanz_smart_wood" target="_blank"><img src="assets/icono-instagram.png" alt="Instagram" class="social-icon-footer"></a>
+                            <a href="https://youtube.com/@yanzsmartwood" target="_blank"><img src="assets/icono-youtube.png" alt="YouTube" class="social-icon-footer"></a>
                         </div>
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3>
                         <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 max-w-xs mx-auto md:mx-0">
-                           <img src="img/pago-peigo.png" alt="Peigo" class="payment-logo-footer">
-                           <img src="img/pago-mastercard.png" alt="Mastercard" class="payment-logo-footer">
-                           <img src="img/pago-visa.png" alt="Visa" class="payment-logo-footer">
-                           <img src="img/pago-american-express.png" alt="American Express" class="payment-logo-footer">
-                           <img src="img/pago-discover.png" alt="Discover" class="payment-logo-footer">
-                           <img src="img/pago-banco-pichincha.png" alt="Banco Pichincha" class="payment-logo-footer">
-                           <img src="img/pago-diners-club.png" alt="Diners Club" class="payment-logo-footer">
-                           <img src="img/pago-paypal.png" alt="Paypal" class="payment-logo-footer">
-                           <img src="img/pago-binance-pay.png" alt="Binance Pay" class="payment-logo-footer">
-                           <img src="img/pago-banco-guayaquil.png" alt="Banco Guayaquil" class="payment-logo-footer">
-                           <img src="img/pago-deuna.png" alt="DeUna" class="payment-logo-footer">
+                           <img src="assets/pago-peigo.png" alt="Peigo" class="payment-logo-footer">
+                           <img src="assets/pago-mastercard.png" alt="Mastercard" class="payment-logo-footer">
+                           <img src="assets/pago-visa.png" alt="Visa" class="payment-logo-footer">
+                           <img src="assets/pago-american-express.png" alt="American Express" class="payment-logo-footer">
+                           <img src="assets/pago-discover.png" alt="Discover" class="payment-logo-footer">
+                           <img src="assets/pago-banco-pichincha.png" alt="Banco Pichincha" class="payment-logo-footer">
+                           <img src="assets/pago-diners-club.png" alt="Diners Club" class="payment-logo-footer">
+                           <img src="assets/pago-paypal.png" alt="Paypal" class="payment-logo-footer">
+                           <img src="assets/pago-binance-pay.png" alt="Binance Pay" class="payment-logo-footer">
+                           <img src="assets/pago-banco-guayaquil.png" alt="Banco Guayaquil" class="payment-logo-footer">
+                           <img src="assets/pago-deuna.png" alt="DeUna" class="payment-logo-footer">
                         </div>
                          <p class="text-xs text-gray-400 mt-2">Pagos mediante transferencia bancaria.</p>
                     </div>
@@ -137,15 +150,15 @@
     
     <!-- ÍCONOS Y MODALES -->
     <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank">
-        <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="videos/video-whatsapp.mp4" type="video/mp4"></video>
+        <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="assets/video-whatsapp.mp4" type="video/mp4"></video>
     </a>
-    <button id="turbo-icon" aria-label="Información de Entrega"><video autoplay loop muted playsinline><source src="videos/perrito_en_moto.mp4" type="video/mp4"></video></button>
+    <button id="turbo-icon" aria-label="Información de Entrega"><video autoplay loop muted playsinline><source src="assets/perrito_en_moto.mp4" type="video/mp4"></video></button>
     
     <!-- MODAL DEL CARRITO / COTI -->
     <div id="cart-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
         <div class="w-full max-w-sm bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center transform transition-transform duration-300">
-            <div class="w-24 h-24 mx-auto mb-4 bg-blue-500 rounded-full flex items-center justify-center border-4 border-white overflow-hidden">
-                <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="videos/video-carrito.mp4" type="video/mp4"></video>
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full flex items-center justify-center overflow-hidden ring-4" style="border-color: var(--yanz-cta-green);">
+                <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="assets/video-carrito.mp4" type="video/mp4"></video>
             </div>
             <h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2>
             <p class="text-sm text-gray-400 mt-1 mb-4">Tu asistente de proyectos. ¡Aquí guardaré todas las ideas geniales que elijas para tu cotización!</p>
@@ -153,7 +166,7 @@
                 <div id="cart-items" class="flex-grow overflow-y-auto max-h-[40vh] pr-2 text-left"></div>
                 <div id="cart-empty-message" class="py-4 text-gray-400 hidden">Tu cesta de ideas está vacía.</div>
             </div>
-             <div id="checkout-section" class="mt-6">
+             <div id="checkout-section" class="mt-auto pt-4">
                 <button id="checkout-button" class="block w-full text-center bg-green-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-600 transition-colors">
                     <i class="fas fa-credit-card"></i> Proceder al Pago
                 </button>
@@ -168,7 +181,7 @@
             <button id="close-turbo-button" class="absolute top-3 right-4 text-gray-400 hover:text-white text-3xl">&times;</button>
             <div class="text-center">
                 <div class="w-24 h-24 mx-auto mb-4 bg-yellow-400 rounded-full flex items-center justify-center border-4 border-white overflow-hidden">
-                    <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="videos/perrito_en_moto.mp4" type="video/mp4"></video>
+                    <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="assets/perrito_en_moto.mp4" type="video/mp4"></video>
                 </div>
                 <h2 class="text-3xl font-bold">¡Hola, soy Turbo!</h2><p class="text-yellow-300 font-semibold mb-6">Tu Repartidor a toda velocidad</p>
             </div>
@@ -247,6 +260,48 @@
             button.querySelector('.toggle-text').textContent = !isActive ? 'Ocultar' : 'Ver Productos';
             content.style.maxHeight = !isActive ? content.scrollHeight + "px" : null;
         };
+        
+        const handleAriaSearch = () => {
+            const ariaQueryInput = document.getElementById('aria-query-input');
+            const ariaResponseDiv = document.getElementById('aria-response');
+            const query = ariaQueryInput.value.toLowerCase().trim();
+            if (!query) return;
+
+            const highlighted = document.querySelector('.product-highlight');
+            if(highlighted) highlighted.classList.remove('product-highlight');
+
+            const keywords = query.split(' ').filter(kw => kw.length > 0);
+            let foundProduct = null;
+
+            for (const product of inventarioFerreteria) {
+                const searchCorpus = [product.nombre.toLowerCase(), ...product.palabrasClave].join(' ');
+                if (keywords.every(kw => searchCorpus.includes(kw))) {
+                    foundProduct = product;
+                    break;
+                }
+            }
+            
+            ariaResponseDiv.classList.remove('hidden');
+            if (foundProduct) {
+                ariaResponseDiv.innerHTML = `¡Claro! Encontré esto: <strong class="text-[var(--yanz-primary)]">${foundProduct.nombre}</strong>. Abriendo el pasillo correspondiente...`;
+                const productCard = document.getElementById(`product-${foundProduct.id}`);
+                if (productCard) {
+                    const accordionContent = productCard.closest('.accordion-content');
+                    const accordionButton = accordionContent.previousElementSibling;
+                    
+                    if (!accordionButton.classList.contains('active')) {
+                        accordionButton.click(); 
+                    }
+
+                    setTimeout(() => {
+                        productCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        productCard.classList.add('product-highlight');
+                    }, 700);
+                }
+            } else {
+                ariaResponseDiv.innerHTML = "Hola, he revisado nuestro inventario y no encontré una coincidencia exacta. ¿Puedes intentar con otras palabras? O si prefieres, explora las categorías de abajo.";
+            }
+        };
 
         productContainer.addEventListener('click', (e) => {
             handleAccordion(e);
@@ -265,7 +320,8 @@
             localStorage.setItem('yanz_order_id', orderId);
             window.location.href = 'caja.html';
         });
-
+        document.getElementById('aria-ask-button').addEventListener('click', handleAriaSearch);
+        document.getElementById('aria-query-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') handleAriaSearch(); });
         document.getElementById('turbo-icon').addEventListener('click', () => document.getElementById('turbo-modal').classList.remove('hidden'));
         document.getElementById('close-turbo-button').addEventListener('click', () => document.getElementById('turbo-modal').classList.add('hidden'));
 
@@ -338,6 +394,8 @@
         const cartItemsContainer = document.getElementById('cart-items');
         const emptyMessage = document.getElementById('cart-empty-message');
         const checkoutSection = document.getElementById('checkout-section');
+        const oldTotal = document.getElementById('cart-total-display');
+        if(oldTotal) oldTotal.remove();
 
         cartItemsContainer.innerHTML = '';
         if (cart.length === 0) {
@@ -354,29 +412,23 @@
                 const itemElement = document.createElement('div');
                 itemElement.className = 'flex items-center justify-between py-2 text-white border-b border-gray-700/50';
                 itemElement.innerHTML = `
-                    <div class="flex-grow">
+                    <div class="flex-grow pr-4">
                         <span class="text-sm">${item.nombre}</span>
                         <p class="text-xs text-gray-400">$${item.precio.toFixed(2)}</p>
                     </div>
-                    <div class="flex items-center gap-3 text-white">
+                    <div class="flex items-center gap-3 text-white flex-shrink-0">
                         <button class="quantity-control text-xs" onclick="decreaseQuantity('${item.id}')">-</button>
-                        <span class="text-sm">${item.cantidad}</span>
+                        <span class="text-sm w-4 text-center">${item.cantidad}</span>
                         <button class="quantity-control text-xs" onclick="increaseQuantity('${item.id}')">+</button>
                     </div>`;
                 cartItemsContainer.appendChild(itemElement);
             });
             
             const totalElement = document.createElement('div');
+            totalElement.id = 'cart-total-display';
             totalElement.className = 'flex items-center justify-between pt-3 font-bold text-lg';
             totalElement.innerHTML = `<span>Total:</span><span>$${total.toFixed(2)}</span>`;
-            
-            // Insert total before the items for better layout
-            cartItemsContainer.insertAdjacentElement('afterend', totalElement);
-
-             // Since we rebuild this, remove old one if exists
-            const oldTotal = document.getElementById('cart-total-display');
-            if(oldTotal) oldTotal.remove();
-            totalElement.id = 'cart-total-display';
+            cartItemsContainer.appendChild(totalElement);
         }
     };
     function updateCartStatus() { 
