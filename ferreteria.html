@@ -84,7 +84,7 @@
         .panel-productos.open {
              padding-top: 1rem;
              padding-bottom: 1.5rem;
-        }
+         }
         
         #turbo-button {
             background-color: var(--yanz-yellow);
@@ -151,7 +151,14 @@
                      <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                  </div>
              </nav>
-             <div id="mobile-menu" class="hidden md:hidden"></div>
+             <!-- Contenido del menú móvil -->
+             <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/index.html#productos" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Productos</a>
+                <a href="/index.html#servicios" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Servicios</a>
+                <a href="/index.html#juegos" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Juegos</a>
+                <a href="/caja.html" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Caja</a>
+                <a href="/index.html#contacto" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Contacto</a>
+             </div>
         </header>
 
         <main>
@@ -166,15 +173,15 @@
             
             <section id="aria-search" class="py-16">
                  <div class="container mx-auto px-6 text-center max-w-3xl">
-                    <h2 class="text-3xl font-bold mb-2">¿Buscas algo específico?</h2>
-                    <h3 class="text-2xl font-bold text-[var(--yanz-primary)] mb-4">¡Pregúntale a Aria!</h3>
-                    <p class="text-[var(--yanz-text-alt)] mb-8">Soy tu asistente de ferretería. Dime qué necesitas y te ayudaré a encontrarlo en nuestro catálogo al instante.</p>
-                    <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-                        <input id="aria-input" type="text" placeholder="Ej: 'Martillo' o 'Tornillos'" class="flex-grow bg-[var(--yanz-bg-alt)] text-[var(--yanz-text)] border-2 border-[var(--yanz-border)] rounded-full py-3 px-6 focus:outline-none focus:border-[var(--yanz-primary)] transition-colors">
-                        <button id="aria-search-button" class="bg-[var(--yanz-primary)] hover:bg-[var(--yanz-secondary)] text-white font-bold py-3 px-8 rounded-full transition-colors">Buscar</button>
-                    </div>
-                    <div id="aria-results" class="mt-8 text-left"></div>
-                </div>
+                     <h2 class="text-3xl font-bold mb-2">¿Buscas algo específico?</h2>
+                     <h3 class="text-2xl font-bold text-[var(--yanz-primary)] mb-4">¡Pregúntale a Aria!</h3>
+                     <p class="text-[var(--yanz-text-alt)] mb-8">Soy tu asistente de ferretería. Dime qué necesitas y te ayudaré a encontrarlo en nuestro catálogo al instante.</p>
+                     <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                         <input id="aria-input" type="text" placeholder="Ej: 'Martillo' o 'Tornillos'" class="flex-grow bg-[var(--yanz-bg-alt)] text-[var(--yanz-text)] border-2 border-[var(--yanz-border)] rounded-full py-3 px-6 focus:outline-none focus:border-[var(--yanz-primary)] transition-colors">
+                         <button id="aria-search-button" class="bg-[var(--yanz-primary)] hover:bg-[var(--yanz-secondary)] text-white font-bold py-3 px-8 rounded-full transition-colors">Buscar</button>
+                     </div>
+                     <div id="aria-results" class="mt-8 text-left"></div>
+                 </div>
             </section>
 
             <section class="py-16 section-bg">
@@ -186,16 +193,16 @@
         
         <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8">
              <div class="container mx-auto px-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
-                    <div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div>
-                    <div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div>
-                    <div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div>
-                </div>
-                <div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400">
-                    <p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p>
-                    <div class="mt-4 space-x-4"><a href="/como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="/privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="/terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div>
-                </div>
-            </div>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+                     <div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div>
+                     <div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div>
+                     <div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div>
+                 </div>
+                 <div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400">
+                     <p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p>
+                     <div class="mt-4 space-x-4"><a href="/como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="/privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="/terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div>
+                 </div>
+             </div>
         </footer>
     </div>
     
@@ -209,7 +216,17 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-        const themeToggle=document.getElementById("theme-toggle"),sunIcon=document.getElementById("theme-icon-sun"),moonIcon=document.getElementById("theme-icon-moon");function applyTheme(e){document.documentElement.classList.toggle("dark",e==="dark"),sunIcon&&sunIcon.classList.toggle("hidden",e!=="dark"),moonIcon&&moonIcon.classList.toggle("hidden",e==="dark")}themeToggle.addEventListener("click",()=>{const e=document.documentElement.classList.contains("dark")?"light":"dark";localStorage.setItem("theme",e),applyTheme(e)});const menuButton=document.getElementById("menu-button"),mobileMenu=document.getElementById("mobile-menu"),mobileNavLinks=document.querySelectorAll(".mobile-nav-link");menuButton&&mobileMenu&&(menuButton.addEventListener("click",()=>mobileMenu.classList.toggle("hidden")),mobileNavLinks.forEach(e=>{e.addEventListener("click",()=>mobileMenu.classList.add("hidden"))}));const savedTheme=localStorage.getItem("theme")||"dark";applyTheme(savedTheme);const paymentLogosContainer=document.getElementById("payment-logos");paymentLogosContainer&&[{name:"PeiGo",image:"/assets/images/pago-peigo.png"},{name:"Mastercard",image:"/assets/images/pago-mastercard.png"},{name:"Visa",image:"/assets/images/pago-visa.png"},{name:"American Express",image:"/assets/images/pago-american-express.png"},{name:"Discover",image:"/assets/images/pago-discover.png"},{name:"JCB",image:"/assets/images/pago-jcb.png"},{name:"Diners Club",image:"/assets/images/pago-diners-club.png"},{name:"PayPal",image:"/assets/images/pago-paypal.png"},{name:"Binance Pay",image:"/assets/images/pago-binance-pay.png"},{name:"Banco Guayaquil",image:"/assets/images/pago-banco-guayaquil.png"},{name:"Banco Pichincha",image:"/assets/images/pago-banco-pichincha.png"},{name:"DeUna",image:"/assets/images/pago-deuna.png"}].forEach(e=>{paymentLogosContainer.innerHTML+=`<img src="${e.image}" alt="${e.name}" title="${e.name}" class="h-8 bg-white rounded-md p-1">`});document.getElementById("year").textContent=(new Date).getFullYear();const cartIconWrapper=document.getElementById("cart-icon-wrapper"),cartCounter=document.getElementById("cart-counter"),cartModalContainer=document.getElementById("cart-modal");function updateCart(e,t){let a=JSON.parse(localStorage.getItem("yanz_cart"))||[];const n=a.findIndex(t=>t.id===e);n>-1?(a[n].quantity+=t,a[n].quantity<=0&&a.splice(n,1)):t>0&&ferreteriaCategorias.flatMap(e=>e.products).find(t=>t.id===e)&&a.push({id:e,name:ferreteriaCategorias.flatMap(e=>e.products).find(t=>t.id===e).name,quantity:t}),localStorage.setItem("yanz_cart",JSON.stringify(a)),renderAll()}const openCartButton=document.getElementById("open-cart-button");openCartButton&&openCartButton.addEventListener("click",()=>{cartModalContainer.classList.remove("hidden")});function closeCartModal(){cartModalContainer&&cartModalContainer.classList.add("hidden")}const turboModal=document.getElementById("turbo-modal"),openTurboButton=document.getElementById("turbo-button");function closeTurboModal(){turboModal&&turboModal.classList.add("hidden")}openTurboButton&&openTurboButton.addEventListener("click",()=>{turboModal.classList.remove("hidden")});const ferreteriaCategorias=[{title:"Herramientas Manuales",products:[{id:"fer001",name:"Martillo de Carpintero",image:"/assets/images/productos/martillo.jpg"},{id:"fer002",name:"Martillo de Goma",image:"/assets/images/productos/martillo_goma.jpg"},{id:"fer003",name:"Alicate de Presión 8\"",image:"/assets/images/productos/alicate.jpg"}]},{title:"Tornillería y Anclajes",products:[{id:"fer004",name:"Tornillos para madera",image:"/assets/images/productos/tornillos.jpg"}]},{title:"Herramientas Eléctricas",products:[]},{title:"Adhesivos y Selladores",products:[]},{title:"Obra Gris y Construcción",products:[]},{title:"Pintura y Acabados",products:[]}];const acordeonContainer=document.getElementById("ferreteria-acordeon"),ariaInput=document.getElementById("aria-input"),ariaSearchButton=document.getElementById("aria-search-button"),ariaResultsContainer=document.getElementById("aria-results");function renderAll(){renderAccordion(),renderCartModal(),renderTurboModal(),updateCartIcon()}function updateCartIcon(){const e=JSON.parse(localStorage.getItem("yanz_cart"))||[],t=e.reduce((e,t)=>e+t.quantity,0);cartCounter&&cartIconWrapper&&(cartCounter.textContent=t,cartIconWrapper.classList.toggle("has-items",t>0),cartCounter.classList.toggle("hidden",0===t))}function renderCartModal(){const e=JSON.parse(localStorage.getItem("yanz_cart"))||[];cartModalContainer.innerHTML=`
+        const themeToggle=document.getElementById("theme-toggle"),sunIcon=document.getElementById("theme-icon-sun"),moonIcon=document.getElementById("theme-icon-moon");function applyTheme(e){document.documentElement.classList.toggle("dark",e==="dark"),sunIcon&&sunIcon.classList.toggle("hidden",e!=="dark"),moonIcon&&moonIcon.classList.toggle("hidden",e==="dark")}themeToggle.addEventListener("click",()=>{const e=document.documentElement.classList.contains("dark")?"light":"dark";localStorage.setItem("theme",e),applyTheme(e)});
+        
+        // --- Lógica del menú móvil ---
+        const menuButton=document.getElementById("menu-button"),mobileMenu=document.getElementById("mobile-menu");
+        if(menuButton&&mobileMenu){
+            menuButton.addEventListener("click",()=>mobileMenu.classList.toggle("hidden"));
+            const mobileNavLinks=mobileMenu.querySelectorAll(".mobile-nav-link");
+            mobileNavLinks.forEach(e=>{e.addEventListener("click",()=>mobileMenu.classList.add("hidden"))});
+        }
+        
+        const savedTheme=localStorage.getItem("theme")||"dark";applyTheme(savedTheme);const paymentLogosContainer=document.getElementById("payment-logos");paymentLogosContainer&&[{name:"PeiGo",image:"/assets/images/pago-peigo.png"},{name:"Mastercard",image:"/assets/images/pago-mastercard.png"},{name:"Visa",image:"/assets/images/pago-visa.png"},{name:"American Express",image:"/assets/images/pago-american-express.png"},{name:"Discover",image:"/assets/images/pago-discover.png"},{name:"JCB",image:"/assets/images/pago-jcb.png"},{name:"Diners Club",image:"/assets/images/pago-diners-club.png"},{name:"PayPal",image:"/assets/images/pago-paypal.png"},{name:"Binance Pay",image:"/assets/images/pago-binance-pay.png"},{name:"Banco Guayaquil",image:"/assets/images/pago-banco-guayaquil.png"},{name:"Banco Pichincha",image:"/assets/images/pago-banco-pichincha.png"},{name:"DeUna",image:"/assets/images/pago-deuna.png"}].forEach(e=>{paymentLogosContainer.innerHTML+=`<img src="${e.image}" alt="${e.name}" title="${e.name}" class="h-8 bg-white rounded-md p-1">`});document.getElementById("year").textContent=(new Date).getFullYear();const cartIconWrapper=document.getElementById("cart-icon-wrapper"),cartCounter=document.getElementById("cart-counter"),cartModalContainer=document.getElementById("cart-modal");function updateCart(e,t){let a=JSON.parse(localStorage.getItem("yanz_cart"))||[];const n=a.findIndex(t=>t.id===e);n>-1?(a[n].quantity+=t,a[n].quantity<=0&&a.splice(n,1)):t>0&&ferreteriaCategorias.flatMap(e=>e.products).find(t=>t.id===e)&&a.push({id:e,name:ferreteriaCategorias.flatMap(e=>e.products).find(t=>t.id===e).name,quantity:t}),localStorage.setItem("yanz_cart",JSON.stringify(a)),renderAll()}const openCartButton=document.getElementById("open-cart-button");openCartButton&&openCartButton.addEventListener("click",()=>{cartModalContainer.classList.remove("hidden")});function closeCartModal(){cartModalContainer&&cartModalContainer.classList.add("hidden")}const turboModal=document.getElementById("turbo-modal"),openTurboButton=document.getElementById("turbo-button");function closeTurboModal(){turboModal&&turboModal.classList.add("hidden")}openTurboButton&&openTurboButton.addEventListener("click",()=>{turboModal.classList.remove("hidden")});const ferreteriaCategorias=[{title:"Herramientas Manuales",products:[{id:"fer001",name:"Martillo de Carpintero",image:"/assets/images/productos/martillo.jpg"},{id:"fer002",name:"Martillo de Goma",image:"/assets/images/productos/martillo_goma.jpg"},{id:"fer003",name:"Alicate de Presión 8\"",image:"/assets/images/productos/alicate.jpg"}]},{title:"Tornillería y Anclajes",products:[{id:"fer004",name:"Tornillos para madera",image:"/assets/images/productos/tornillos.jpg"}]},{title:"Herramientas Eléctricas",products:[]},{title:"Adhesivos y Selladores",products:[]},{title:"Obra Gris y Construcción",products:[]},{title:"Pintura y Acabados",products:[]}];const acordeonContainer=document.getElementById("ferreteria-acordeon"),ariaInput=document.getElementById("aria-input"),ariaSearchButton=document.getElementById("aria-search-button"),ariaResultsContainer=document.getElementById("aria-results");function renderAll(){renderAccordion(),renderCartModal(),renderTurboModal(),updateCartIcon()}function updateCartIcon(){const e=JSON.parse(localStorage.getItem("yanz_cart"))||[],t=e.reduce((e,t)=>e+t.quantity,0);cartCounter&&cartIconWrapper&&(cartCounter.textContent=t,cartIconWrapper.classList.toggle("has-items",t>0),cartCounter.classList.toggle("hidden",0===t))}function renderCartModal(){const e=JSON.parse(localStorage.getItem("yanz_cart"))||[];cartModalContainer.innerHTML=`
                 <div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter">
                     <div class="text-center mb-6">
                         <video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
@@ -234,35 +251,24 @@
                         ${e.length>0?`<a href="https://wa.me/593996480843?text=${encodeURIComponent("Hola, me gustaría cotizar:\n"+e.map(e=>"- "+e.name+" (x"+e.quantity+")").join("\n"))}" target="_blank" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all"><span>Solicitar Cotización</span></a>`:""}
                         <button class="mt-4 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button>
                     </div>
-                </div>`}function renderTurboModal(){turboModal.innerHTML=`
-            <div class="w-full max-w-lg bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center modal-enter">
-                <video autoplay loop muted playsinline class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-[var(--yanz-yellow)] shadow-lg object-cover">
-                    <source src="/assets/videos/diseno_ia.mp4" type="video/mp4">
+                </div>`}
+        
+        // --- Modal del video del perrito ---
+        function renderTurboModal(){
+            turboModal.innerHTML=`
+            <div class="w-full max-w-2xl bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-4 flex flex-col text-center modal-enter relative">
+                <h2 class="text-2xl font-bold text-white mb-4">Video</h2>
+                <video controls autoplay class="w-full rounded-lg">
+                    <source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4">
+                    Tu navegador no soporta el video.
                 </video>
-                <h2 class="text-2xl font-bold text-white">¡Hola! ¡Soy Turbo, listo para llevar tus materiales! 🚀</h2>
-                <div class="text-gray-300 text-sm mt-4 text-left space-y-4">
-                    <p>Mi misión es entregarte todo lo que necesitas para tu proyecto de la manera más rápida y clara posible. ¡Aquí te explico cómo funciono!</p>
-                    <div>
-                        <h4 class="font-bold text-white">Nota de Transparencia: ¡Te lo consigo!</h4>
-                        <p>Para darte el catálogo más completo, trabajo con los mejores proveedores. Si un artículo no está en nuestra bodega, me encargo de conseguirlo (usualmente en 48 horas). Siempre te contactaremos por WhatsApp para confirmar el tiempo exacto.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-white">Mis Tarifas de Entrega</h4>
-                        <table class="w-full mt-2 text-xs md:text-sm">
-                            <thead class="border-b border-gray-600"><tr><th class="p-2">Zona</th><th class="p-2">Compra</th><th class="p-2">Costo</th></tr></thead>
-                            <tbody>
-                                <tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">Menor a $50</td><td class="p-2 font-bold">$4.00</td></tr>
-                                <tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">$50 o más</td><td class="p-2 font-bold text-green-400">¡GRATIS!</td></tr>
-                                <tr class="border-b border-gray-700"><td class="p-2">Valles</td><td class="p-2">Menor a $75</td><td class="p-2 font-bold">$7.00</td></tr>
-                                <tr><td class="p-2">Valles</td><td class="p-2">$75 o más</td><td class="p-2 font-bold">$3.50</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
                 <div class="mt-6">
-                    <button class="w-full bg-[var(--yanz-yellow)] text-gray-900 font-bold py-3 px-5 rounded-lg shadow-sm hover:opacity-90 transition-opacity" onclick="closeTurboModal()">¡Entendido!</button>
+                    <button class="w-full bg-[var(--yanz-yellow)] text-gray-900 font-bold py-3 px-5 rounded-lg shadow-sm hover:opacity-90 transition-opacity" onclick="closeTurboModal()">Cerrar</button>
                 </div>
-            </div>`}function renderAccordion(){if(!acordeonContainer)return;const e=JSON.parse(localStorage.getItem("yanz_cart"))||[];acordeonContainer.innerHTML="",ferreteriaCategorias.forEach((t,a)=>{const n=document.createElement("div");n.className="bg-[var(--yanz-bg-alt)] rounded-lg overflow-hidden border border-[var(--yanz-border)]",n.dataset.categoryIndex=a;const i=document.createElement("button");i.className="acordeon-boton w-full flex justify-between items-center p-4 text-left",i.innerHTML=`<span class="text-lg font-bold">${t.title}</span><div class="bg-[var(--yanz-primary)] text-white text-sm font-semibold py-1 px-4 rounded-full">Ver Productos</div>`;const d=document.createElement("div");d.className="panel-productos grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4",t.products.length>0?t.products.forEach(t=>{const a=e.find(e=>e.id===t.id),n=document.createElement("div");n.className="bg-[var(--yanz-bg)] rounded-lg p-4 text-center shadow-md flex flex-col";let i="";i=a?`
+            </div>`
+        }
+
+        function renderAccordion(){if(!acordeonContainer)return;const e=JSON.parse(localStorage.getItem("yanz_cart"))||[];acordeonContainer.innerHTML="",ferreteriaCategorias.forEach((t,a)=>{const n=document.createElement("div");n.className="bg-[var(--yanz-bg-alt)] rounded-lg overflow-hidden border border-[var(--yanz-border)]",n.dataset.categoryIndex=a;const i=document.createElement("button");i.className="acordeon-boton w-full flex justify-between items-center p-4 text-left",i.innerHTML=`<span class="text-lg font-bold">${t.title}</span><div class="bg-[var(--yanz-primary)] text-white text-sm font-semibold py-1 px-4 rounded-full">Ver Productos</div>`;const d=document.createElement("div");d.className="panel-productos grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4",t.products.length>0?t.products.forEach(t=>{const a=e.find(e=>e.id===t.id),n=document.createElement("div");n.className="bg-[var(--yanz-bg)] rounded-lg p-4 text-center shadow-md flex flex-col";let i="";i=a?`
                                 <div class="quantity-selector mt-auto">
                                     <button class="quantity-btn minus-btn" data-id="${t.id}">-</button>
                                     <span class="quantity-display">${a.quantity}</span>
