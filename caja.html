@@ -40,6 +40,17 @@
 
         #mobile-menu { background-color: var(--yanz-header-bg); }
 
+        /* Estilo para el círculo del carrito */
+        #cart-icon-wrapper {
+            padding: 2px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: border-color 0.3s ease-in-out;
+        }
+        #cart-icon-wrapper.has-items {
+            border-color: var(--yanz-primary);
+        }
+
         .chat-bubble-aria {
             background-color: var(--yanz-bg-alt);
             color: var(--yanz-text);
@@ -59,7 +70,7 @@
 </head>
 <body class="antialiased">
 
-    <!-- Encabezado unificado, idéntico al de ferreteria.html -->
+    <!-- Encabezado unificado -->
     <header id="main-header" class="bg-[var(--yanz-header-bg)] shadow-md sticky top-0 z-50">
          <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
              <a href="/index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="/assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
@@ -71,10 +82,13 @@
              </div>
              <div class="flex items-center space-x-2">
                  <div class="flex items-center space-x-3">
-                    <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
-                        <video autoplay loop muted playsinline class="w-8 h-8"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
-                        <span id="cart-counter" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
-                    </button>
+                    <!-- CORRECCIÓN: Se restauró el div wrapper para el círculo -->
+                    <div id="cart-icon-wrapper">
+                        <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
+                            <video autoplay loop muted playsinline class="w-8 h-8"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
+                        </button>
+                    </div>
+                    <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
                  </div>
                  <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
                      <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
@@ -161,6 +175,7 @@
         const cartModalContainer = document.getElementById('cart-modal');
         const openCartButton = document.getElementById('open-cart-button');
         const cartCounter = document.getElementById('cart-counter');
+        const cartIconWrapper = document.getElementById('cart-icon-wrapper');
 
         function renderCartModal() {
             const cart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
@@ -199,6 +214,9 @@
             if (cartCounter) {
                 cartCounter.textContent = totalItems;
                 cartCounter.classList.toggle('hidden', totalItems === 0);
+            }
+            if (cartIconWrapper) {
+                cartIconWrapper.classList.toggle('has-items', totalItems > 0);
             }
         }
 
