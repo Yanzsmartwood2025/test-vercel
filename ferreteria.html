@@ -151,7 +151,6 @@
                      <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                  </div>
              </nav>
-             <!-- Contenido del menú móvil -->
              <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="/index.html#productos" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Productos</a>
                 <a href="/index.html#servicios" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Servicios</a>
@@ -207,91 +206,173 @@
     </div>
     
     <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank"><video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="/assets/videos/video-whatsapp.mp4" type="video/mp4"></video></a>
-    
-    <!-- Cambio final: El botón fijo ahora muestra el video del perrito -->
     <button id="turbo-button" class="fixed bottom-6 left-6 z-50 rounded-full w-16 h-16 shadow-lg transition-transform hover:scale-110 flex items-center justify-center overflow-hidden">
         <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4"></video>
     </button>
-    
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden"></div>
     <div id="turbo-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden"></div>
     
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
+        // --- Lógica del Tema y Menú ---
         const themeToggle=document.getElementById("theme-toggle"),sunIcon=document.getElementById("theme-icon-sun"),moonIcon=document.getElementById("theme-icon-moon");function applyTheme(e){document.documentElement.classList.toggle("dark",e==="dark"),sunIcon&&sunIcon.classList.toggle("hidden",e!=="dark"),moonIcon&&moonIcon.classList.toggle("hidden",e==="dark")}themeToggle.addEventListener("click",()=>{const e=document.documentElement.classList.contains("dark")?"light":"dark";localStorage.setItem("theme",e),applyTheme(e)});
-        
         const menuButton=document.getElementById("menu-button"),mobileMenu=document.getElementById("mobile-menu");
         if(menuButton&&mobileMenu){
             menuButton.addEventListener("click",()=>mobileMenu.classList.toggle("hidden"));
             const mobileNavLinks=mobileMenu.querySelectorAll(".mobile-nav-link");
             mobileNavLinks.forEach(e=>{e.addEventListener("click",()=>mobileMenu.classList.add("hidden"))});
         }
+        const savedTheme=localStorage.getItem("theme")||"dark";applyTheme(savedTheme);
         
-        const savedTheme=localStorage.getItem("theme")||"dark";applyTheme(savedTheme);const paymentLogosContainer=document.getElementById("payment-logos");paymentLogosContainer&&[{name:"PeiGo",image:"/assets/images/pago-peigo.png"},{name:"Mastercard",image:"/assets/images/pago-mastercard.png"},{name:"Visa",image:"/assets/images/pago-visa.png"},{name:"American Express",image:"/assets/images/pago-american-express.png"},{name:"Discover",image:"/assets/images/pago-discover.png"},{name:"JCB",image:"/assets/images/pago-jcb.png"},{name:"Diners Club",image:"/assets/images/pago-diners-club.png"},{name:"PayPal",image:"/assets/images/pago-paypal.png"},{name:"Binance Pay",image:"/assets/images/pago-binance-pay.png"},{name:"Banco Guayaquil",image:"/assets/images/pago-banco-guayaquil.png"},{name:"Banco Pichincha",image:"/assets/images/pago-banco-pichincha.png"},{name:"DeUna",image:"/assets/images/pago-deuna.png"}].forEach(e=>{paymentLogosContainer.innerHTML+=`<img src="${e.image}" alt="${e.name}" title="${e.name}" class="h-8 bg-white rounded-md p-1">`});document.getElementById("year").textContent=(new Date).getFullYear();const cartIconWrapper=document.getElementById("cart-icon-wrapper"),cartCounter=document.getElementById("cart-counter"),cartModalContainer=document.getElementById("cart-modal");function updateCart(e,t){let a=JSON.parse(localStorage.getItem("yanz_cart"))||[];const n=a.findIndex(t=>t.id===e);n>-1?(a[n].quantity+=t,a[n].quantity<=0&&a.splice(n,1)):t>0&&ferreteriaCategorias.flatMap(e=>e.products).find(t=>t.id===e)&&a.push({id:e,name:ferreteriaCategorias.flatMap(e=>e.products).find(t=>t.id===e).name,quantity:t}),localStorage.setItem("yanz_cart",JSON.stringify(a)),renderAll()}const openCartButton=document.getElementById("open-cart-button");openCartButton&&openCartButton.addEventListener("click",()=>{cartModalContainer.classList.remove("hidden")});function closeCartModal(){cartModalContainer&&cartModalContainer.classList.add("hidden")}const turboModal=document.getElementById("turbo-modal"),openTurboButton=document.getElementById("turbo-button");function closeTurboModal(){turboModal&&turboModal.classList.add("hidden")}openTurboButton&&openTurboButton.addEventListener("click",()=>{turboModal.classList.remove("hidden")});const ferreteriaCategorias=[{title:"Herramientas Manuales",products:[{id:"fer001",name:"Martillo de Carpintero",image:"/assets/images/productos/martillo.jpg"},{id:"fer002",name:"Martillo de Goma",image:"/assets/images/productos/martillo_goma.jpg"},{id:"fer003",name:"Alicate de Presión 8\"",image:"/assets/images/productos/alicate.jpg"}]},{title:"Tornillería y Anclajes",products:[{id:"fer004",name:"Tornillos para madera",image:"/assets/images/productos/tornillos.jpg"}]},{title:"Herramientas Eléctricas",products:[]},{title:"Adhesivos y Selladores",products:[]},{title:"Obra Gris y Construcción",products:[]},{title:"Pintura y Acabados",products:[]}];const acordeonContainer=document.getElementById("ferreteria-acordeon"),ariaInput=document.getElementById("aria-input"),ariaSearchButton=document.getElementById("aria-search-button"),ariaResultsContainer=document.getElementById("aria-results");function renderAll(){renderAccordion(),renderCartModal(),renderTurboModal(),updateCartIcon()}function updateCartIcon(){const e=JSON.parse(localStorage.getItem("yanz_cart"))||[],t=e.reduce((e,t)=>e+t.quantity,0);cartCounter&&cartIconWrapper&&(cartCounter.textContent=t,cartIconWrapper.classList.toggle("has-items",t>0),cartCounter.classList.toggle("hidden",0===t))}function renderCartModal(){const e=JSON.parse(localStorage.getItem("yanz_cart"))||[];cartModalContainer.innerHTML=`
+        // --- Lógica del Pie de Página ---
+        const paymentLogosContainer=document.getElementById("payment-logos");paymentLogosContainer&&[{name:"PeiGo",image:"/assets/images/pago-peigo.png"},{name:"Mastercard",image:"/assets/images/pago-mastercard.png"},{name:"Visa",image:"/assets/images/pago-visa.png"},{name:"American Express",image:"/assets/images/pago-american-express.png"},{name:"Discover",image:"/assets/images/pago-discover.png"},{name:"JCB",image:"/assets/images/pago-jcb.png"},{name:"Diners Club",image:"/assets/images/pago-diners-club.png"},{name:"PayPal",image:"/assets/images/pago-paypal.png"},{name:"Binance Pay",image:"/assets/images/pago-binance-pay.png"},{name:"Banco Guayaquil",image:"/assets/images/pago-banco-guayaquil.png"},{name:"Banco Pichincha",image:"/assets/images/pago-banco-pichincha.png"},{name:"DeUna",image:"/assets/images/pago-deuna.png"}].forEach(e=>{paymentLogosContainer.innerHTML+=`<img src="${e.image}" alt="${e.name}" title="${e.name}" class="h-8 bg-white rounded-md p-1">`});document.getElementById("year").textContent=(new Date).getFullYear();
+        
+        // --- DATOS DE PRODUCTOS ---
+        const ferreteriaCategorias=[
+            {
+                title:"Herramientas Manuales",
+                products:[
+                    {id:"fer001", name:"Martillo de Carpintero", image:"/assets/images/productos/martillo.jpg", type: 'sale', price: 12.50},
+                    {id:"fer002", name:"Martillo de Goma", image:"/assets/images/productos/martillo_goma.jpg", type: 'sale', price: 8.00},
+                    {id:"fer003", name:"Alicate de Presión 8\"", image:"/assets/images/productos/alicate.jpg", type: 'sale', price: 15.00}
+                ]
+            },
+            {
+                title:"Tornillería y Anclajes",
+                products:[
+                    {id:"fer004", name:"Tornillos para madera (Caja 100u)", image:"/assets/images/productos/tornillos.jpg", type: 'sale', price: 5.50}
+                ]
+            },
+            {title:"Herramientas Eléctricas",products:[]},
+            {title:"Adhesivos y Selladores",products:[]},
+            {title:"Obra Gris y Construcción",products:[]},
+            {title:"Pintura y Acabados",products:[]}
+        ];
+
+        const cartIconWrapper=document.getElementById("cart-icon-wrapper"),cartCounter=document.getElementById("cart-counter"),cartModalContainer=document.getElementById("cart-modal");
+
+        // --- Lógica del Carrito ---
+        function updateCart(productId, change) {
+            let cart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
+            const productIndex = cart.findIndex(item => item.id === productId);
+
+            if (productIndex > -1) {
+                cart[productIndex].quantity += change;
+                if (cart[productIndex].quantity <= 0) {
+                    cart.splice(productIndex, 1);
+                }
+            } else if (change > 0) {
+                const productToAdd = ferreteriaCategorias.flatMap(cat => cat.products).find(p => p.id === productId);
+                if (productToAdd) {
+                    const cartItem = { 
+                        id: productToAdd.id, 
+                        name: productToAdd.name,
+                        type: productToAdd.type,
+                        quantity: change 
+                    };
+                    if (productToAdd.price) {
+                        cartItem.price = productToAdd.price;
+                    }
+                    if (productToAdd.image) {
+                        cartItem.image = productToAdd.image;
+                    }
+                    cart.push(cartItem);
+                }
+            }
+            localStorage.setItem("yanz_cart", JSON.stringify(cart));
+            renderAll();
+        }
+
+        const openCartButton=document.getElementById("open-cart-button");openCartButton&&openCartButton.addEventListener("click",()=>{cartModalContainer.classList.remove("hidden")});function closeCartModal(){cartModalContainer&&cartModalContainer.classList.add("hidden")}const turboModal=document.getElementById("turbo-modal"),openTurboButton=document.getElementById("turbo-button");function closeTurboModal(){turboModal&&turboModal.classList.add("hidden")}openTurboButton&&openTurboButton.addEventListener("click",()=>{turboModal.classList.remove("hidden")});const acordeonContainer=document.getElementById("ferreteria-acordeon"),ariaInput=document.getElementById("aria-input"),ariaSearchButton=document.getElementById("aria-search-button"),ariaResultsContainer=document.getElementById("aria-results");
+        
+        function renderAll(){renderAccordion(),renderCartModal(),renderTurboModal(),updateCartIcon()}
+        function updateCartIcon(){const e=JSON.parse(localStorage.getItem("yanz_cart"))||[],t=e.reduce((e,t)=>e+t.quantity,0);cartCounter&&cartIconWrapper&&(cartCounter.textContent=t,cartIconWrapper.classList.toggle("has-items",t>0),cartCounter.classList.toggle("hidden",0===t))}
+        
+        // --- Modal del Carrito Corregido ---
+        function renderCartModal() {
+            const cart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
+            
+            const saleItems = cart.filter(item => item.type === 'sale');
+            let saleTotal = 0;
+            saleItems.forEach(item => saleTotal += (item.price * item.quantity));
+
+            const checkoutButtonHtml = saleItems.length > 0 ? 
+                `<a href="/caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all">
+                    <span>Ir a Pagar ($${saleTotal.toFixed(2)})</span>
+                </a>` : '';
+
+            const quoteMessage = "Hola, me gustaría solicitar una cotización para los siguientes productos:\n" + 
+                cart.map(item => `- ${item.name} (x${item.quantity})`).join("\n");
+            const quoteButtonHtml = cart.length > 0 ?
+                `<a href="https://wa.me/593996480843?text=${encodeURIComponent(quoteMessage)}" target="_blank" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700 transition-all">
+                    <span>Solicitar Cotización de Todo</span>
+                </a>` : '';
+            
+            const cartItemsHtml = cart.length === 0 
+                ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` 
+                : cart.map(item => `
+                    <div class="flex justify-between items-center py-3">
+                        <div>
+                            <span class="text-gray-300 pr-4">${item.name}</span>
+                            ${item.type === 'quote' ? '<span class="text-xs text-blue-400 font-semibold">PARA COTIZAR</span>' : ''}
+                        </div>
+                        <div class="quantity-selector" style="background-color: var(--yanz-bg-alt);">
+                            <button class="quantity-btn text-[var(--yanz-text)]" onclick="updateCart('${item.id}', -1)">-</button>
+                            <span class="quantity-display text-[var(--yanz-text)]">${item.quantity}</span>
+                            <button class="quantity-btn text-[var(--yanz-text)]" onclick="updateCart('${item.id}', 1)">+</button>
+                        </div>
+                    </div>
+                `).join("");
+
+            cartModalContainer.innerHTML=`
                 <div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter">
                     <div class="text-center mb-6">
                         <video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
                         <h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2>
-                        <p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. Aquí guardaré tus ideas para la cotización.</p>
+                        <p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. Aquí guardaré tus ideas.</p>
                     </div>
-                    <div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto">
+                    <div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;">
                         <div id="cart-items" class="divide-y divide-gray-700 text-left">
-                            ${0===e.length?`<p class="text-gray-400 py-8 text-center">Tu cesta de ideas está vacía.</p>`:e.map(e=>`
-                                <div class="flex justify-between items-center py-3">
-                                    <span class="text-gray-300 pr-4">${e.name}</span>
-                                    <div class="quantity-selector" style="background-color: var(--yanz-bg-alt);">
-                                        <button class="quantity-btn text-[var(--yanz-text)]" onclick="updateCart('${e.id}', -1)">-</button>
-                                        <span class="quantity-display text-[var(--yanz-text)]">${e.quantity}</span>
-                                        <button class="quantity-btn text-[var(--yanz-text)]" onclick="updateCart('${e.id}', 1)">+</button>
-                                    </div>
-                                </div>
-                            `).join("")}
+                            ${cartItemsHtml}
                         </div>
                     </div>
-                    <div class="mt-auto pt-4">
-                        ${e.length>0?`<a href="https://wa.me/593996480843?text=${encodeURIComponent("Hola, me gustaría cotizar:\n"+e.map(e=>"- "+e.name+" (x"+e.quantity+")").join("\n"))}" target="_blank" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all"><span>Solicitar Cotización</span></a>`:""}
-                        <button class="mt-4 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button>
+                    <div class="mt-auto pt-4 space-y-3">
+                        ${checkoutButtonHtml}
+                        ${quoteButtonHtml}
+                        <button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button>
                     </div>
-                </div>`}
+                </div>`;
+        }
         
-        function renderTurboModal(){
-            turboModal.innerHTML=`
-            <div class="w-full max-w-lg bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center modal-enter">
-                <video autoplay loop muted playsinline class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-[var(--yanz-yellow)] shadow-lg object-cover">
-                    <source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4">
-                </video>
-                <h2 class="text-2xl font-bold text-white">¡Hola! ¡Soy Turbo, listo para llevar tus materiales! 🚀</h2>
-                <div class="text-gray-300 text-sm mt-4 text-left space-y-4">
-                    <p>Mi misión es entregarte todo lo que necesitas para tu proyecto de la manera más rápida y clara posible. ¡Aquí te explico cómo funciono!</p>
-                    <div>
-                        <h4 class="font-bold text-white">Nota de Transparencia: ¡Te lo consigo!</h4>
-                        <p>Para darte el catálogo más completo, trabajo con los mejores proveedores. Si un artículo no está en nuestra bodega, me encargo de conseguirlo (usualmente en 48 horas). Siempre te contactaremos por WhatsApp para confirmar el tiempo exacto.</p>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-white">Mis Tarifas de Entrega</h4>
-                        <table class="w-full mt-2 text-xs md:text-sm">
-                            <thead class="border-b border-gray-600"><tr><th class="p-2">Zona</th><th class="p-2">Compra</th><th class="p-2">Costo</th></tr></thead>
-                            <tbody>
-                                <tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">Menor a $50</td><td class="p-2 font-bold">$4.00</td></tr>
-                                <tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">$50 o más</td><td class="p-2 font-bold text-green-400">¡GRATIS!</td></tr>
-                                <tr class="border-b border-gray-700"><td class="p-2">Valles</td><td class="p-2">Menor a $75</td><td class="p-2 font-bold">$7.00</td></tr>
-                                <tr><td class="p-2">Valles</td><td class="p-2">$75 o más</td><td class="p-2 font-bold">$3.50</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="mt-6">
-                    <button class="w-full bg-[var(--yanz-yellow)] text-gray-900 font-bold py-3 px-5 rounded-lg shadow-sm hover:opacity-90 transition-opacity" onclick="closeTurboModal()">¡Entendido!</button>
-                </div>
-            </div>`}
+        function renderTurboModal(){turboModal.innerHTML=`
+        <div class="w-full max-w-lg bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center modal-enter">
+            <video autoplay loop muted playsinline class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-[var(--yanz-yellow)] shadow-lg object-cover">
+                <source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4">
+            </video>
+            <h2 class="text-2xl font-bold text-white">¡Hola! ¡Soy Turbo, listo para llevar tus materiales! 🚀</h2>
+            <div class="text-gray-300 text-sm mt-4 text-left space-y-4">
+                <p>Mi misión es entregarte todo lo que necesitas para tu proyecto de la manera más rápida y clara posible. ¡Aquí te explico cómo funciono!</p>
+                <div><h4 class="font-bold text-white">Nota de Transparencia: ¡Te lo consigo!</h4><p>Para darte el catálogo más completo, trabajo con los mejores proveedores. Si un artículo no está en nuestra bodega, me encargo de conseguirlo (usualmente en 48 horas). Siempre te contactaremos por WhatsApp para confirmar el tiempo exacto.</p></div>
+                <div><h4 class="font-bold text-white">Mis Tarifas de Entrega</h4><table class="w-full mt-2 text-xs md:text-sm"><thead class="border-b border-gray-600"><tr><th class="p-2">Zona</th><th class="p-2">Compra</th><th class="p-2">Costo</th></tr></thead><tbody><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">Menor a $50</td><td class="p-2 font-bold">$4.00</td></tr><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">$50 o más</td><td class="p-2 font-bold text-green-400">¡GRATIS!</td></tr><tr class="border-b border-gray-700"><td class="p-2">Valles</td><td class="p-2">Menor a $75</td><td class="p-2 font-bold">$7.00</td></tr><tr><td class="p-2">Valles</td><td class="p-2">$75 o más</td><td class="p-2 font-bold">$3.50</td></tr></tbody></table></div>
+            </div>
+            <div class="mt-6"><button class="w-full bg-[var(--yanz-yellow)] text-gray-900 font-bold py-3 px-5 rounded-lg shadow-sm hover:opacity-90 transition-opacity" onclick="closeTurboModal()">¡Entendido!</button></div>
+        </div>`}
+        
+        function renderAccordion(){if(!acordeonContainer)return;const e=JSON.parse(localStorage.getItem("yanz_cart"))||[];acordeonContainer.innerHTML="",ferreteriaCategorias.forEach((t,a)=>{const n=document.createElement("div");n.className="bg-[var(--yanz-bg-alt)] rounded-lg overflow-hidden border border-[var(--yanz-border)]",n.dataset.categoryIndex=a;const i=document.createElement("button");i.className="acordeon-boton w-full flex justify-between items-center p-4 text-left",i.innerHTML=`<span class="text-lg font-bold">${t.title}</span><div class="bg-[var(--yanz-primary)] text-white text-sm font-semibold py-1 px-4 rounded-full">Ver Productos</div>`;const d=document.createElement("div");d.className="panel-productos grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4",t.products.length>0?t.products.forEach(t=>{const a=e.find(e=>e.id===t.id),n=document.createElement("div");n.className="bg-[var(--yanz-bg)] rounded-lg p-4 text-center shadow-md flex flex-col";
+            let buttonHtml = a ? 
+                `<div class="quantity-selector mt-auto">
+                    <button class="quantity-btn minus-btn" data-id="${t.id}">-</button>
+                    <span class="quantity-display">${a.quantity}</span>
+                    <button class="quantity-btn plus-btn" data-id="${t.id}">+</button>
+                </div>` :
+                (t.type === 'sale' ? 
+                    `<button class="add-to-cart-btn mt-auto w-full bg-[var(--yanz-primary)] hover:bg-[var(--yanz-secondary)] text-white font-bold py-2 px-4 rounded-full transition-colors" data-id="${t.id}">Agregar a Coti</button>` :
+                    `<button class="add-to-cart-btn mt-auto w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors" data-id="${t.id}">Agregar para Cotizar</button>`
+                );
 
-        function renderAccordion(){if(!acordeonContainer)return;const e=JSON.parse(localStorage.getItem("yanz_cart"))||[];acordeonContainer.innerHTML="",ferreteriaCategorias.forEach((t,a)=>{const n=document.createElement("div");n.className="bg-[var(--yanz-bg-alt)] rounded-lg overflow-hidden border border-[var(--yanz-border)]",n.dataset.categoryIndex=a;const i=document.createElement("button");i.className="acordeon-boton w-full flex justify-between items-center p-4 text-left",i.innerHTML=`<span class="text-lg font-bold">${t.title}</span><div class="bg-[var(--yanz-primary)] text-white text-sm font-semibold py-1 px-4 rounded-full">Ver Productos</div>`;const d=document.createElement("div");d.className="panel-productos grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4",t.products.length>0?t.products.forEach(t=>{const a=e.find(e=>e.id===t.id),n=document.createElement("div");n.className="bg-[var(--yanz-bg)] rounded-lg p-4 text-center shadow-md flex flex-col";let i="";i=a?`
-                                <div class="quantity-selector mt-auto">
-                                    <button class="quantity-btn minus-btn" data-id="${t.id}">-</button>
-                                    <span class="quantity-display">${a.quantity}</span>
-                                    <button class="quantity-btn plus-btn" data-id="${t.id}">+</button>
-                                </div>`:`<button class="add-to-cart-btn mt-auto w-full bg-[var(--yanz-primary)] hover:bg-[var(--yanz-secondary)] text-white font-bold py-2 px-4 rounded-full transition-colors" data-id="${t.id}">Agregar a Coti</button>`,n.innerHTML=`<img src="${t.image}" alt="${t.name}" class="w-full h-32 object-cover rounded-md mb-4"><h4 class="font-semibold mb-4 flex-grow">${t.name}</h4><div class="action-container">${i}</div>`,d.appendChild(n)}):d.innerHTML='<p class="text-[var(--yanz-text-alt)] col-span-full text-center py-4">Productos próximamente...</p>',n.appendChild(i),n.appendChild(d),acordeonContainer.appendChild(n),i.addEventListener("click",()=>{const e=d.classList.contains("open");acordeonContainer.querySelectorAll(".panel-productos.open").forEach(e=>{e.classList.remove("open"),e.style.maxHeight=null}),e||(d.classList.add("open"),d.style.maxHeight=d.scrollHeight+"px")})}),acordeonContainer.querySelectorAll(".add-to-cart-btn, .quantity-btn").forEach(e=>{e.addEventListener("click",t=>{t.stopPropagation();const a=t.currentTarget.dataset.id,n="minus-btn"===t.currentTarget.classList[1]?-1:1;updateCart(a,n)})})}function performSearch(){const e=ariaInput.value.toLowerCase().trim();if(!e)return;ariaResultsContainer.innerHTML='<p class="text-center text-[var(--yanz-text-alt)]">Buscando...</p>';let t={};ferreteriaCategorias.forEach((a,n)=>{a.products.forEach(i=>{i.name.toLowerCase().includes(e)&&(t[n]?t[n].count++:t[n]={count:1,title:a.title})})});let a=Object.keys(t);setTimeout(()=>{if(ariaResultsContainer.innerHTML="",a.length>0)a.forEach(e=>{const a=document.createElement("div");a.className="bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] p-4 rounded-lg mb-2 flex justify-between items-center cursor-pointer hover:border-[var(--yanz-primary)]",a.innerHTML=`<div><span class="font-bold">"${ariaInput.value}"</span><p class="text-sm text-[var(--yanz-text-alt)]">Encontrado en: ${t[e].title} (${t[e].count} ${t[e].count>1?"productos":"producto"})</p></div><span class="text-[var(--yanz-primary)] font-bold">Ver &rarr;</span>`,a.addEventListener("click",()=>{const t=document.querySelector(`[data-category-index='${e}']`);if(t){t.scrollIntoView({behavior:"smooth",block:"center"});const a=t.querySelector("button");a.nextElementSibling.classList.contains("open")||a.click()}}),ariaResultsContainer.appendChild(a)});else ariaResultsContainer.innerHTML=`<p class="text-center text-[var(--yanz-text-alt)]">Lo siento, no encontré nada parecido a "${ariaInput.value}". Puedes pedirle ayuda a Turbo para conseguirlo.</p>`},500)}ariaSearchButton&&ariaSearchButton.addEventListener("click",performSearch),ariaInput&&ariaInput.addEventListener("keypress",e=>{e.key==="Enter"&&performSearch()}),window.updateCart=updateCart,window.closeCartModal=closeCartModal,window.closeTurboModal=closeTurboModal,renderAll()});
+            n.innerHTML=`<img src="${t.image}" alt="${t.name}" class="w-full h-32 object-cover rounded-md mb-4"><h4 class="font-semibold mb-2 flex-grow">${t.name}</h4>${t.price ? `<p class="font-bold text-lg text-[var(--yanz-primary)] mb-4">$${t.price.toFixed(2)}</p>` : ''}<div class="action-container">${buttonHtml}</div>`,d.appendChild(n)}):d.innerHTML='<p class="text-[var(--yanz-text-alt)] col-span-full text-center py-4">Productos próximamente...</p>',n.appendChild(i),n.appendChild(d),acordeonContainer.appendChild(n),i.addEventListener("click",()=>{const e=d.classList.contains("open");acordeonContainer.querySelectorAll(".panel-productos.open").forEach(e=>{e.classList.remove("open"),e.style.maxHeight=null}),e||(d.classList.add("open"),d.style.maxHeight=d.scrollHeight+"px")})}),acordeonContainer.querySelectorAll(".add-to-cart-btn, .quantity-btn").forEach(e=>{e.addEventListener("click",t=>{t.stopPropagation();const a=t.currentTarget.dataset.id,n=t.currentTarget.classList.contains("minus-btn")?-1:1;updateCart(a,n)})})}function performSearch(){const e=ariaInput.value.toLowerCase().trim();if(!e)return;ariaResultsContainer.innerHTML='<p class="text-center text-[var(--yanz-text-alt)]">Buscando...</p>';let t={};ferreteriaCategorias.forEach((a,n)=>{a.products.forEach(i=>{i.name.toLowerCase().includes(e)&&(t[n]?t[n].count++:t[n]={count:1,title:a.title})})});let a=Object.keys(t);setTimeout(()=>{if(ariaResultsContainer.innerHTML="",a.length>0)a.forEach(e=>{const a=document.createElement("div");a.className="bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] p-4 rounded-lg mb-2 flex justify-between items-center cursor-pointer hover:border-[var(--yanz-primary)]",a.innerHTML=`<div><span class="font-bold">"${ariaInput.value}"</span><p class="text-sm text-[var(--yanz-text-alt)]">Encontrado en: ${t[e].title} (${t[e].count} ${t[e].count>1?"productos":"producto"})</p></div><span class="text-[var(--yanz-primary)] font-bold">Ver &rarr;</span>`,a.addEventListener("click",()=>{const t=document.querySelector(`[data-category-index='${e}']`);if(t){t.scrollIntoView({behavior:"smooth",block:"center"});const a=t.querySelector("button");a.nextElementSibling.classList.contains("open")||a.click()}}),ariaResultsContainer.appendChild(a)});else ariaResultsContainer.innerHTML=`<p class="text-center text-[var(--yanz-text-alt)]">Lo siento, no encontré nada parecido a "${ariaInput.value}". Puedes pedirle ayuda a Turbo para conseguirlo.</p>`},500)}ariaSearchButton&&ariaSearchButton.addEventListener("click",performSearch),ariaInput&&ariaInput.addEventListener("keypress",e=>{e.key==="Enter"&&performSearch()}),window.updateCart=updateCart,window.closeCartModal=closeCartModal,window.closeTurboModal=closeTurboModal,renderAll()});
     </script>
 </body>
 </html>
+
