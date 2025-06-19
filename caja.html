@@ -40,7 +40,6 @@
 
         #mobile-menu { background-color: var(--yanz-header-bg); }
 
-        /* Estilo para el círculo del carrito */
         #cart-icon-wrapper {
             padding: 2px;
             border-radius: 50%;
@@ -70,7 +69,6 @@
 </head>
 <body class="antialiased">
 
-    <!-- Encabezado unificado -->
     <header id="main-header" class="bg-[var(--yanz-header-bg)] shadow-md sticky top-0 z-50">
          <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
              <a href="/index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="/assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
@@ -82,7 +80,6 @@
              </div>
              <div class="flex items-center space-x-2">
                  <div class="flex items-center space-x-3">
-                    <!-- CORRECCIÓN: Se restauró el div wrapper para el círculo -->
                     <div id="cart-icon-wrapper">
                         <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
                             <video autoplay loop muted playsinline class="w-8 h-8"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
@@ -271,12 +268,13 @@
             }
         }
         
+        // --- CORRECCIÓN: Funciones de chat ahora incluyen un botón de Enviar ---
         function askForName() {
             conversationState = 'getting_name';
             addMessage('Para comenzar, ¿cuál es tu nombre completo?');
             userActions.innerHTML = `
                 <form onsubmit="event.preventDefault(); handleAction('submit_name', this.name.value);" class="flex gap-2">
-                    <input type="text" name="name" required class="flex-grow bg-[var(--yanz-bg)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Escribe tu nombre...">
+                    <input type="text" name="name" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Escribe tu nombre...">
                     <button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button>
                 </form>
             `;
@@ -288,7 +286,7 @@
             addMessage(`¡Un gusto, ${userData.name}! Ahora, por favor, indícame la dirección completa para la entrega.`);
              userActions.innerHTML = `
                 <form onsubmit="event.preventDefault(); handleAction('submit_address', this.address.value);" class="flex gap-2">
-                    <input type="text" name="address" required class="flex-grow bg-[var(--yanz-bg)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Calle, número, sector...">
+                    <input type="text" name="address" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Calle, número, sector...">
                     <button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button>
                 </form>
             `;
@@ -300,7 +298,7 @@
             addMessage('¡Entendido! Si deseas recibir una copia de la factura, puedes darme tu correo electrónico. Es opcional.');
             userActions.innerHTML = `
                 <form onsubmit="event.preventDefault(); handleAction('submit_email', this.email.value);" class="flex gap-2">
-                    <input type="email" name="email" class="flex-grow bg-[var(--yanz-bg)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="tu.correo@ejemplo.com (opcional)">
+                    <input type="email" name="email" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="tu.correo@ejemplo.com (opcional)">
                     <button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button>
                 </form>
             `;
@@ -312,7 +310,7 @@
             addMessage('Perfecto. ¿Hay alguna nota adicional que deba saber sobre tu pedido o la entrega?');
             userActions.innerHTML = `
                 <form onsubmit="event.preventDefault(); handleAction('submit_notes', this.notes.value);" class="flex gap-2">
-                    <input type="text" name="notes" class="flex-grow bg-[var(--yanz-bg)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Ej: llamar antes de llegar...">
+                    <input type="text" name="notes" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Ej: llamar antes de llegar...">
                     <button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button>
                 </form>
             `;
