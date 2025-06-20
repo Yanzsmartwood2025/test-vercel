@@ -91,6 +91,7 @@
         </header>
         
         <main>
+             <!-- Contenido principal de la página (hero, productos, servicios, etc.) -->
             <section id="hero" class="relative h-screen flex items-center justify-center text-white"><div class="absolute inset-0 bg-black/60 z-10"></div><video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="assets/videos/hero_background.mp4" type="video/mp4"></video><div class="relative z-20 text-center px-4"><video autoplay loop muted playsinline class="w-48 md:w-64 mx-auto mb-6"><source src="assets/videos/videologo-principal.mp4" type="video/mp4"></video><h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">YAN'Z SMART WOOD</h1><p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.</p></div></section>
             <section id="productos" class="py-20 section-bg"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Explora Nuestros Productos</h2><div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div></div></section>
             <section id="servicios" class="py-20"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Conoce Nuestros Servicios</h2><div id="service-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div></section>
@@ -106,6 +107,7 @@
     
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden"></div>
 
+    <!-- ===== [INICIO] NUEVO MODAL DE AUTENTICACIÓN ===== -->
     <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden">
         <div class="w-full max-w-xs bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-8 flex flex-col modal-enter relative text-center">
              <button id="close-auth-modal-button" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
@@ -120,6 +122,7 @@
             </button>
         </div>
     </div>
+    <!-- ===== [FIN] NUEVO MODAL DE AUTENTICACIÓN ===== -->
     
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
@@ -144,35 +147,40 @@
         appCheck.activate('6LfW-2crAAAAAMamgQQ_K1J2CHu4AVUejcTHp-x4', true);
 
         const auth = firebase.auth();
+        const db = firebase.firestore();
         const authContainer = document.getElementById('auth-container');
+        
+        // ===== [INICIO] Referencias a los elementos del nuevo modal =====
         const authModal = document.getElementById('auth-modal');
         const closeAuthModalButton = document.getElementById('close-auth-modal-button');
         const googleLoginButtonModal = document.getElementById('google-login-button-modal');
+        // ===== [FIN] Referencias a los elementos del nuevo modal =====
 
         const loginWithGoogle = () => {
             const provider = new firebase.auth.GoogleAuthProvider();
-            // --- CAMBIO CLAVE: Usar signInWithRedirect para máxima compatibilidad con PWA ---
-            auth.signInWithRedirect(provider);
+            
+            // ===== [CAMBIO CLAVE] Forzar el selector de cuentas de Google =====
+            provider.setCustomParameters({
+                prompt: 'select_account'
+            });
+
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log('Inicio de sesión con popup exitoso:', result.user.displayName);
+                    authModal.classList.add('hidden'); // Ocultar modal tras éxito
+                })
+                .catch((error) => {
+                    console.error("Error en signInWithPopup:", error.code, error.message);
+                });
         };
         
         const logout = () => { auth.signOut(); };
 
-        // --- Manejo del resultado de la redirección al volver a la página ---
-        auth.getRedirectResult()
-            .then((result) => {
-                if (result.user) {
-                    console.log('Inicio de sesión por redirección exitoso:', result.user.displayName);
-                    authModal.classList.add('hidden'); // Ocultar modal si estaba abierto
-                }
-            }).catch((error) => {
-                console.error("Error en getRedirectResult:", error.code, error.message);
-            });
-            
         authContainer.innerHTML = `<div class="w-9 h-9 rounded-full bg-gray-700 animate-pulse"></div>`;
 
         auth.onAuthStateChanged(user => {
             if (user) {
-                // --- VISTA PARA USUARIO CONECTADO ---
+                // --- VISTA PARA USUARIO CONECTADO (con menú desplegable) ---
                 const userImage = user.photoURL ? `<img src="${user.photoURL}" alt="Foto de ${user.displayName}" class="w-full h-full object-cover">` : `<span class="text-white font-bold text-xl">${user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}</span>`;
                 authContainer.innerHTML = `<div class="relative"><button id="user-menu-button" title="Mi Cuenta" class="w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-sm overflow-hidden border-2 border-gray-500 hover:border-gray-400 bg-gray-700">${userImage}</button><div id="user-menu-dropdown" class="hidden absolute top-full right-0 mt-2 w-56 bg-[var(--yanz-header-bg)] border border-gray-700 rounded-lg shadow-xl z-50"><div class="px-4 py-3 border-b border-gray-700"><p class="text-sm font-semibold text-white truncate">${user.displayName || 'Usuario'}</p><p class="text-xs text-gray-400 truncate">${user.email || 'Sin email'}</p></div><div class="py-1"><a href="#" id="logout-button-menu" class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"><svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>Cerrar Sesión</a></div></div></div>`;
                 const userMenuButton = document.getElementById('user-menu-button'); const userMenuDropdown = document.getElementById('user-menu-dropdown'); const logoutButtonMenu = document.getElementById('logout-button-menu');
@@ -180,7 +188,7 @@
                 logoutButtonMenu.addEventListener('click', (e) => { e.preventDefault(); userMenuDropdown.classList.add('hidden'); logout(); });
                 window.addEventListener('click', (event) => { if (userMenuDropdown && !userMenuDropdown.classList.contains('hidden') && !userMenuButton.contains(event.target) && !userMenuDropdown.contains(event.target)) { userMenuDropdown.classList.add('hidden'); } });
             } else {
-                // --- VISTA PARA USUARIO DESCONECTADO ---
+                // --- VISTA PARA USUARIO DESCONECTADO (icono que abre el modal) ---
                 authContainer.innerHTML = `<button id="open-auth-modal-button" title="Acceder o Registrarse" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm overflow-hidden"><video autoplay loop muted playsinline class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML = '<span class=\\'font-sans text-gray-800 text-lg font-bold\\'>G</span>';"><source src="assets/videos/login-icon.mp4" type="video/mp4"></video></button>`;
                 document.getElementById('open-auth-modal-button').addEventListener('click', () => {
                     authModal.classList.remove('hidden');
@@ -188,11 +196,15 @@
             }
         });
         
+        // ===== [INICIO] Lógica para manejar el modal de autenticación =====
         googleLoginButtonModal.addEventListener('click', loginWithGoogle);
         closeAuthModalButton.addEventListener('click', () => authModal.classList.add('hidden'));
         authModal.addEventListener('click', (event) => {
-            if (event.target === authModal) { authModal.classList.add('hidden'); }
+            if (event.target === authModal) { // Cierra el modal si se hace clic en el fondo
+                authModal.classList.add('hidden');
+            }
         });
+        // ===== [FIN] Lógica para manejar el modal de autenticación =====
         
         // --- Lógica del carrito, tema, y carga de datos (sin cambios) ---
         const cartModalContainer = document.getElementById('cart-modal'); const openCartButton = document.getElementById('open-cart-button'); function getCart() { return JSON.parse(localStorage.getItem("yanz_cart")) || []; } function saveCart(cart) { localStorage.setItem("yanz_cart", JSON.stringify(cart)); updateCartIcon(); if (!cartModalContainer.classList.contains('hidden')) { renderCartModal(); } document.dispatchEvent(new CustomEvent('cart-updated')); } window.increaseQuantity = (itemName) => { let cart = getCart(); const item = cart.find(i => i.name === itemName); if (item) { item.quantity = (item.quantity || 1) + 1; } saveCart(cart); }; window.decreaseQuantity = (itemName) => { let cart = getCart(); const itemIndex = cart.findIndex(i => i.name === itemName); if (itemIndex > -1) { if (cart[itemIndex].quantity > 1) { cart[itemIndex].quantity--; } else { cart.splice(itemIndex, 1); } } saveCart(cart); }; window.removeItemFromCart = (itemName) => { let cart = getCart().filter(i => i.name !== itemName); saveCart(cart); }; function renderCartModal() { const cart = getCart(); const actionButtonHtml = cart.length > 0 ? `<a href="caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all"><span>Ir a la Caja</span></a>` : '<a href="ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-lg">Volver a la tienda</a>'; const cartItemsHtml = cart.length === 0 ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` : cart.map(item => `<div class="flex justify-between items-center py-3"><span class="text-gray-300 pr-2 flex-grow">${item.name}</span><div class="flex items-center gap-2 text-white"><button onclick="decreaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">-</button><span class="w-8 text-center">${item.quantity}</span><button onclick="increaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">+</button><button onclick="removeItemFromCart('${item.name}')" class="ml-2 text-red-400 hover:text-red-300 transition-colors" aria-label="Eliminar item"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button></div></div>`).join(""); cartModalContainer.innerHTML=`<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">Tu Carrito de Ideas</h2></div><div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div id="cart-items" class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div><div class="mt-auto pt-4 space-y-3">${actionButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div></div>`; } function updateCartIcon() { const cart = getCart(); const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0); const cartCounter = document.getElementById('cart-counter'); const cartIconWrapper = document.getElementById('cart-icon-wrapper'); if (cartCounter && cartIconWrapper) { cartCounter.textContent = totalItems; cartCounter.classList.toggle('hidden', totalItems === 0); cartIconWrapper.classList.toggle('has-items', totalItems > 0); } } window.closeCartModal = () => cartModalContainer.classList.add('hidden'); openCartButton.addEventListener('click', () => { renderCartModal(); cartModalContainer.classList.remove('hidden'); }); updateCartIcon(); window.addEventListener('storage', (e) => { if (e.key === 'yanz_cart') { updateCartIcon(); } }); document.addEventListener('add-to-cart', updateCartIcon);
