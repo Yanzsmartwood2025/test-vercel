@@ -20,6 +20,7 @@
             --yanz-text-alt: #718096; --yanz-heading: #1A202C; --yanz-primary: #0072CE;
             --yanz-border: #E2E8F0;
             --yanz-header-bg: #141821;
+            --yanz-yellow: #facc15; 
         }
 
         html.dark {
@@ -141,7 +142,15 @@
         </div>
     </footer>
     
+    <!-- Botón flotante de Turbo -->
+    <button id="turbo-button" class="fixed bottom-6 left-6 z-40 rounded-full w-16 h-16 shadow-lg transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" style="background-color: var(--yanz-yellow);">
+        <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4"></video>
+    </button>
+    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-40 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank"><video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="/assets/videos/video-whatsapp.mp4" type="video/mp4"></video></a>
+
+    <!-- Modales -->
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden"></div>
+    <div id="turbo-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden"></div>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -229,6 +238,18 @@
             cartModalContainer.classList.remove('hidden');
         });
         
+        // --- Lógica del modal de Turbo ---
+        const turboModal = document.getElementById("turbo-modal");
+        const openTurboButton = document.getElementById("turbo-button");
+        function renderTurboModal(){
+            turboModal.innerHTML = `<div class="w-full max-w-lg bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center"><video autoplay loop muted playsinline class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-[var(--yanz-yellow)] shadow-lg object-cover"><source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">¡Hola! ¡Soy Turbo, listo para llevar tus materiales! 🚀</h2><div class="text-gray-300 text-sm mt-4 text-left space-y-4"><p>Mi misión es entregarte todo lo que necesitas para tu proyecto de la manera más rápida y clara posible. ¡Aquí te explico cómo funciono!</p><div><h4 class="font-bold text-white">Nota de Transparencia: ¡Te lo consigo!</h4><p>Para darte el catálogo más completo, trabajo con los mejores proveedores. Si un artículo no está en nuestra bodega, me encargo de conseguirlo (usualmente en 48 horas). Siempre te contactaremos por WhatsApp para confirmar el tiempo exacto.</p></div><div><h4 class="font-bold text-white">Mis Tarifas de Entrega</h4><table class="w-full mt-2 text-xs md:text-sm"><thead class="border-b border-gray-600"><tr><th class="p-2">Zona</th><th class="p-2">Compra</th><th class="p-2">Costo</th></tr></thead><tbody><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">Menor a $50</td><td class="p-2 font-bold">$4.00</td></tr><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">$50 o más</td><td class="p-2 font-bold text-green-400">¡GRATIS!</td></tr><tr class="border-b border-gray-700"><td class="p-2">Valles</td><td class="p-2">Menor a $75</td><td class="p-2 font-bold">$7.00</td></tr><tr><td class="p-2">Valles</td><td class="p-2">$75 o más</td><td class="p-2 font-bold">$3.50</td></tr></tbody></table></div></div><div class="mt-6"><button class="w-full bg-[var(--yanz-yellow)] text-gray-900 font-bold py-3 px-5 rounded-lg shadow-sm hover:opacity-90 transition-opacity" onclick="closeTurboModal()">¡Entendido!</button></div></div>`;
+        }
+        window.closeTurboModal = () => turboModal.classList.add('hidden');
+        openTurboButton.addEventListener('click', () => {
+            renderTurboModal();
+            turboModal.classList.remove('hidden');
+        });
+
         // --- Lógica del Chat de Aria con VOZ ---
         const chatCart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
         const chatWindow = document.getElementById('chat-window');
@@ -255,15 +276,12 @@
         }
 
         function speak(text) {
-            // Detiene cualquier voz anterior para evitar solapamientos
             synth.cancel(); 
             if (isMuted || !text) return;
             
             const plainText = text.replace(/<[^>]*>/g, ' '); 
             const utterance = new SpeechSynthesisUtterance(plainText);
-            if (spanishVoice) {
-                utterance.voice = spanishVoice;
-            }
+            if (spanishVoice) utterance.voice = spanishVoice;
             utterance.lang = 'es-ES';
             synth.speak(utterance);
         }
@@ -272,9 +290,7 @@
             isMuted = !isMuted;
             voiceOnIcon.classList.toggle('hidden', isMuted);
             voiceOffIcon.classList.toggle('hidden', !isMuted);
-            if (isMuted) {
-                synth.cancel();
-            }
+            if (isMuted) synth.cancel();
         });
 
         function addMessage(text, sender = 'aria', isHtml = false) {
@@ -284,9 +300,7 @@
             wrapper.innerHTML = content;
             chatWindow.appendChild(wrapper);
             chatWindow.scrollTop = chatWindow.scrollHeight;
-            if (sender === 'aria') {
-                speak(text);
-            }
+            if (sender === 'aria') speak(text);
         }
 
         function handleAction(action, value = null) {
@@ -296,105 +310,54 @@
             if (conversationState === 'start' && action === 'proceed') {
                 addMessage('¡Perfecto!', 'user');
                 setTimeout(askForName, 1000);
-            }
-            if (conversationState === 'getting_name' && action === 'submit_name') {
+            } else if (conversationState === 'getting_name' && action === 'submit_name') {
                 userData.name = value;
                 addMessage(value, 'user');
                 setTimeout(askForAddress, 1000);
-            }
-            if (conversationState === 'getting_address' && action === 'submit_address') {
+            } else if (conversationState === 'getting_address' && action === 'submit_address') {
                 userData.address = value;
                 addMessage(value, 'user');
                 setTimeout(askForEmail, 1000);
-            }
-            if (conversationState === 'getting_email' && action === 'submit_email') {
+            } else if (conversationState === 'getting_email' && action === 'submit_email') {
                 userData.email = value;
                 addMessage(value || 'Omitido', 'user');
                 setTimeout(askForNotes, 1000);
-            }
-             if (conversationState === 'getting_notes' && action === 'submit_notes') {
+            } else if (conversationState === 'getting_notes' && action === 'submit_notes') {
                 userData.notes = value;
                 addMessage(value || 'Sin notas', 'user');
                 setTimeout(finalSummary, 1000);
             }
         }
         
-        function askForName() { /* ... igual que antes ... */ }
-        function askForAddress() { /* ... igual que antes ... */ }
-        function askForEmail() { /* ... igual que antes ... */ }
-        function askForNotes() { /* ... igual que antes ... */ }
-        function finalSummary() { /* ... igual que antes ... */ }
-
-        function startConversation() {
-            conversationState = 'start';
-            let cartSummary = '¡Hola! Soy Aria, tu asistente de compras. He revisado tu carrito y tienes los siguientes productos:<br><br>';
-            chatCart.forEach(item => {
-                cartSummary += `&bull; ${item.quantity} x ${item.name} ${item.type === 'quote' ? '(para cotizar)' : ''}<br>`;
-            });
-            cartSummary += '<br>¿Es correcto? Podemos proceder a registrar tu pedido.';
-            
-            addMessage(cartSummary, 'aria', true);
-            voiceToggleWrapper.classList.remove('hidden');
-            
-            userActions.innerHTML = `
-                <button onclick="handleAction('proceed')" class="w-full bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Sí, continuar</button>
-            `;
-        }
-
-        // --- Flujo de inicio de la página ---
-        function initializePage() {
-             if (chatCart.length === 0) {
-                addMessage('¡Hola! Soy Aria. Parece que tu carrito está vacío.');
-                speak('¡Hola! Soy Aria. Parece que tu carrito está vacío.');
-                userActions.innerHTML = '<a href="/ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Volver a la tienda</a>';
-                return;
-            }
-            
-            // Botón inicial para que el usuario dé permiso al audio
-            userActions.innerHTML = `
-                <button id="start-chat-btn" class="w-full bg-green-500 text-white font-bold py-4 px-6 rounded-full text-lg animate-pulse">
-                    Hablar con Aria para comenzar
-                </button>
-            `;
-            document.getElementById('start-chat-btn').addEventListener('click', () => {
-                userActions.innerHTML = '<p class="text-center text-sm text-[var(--yanz-text-alt)]">Conectando...</p>';
-                setTimeout(startConversation, 500);
-            }, { once: true });
-        }
-        
-        // --- Asignación de funciones a window para los botones en línea ---
-        window.handleAction = handleAction;
-
-        // --- Arranque inicial ---
-        updateCartIcon();
-        initializePage();
-
-        // Re-implementación de las funciones de chat para que no se pierdan al asignar a window
-        askForName = function() {
+        function askForName() {
             conversationState = 'getting_name';
             addMessage('Para comenzar, ¿cuál es tu nombre completo?');
             userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_name', this.name.value);" class="flex gap-2"><input type="text" name="name" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Escribe tu nombre..."><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
             userActions.querySelector('input').focus();
-        };
-        askForAddress = function() {
+        }
+
+        function askForAddress() {
             conversationState = 'getting_address';
             addMessage(`¡Un gusto, ${userData.name}! Ahora, por favor, indícame la dirección completa para la entrega.`);
             userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_address', this.address.value);" class="flex gap-2"><input type="text" name="address" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Calle, número, sector..."><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
             userActions.querySelector('input').focus();
-        };
-        askForEmail = function() {
+        }
+
+        function askForEmail() {
             conversationState = 'getting_email';
             addMessage('¡Entendido! Si deseas recibir una copia de la factura, puedes darme tu correo electrónico. Es opcional.');
             userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_email', this.email.value);" class="flex gap-2"><input type="email" name="email" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="tu.correo@ejemplo.com (opcional)"><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
             userActions.querySelector('input').focus();
-        };
-        askForNotes = function() {
+        }
+
+        function askForNotes() {
             conversationState = 'getting_notes';
             addMessage('Perfecto. ¿Hay alguna nota adicional que deba saber sobre tu pedido o la entrega?');
             userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_notes', this.notes.value);" class="flex gap-2"><input type="text" name="notes" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Ej: llamar antes de llegar..."><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
             userActions.querySelector('input').focus();
-        };
-        finalSummary = function() {
+        }
+        
+        function finalSummary() {
             conversationState = 'final';
             const saleItems = chatCart.filter(item => item.type === 'sale');
             const quoteItems = chatCart.filter(item => item.type === 'quote');
@@ -422,7 +385,7 @@
                     whatsappMessage += `- ${item.quantity} x ${item.name}\n`;
                 });
             }
-            if (quoteItems.length > 0 && saleItems.length > 0) {
+            if(quoteItems.length > 0 && saleItems.length > 0) {
                  summaryMessage += `<br>Para confirmar tu pedido, por favor realiza el pago de los productos de ferretería y envíanos el comprobante por WhatsApp. Uno de nuestros asesores te contactará para la cotización del resto.`;
             } else if (saleItems.length > 0) {
                  summaryMessage += `<br>Para confirmar tu pedido, por favor realiza el pago y envíanos el comprobante por WhatsApp.`;
@@ -432,7 +395,42 @@
             addMessage(summaryMessage, 'aria', true);
             const whatsappUrl = `https://wa.me/593996480843?text=${encodeURIComponent(whatsappMessage)}`;
             userActions.innerHTML = `<p class="text-center text-sm mb-4">¡Todo está listo! Presiona el botón para confirmar por WhatsApp.</p><a href="${whatsappUrl}" target="_blank" class="w-full block text-center bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full transition-colors text-lg">Confirmar por WhatsApp</a>`;
-        };
+        }
+
+        function startConversation() {
+            conversationState = 'start';
+            voiceToggleWrapper.classList.remove('hidden');
+            let cartSummary = '¡Hola! Soy Aria, tu asistente de compras. He revisado tu carrito y tienes los siguientes productos:<br><br>';
+            chatCart.forEach(item => {
+                cartSummary += `&bull; ${item.quantity} x ${item.name} ${item.type === 'quote' ? '(para cotizar)' : ''}<br>`;
+            });
+            cartSummary += '<br>¿Es correcto? Podemos proceder a registrar tu pedido.';
+            addMessage(cartSummary, 'aria', true);
+            userActions.innerHTML = `<button onclick="handleAction('proceed')" class="w-full bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Sí, continuar</button>`;
+        }
+
+        function initializePage() {
+             if (chatCart.length === 0) {
+                addMessage('¡Hola! Soy Aria. Parece que tu carrito está vacío.');
+                userActions.innerHTML = '<a href="/ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Volver a la tienda</a>';
+                return;
+            }
+            
+            userActions.innerHTML = `
+                <button id="start-chat-btn" class="w-full bg-green-500 text-white font-bold py-4 px-6 rounded-full text-lg animate-pulse">
+                    Hablar con Aria para comenzar
+                </button>
+            `;
+            document.getElementById('start-chat-btn').addEventListener('click', () => {
+                userActions.innerHTML = '<p class="text-center text-sm text-[var(--yanz-text-alt)]">Conectando...</p>';
+                setTimeout(startConversation, 500);
+            }, { once: true });
+        }
+        
+        window.handleAction = handleAction;
+
+        updateCartIcon();
+        initializePage();
     });
     </script>
 </body>
