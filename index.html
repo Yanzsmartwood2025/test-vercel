@@ -7,13 +7,11 @@
     
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#1A202C">
-
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
-
     <style>
         :root {
             --yanz-bg: #FFFFFF; --yanz-bg-alt: #F7F8FC; --yanz-text: #2D3748;
@@ -21,42 +19,35 @@
             --yanz-secondary: #00AEEF; --yanz-border: #E2E8F0; --yanz-shadow: rgba(0,0,0,0.05);
             --yanz-header-bg: #141821;
         }
-
         html.dark {
             --yanz-bg: #1A202C; --yanz-bg-alt: #2D3748; --yanz-text: #E2E8F0;
             --yanz-text-alt: #A0AEC0; --yanz-heading: #FFFFFF; --yanz-primary: #38B2AC;
             --yanz-secondary: #4FD1C5;
         }
-
         body { 
             font-family: 'Poppins', sans-serif; 
             background-color: var(--yanz-bg);
             color: var(--yanz-text);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
         h1, h2, h3 { 
             font-family: 'Roboto Slab', serif;
             color: var(--yanz-heading);
             transition: color 0.3s ease;
         }
-
         .section-bg { 
             background-color: var(--yanz-bg-alt);
             transition: background-color 0.3s ease;
         }
-
         html { scroll-behavior: smooth; }
         
         #main-header {
             background-color: var(--yanz-header-bg);
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-
         #mobile-menu {
             background-color: var(--yanz-header-bg);
         }
-
         #cart-icon-wrapper {
             padding: 2px;
             border-radius: 50%;
@@ -78,14 +69,20 @@
         #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         #page-content { opacity: 0; transition: opacity 0.5s ease-in; }
         #page-content.loaded { opacity: 1; }
+
+        .modal-enter {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
     </style>
 </head>
 <body class="antialiased">
-
     <div id="preloader">
         <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain"><source src="/assets/videos/intro.mp4" type="video/mp4"></video>
     </div>
-
     <div id="page-content">
         <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
              <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
@@ -95,38 +92,41 @@
                      <a href="#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
                      <a href="#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Testimonios</a>
                      <a href="#juegos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Juegos</a>
-                     <a href="/caja.html" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Caja</a>
+                     <a href="#caja" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Caja</a>
                      <a href="#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
                  </div>
-                 <div class="flex items-center space-x-2">
-                     <div class="flex items-center space-x-3">
+                 <div class="flex items-center space-x-2 sm:space-x-4">
+                    <!-- Contenedor para la Autenticación -->
+                    <div id="auth-container" class="flex items-center"></div>
+                    
+                    <div class="flex items-center space-x-3">
                          <div id="cart-icon-wrapper">
                              <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
                                  <video autoplay loop muted playsinline class="w-8 h-8"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
                              </button>
                          </div>
                          <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
-                     </div>
-                     <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
-                         <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
-                         <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                     </button>
-                     <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                    </div>
+
+                    <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
+                        <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
+                        <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    </button>
+                    <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                  </div>
              </nav>
              <div id="mobile-menu" class="hidden md:hidden">
-                 <a href="#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a><a href="#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a><a href="#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a><a href="#juegos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Juegos</a><a href="/caja.html" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Caja</a><a href="#contacto" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contacto</a>
+                 <a href="#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a><a href="#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a><a href="#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a><a href="#juegos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Juegos</a><a href="#caja" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Caja</a><a href="#contacto" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contacto</a>
              </div>
         </header>
-
+        
         <main>
-             <section id="hero" class="relative h-screen flex items-center justify-center text-white"><div class="absolute inset-0 bg-black/60 z-10"></div><video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="/assets/videos/hero_background.mp4" type="video/mp4"></video><div class="relative z-20 text-center px-4"><video autoplay loop muted playsinline class="w-48 md:w-64 mx-auto mb-6"><source src="/assets/videos/videologo-principal.mp4" type="video/mp4"></video><h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">YAN'Z SMART WOOD</h1><p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.</p></div></section>
-             <section id="productos" class="py-20 section-bg"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Explora Nuestros Productos</h2><div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div></div></section>
-             <section id="servicios" class="py-20"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Conoce Nuestros Servicios</h2><div id="service-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div></section>
-             <section id="testimonios" class="py-20 section-bg"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">La Experiencia de Nuestros Clientes</h2><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col"><svg class="w-8 h-8 text-[var(--yanz-primary)] mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.46 6.33a.75.75 0 00-1.44-.66L3.65 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63zm5.03 0a.75.75 0 00-1.44-.66L8.68 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63z"/></svg><p class="text-[var(--yanz-text-alt)] italic mb-6 flex-grow">"El diseño de mi nueva cocina superó todas mis expectativas. El equipo fue profesional y cuidó cada detalle."</p><h3 class="font-bold text-right">- Carlos R., Cumbayá</h3></div><div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col"><svg class="w-8 h-8 text-[var(--yanz-primary)] mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.46 6.33a.75.75 0 00-1.44-.66L3.65 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63zm5.03 0a.75.75 0 00-1.44-.66L8.68 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63z"/></svg><p class="text-[var(--yanz-text-alt)] italic mb-6 flex-grow">"La instalación del piso SPC fue impecable. Aunque tomó un día más de lo planeado, la calidad del trabajo valió la pena."</p><h3 class="font-bold text-right">- Verónica S., Quito</h3></div><div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col"><svg class="w-8 h-8 text-[var(--yanz-primary)] mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.46 6.33a.75.75 0 00-1.44-.66L3.65 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63zm5.03 0a.75.75 0 00-1.44-.66L8.68 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63z"/></svg><p class="text-[var(--yanz-text-alt)] italic mb-6 flex-grow">"¡Mi nuevo clóset es un sueño! El espacio está optimizado al máximo. Totalmente recomendados."</p><h3 class="font-bold text-right">- David M., La Carolina</h3></div></div><div class="text-center mt-16"><h3 class="text-2xl font-bold mb-4">¿Te gustó nuestro trabajo?</h3><p class="text-[var(--yanz-text-alt)] max-w-2xl mx-auto mb-8">Tu opinión es muy importante para nosotros. ¡Nos encantaría saber de ti!</p><a href="https://wa.me/593996480843?text=Hola%2C%20quiero%20compartir%20mi%20experiencia%20con%20YAN'Z%20SMART%20WOOD." target="_blank" class="inline-block bg-[var(--yanz-primary)] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[var(--yanz-secondary)] transition-all duration-300 transform hover:scale-105">Comparte tu Experiencia</a></div></div></section>
-<section id="juegos" class="py-20"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl md:text-4xl font-bold mb-4">Zona de Recompensas YAN'Z</h2><p class="max-w-3xl mx-auto text-[var(--yanz-text-alt)] mb-12">Creemos que la fidelidad debe ser recompensada. Por eso, estamos construyendo una zona de juegos exclusiva. ¡Prepárate para jugar, acumular puntos y canjearlos por descuentos reales en nuestros productos y servicios!</p><div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-xl hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2"><div class="overflow-hidden"><video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="/assets/videos/diseno_ia.mp4" type="video/mp4"></video></div><div class="p-6"><h3 class="text-xl font-bold mb-2">Juega. Gana. Construye.</h3><p class="text-sm text-[var(--yanz-text-alt)] mb-4">Desde herramientas hasta un descuento en tu próximo gran proyecto. La diversión también construye.</p><a href="/juego.html" class="mt-4 inline-block bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-semibold py-2 px-6 rounded-full cursor-not-allowed">Próximamente...</a></div></div></div></section>
-             
-             <section id="caja" class="py-20 section-bg"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl md:text-4xl font-bold mb-4">Caja Virtual YAN'Z</h2><p class="max-w-3xl mx-auto text-[var(--yanz-text-alt)] mb-12">Cuando estés listo para hacer realidad tu proyecto, nuestro asistente virtual "Coti" te guiará en un proceso de pago fácil y seguro. Revisa tu lista, elige tu método de pago y déjanos el resto a nosotros.</p><div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-xl hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2"><div class="overflow-hidden"><video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video></div><div class="p-6"><h3 class="text-xl font-bold mb-2">Un Checkout Inteligente</h3><p class="text-sm text-[var(--yanz-text-alt)] mb-4">Revisa tu cotización, confirma tu pedido y prepárate para ver tu visión convertida en realidad. Tu seguridad y confianza son nuestra prioridad.</p><a href="/caja.html" class="mt-4 inline-block bg-[var(--yanz-primary)] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[var(--yanz-secondary)] transition-all duration-300 transform hover:scale-105">Ir a la Caja</a></div></div></div></section>
+            <section id="hero" class="relative h-screen flex items-center justify-center text-white"><div class="absolute inset-0 bg-black/60 z-10"></div><video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="/assets/videos/hero_background.mp4" type="video/mp4"></video><div class="relative z-20 text-center px-4"><video autoplay loop muted playsinline class="w-48 md:w-64 mx-auto mb-6"><source src="/assets/videos/videologo-principal.mp4" type="video/mp4"></video><h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">YAN'Z SMART WOOD</h1><p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.</p></div></section>
+            <section id="productos" class="py-20 section-bg"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Explora Nuestros Productos</h2><div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div></div></section>
+            <section id="servicios" class="py-20"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Conoce Nuestros Servicios</h2><div id="service-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div></section>
+            <section id="testimonios" class="py-20 section-bg"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">La Experiencia de Nuestros Clientes</h2><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col"><svg class="w-8 h-8 text-[var(--yanz-primary)] mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.46 6.33a.75.75 0 00-1.44-.66L3.65 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63zm5.03 0a.75.75 0 00-1.44-.66L8.68 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63z"/></svg><p class="text-[var(--yanz-text-alt)] italic mb-6 flex-grow">"El diseño de mi nueva cocina superó todas mis expectativas. El equipo fue profesional y cuidó cada detalle."</p><h3 class="font-bold text-right">- Carlos R., Cumbayá</h3></div><div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col"><svg class="w-8 h-8 text-[var(--yanz-primary)] mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.46 6.33a.75.75 0 00-1.44-.66L3.65 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63zm5.03 0a.75.75 0 00-1.44-.66L8.68 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63z"/></svg><p class="text-[var(--yanz-text-alt)] italic mb-6 flex-grow">"La instalación del piso SPC fue impecable. Aunque tomó un día más de lo planeado, la calidad del trabajo valió la pena."</p><h3 class="font-bold text-right">- Verónica S., Quito</h3></div><div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col"><svg class="w-8 h-8 text-[var(--yanz-primary)] mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.46 6.33a.75.75 0 00-1.44-.66L3.65 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63zm5.03 0a.75.75 0 00-1.44-.66L8.68 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63z"/></svg><p class="text-[var(--yanz-text-alt)] italic mb-6 flex-grow">"¡Mi nuevo clóset es un sueño! El espacio está optimizado al máximo. Totalmente recomendados."</p><h3 class="font-bold text-right">- David M., La Carolina</h3></div></div><div class="text-center mt-16"><h3 class="text-2xl font-bold mb-4">¿Te gustó nuestro trabajo?</h3><p class="text-[var(--yanz-text-alt)] max-w-2xl mx-auto mb-8">Tu opinión es muy importante para nosotros. ¡Nos encantaría saber de ti!</p><a href="https://wa.me/593996480843?text=Hola%2C%20quiero%20compartir%20mi%20experiencia%20con%20YAN'Z%20SMART%20WOOD." target="_blank" class="inline-block bg-[var(--yanz-primary)] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[var(--yanz-secondary)] transition-all duration-300 transform hover:scale-105">Comparte tu Experiencia</a></div></div></section>
+            <section id="juegos" class="py-20"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl md:text-4xl font-bold mb-4">Zona de Recompensas YAN'Z</h2><p class="max-w-3xl mx-auto text-[var(--yanz-text-alt)] mb-12">Creemos que la fidelidad debe ser recompensada. Por eso, estamos construyendo una zona de juegos exclusiva. ¡Prepárate para jugar, acumular puntos y canjearlos por descuentos reales en nuestros productos y servicios!</p><div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-xl hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2"><div class="overflow-hidden"><video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="/assets/videos/diseno_ia.mp4" type="video/mp4"></video></div><div class="p-6"><h3 class="text-xl font-bold mb-2">Juega. Gana. Construye.</h3><p class="text-sm text-[var(--yanz-text-alt)] mb-4">Desde herramientas hasta un descuento en tu próximo gran proyecto. La diversión también construye.</p><a href="/juego.html" class="mt-4 inline-block bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-semibold py-2 px-6 rounded-full cursor-not-allowed">Próximamente...</a></div></div></div></section>
+            <section id="caja" class="py-20 section-bg"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl md:text-4xl font-bold mb-4">Caja Virtual YAN'Z</h2><p class="max-w-3xl mx-auto text-[var(--yanz-text-alt)] mb-12">Cuando estés listo para hacer realidad tu proyecto, nuestro asistente virtual "Coti" te guiará en un proceso de pago fácil y seguro. Revisa tu lista, elige tu método de pago y déjanos el resto a nosotros.</p><div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-xl hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2"><div class="overflow-hidden"><video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video></div><div class="p-6"><h3 class="text-xl font-bold mb-2">Un Checkout Inteligente</h3><p class="text-sm text-[var(--yanz-text-alt)] mb-4">Revisa tu cotización, confirma tu pedido y prepárate para ver tu visión convertida en realidad. Tu seguridad y confianza son nuestra prioridad.</p><a href="/caja.html" class="mt-4 inline-block bg-[var(--yanz-primary)] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[var(--yanz-secondary)] transition-all duration-300 transform hover:scale-105">Ir a la Caja</a></div></div></div></section>
         </main>
         
         <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8"><div class="container mx-auto px-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left"><div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div><div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110"><img src="/assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div><div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div></div><div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400"><p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p><div class="mt-4 space-x-4"><a href="/como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="/privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="/terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div></div></div></footer>
@@ -134,129 +134,130 @@
     
     <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank"><video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="/assets/videos/video-whatsapp.mp4" type="video/mp4"></video></a>
     
-    <!-- El modal del carrito ahora es solo un contenedor vacío. JS lo llenará. -->
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden"></div>
     
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- LÓGICA DEL PRELOADER Y ARRANQUE DE LA APP ---
-        const preloader = document.getElementById('preloader');
-        const pageContent = document.getElementById('page-content');
-        const introVideo = document.getElementById('intro-video');
-        let appStarted = false;
 
-        function startApp() {
-            if (appStarted) return;
-            appStarted = true;
-            if (preloader) preloader.classList.add('hidden');
-            if (pageContent) pageContent.classList.add('loaded');
-        }
-
-        if (introVideo) {
-            introVideo.addEventListener('ended', startApp);
-            introVideo.addEventListener('error', startApp);
-            setTimeout(startApp, 5000); // Lanza la app después de 5s si el video falla
-        } else {
-            startApp();
-        }
-
-        // --- LÓGICA DEL TEMA (LUZ/OSCURO) ---
-        const themeToggle = document.getElementById('theme-toggle');
-        const sunIcon = document.getElementById('theme-icon-sun');
-        const moonIcon = document.getElementById('theme-icon-moon');
-        const applyTheme = (theme) => {
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-            if(sunIcon && moonIcon){
-                sunIcon.classList.toggle('hidden', theme !== 'dark');
-                moonIcon.classList.toggle('hidden', theme === 'dark');
-            }
+        // --- INICIO: LÓGICA DE FIREBASE ---
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_AUTH_DOMAIN",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_STORAGE_BUCKET",
+            messagingSenderId: "TU_MESSAGING_SENDER_ID",
+            appId: "TU_APP_ID"
         };
-        themeToggle.addEventListener('click', () => {
-            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-            localStorage.setItem('theme', newTheme);
-            applyTheme(newTheme);
-        });
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        applyTheme(savedTheme);
 
-        // --- LÓGICA DEL MENÚ MÓVIL ---
-        const menuButton = document.getElementById('menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-        menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-        });
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const authContainer = document.getElementById('auth-container');
 
-        // --- LÓGICA DEL PIE DE PÁGINA (AÑO Y LOGOS DE PAGO) ---
-        document.getElementById('year').textContent = new Date().getFullYear();
-        const paymentLogosContainer = document.getElementById('payment-logos');
-        if (paymentLogosContainer) {
-            const paymentMethods = [{ name: 'PeiGo', image: '/assets/images/pago-peigo.png' }, { name: 'Mastercard', image: '/assets/images/pago-mastercard.png' }, { name: 'Visa', image: '/assets/images/pago-visa.png' }, { name: 'American Express', image: '/assets/images/pago-american-express.png' }, { name: 'Discover', image: '/assets/images/pago-discover.png' }, { name: 'JCB', image: '/assets/images/pago-jcb.png' }, { name: 'Diners Club', image: '/assets/images/pago-diners-club.png' }, { name: 'PayPal', image: '/assets/images/pago-paypal.png' }, { name: 'Binance Pay', image: '/assets/images/pago-binance-pay.png' }, { name: 'Banco Guayaquil', image: '/assets/images/pago-banco-guayaquil.png' }, { name: 'Banco Pichincha', image: '/assets/images/pago-banco-pichincha.png' }, { name: 'DeUna', image: '/assets/images/pago-deuna.png' }];
-            paymentMethods.forEach(m => {
-                paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`;
-            });
-        }
-        
-        // --- BASE DE DATOS DE PRODUCTOS Y SERVICIOS DEL SITIO ---
-        const siteProducts = [
-            // Productos de esta página (para cotizar)
-            { id: 'coc001', name: 'Cocinas de Vanguardia', type: 'quote' },
-            { id: 'clo001', name: 'Clósets a Medida', type: 'quote' },
-            { id: 'pue001', name: 'Puertas Modernas', type: 'quote' },
-            { id: 'pis001', name: 'Pisos de Madera Sintética', type: 'quote' },
-            { id: 'ban001', name: 'Muebles de Baño', type: 'quote' },
-            { id: 'gyp001', name: 'Gypsum y Luz', type: 'quote' },
-            { id: 'acc001', name: 'Accesorios y Organizadores', type: 'quote' },
-            { id: 'dis001', name: 'Diseño con IA "Aria"', type: 'quote' },
-            // Servicios de esta página (para cotizar)
-            { id: 'ser001', name: 'Renovación y Cuidado del Hogar', type: 'quote' },
-            { id: 'ser002', name: 'Consultoría e Integración de IA', type: 'quote' },
-            // Productos de ferreteria.html (para venta directa)
-            { id: 'fer001', name: 'Martillo de Carpintero', type: 'sale', price: 12.50 },
-            { id: 'fer002', name: 'Martillo de Goma', type: 'sale', price: 8.00 },
-            { id: 'fer003', name: 'Alicate de Presión 8"', type: 'sale', price: 15.00 },
-            { id: 'fer004', name: 'Tornillos para madera (Caja 100u)', type: 'sale', price: 5.50 }
-        ];
-
-        // --- LÓGICA CENTRAL DEL CARRITO ---
-        const cartModal = document.getElementById('cart-modal');
-        const openCartButton = document.getElementById('open-cart-button');
-        const cartCounter = document.getElementById('cart-counter');
-        const cartIconWrapper = document.getElementById('cart-icon-wrapper');
-
-        function updateCartStatus() {
-            const cart = JSON.parse(localStorage.getItem('yanz_cart')) || [];
-            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-            if (cartCounter && cartIconWrapper) {
-                cartCounter.textContent = itemCount;
-                cartCounter.classList.toggle('hidden', itemCount === 0);
-                cartIconWrapper.classList.toggle('has-items', itemCount > 0);
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // Vista para usuario CONECTADO
+                authContainer.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <img src="${user.photoURL}" alt="${user.displayName}" class="w-9 h-9 rounded-full border-2 border-gray-500" title="Conectado como ${user.displayName}">
+                        <button id="logout-button" title="Cerrar Sesión" class="p-2 rounded-full text-gray-300 hover:bg-gray-700 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                        </button>
+                    </div>
+                `;
+                document.getElementById('logout-button').addEventListener('click', () => auth.signOut());
+            } else {
+                // Vista para usuario DESCONECTADO
+                authContainer.innerHTML = `
+                    <button id="login-button" title="Acceder con Google" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-gray-800 font-bold text-lg hover:bg-gray-200 transition-colors shadow-sm overflow-hidden">
+                        <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                            <source src="/assets/videos/login-icon.mp4" type="video/mp4">
+                        </video>
+                    </button>
+                `;
+                document.getElementById('login-button').addEventListener('click', () => {
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    auth.signInWithPopup(provider).catch(error => console.error("Error al iniciar sesión:", error));
+                });
             }
-        }
+        });
+        // --- FIN: LÓGICA DE FIREBASE ---
+
+        // --- INICIO: LÓGICA DEL CARRITO INTERACTIVO ---
+        const cartModalContainer = document.getElementById('cart-modal');
+        const openCartButton = document.getElementById('open-cart-button');
         
+        function getCart() {
+            return JSON.parse(localStorage.getItem("yanz_cart")) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem("yanz_cart", JSON.stringify(cart));
+            updateCartIcon();
+            if (!cartModalContainer.classList.contains('hidden')) {
+                renderCartModal();
+            }
+            document.dispatchEvent(new CustomEvent('cart-updated'));
+        }
+
+        window.increaseQuantity = (itemName) => {
+            let cart = getCart();
+            const item = cart.find(i => i.name === itemName);
+            if (item) {
+                item.quantity = (item.quantity || 1) + 1;
+            }
+            saveCart(cart);
+        };
+
+        window.decreaseQuantity = (itemName) => {
+            let cart = getCart();
+            const itemIndex = cart.findIndex(i => i.name === itemName);
+            if (itemIndex > -1) {
+                if (cart[itemIndex].quantity > 1) {
+                    cart[itemIndex].quantity--;
+                } else {
+                    cart.splice(itemIndex, 1);
+                }
+            }
+            saveCart(cart);
+        };
+        
+        window.removeItemFromCart = (itemName) => {
+            let cart = getCart().filter(i => i.name !== itemName);
+            saveCart(cart);
+        };
+
         function renderCartModal() {
-            const cart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
-            
+            const cart = getCart();
             const actionButtonHtml = cart.length > 0 
                 ? `<a href="/caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all">
-                    <span>Proceder a la Caja con Aria</span>
+                       <span>Ir a la Caja</span>
                    </a>` 
-                : '<p class="text-gray-400 py-4 text-center">Tu carrito está vacío.</p>';
+                : '<a href="/ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-lg">Volver a la tienda</a>';
 
-            const cartItemsHtml = cart.map(item => `
-                <div class="flex justify-between items-center py-3">
-                    <div>
-                        <span class="text-gray-300 pr-4">${item.name}</span>
-                        ${item.type === 'quote' ? '<span class="text-xs text-blue-400 font-semibold">PARA COTIZAR</span>' : ''}
-                    </div>
-                    <span class="font-semibold text-white">${item.quantity}</span>
-                </div>
-            `).join("");
+            const cartItemsHtml = cart.length === 0 
+                ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` 
+                : cart.map(item => `
+                    <div class="flex justify-between items-center py-3">
+                        <span class="text-gray-300 pr-2 flex-grow">${item.name}</span>
+                        <div class="flex items-center gap-2 text-white">
+                            <button onclick="decreaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">-</button>
+                            <span class="w-8 text-center">${item.quantity}</span>
+                            <button onclick="increaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">+</button>
+                            <button onclick="removeItemFromCart('${item.name}')" class="ml-2 text-red-400 hover:text-red-300 transition-colors" aria-label="Eliminar item">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                            </button>
+                        </div>
+                    </div>`).join("");
 
-            cartModal.innerHTML=`
-                <div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col">
+            cartModalContainer.innerHTML=`
+                <div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter">
                     <div class="text-center mb-6">
                         <video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
                         <h2 class="text-2xl font-bold text-white">Tu Carrito de Ideas</h2>
@@ -270,32 +271,70 @@
                     </div>
                 </div>`;
         }
+        
+        function updateCartIcon() {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            const cartCounter = document.getElementById('cart-counter');
+            const cartIconWrapper = document.getElementById('cart-icon-wrapper');
 
-        window.closeCartModal = () => cartModal.classList.add('hidden');
+            if (cartCounter && cartIconWrapper) {
+                cartCounter.textContent = totalItems;
+                cartCounter.classList.toggle('hidden', totalItems === 0);
+                cartIconWrapper.classList.toggle('has-items', totalItems > 0);
+            }
+        }
+
+        window.closeCartModal = () => cartModalContainer.classList.add('hidden');
+        
         openCartButton.addEventListener('click', () => {
             renderCartModal();
-            cartModal.classList.remove('hidden');
+            cartModalContainer.classList.remove('hidden');
         });
         
-        // --- Renderizado dinámico de tarjetas de productos/servicios ---
-        const createCategoryCard = (category) => {
-             const cardLink = document.createElement('a');
-             cardLink.href = category.link;
-             cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2";
-             const mediaWrapper = document.createElement('div');
-             mediaWrapper.className = "overflow-hidden";
-             mediaWrapper.innerHTML = `<video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${category.video}" type="video/mp4"></video>`;
-             const textWrapper = document.createElement('div');
-             textWrapper.className = "p-6 flex flex-col flex-grow";
-             textWrapper.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`;
-             cardLink.appendChild(mediaWrapper);
-             cardLink.appendChild(textWrapper);
-             return cardLink;
+        updateCartIcon();
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'yanz_cart') {
+                updateCartIcon();
+            }
+        });
+        document.addEventListener('add-to-cart', updateCartIcon);
+        // --- FIN: LÓGICA DEL CARRITO INTERACTIVO ---
+        
+        
+        // --- LÓGICA DEL TEMA (LUZ/OSCURO) (código original) ---
+        const themeToggle = document.getElementById('theme-toggle'); 
+        const sunIcon = document.getElementById('theme-icon-sun'); 
+        const moonIcon = document.getElementById('theme-icon-moon');
+        const applyTheme = (theme) => { 
+            document.documentElement.classList.toggle('dark', theme === 'dark');
+            sunIcon.classList.toggle('hidden', theme !== 'dark');
+            moonIcon.classList.toggle('hidden', theme === 'dark');
         };
-
+        themeToggle.addEventListener('click', () => { 
+            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme); 
+            applyTheme(newTheme); 
+        });
+        
+        // --- LÓGICA PARA CARGAR DATOS Y FUNCIONES INICIALES (código original) ---
+        const createCategoryCard = (category) => {
+            const cardLink = document.createElement('a');
+            cardLink.href = category.link;
+            cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2";
+            const mediaWrapper = document.createElement('div');
+            mediaWrapper.className = "overflow-hidden";
+            mediaWrapper.innerHTML = `<video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${category.video}" type="video/mp4"></video>`;
+            const textWrapper = document.createElement('div');
+            textWrapper.className = "p-6 flex flex-col flex-grow";
+            textWrapper.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`;
+            cardLink.appendChild(mediaWrapper);
+            cardLink.appendChild(textWrapper);
+            return cardLink;
+        };
         const productGrid = document.getElementById('product-grid');
         const serviceGrid = document.getElementById('service-grid');
-        const mainCategories = [
+        const categories = [
              { title: 'Cocinas de Vanguardia', video: '/assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: '/cocinas.html', type: 'product' },
              { title: 'Clósets', video: '/assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: '/closets.html', type: 'product' },
              { title: 'Puertas Modernas', video: '/assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: '/puertas.html', type: 'product' },
@@ -308,14 +347,20 @@
              { title: 'Herrajes y Ferretería Profesional', video: '/assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: '/ferreteria.html', type: 'service' },
              { title: 'Consultoría e Integración de IA', video: '/assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' }
         ];
-        mainCategories.forEach(cat => { 
-            const card = createCategoryCard(cat); 
-            if (cat.type === 'product' && productGrid) productGrid.appendChild(card); 
-            if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card); 
-        });
-
-        // Llamada inicial para asegurar que el carrito se muestre correctamente al cargar la página
-        updateCartStatus();
+        categories.forEach(cat => { const card = createCategoryCard(cat); if (cat.type === 'product' && productGrid) productGrid.appendChild(card); if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card); });
+        
+        const menuButton = document.getElementById('menu-button'); const mobileMenu = document.getElementById('mobile-menu'); const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden')); mobileNavLinks.forEach(link => { link.addEventListener('click', () => mobileMenu.classList.add('hidden')) });
+        
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme);
+        const paymentLogosContainer = document.getElementById('payment-logos'); if(paymentLogosContainer) { const paymentMethods = [ { name: 'PeiGo', image: '/assets/images/pago-peigo.png' }, { name: 'Mastercard', image: '/assets/images/pago-mastercard.png' }, { name: 'Visa', image: '/assets/images/pago-visa.png' }, { name: 'American Express', image: '/assets/images/pago-american-express.png' }, { name: 'Discover', image: '/assets/images/pago-discover.png' }, { name: 'JCB', image: '/assets/images/pago-jcb.png' }, { name: 'Diners Club', image: '/assets/images/pago-diners-club.png' }, { name: 'PayPal', image: '/assets/images/pago-paypal.png' }, { name: 'Binance Pay', image: '/assets/images/pago-binance-pay.png' }, { name: 'Banco Guayaquil', image: '/assets/images/pago-banco-guayaquil.png' }, { name: 'Banco Pichincha', image: '/assets/images/pago-banco-pichincha.png' }, { name: 'DeUna', image: '/assets/images/pago-deuna.png' } ]; paymentMethods.forEach(m => { paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`; }); }
+        
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        const preloader = document.getElementById('preloader'); const pageContent = document.getElementById('page-content'); const introVideo = document.getElementById('intro-video'); let appStarted = false;
+        function startApp() { if (appStarted) return; appStarted = true; if (preloader) preloader.classList.add('hidden'); if (pageContent) pageContent.classList.add('loaded'); }
+        if (introVideo) { introVideo.addEventListener('ended', startApp); introVideo.addEventListener('error', startApp); setTimeout(startApp, 5000); } else { startApp(); }
     });
     </script>
 </body>
