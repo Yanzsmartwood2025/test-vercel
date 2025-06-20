@@ -189,19 +189,70 @@
         const cartCounter = document.getElementById('cart-counter');
         const cartIconWrapper = document.getElementById('cart-icon-wrapper');
 
+        // NUEVO: Funciones para manipular el carrito
+        function getCart() {
+            return JSON.parse(localStorage.getItem("yanz_cart")) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem("yanz_cart", JSON.stringify(cart));
+            updateCartIcon();
+            renderCartModal();
+            // Si estamos en la página del chat, actualizamos la conversación si está vacía
+            if(window.location.pathname.includes('aria.html') && getCart().length === 0) {
+                 initializePage();
+            }
+        }
+        
+        window.increaseQuantity = (itemName) => {
+            let cart = getCart();
+            const item = cart.find(i => i.name === itemName);
+            if (item) {
+                item.quantity++;
+            }
+            saveCart(cart);
+        };
+
+        window.decreaseQuantity = (itemName) => {
+            let cart = getCart();
+            const item = cart.find(i => i.name === itemName);
+            if (item && item.quantity > 1) {
+                item.quantity--;
+            } else {
+                // Si la cantidad es 1 o menos, eliminamos el item
+                cart = cart.filter(i => i.name !== itemName);
+            }
+            saveCart(cart);
+        };
+        
+        window.removeItemFromCart = (itemName) => {
+            let cart = getCart().filter(i => i.name !== itemName);
+            saveCart(cart);
+        };
+
+
+        // MODIFICADO: renderCartModal ahora es interactivo
         function renderCartModal() {
-            const cart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
+            const cart = getCart();
             const actionButtonHtml = cart.length > 0 
-                ? `<button onclick="closeCartModal()" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all">
+                ? `<a href="/aria.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all">
                     <span>Continuar con Aria</span>
-                   </button>` 
+                   </a>` 
                 : '<a href="/ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Volver a la tienda</a>';
 
             const cartItemsHtml = cart.length === 0 
                 ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` 
                 : cart.map(item => `
                     <div class="flex justify-between items-center py-3">
-                        <span class="text-gray-300 pr-4">${item.name} (${item.quantity})</span>
+                        <span class="text-gray-300 pr-2 flex-grow">${item.name}</span>
+                        <div class="flex items-center gap-2 text-white">
+                            <button onclick="decreaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">-</button>
+                            <span class="w-8 text-center">${item.quantity}</span>
+                            <button onclick="increaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">+</button>
+                            <button onclick="removeItemFromCart('${item.name}')" class="ml-2 text-red-400 hover:text-red-300 transition-colors" aria-label="Eliminar item">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                            </button>
+                        </div>
                     </div>`).join("");
 
             cartModalContainer.innerHTML=`
@@ -221,7 +272,7 @@
         }
         
         function updateCartIcon() {
-            const cart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
+            const cart = getCart();
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             if (cartCounter) {
                 cartCounter.textContent = totalItems;
@@ -238,7 +289,6 @@
             cartModalContainer.classList.remove('hidden');
         });
         
-        // --- Lógica del modal de Turbo ---
         const turboModal = document.getElementById("turbo-modal");
         const openTurboButton = document.getElementById("turbo-button");
         function renderTurboModal(){
@@ -250,8 +300,8 @@
             turboModal.classList.remove('hidden');
         });
 
-        // --- Lógica del Chat de Aria con VOZ ---
-        const chatCart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
+        // --- Lógica del Chat de Aria ---
+        const chatCart = getCart(); // Usamos la nueva función global
         const chatWindow = document.getElementById('chat-window');
         const userActions = document.getElementById('user-actions');
         const voiceToggleWrapper = document.getElementById('voice-toggle-wrapper');
@@ -261,7 +311,7 @@
 
         let isMuted = false;
         let conversationState = 'initial';
-        let userData = { name: '', address: '', email: '', notes: '' };
+        let userData = { name: '', address: '', identification: '', email: '', notes: '' };
 
         const synth = window.speechSynthesis;
         let spanishVoice;
@@ -275,23 +325,21 @@
             synth.onvoiceschanged = loadVoices;
         }
 
-        // --- CÓDIGO MODIFICADO: Función de hablar mejorada ---
+        // MODIFICADO: Función speak con limpieza de texto
         function speak(text) {
             synth.cancel(); 
             if (isMuted || !text) return;
             
-            // Primero, quitar etiquetas HTML para obtener texto plano
             let plainText = text.replace(/<[^>]*>/g, ' '); 
-            
-            // Reemplazar "1 x" con "1 por" para que suene natural
             plainText = plainText.replace(/(\d+)\s*x\s+/gi, '$1 por ');
+            plainText = plainText.replace(/&bull;/gi, '');
+            plainText = plainText.replace(/•/gi, '');
 
             const utterance = new SpeechSynthesisUtterance(plainText);
             if (spanishVoice) utterance.voice = spanishVoice;
             utterance.lang = 'es-ES';
             synth.speak(utterance);
         }
-        // --- FIN DE LA MODIFICACIÓN ---
         
         voiceToggle.addEventListener('click', () => {
             isMuted = !isMuted;
@@ -324,7 +372,11 @@
             } else if (conversationState === 'getting_address' && action === 'submit_address') {
                 userData.address = value;
                 addMessage(value, 'user');
-                setTimeout(askForEmail, 1000);
+                setTimeout(askForIdentification, 1000); // Nuevo paso
+            } else if (conversationState === 'getting_id' && action === 'submit_id') {
+                userData.identification = value;
+                addMessage(value, 'user');
+                setTimeout(askForEmail, 1000); // Siguiente paso
             } else if (conversationState === 'getting_email' && action === 'submit_email') {
                 userData.email = value;
                 addMessage(value || 'Omitido', 'user');
@@ -350,9 +402,17 @@
             userActions.querySelector('input').focus();
         }
 
+        // NUEVA FUNCIÓN: Pedir Cédula o RUC
+        function askForIdentification() {
+            conversationState = 'getting_id';
+            addMessage('Gracias. Para la factura, por favor ingresa tu número de Cédula o RUC.');
+            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_id', this.id.value);" class="flex items-center gap-2"><input type="text" name="id" required class="w-full flex-1 bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[var(--yanz-primary)] focus:border-transparent transition" placeholder="Cédula o RUC..."><button type="submit" aria-label="Enviar" class="flex-shrink-0 bg-[var(--yanz-primary)] text-white rounded-full p-3 hover:bg-opacity-90 transition-all shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7" /></svg></button></form>`;
+            userActions.querySelector('input').focus();
+        }
+
         function askForEmail() {
             conversationState = 'getting_email';
-            addMessage('¡Entendido! Si deseas recibir una copia de la factura, puedes darme tu correo electrónico. Es opcional.');
+            addMessage('¡Casi listo! Si deseas una copia de la factura en tu correo, puedes escribirlo aquí. Es opcional.');
             userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_email', this.email.value);" class="flex items-center gap-2"><input type="email" name="email" class="w-full flex-1 bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[var(--yanz-primary)] focus:border-transparent transition" placeholder="tu.correo@ejemplo.com (opcional)"><button type="submit" aria-label="Enviar" class="flex-shrink-0 bg-[var(--yanz-primary)] text-white rounded-full p-3 hover:bg-opacity-90 transition-all shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7" /></svg></button></form>`;
             userActions.querySelector('input').focus();
         }
@@ -366,15 +426,16 @@
         
         function finalSummary() {
             conversationState = 'final';
-            const saleItems = chatCart.filter(item => item.type === 'sale');
-            const quoteItems = chatCart.filter(item => item.type === 'quote');
+            const currentCart = getCart(); // Usamos la función global
+            const saleItems = currentCart.filter(item => item.type === 'sale');
+            const quoteItems = currentCart.filter(item => item.type === 'quote');
             
             let saleSubtotal = 0;
             if (saleItems.length > 0) {
                 saleItems.forEach(item => saleSubtotal += (item.price * item.quantity));
             }
             
-            const ivaRate = 0.15; // 15% IVA en Ecuador
+            const ivaRate = 0.15;
             const ivaAmount = saleSubtotal * ivaRate;
             const finalTotal = saleSubtotal + ivaAmount;
 
@@ -388,13 +449,13 @@
 
             let summaryMessage = '¡Excelente! He procesado toda tu información. Este es el resumen final:<br><br>';
             
-            let whatsappMessage = `*¡Nuevo Pedido/Cotización desde la Web!* 🤖\n\n*Fecha del Pedido:* ${formattedDateTime}\n\n*Cliente:* ${userData.name}\n*Dirección:* ${userData.address}\n`;
+            let whatsappMessage = `*¡Nuevo Pedido/Cotización desde la Web!* 🤖\n\n*Fecha del Pedido:* ${formattedDateTime}\n\n*-- DATOS DE FACTURACIÓN --*\n*Cliente:* ${userData.name}\n*Cédula/RUC:* ${userData.identification}\n*Dirección:* ${userData.address}\n`;
             if (userData.email) whatsappMessage += `*Email:* ${userData.email}\n`;
             if (userData.notes) whatsappMessage += `*Notas:* ${userData.notes}\n\n`;
 
             if (saleItems.length > 0) {
                 summaryMessage += `<strong>Productos para Compra Inmediata:</strong><br>`;
-                whatsappMessage += `*Productos para Compra Inmediata:*\n`;
+                whatsappMessage += `\n*-- PRODUCTOS PARA COMPRA --*\n`;
                 saleItems.forEach(item => {
                     summaryMessage += `&bull; ${item.quantity} x ${item.name}<br>`;
                     whatsappMessage += `- ${item.quantity} x ${item.name}\n`;
@@ -407,25 +468,20 @@
 
                 whatsappMessage += `\n*Subtotal: $${saleSubtotal.toFixed(2)}*\n`;
                 whatsappMessage += `*IVA (15%): $${ivaAmount.toFixed(2)}*\n`;
-                whatsappMessage += `*Total a Pagar: $${finalTotal.toFixed(2)}*\n\n`;
+                whatsappMessage += `*Total a Pagar: $${finalTotal.toFixed(2)}*\n`;
             }
 
             if (quoteItems.length > 0) {
                 summaryMessage += `<strong>Productos para Cotización:</strong><br>`;
-                whatsappMessage += `*Productos para Cotizar:*\n`;
+                whatsappMessage += `\n*-- PRODUCTOS PARA COTIZAR --*\n`;
                 quoteItems.forEach(item => {
                     summaryMessage += `&bull; ${item.quantity} x ${item.name}<br>`;
                     whatsappMessage += `- ${item.quantity} x ${item.name}\n`;
                 });
             }
 
-            if(quoteItems.length > 0 && saleItems.length > 0) {
-                 summaryMessage += `<br>Para confirmar tu pedido, por favor realiza el pago de los productos de ferretería y envíanos el comprobante por WhatsApp. Uno de nuestros asesores te contactará para la cotización del resto.`;
-            } else if (saleItems.length > 0) {
-                 summaryMessage += `<br>Para confirmar tu pedido, por favor realiza el pago y envíanos el comprobante por WhatsApp.`;
-            } else {
-                 summaryMessage += `<br>Para continuar, por favor envía esta solicitud por WhatsApp y uno de nuestros asesores te contactará a la brevedad.`;
-            }
+            summaryMessage += `<br>Para confirmar tu pedido y coordinar el pago, presiona el botón de WhatsApp.`;
+
             addMessage(summaryMessage, 'aria', true);
             const whatsappUrl = `https://wa.me/593996480843?text=${encodeURIComponent(whatsappMessage)}`;
             userActions.innerHTML = `<p class="text-center text-sm mb-4">¡Todo está listo! Presiona el botón para confirmar por WhatsApp.</p><a href="${whatsappUrl}" target="_blank" class="w-full block text-center bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full transition-colors text-lg">Confirmar por WhatsApp</a>`;
@@ -435,7 +491,8 @@
             conversationState = 'start';
             voiceToggleWrapper.classList.remove('hidden');
             let cartSummary = '¡Hola! Soy Aria, tu asistente de compras. He revisado tu carrito y tienes los siguientes productos:<br><br>';
-            chatCart.forEach(item => {
+            const currentCart = getCart();
+            currentCart.forEach(item => {
                 cartSummary += `&bull; ${item.quantity} x ${item.name} ${item.type === 'quote' ? '(para cotizar)' : ''}<br>`;
             });
             cartSummary += '<br>¿Es correcto? Podemos proceder a registrar tu pedido.';
@@ -444,7 +501,7 @@
         }
 
         function initializePage() {
-             if (chatCart.length === 0) {
+             if (getCart().length === 0) {
                  addMessage('¡Hola! Soy Aria. Parece que tu carrito está vacío.');
                  userActions.innerHTML = '<a href="/ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Volver a la tienda</a>';
                  return;
@@ -464,7 +521,10 @@
         window.handleAction = handleAction;
 
         updateCartIcon();
-        initializePage();
+        // Solo inicializar el chat si estamos en la página de aria
+        if (document.getElementById('aria-checkout-container')) {
+            initializePage();
+        }
     });
     </script>
 </body>
