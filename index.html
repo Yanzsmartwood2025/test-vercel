@@ -139,12 +139,14 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    <!-- SDK de App Check -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-check-compat.js"></script>
+
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
 
         // --- INICIO: LÓGICA DE FIREBASE ---
-        // Tus claves personales de Firebase.
         const firebaseConfig = {
           apiKey: "AIzaSyC3ENgMXZWAHu7r8l-0z1Iva8CbML_Z26o",
           authDomain: "yan-z-smart-wood.firebaseapp.com",
@@ -155,8 +157,17 @@
           measurementId: "G-XX963RJLXE"
         };
 
-        // Inicializa Firebase con tu configuración.
-        firebase.initializeApp(firebaseConfig);
+        const app = firebase.initializeApp(firebaseConfig);
+
+        // --- INICIO: CONFIGURACIÓN DE APP CHECK ---
+        const appCheck = firebase.appCheck(app);
+        appCheck.activate(
+          // Tu clave del sitio de reCAPTCHA ya está integrada.
+          '6LfW-2crAAAAAMamgQQ_K1J2CHu4AVUejcTHp-x4',
+          true
+        );
+        // --- FIN: CONFIGURACIÓN DE APP CHECK ---
+
         const auth = firebase.auth();
         const db = firebase.firestore();
         const authContainer = document.getElementById('auth-container');
