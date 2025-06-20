@@ -114,6 +114,12 @@
         </section>
 
         <section class="bg-[var(--yanz-bg-alt)] py-12">
+            <div id="voice-toggle-wrapper" class="max-w-3xl mx-auto mb-4 flex justify-end hidden">
+                <button id="voice-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" title="Activar/Desactivar Voz">
+                    <svg id="voice-on" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                    <svg id="voice-off" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 dark:text-gray-500 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l-2-2m0 0l-2-2m2 2l2 2m-2-2l2-2" /></svg>
+                </button>
+            </div>
             <div id="aria-checkout-container" class="max-w-3xl mx-auto bg-[var(--yanz-bg)] rounded-2xl shadow-xl overflow-hidden">
                 <div id="chat-window" class="p-6 h-[70vh] overflow-y-auto space-y-6"></div>
                 <div id="user-actions" class="p-4 border-t border-[var(--yanz-border)] bg-[var(--yanz-bg)]"></div>
@@ -223,12 +229,53 @@
             cartModalContainer.classList.remove('hidden');
         });
         
-        // --- Lógica del Chat de Aria ---
+        // --- Lógica del Chat de Aria con VOZ ---
         const chatCart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
         const chatWindow = document.getElementById('chat-window');
         const userActions = document.getElementById('user-actions');
-        let conversationState = 'start';
+        const voiceToggleWrapper = document.getElementById('voice-toggle-wrapper');
+        const voiceToggle = document.getElementById('voice-toggle');
+        const voiceOnIcon = document.getElementById('voice-on');
+        const voiceOffIcon = document.getElementById('voice-off');
+
+        let isMuted = false;
+        let conversationState = 'initial';
         let userData = { name: '', address: '', email: '', notes: '' };
+
+        const synth = window.speechSynthesis;
+        let spanishVoice;
+        
+        function loadVoices() {
+            const voices = synth.getVoices();
+            spanishVoice = voices.find(voice => voice.lang.startsWith('es-')) || voices.find(voice => voice.lang.startsWith('es'));
+        }
+        loadVoices();
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = loadVoices;
+        }
+
+        function speak(text) {
+            // Detiene cualquier voz anterior para evitar solapamientos
+            synth.cancel(); 
+            if (isMuted || !text) return;
+            
+            const plainText = text.replace(/<[^>]*>/g, ' '); 
+            const utterance = new SpeechSynthesisUtterance(plainText);
+            if (spanishVoice) {
+                utterance.voice = spanishVoice;
+            }
+            utterance.lang = 'es-ES';
+            synth.speak(utterance);
+        }
+        
+        voiceToggle.addEventListener('click', () => {
+            isMuted = !isMuted;
+            voiceOnIcon.classList.toggle('hidden', isMuted);
+            voiceOffIcon.classList.toggle('hidden', !isMuted);
+            if (isMuted) {
+                synth.cancel();
+            }
+        });
 
         function addMessage(text, sender = 'aria', isHtml = false) {
             const wrapper = document.createElement('div');
@@ -237,11 +284,15 @@
             wrapper.innerHTML = content;
             chatWindow.appendChild(wrapper);
             chatWindow.scrollTop = chatWindow.scrollHeight;
+            if (sender === 'aria') {
+                speak(text);
+            }
         }
-
 
         function handleAction(action, value = null) {
             userActions.innerHTML = '<p class="text-center text-sm text-[var(--yanz-text-alt)]">Aria está escribiendo...</p>';
+            synth.cancel();
+            
             if (conversationState === 'start' && action === 'proceed') {
                 addMessage('¡Perfecto!', 'user');
                 setTimeout(askForName, 1000);
@@ -268,70 +319,92 @@
             }
         }
         
-        // --- CORRECCIÓN: Funciones de chat ahora incluyen un botón de Enviar ---
-        function askForName() {
-            conversationState = 'getting_name';
-            addMessage('Para comenzar, ¿cuál es tu nombre completo?');
+        function askForName() { /* ... igual que antes ... */ }
+        function askForAddress() { /* ... igual que antes ... */ }
+        function askForEmail() { /* ... igual que antes ... */ }
+        function askForNotes() { /* ... igual que antes ... */ }
+        function finalSummary() { /* ... igual que antes ... */ }
+
+        function startConversation() {
+            conversationState = 'start';
+            let cartSummary = '¡Hola! Soy Aria, tu asistente de compras. He revisado tu carrito y tienes los siguientes productos:<br><br>';
+            chatCart.forEach(item => {
+                cartSummary += `&bull; ${item.quantity} x ${item.name} ${item.type === 'quote' ? '(para cotizar)' : ''}<br>`;
+            });
+            cartSummary += '<br>¿Es correcto? Podemos proceder a registrar tu pedido.';
+            
+            addMessage(cartSummary, 'aria', true);
+            voiceToggleWrapper.classList.remove('hidden');
+            
             userActions.innerHTML = `
-                <form onsubmit="event.preventDefault(); handleAction('submit_name', this.name.value);" class="flex gap-2">
-                    <input type="text" name="name" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Escribe tu nombre...">
-                    <button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button>
-                </form>
+                <button onclick="handleAction('proceed')" class="w-full bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Sí, continuar</button>
             `;
-            userActions.querySelector('input').focus();
         }
 
-        function askForAddress() {
-            conversationState = 'getting_address';
-            addMessage(`¡Un gusto, ${userData.name}! Ahora, por favor, indícame la dirección completa para la entrega.`);
-             userActions.innerHTML = `
-                <form onsubmit="event.preventDefault(); handleAction('submit_address', this.address.value);" class="flex gap-2">
-                    <input type="text" name="address" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Calle, número, sector...">
-                    <button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button>
-                </form>
-            `;
-            userActions.querySelector('input').focus();
-        }
-
-        function askForEmail() {
-            conversationState = 'getting_email';
-            addMessage('¡Entendido! Si deseas recibir una copia de la factura, puedes darme tu correo electrónico. Es opcional.');
+        // --- Flujo de inicio de la página ---
+        function initializePage() {
+             if (chatCart.length === 0) {
+                addMessage('¡Hola! Soy Aria. Parece que tu carrito está vacío.');
+                speak('¡Hola! Soy Aria. Parece que tu carrito está vacío.');
+                userActions.innerHTML = '<a href="/ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Volver a la tienda</a>';
+                return;
+            }
+            
+            // Botón inicial para que el usuario dé permiso al audio
             userActions.innerHTML = `
-                <form onsubmit="event.preventDefault(); handleAction('submit_email', this.email.value);" class="flex gap-2">
-                    <input type="email" name="email" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="tu.correo@ejemplo.com (opcional)">
-                    <button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button>
-                </form>
+                <button id="start-chat-btn" class="w-full bg-green-500 text-white font-bold py-4 px-6 rounded-full text-lg animate-pulse">
+                    Hablar con Aria para comenzar
+                </button>
             `;
-            userActions.querySelector('input').focus();
-        }
-
-        function askForNotes() {
-            conversationState = 'getting_notes';
-            addMessage('Perfecto. ¿Hay alguna nota adicional que deba saber sobre tu pedido o la entrega?');
-            userActions.innerHTML = `
-                <form onsubmit="event.preventDefault(); handleAction('submit_notes', this.notes.value);" class="flex gap-2">
-                    <input type="text" name="notes" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Ej: llamar antes de llegar...">
-                    <button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button>
-                </form>
-            `;
-            userActions.querySelector('input').focus();
+            document.getElementById('start-chat-btn').addEventListener('click', () => {
+                userActions.innerHTML = '<p class="text-center text-sm text-[var(--yanz-text-alt)]">Conectando...</p>';
+                setTimeout(startConversation, 500);
+            }, { once: true });
         }
         
-        function finalSummary() {
+        // --- Asignación de funciones a window para los botones en línea ---
+        window.handleAction = handleAction;
+
+        // --- Arranque inicial ---
+        updateCartIcon();
+        initializePage();
+
+        // Re-implementación de las funciones de chat para que no se pierdan al asignar a window
+        askForName = function() {
+            conversationState = 'getting_name';
+            addMessage('Para comenzar, ¿cuál es tu nombre completo?');
+            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_name', this.name.value);" class="flex gap-2"><input type="text" name="name" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Escribe tu nombre..."><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
+            userActions.querySelector('input').focus();
+        };
+        askForAddress = function() {
+            conversationState = 'getting_address';
+            addMessage(`¡Un gusto, ${userData.name}! Ahora, por favor, indícame la dirección completa para la entrega.`);
+            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_address', this.address.value);" class="flex gap-2"><input type="text" name="address" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Calle, número, sector..."><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
+            userActions.querySelector('input').focus();
+        };
+        askForEmail = function() {
+            conversationState = 'getting_email';
+            addMessage('¡Entendido! Si deseas recibir una copia de la factura, puedes darme tu correo electrónico. Es opcional.');
+            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_email', this.email.value);" class="flex gap-2"><input type="email" name="email" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="tu.correo@ejemplo.com (opcional)"><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
+            userActions.querySelector('input').focus();
+        };
+        askForNotes = function() {
+            conversationState = 'getting_notes';
+            addMessage('Perfecto. ¿Hay alguna nota adicional que deba saber sobre tu pedido o la entrega?');
+            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_notes', this.notes.value);" class="flex gap-2"><input type="text" name="notes" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Ej: llamar antes de llegar..."><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
+            userActions.querySelector('input').focus();
+        };
+        finalSummary = function() {
             conversationState = 'final';
             const saleItems = chatCart.filter(item => item.type === 'sale');
             const quoteItems = chatCart.filter(item => item.type === 'quote');
             let saleTotal = 0;
-            if (saleItems.length > 0) {
-                saleItems.forEach(item => saleTotal += (item.price * item.quantity));
-            }
-
+            if (saleItems.length > 0) saleItems.forEach(item => saleTotal += (item.price * item.quantity));
             let summaryMessage = '¡Excelente! He procesado toda tu información. Este es el resumen final:<br><br>';
             let whatsappMessage = `*¡Nuevo Pedido/Cotización desde la Web!* 🤖\n\n*Cliente:* ${userData.name}\n*Dirección:* ${userData.address}\n`;
             if (userData.email) whatsappMessage += `*Email:* ${userData.email}\n`;
             if (userData.notes) whatsappMessage += `*Notas:* ${userData.notes}\n\n`;
-
-            if(saleItems.length > 0) {
+            if (saleItems.length > 0) {
                 summaryMessage += `<strong>Productos para Compra Inmediata:</strong><br>`;
                 whatsappMessage += `*Productos para Compra Inmediata:*\n`;
                 saleItems.forEach(item => {
@@ -341,8 +414,7 @@
                 summaryMessage += `<br><strong>Total a Pagar: $${saleTotal.toFixed(2)}</strong><br><br>`;
                 whatsappMessage += `*Total a Pagar: $${saleTotal.toFixed(2)}*\n\n`;
             }
-
-            if(quoteItems.length > 0) {
+            if (quoteItems.length > 0) {
                 summaryMessage += `<strong>Productos para Cotización:</strong><br>`;
                 whatsappMessage += `*Productos para Cotizar:*\n`;
                 quoteItems.forEach(item => {
@@ -350,52 +422,17 @@
                     whatsappMessage += `- ${item.quantity} x ${item.name}\n`;
                 });
             }
-
-            if(quoteItems.length > 0 && saleItems.length > 0) {
+            if (quoteItems.length > 0 && saleItems.length > 0) {
                  summaryMessage += `<br>Para confirmar tu pedido, por favor realiza el pago de los productos de ferretería y envíanos el comprobante por WhatsApp. Uno de nuestros asesores te contactará para la cotización del resto.`;
-            } else if(saleItems.length > 0) {
+            } else if (saleItems.length > 0) {
                  summaryMessage += `<br>Para confirmar tu pedido, por favor realiza el pago y envíanos el comprobante por WhatsApp.`;
             } else {
                  summaryMessage += `<br>Para continuar, por favor envía esta solicitud por WhatsApp y uno de nuestros asesores te contactará a la brevedad.`;
             }
-            
             addMessage(summaryMessage, 'aria', true);
-
             const whatsappUrl = `https://wa.me/593996480843?text=${encodeURIComponent(whatsappMessage)}`;
-            userActions.innerHTML = `
-                <p class="text-center text-sm mb-4">¡Todo está listo! Presiona el botón para confirmar por WhatsApp.</p>
-                <a href="${whatsappUrl}" target="_blank" class="w-full block text-center bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full transition-colors text-lg">
-                    Confirmar por WhatsApp
-                </a>
-            `;
-        }
-
-        function startConversation() {
-            if (chatCart.length === 0) {
-                addMessage('¡Hola! Soy Aria. Parece que tu carrito está vacío. No puedo iniciar el proceso de caja sin productos.');
-                userActions.innerHTML = '<a href="/ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Volver a la tienda</a>';
-                return;
-            }
-            
-            let cartSummary = '¡Hola! Soy Aria, tu asistente de compras. He revisado tu carrito y tienes los siguientes productos:<br><br>';
-            chatCart.forEach(item => {
-                cartSummary += `&bull; ${item.quantity} x ${item.name} ${item.type === 'quote' ? '(para cotizar)' : ''}<br>`;
-            });
-            cartSummary += '<br>¿Es correcto? Podemos proceder a registrar tu pedido.';
-            
-            setTimeout(() => {
-                addMessage(cartSummary, 'aria', true);
-                userActions.innerHTML = `
-                    <button onclick="handleAction('proceed')" class="w-full bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Sí, continuar</button>
-                `;
-            }, 500);
-        }
-        
-        window.handleAction = handleAction;
-
-        // Iniciar todo
-        updateCartIcon();
-        startConversation();
+            userActions.innerHTML = `<p class="text-center text-sm mb-4">¡Todo está listo! Presiona el botón para confirmar por WhatsApp.</p><a href="${whatsappUrl}" target="_blank" class="w-full block text-center bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-full transition-colors text-lg">Confirmar por WhatsApp</a>`;
+        };
     });
     </script>
 </body>
