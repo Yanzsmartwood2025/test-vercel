@@ -144,15 +144,18 @@
     document.addEventListener('DOMContentLoaded', () => {
 
         // --- INICIO: LÓGICA DE FIREBASE ---
+        // Tus claves personales de Firebase.
         const firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_AUTH_DOMAIN",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_STORAGE_BUCKET",
-            messagingSenderId: "TU_MESSAGING_SENDER_ID",
-            appId: "TU_APP_ID"
+          apiKey: "AIzaSyC3ENgMXZWAHu7r8l-0z1Iva8CbML_Z26o",
+          authDomain: "yan-z-smart-wood.firebaseapp.com",
+          projectId: "yan-z-smart-wood",
+          storageBucket: "yan-z-smart-wood.appspot.com",
+          messagingSenderId: "369287615235",
+          appId: "1:369287615235:web:654e1e6fb48b4f634f8f36",
+          measurementId: "G-XX963RJLXE"
         };
 
+        // Inicializa Firebase con tu configuración.
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
@@ -176,7 +179,7 @@
                 // Vista para usuario DESCONECTADO
                 authContainer.innerHTML = `
                     <button id="login-button" title="Acceder con Google" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm overflow-hidden">
-                        <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                        <video autoplay loop muted playsinline class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML = '<span class=\\'font-sans text-gray-800 text-lg font-bold\\'>G</span>';">
                             <source src="assets/videos/login-icon.mp4" type="video/mp4">
                         </video>
                     </button>
