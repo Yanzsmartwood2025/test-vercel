@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAN'Z SMART WOOD - Diseño, Servicios y Tecnología IA</title>
     
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1A202C">
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -51,7 +51,7 @@
         #cart-icon-wrapper {
             padding: 2px;
             border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.2); /* Apagado por defecto */
+            border: 3px solid rgba(255, 255, 255, 0.2);
             transition: border-color 0.3s ease-in-out;
         }
         #cart-icon-wrapper.has-items {
@@ -175,7 +175,7 @@
             } else {
                 // Vista para usuario DESCONECTADO
                 authContainer.innerHTML = `
-                    <button id="login-button" title="Acceder con Google" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-gray-800 font-bold text-lg hover:bg-gray-200 transition-colors shadow-sm overflow-hidden">
+                    <button id="login-button" title="Acceder con Google" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm overflow-hidden">
                         <video autoplay loop muted playsinline class="w-full h-full object-cover">
                             <source src="assets/videos/login-icon.mp4" type="video/mp4">
                         </video>
