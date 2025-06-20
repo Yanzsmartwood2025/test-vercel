@@ -54,7 +54,7 @@
 </head>
 <body class="antialiased">
     <div id="preloader">
-        <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain"><source src="assets/videos/intro.mp4" type="video/mp4"></video>
+        <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain"><source src="assets/videos/intro.mp4" type="video/mp4" onerror="this.parentElement.style.display='none';"></video>
     </div>
     <div id="page-content">
         <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
@@ -71,12 +71,12 @@
                  <div class="flex items-center space-x-2 sm:space-x-4">
                      <div id="auth-container" class="flex items-center"></div>
                      <div class="flex items-center space-x-3">
-                           <div id="cart-icon-wrapper">
-                               <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
-                                   <video autoplay loop muted playsinline class="w-8 h-8"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video>
-                               </button>
-                           </div>
-                           <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
+                         <div id="cart-icon-wrapper">
+                             <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
+                                 <video autoplay loop muted playsinline class="w-8 h-8"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video>
+                             </button>
+                         </div>
+                         <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
                      </div>
                      <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
                          <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
@@ -91,7 +91,7 @@
         </header>
         
         <main>
-             <!-- Contenido principal de la página (hero, productos, servicios, etc.) -->
+            <!-- Contenido principal de la página (hero, productos, servicios, etc.) -->
             <section id="hero" class="relative h-screen flex items-center justify-center text-white"><div class="absolute inset-0 bg-black/60 z-10"></div><video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="assets/videos/hero_background.mp4" type="video/mp4"></video><div class="relative z-20 text-center px-4"><video autoplay loop muted playsinline class="w-48 md:w-64 mx-auto mb-6"><source src="assets/videos/videologo-principal.mp4" type="video/mp4"></video><h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">YAN'Z SMART WOOD</h1><p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.</p></div></section>
             <section id="productos" class="py-20 section-bg"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Explora Nuestros Productos</h2><div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div></div></section>
             <section id="servicios" class="py-20"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Conoce Nuestros Servicios</h2><div id="service-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div></section>
@@ -107,110 +107,273 @@
     
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden"></div>
 
-    <!-- ===== [INICIO] NUEVO MODAL DE AUTENTICACIÓN ===== -->
     <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden">
         <div class="w-full max-w-xs bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-8 flex flex-col modal-enter relative text-center">
              <button id="close-auth-modal-button" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
              </button>
             <h2 class="text-2xl font-bold text-white mb-2">Welcome</h2>
             <p class="text-gray-400 mb-6">Sign in or create an account</p>
             
             <button id="google-login-button-modal" class="w-full inline-flex items-center justify-center gap-3 px-4 py-2 text-base font-semibold text-gray-700 bg-white border border-transparent rounded-lg shadow-sm hover:bg-gray-200 transition-all">
-                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.574l6.19,5.238C41.38,34.783,44,29.865,44,24C44,22.659,43.862,21.35,43.611,20.083z"></p_html_attribute_path></svg>
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.574l6.19,5.238C41.38,34.783,44,29.865,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
                 <span>Sign in with Google</span>
             </button>
         </div>
     </div>
-    <!-- ===== [FIN] NUEVO MODAL DE AUTENTICACIÓN ===== -->
     
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-check-compat.js"></script>
+    <!-- Firebase SDKs - Modular (v9+) -->
+    <script type="module">
+        // Importar funciones necesarias del SDK de Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithRedirect, getRedirectResult, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
 
-        const firebaseConfig = {
-         apiKey: "AIzaSyC3ENgMXZWAHu7r8l-0z1Iva8CbML_Z26o",
-         authDomain: "yan-z-smart-wood.firebaseapp.com",
-         projectId: "yan-z-smart-wood",
-         storageBucket: "yan-z-smart-wood.appspot.com",
-         messagingSenderId: "369287615235",
-         appId: "1:369287615235:web:654e1e6fb48b4f634f8f36",
-         measurementId: "G-XX963RJLXE"
-        };
+            const firebaseConfig = {
+                apiKey: "AIzaSyC3ENgMXZWAHu7r8l-0z1Iva8CbML_Z26o",
+                authDomain: "yan-z-smart-wood.firebaseapp.com",
+                projectId: "yan-z-smart-wood",
+                storageBucket: "yan-z-smart-wood.appspot.com",
+                messagingSenderId: "369287615235",
+                appId: "1:369287615235:web:654e1e6fb48b4f634f8f36",
+                measurementId: "G-XX963RJLXE"
+            };
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const appCheck = firebase.appCheck(app);
-        appCheck.activate('6LfW-2crAAAAAMamgQQ_K1J2CHu4AVUejcTHp-x4', true);
+            // --- INICIALIZACIÓN DE FIREBASE Y SERVICIOS ---
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
 
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const authContainer = document.getElementById('auth-container');
-        
-        // ===== [INICIO] Referencias a los elementos del nuevo modal =====
-        const authModal = document.getElementById('auth-modal');
-        const closeAuthModalButton = document.getElementById('close-auth-modal-button');
-        const googleLoginButtonModal = document.getElementById('google-login-button-modal');
-        // ===== [FIN] Referencias a los elementos del nuevo modal =====
+            // --- VARIABLES GLOBALES DE ESTADO ---
+            let currentCart = []; // Fuente única de verdad para el carrito
+            let currentUserId = null; // ID del usuario actual
+            let cartListener = null; // Función para desuscribirse del listener de Firestore
 
-        const loginWithGoogle = () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
+            // --- REFERENCIAS AL DOM ---
+            const authContainer = document.getElementById('auth-container');
+            const authModal = document.getElementById('auth-modal');
+            const closeAuthModalButton = document.getElementById('close-auth-modal-button');
+            const googleLoginButtonModal = document.getElementById('google-login-button-modal');
+            const cartModalContainer = document.getElementById('cart-modal');
+            const openCartButton = document.getElementById('open-cart-button');
+            const GUEST_CART_KEY = 'yanz_guest_cart';
+
+
+            // --- LÓGICA DE AUTENTICACIÓN ---
+
+            // Iniciar sesión con Google usando redirección para compatibilidad con PWA
+            const loginWithGoogle = () => {
+                const provider = new GoogleAuthProvider();
+                provider.setCustomParameters({ prompt: 'select_account' });
+                signInWithRedirect(auth, provider).catch(error => {
+                    console.error("Error al iniciar redirección de login:", error);
+                });
+            };
+
+            // Cerrar sesión
+            const logout = () => {
+                signOut(auth).catch(error => {
+                    console.error("Error al cerrar sesión:", error);
+                });
+            };
             
-            // ===== [CAMBIO CLAVE] Forzar el selector de cuentas de Google =====
-            provider.setCustomParameters({
-                prompt: 'select_account'
+            // Procesar el resultado de la redirección al volver a la página
+            getRedirectResult(auth)
+                .then((result) => {
+                    if (result && result.user) {
+                        console.log('Inicio de sesión con redirect exitoso:', result.user.displayName);
+                        authModal.classList.add('hidden');
+                    }
+                }).catch((error) => {
+                    console.error("Error en getRedirectResult:", error);
+                });
+
+
+            // --- LÓGICA DEL CARRITO (CON FIRESTORE) ---
+
+            // Guarda el estado actual del carrito en el lugar correcto (Firestore o LocalStorage)
+            const saveCurrentCart = async () => {
+                if (currentUserId) {
+                    const cartRef = doc(db, 'carts', currentUserId);
+                    try {
+                        await setDoc(cartRef, { items: currentCart });
+                    } catch (error) {
+                        console.error("Error al guardar carrito en Firestore:", error);
+                    }
+                } else {
+                    localStorage.setItem(GUEST_CART_KEY, JSON.stringify(currentCart));
+                }
+                 updateCartUI(); // Actualizar la UI después de guardar
+            };
+
+            // Carga el carrito de un usuario invitado desde LocalStorage
+            const loadGuestCart = () => {
+                currentCart = JSON.parse(localStorage.getItem(GUEST_CART_KEY)) || [];
+                updateCartUI();
+            };
+            
+            // Fusiona el carrito de invitado con el de Firestore y establece un listener en tiempo real
+            const mergeAndLoadFirestoreCart = async (userId) => {
+                const guestCart = JSON.parse(localStorage.getItem(GUEST_CART_KEY)) || [];
+                const cartRef = doc(db, 'carts', userId);
+
+                // Establecer listener en tiempo real
+                cartListener = onSnapshot(cartRef, async (docSnap) => {
+                    const firestoreCart = docSnap.exists() ? docSnap.data().items : [];
+                    
+                    // Si hay un carrito de invitado, lo fusionamos UNA SOLA VEZ
+                    if (guestCart.length > 0) {
+                        const mergedCart = [...firestoreCart];
+                        guestCart.forEach(guestItem => {
+                            const existingItemIndex = mergedCart.findIndex(item => item.name === guestItem.name);
+                            if (existingItemIndex > -1) {
+                                mergedCart[existingItemIndex].quantity += guestItem.quantity;
+                            } else {
+                                mergedCart.push(guestItem);
+                            }
+                        });
+                        currentCart = mergedCart;
+                        
+                        // Limpiar el carrito de invitado y guardar el fusionado en Firestore
+                        localStorage.removeItem(GUEST_CART_KEY);
+                        await saveCurrentCart(); // Guardará en Firestore porque ya hay userId
+                    } else {
+                        currentCart = firestoreCart;
+                    }
+                    
+                    updateCartUI();
+                }, (error) => {
+                    console.error("Error en listener de carrito:", error);
+                });
+            };
+
+            // --- FUNCIONES DE MANIPULACIÓN DEL CARRITO (ahora operan sobre `currentCart`) ---
+            window.increaseQuantity = (itemName) => {
+                const item = currentCart.find(i => i.name === itemName);
+                if (item) {
+                    item.quantity = (item.quantity || 1) + 1;
+                    saveCurrentCart();
+                }
+            };
+
+            window.decreaseQuantity = (itemName) => {
+                const itemIndex = currentCart.findIndex(i => i.name === itemName);
+                if (itemIndex > -1) {
+                    if (currentCart[itemIndex].quantity > 1) {
+                        currentCart[itemIndex].quantity--;
+                    } else {
+                        currentCart.splice(itemIndex, 1);
+                    }
+                    saveCurrentCart();
+                }
+            };
+            
+            window.removeItemFromCart = (itemName) => {
+                currentCart = currentCart.filter(i => i.name !== itemName);
+                saveCurrentCart();
+            };
+            
+            // Simulación de 'agregar al carrito' para propósito de ejemplo
+            // En tu código real, esta función se llamaría desde los botones de producto
+            window.addToCart = (item) => {
+                 const existingItem = currentCart.find(i => i.name === item.name);
+                 if (existingItem) {
+                     existingItem.quantity += item.quantity;
+                 } else {
+                     currentCart.push(item);
+                 }
+                 saveCurrentCart();
+                 // Despachar un evento para mostrar alguna notificación si se desea
+                 document.dispatchEvent(new CustomEvent('item-added-to-cart'));
+            };
+
+
+            // --- RENDERIZADO DE LA INTERFAZ (UI) ---
+            
+            // Actualiza el ícono del contador del carrito
+            const updateCartIcon = () => {
+                const totalItems = currentCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                const cartCounter = document.getElementById('cart-counter');
+                const cartIconWrapper = document.getElementById('cart-icon-wrapper');
+                if (cartCounter && cartIconWrapper) {
+                    cartCounter.textContent = totalItems;
+                    cartCounter.classList.toggle('hidden', totalItems === 0);
+                    cartIconWrapper.classList.toggle('has-items', totalItems > 0);
+                }
+            };
+
+            // Renderiza el contenido del modal del carrito
+            const renderCartModal = () => {
+                const actionButtonHtml = currentCart.length > 0 ? `<a href="caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all"><span>Ir a la Caja</span></a>` : '<a href="#productos" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-lg" onclick="closeCartModal()">Volver a la tienda</a>';
+                const cartItemsHtml = currentCart.length === 0 ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` : currentCart.map(item => `<div class="flex justify-between items-center py-3"><span class="text-gray-300 pr-2 flex-grow">${item.name}</span><div class="flex items-center gap-2 text-white"><button onclick="decreaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">-</button><span class="w-8 text-center">${item.quantity}</span><button onclick="increaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">+</button><button onclick="removeItemFromCart('${item.name}')" class="ml-2 text-red-400 hover:text-red-300 transition-colors" aria-label="Eliminar item"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button></div></div>`).join("");
+                cartModalContainer.innerHTML=`<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">Tu Carrito de Ideas</h2></div><div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div id="cart-items" class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div><div class="mt-auto pt-4 space-y-3">${actionButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div></div>`;
+            };
+            
+            // Función centralizada para actualizar toda la UI del carrito
+            const updateCartUI = () => {
+                updateCartIcon();
+                if (!cartModalContainer.classList.contains('hidden')) {
+                    renderCartModal();
+                }
+            };
+            
+            window.closeCartModal = () => cartModalContainer.classList.add('hidden');
+            openCartButton.addEventListener('click', () => {
+                renderCartModal();
+                cartModalContainer.classList.remove('hidden');
             });
 
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    console.log('Inicio de sesión con popup exitoso:', result.user.displayName);
-                    authModal.classList.add('hidden'); // Ocultar modal tras éxito
-                })
-                .catch((error) => {
-                    console.error("Error en signInWithPopup:", error.code, error.message);
-                });
-        };
-        
-        const logout = () => { auth.signOut(); };
 
-        authContainer.innerHTML = `<div class="w-9 h-9 rounded-full bg-gray-700 animate-pulse"></div>`;
+            // --- OBSERVADOR PRINCIPAL DE ESTADO DE AUTENTICACIÓN ---
+            
+            onAuthStateChanged(auth, (user) => {
+                // Limpiar el listener anterior para evitar duplicados
+                if (cartListener) {
+                    cartListener(); // Desuscribirse del listener de Firestore
+                    cartListener = null;
+                }
 
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                // --- VISTA PARA USUARIO CONECTADO (con menú desplegable) ---
-                const userImage = user.photoURL ? `<img src="${user.photoURL}" alt="Foto de ${user.displayName}" class="w-full h-full object-cover">` : `<span class="text-white font-bold text-xl">${user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}</span>`;
-                authContainer.innerHTML = `<div class="relative"><button id="user-menu-button" title="Mi Cuenta" class="w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-sm overflow-hidden border-2 border-gray-500 hover:border-gray-400 bg-gray-700">${userImage}</button><div id="user-menu-dropdown" class="hidden absolute top-full right-0 mt-2 w-56 bg-[var(--yanz-header-bg)] border border-gray-700 rounded-lg shadow-xl z-50"><div class="px-4 py-3 border-b border-gray-700"><p class="text-sm font-semibold text-white truncate">${user.displayName || 'Usuario'}</p><p class="text-xs text-gray-400 truncate">${user.email || 'Sin email'}</p></div><div class="py-1"><a href="#" id="logout-button-menu" class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"><svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>Cerrar Sesión</a></div></div></div>`;
-                const userMenuButton = document.getElementById('user-menu-button'); const userMenuDropdown = document.getElementById('user-menu-dropdown'); const logoutButtonMenu = document.getElementById('logout-button-menu');
-                userMenuButton.addEventListener('click', (event) => { event.stopPropagation(); userMenuDropdown.classList.toggle('hidden'); });
-                logoutButtonMenu.addEventListener('click', (e) => { e.preventDefault(); userMenuDropdown.classList.add('hidden'); logout(); });
-                window.addEventListener('click', (event) => { if (userMenuDropdown && !userMenuDropdown.classList.contains('hidden') && !userMenuButton.contains(event.target) && !userMenuDropdown.contains(event.target)) { userMenuDropdown.classList.add('hidden'); } });
-            } else {
-                // --- VISTA PARA USUARIO DESCONECTADO (icono que abre el modal) ---
-                authContainer.innerHTML = `<button id="open-auth-modal-button" title="Acceder o Registrarse" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm overflow-hidden"><video autoplay loop muted playsinline class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML = '<span class=\\'font-sans text-gray-800 text-lg font-bold\\'>G</span>';"><source src="assets/videos/login-icon.mp4" type="video/mp4"></video></button>`;
-                document.getElementById('open-auth-modal-button').addEventListener('click', () => {
-                    authModal.classList.remove('hidden');
-                });
-            }
+                if (user) {
+                    // --- USUARIO CONECTADO ---
+                    currentUserId = user.uid;
+                    const userImage = user.photoURL ? `<img src="${user.photoURL}" alt="Foto de ${user.displayName}" class="w-full h-full object-cover">` : `<span class="text-white font-bold text-xl">${user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}</span>`;
+                    authContainer.innerHTML = `<div class="relative"><button id="user-menu-button" title="Mi Cuenta" class="w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-sm overflow-hidden border-2 border-gray-500 hover:border-gray-400 bg-gray-700">${userImage}</button><div id="user-menu-dropdown" class="hidden absolute top-full right-0 mt-2 w-56 bg-[var(--yanz-header-bg)] border border-gray-700 rounded-lg shadow-xl z-50"><div class="px-4 py-3 border-b border-gray-700"><p class="text-sm font-semibold text-white truncate">${user.displayName || 'Usuario'}</p><p class="text-xs text-gray-400 truncate">${user.email || 'Sin email'}</p></div><div class="py-1"><a href="#" id="logout-button-menu" class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"><svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>Cerrar Sesión</a></div></div></div>`;
+                    
+                    document.getElementById('logout-button-menu').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+                    const userMenuButton = document.getElementById('user-menu-button');
+                    const userMenuDropdown = document.getElementById('user-menu-dropdown');
+                    userMenuButton.addEventListener('click', (event) => { event.stopPropagation(); userMenuDropdown.classList.toggle('hidden'); });
+                    window.addEventListener('click', (event) => { if (userMenuDropdown && !userMenuDropdown.classList.contains('hidden') && !userMenuButton.contains(event.target)) { userMenuDropdown.classList.add('hidden'); } });
+
+                    // Cargar carrito del usuario desde Firestore (y fusionar si es necesario)
+                    mergeAndLoadFirestoreCart(user.uid);
+
+                } else {
+                    // --- USUARIO DESCONECTADO (INVITADO) ---
+                    currentUserId = null;
+                    authContainer.innerHTML = `<button id="open-auth-modal-button" title="Acceder o Registrarse" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm overflow-hidden"><video autoplay loop muted playsinline class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML = '<span class=\\'font-sans text-gray-800 text-lg font-bold\\'>G</span>';"><source src="assets/videos/login-icon.mp4" type="video/mp4"></video></button>`;
+                    document.getElementById('open-auth-modal-button').addEventListener('click', () => { authModal.classList.remove('hidden'); });
+
+                    // Cargar carrito de invitado desde LocalStorage
+                    loadGuestCart();
+                }
+            });
+            
+            // --- LISTENERS DE MODALES Y OTROS ELEMENTOS DE UI ---
+            googleLoginButtonModal.addEventListener('click', loginWithGoogle);
+            closeAuthModalButton.addEventListener('click', () => authModal.classList.add('hidden'));
+            authModal.addEventListener('click', (event) => {
+                if (event.target === authModal) authModal.classList.add('hidden');
+            });
+
+
+            // --- LÓGICA DE CARGA INICIAL Y CONTENIDO ESTÁTICO (sin cambios) ---
+            const themeToggle = document.getElementById('theme-toggle'); const sunIcon = document.getElementById('theme-icon-sun'); const moonIcon = document.getElementById('theme-icon-moon'); const applyTheme = (theme) => { document.documentElement.classList.toggle('dark', theme === 'dark'); sunIcon.classList.toggle('hidden', theme !== 'dark'); moonIcon.classList.toggle('hidden', theme === 'dark'); }; themeToggle.addEventListener('click', () => { const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); });
+            const createCategoryCard = (category) => { const cardLink = document.createElement('a'); cardLink.href = category.link; cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2"; const mediaWrapper = document.createElement('div'); mediaWrapper.className = "overflow-hidden"; mediaWrapper.innerHTML = `<video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${category.video}" type="video/mp4"></video>`; const textWrapper = document.createElement('div'); textWrapper.className = "p-6 flex flex-col flex-grow"; textWrapper.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`; cardLink.appendChild(mediaWrapper); cardLink.appendChild(textWrapper); return cardLink; }; const productGrid = document.getElementById('product-grid'); const serviceGrid = document.getElementById('service-grid'); const categories = [ { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas.html', type: 'product' }, { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets.html', type: 'product' }, { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas.html', type: 'product' }, { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos.html', type: 'product' }, { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos.html', type: 'product' }, { title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum.html', type: 'product' }, { title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios.html', type: 'product' }, { title: 'Diseño con IA "Aria"', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria.html', type: 'product' }, { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/servicio_renovacion.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' }, { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria.html', type: 'service' }, { title: 'Consultoría e Integración de IA', video: 'assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' } ]; categories.forEach(cat => { const card = createCategoryCard(cat); if (cat.type === 'product' && productGrid) productGrid.appendChild(card); if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card); }); const menuButton = document.getElementById('menu-button'); const mobileMenu = document.getElementById('mobile-menu'); const mobileNavLinks = document.querySelectorAll('.mobile-nav-link'); menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden')); mobileNavLinks.forEach(link => { link.addEventListener('click', () => mobileMenu.classList.add('hidden')) }); const savedTheme = localStorage.getItem('theme') || 'dark'; applyTheme(savedTheme); const paymentLogosContainer = document.getElementById('payment-logos'); if(paymentLogosContainer) { const paymentMethods = [ { name: 'PeiGo', image: 'assets/images/pago-peigo.png' }, { name: 'Mastercard', image: 'assets/images/pago-mastercard.png' }, { name: 'Visa', image: 'assets/images/pago-visa.png' }, { name: 'American Express', image: 'assets/images/pago-american-express.png' }, { name: 'Discover', image: 'assets/images/pago-discover.png' }, { name: 'JCB', image: 'assets/images/pago-jcb.png' }, { name: 'Diners Club', image: 'assets/images/pago-diners-club.png' }, { name: 'PayPal', image: 'assets/images/pago-paypal.png' }, { name: 'Binance Pay', image: 'assets/images/pago-binance-pay.png' }, { name: 'Banco Guayaquil', image: 'assets/images/pago-banco-guayaquil.png' }, { name: 'Banco Pichincha', image: 'assets/images/pago-banco-pichincha.png' }, { name: 'DeUna', image: 'assets/images/pago-deuna.png' } ]; paymentMethods.forEach(m => { paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`; }); } document.getElementById('year').textContent = new Date().getFullYear(); const preloader = document.getElementById('preloader'); const pageContent = document.getElementById('page-content'); const introVideo = document.getElementById('intro-video'); let appStarted = false; function startApp() { if (appStarted) return; appStarted = true; if (preloader) preloader.classList.add('hidden'); if (pageContent) pageContent.classList.add('loaded'); } if (introVideo) { introVideo.addEventListener('ended', startApp); introVideo.addEventListener('error', startApp); setTimeout(startApp, 5000); } else { startApp(); }
+
         });
-        
-        // ===== [INICIO] Lógica para manejar el modal de autenticación =====
-        googleLoginButtonModal.addEventListener('click', loginWithGoogle);
-        closeAuthModalButton.addEventListener('click', () => authModal.classList.add('hidden'));
-        authModal.addEventListener('click', (event) => {
-            if (event.target === authModal) { // Cierra el modal si se hace clic en el fondo
-                authModal.classList.add('hidden');
-            }
-        });
-        // ===== [FIN] Lógica para manejar el modal de autenticación =====
-        
-        // --- Lógica del carrito, tema, y carga de datos (sin cambios) ---
-        const cartModalContainer = document.getElementById('cart-modal'); const openCartButton = document.getElementById('open-cart-button'); function getCart() { return JSON.parse(localStorage.getItem("yanz_cart")) || []; } function saveCart(cart) { localStorage.setItem("yanz_cart", JSON.stringify(cart)); updateCartIcon(); if (!cartModalContainer.classList.contains('hidden')) { renderCartModal(); } document.dispatchEvent(new CustomEvent('cart-updated')); } window.increaseQuantity = (itemName) => { let cart = getCart(); const item = cart.find(i => i.name === itemName); if (item) { item.quantity = (item.quantity || 1) + 1; } saveCart(cart); }; window.decreaseQuantity = (itemName) => { let cart = getCart(); const itemIndex = cart.findIndex(i => i.name === itemName); if (itemIndex > -1) { if (cart[itemIndex].quantity > 1) { cart[itemIndex].quantity--; } else { cart.splice(itemIndex, 1); } } saveCart(cart); }; window.removeItemFromCart = (itemName) => { let cart = getCart().filter(i => i.name !== itemName); saveCart(cart); }; function renderCartModal() { const cart = getCart(); const actionButtonHtml = cart.length > 0 ? `<a href="caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all"><span>Ir a la Caja</span></a>` : '<a href="ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-lg">Volver a la tienda</a>'; const cartItemsHtml = cart.length === 0 ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` : cart.map(item => `<div class="flex justify-between items-center py-3"><span class="text-gray-300 pr-2 flex-grow">${item.name}</span><div class="flex items-center gap-2 text-white"><button onclick="decreaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">-</button><span class="w-8 text-center">${item.quantity}</span><button onclick="increaseQuantity('${item.name}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">+</button><button onclick="removeItemFromCart('${item.name}')" class="ml-2 text-red-400 hover:text-red-300 transition-colors" aria-label="Eliminar item"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button></div></div>`).join(""); cartModalContainer.innerHTML=`<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">Tu Carrito de Ideas</h2></div><div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div id="cart-items" class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div><div class="mt-auto pt-4 space-y-3">${actionButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div></div>`; } function updateCartIcon() { const cart = getCart(); const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0); const cartCounter = document.getElementById('cart-counter'); const cartIconWrapper = document.getElementById('cart-icon-wrapper'); if (cartCounter && cartIconWrapper) { cartCounter.textContent = totalItems; cartCounter.classList.toggle('hidden', totalItems === 0); cartIconWrapper.classList.toggle('has-items', totalItems > 0); } } window.closeCartModal = () => cartModalContainer.classList.add('hidden'); openCartButton.addEventListener('click', () => { renderCartModal(); cartModalContainer.classList.remove('hidden'); }); updateCartIcon(); window.addEventListener('storage', (e) => { if (e.key === 'yanz_cart') { updateCartIcon(); } }); document.addEventListener('add-to-cart', updateCartIcon);
-        const themeToggle = document.getElementById('theme-toggle'); const sunIcon = document.getElementById('theme-icon-sun'); const moonIcon = document.getElementById('theme-icon-moon'); const applyTheme = (theme) => { document.documentElement.classList.toggle('dark', theme === 'dark'); sunIcon.classList.toggle('hidden', theme !== 'dark'); moonIcon.classList.toggle('hidden', theme === 'dark'); }; themeToggle.addEventListener('click', () => { const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); });
-        const createCategoryCard = (category) => { const cardLink = document.createElement('a'); cardLink.href = category.link; cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2"; const mediaWrapper = document.createElement('div'); mediaWrapper.className = "overflow-hidden"; mediaWrapper.innerHTML = `<video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${category.video}" type="video/mp4"></video>`; const textWrapper = document.createElement('div'); textWrapper.className = "p-6 flex flex-col flex-grow"; textWrapper.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`; cardLink.appendChild(mediaWrapper); cardLink.appendChild(textWrapper); return cardLink; }; const productGrid = document.getElementById('product-grid'); const serviceGrid = document.getElementById('service-grid'); const categories = [ { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas.html', type: 'product' }, { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets.html', type: 'product' }, { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas.html', type: 'product' }, { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos.html', type: 'product' }, { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos.html', type: 'product' }, { title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum.html', type: 'product' }, { title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios.html', type: 'product' }, { title: 'Diseño con IA "Aria"', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria.html', type: 'product' }, { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/servicio_renovacion.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' }, { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria.html', type: 'service' }, { title: 'Consultoría e Integración de IA', video: 'assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' } ]; categories.forEach(cat => { const card = createCategoryCard(cat); if (cat.type === 'product' && productGrid) productGrid.appendChild(card); if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card); }); const menuButton = document.getElementById('menu-button'); const mobileMenu = document.getElementById('mobile-menu'); const mobileNavLinks = document.querySelectorAll('.mobile-nav-link'); menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden')); mobileNavLinks.forEach(link => { link.addEventListener('click', () => mobileMenu.classList.add('hidden')) }); const savedTheme = localStorage.getItem('theme') || 'dark'; applyTheme(savedTheme); const paymentLogosContainer = document.getElementById('payment-logos'); if(paymentLogosContainer) { const paymentMethods = [ { name: 'PeiGo', image: 'assets/images/pago-peigo.png' }, { name: 'Mastercard', image: 'assets/images/pago-mastercard.png' }, { name: 'Visa', image: 'assets/images/pago-visa.png' }, { name: 'American Express', image: 'assets/images/pago-american-express.png' }, { name: 'Discover', image: 'assets/images/pago-discover.png' }, { name: 'JCB', image: 'assets/images/pago-jcb.png' }, { name: 'Diners Club', image: 'assets/images/pago-diners-club.png' }, { name: 'PayPal', image: 'assets/images/pago-paypal.png' }, { name: 'Binance Pay', image: 'assets/images/pago-binance-pay.png' }, { name: 'Banco Guayaquil', image: 'assets/images/pago-banco-guayaquil.png' }, { name: 'Banco Pichincha', image: 'assets/images/pago-banco-pichincha.png' }, { name: 'DeUna', image: 'assets/images/pago-deuna.png' } ]; paymentMethods.forEach(m => { paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`; }); } document.getElementById('year').textContent = new Date().getFullYear(); const preloader = document.getElementById('preloader'); const pageContent = document.getElementById('page-content'); const introVideo = document.getElementById('intro-video'); let appStarted = false; function startApp() { if (appStarted) return; appStarted = true; if (preloader) preloader.classList.add('hidden'); if (pageContent) pageContent.classList.add('loaded'); } if (introVideo) { introVideo.addEventListener('ended', startApp); introVideo.addEventListener('error', startApp); setTimeout(startApp, 5000); } else { startApp(); }
-    });
     </script>
 </body>
 </html>
