@@ -71,47 +71,47 @@
 <body class="antialiased">
 
     <header id="main-header" class="bg-[var(--yanz-header-bg)] shadow-md sticky top-0 z-50">
-         <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
-             <a href="/index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="/assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
-             <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
-                 <a href="/index.html#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
-                 <a href="/index.html#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
-                 <a href="/index.html#juegos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Juegos</a>
-                 <a href="/index.html#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
-             </div>
-             <div class="flex items-center space-x-2">
-                 <div class="flex items-center space-x-3">
+        <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
+            <a href="/index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="/assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
+            <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                <a href="/index.html#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
+                <a href="/index.html#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
+                <a href="/index.html#juegos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Juegos</a>
+                <a href="/index.html#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-3">
                     <div id="cart-icon-wrapper">
                         <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
                             <video autoplay loop muted playsinline class="w-8 h-8"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
                         </button>
                     </div>
                     <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
-                 </div>
-                 <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
-                     <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
-                     <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                 </button>
-                 <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-             </div>
-         </nav>
-         <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                </div>
+                <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
+                    <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
+                    <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                </button>
+                <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="/index.html#productos" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Productos</a>
             <a href="/index.html#servicios" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Servicios</a>
             <a href="/index.html#juegos" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Juegos</a>
             <a href="/index.html#contacto" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Contacto</a>
-         </div>
+        </div>
     </header>
 
     <main>
         <section class="relative h-[60vh] flex items-center justify-center text-white bg-black">
-             <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-50">
+            <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-50">
                 <source src="/assets/videos/aria.mp4" type="video/mp4" onerror="this.parentElement.style.backgroundColor = '#1A202C';">
-             </video>
-             <div class="relative z-10 text-center px-4">
-                 <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-4">Aria</h1>
-                 <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Tu asistente personal de compras. Finalicemos tu pedido.</p>
-             </div>
+            </video>
+            <div class="relative z-10 text-center px-4">
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-4">Aria</h1>
+                <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Tu asistente personal de compras. Finalicemos tu pedido.</p>
+            </div>
         </section>
 
         <section class="bg-[var(--yanz-bg-alt)] py-12">
@@ -332,28 +332,28 @@
         function askForName() {
             conversationState = 'getting_name';
             addMessage('Para comenzar, ¿cuál es tu nombre completo?');
-            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_name', this.name.value);" class="flex gap-2"><input type="text" name="name" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Escribe tu nombre..."><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
+            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_name', this.name.value);" class="flex items-center gap-2"><input type="text" name="name" required class="w-full flex-1 bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[var(--yanz-primary)] focus:border-transparent transition" placeholder="Escribe tu nombre..."><button type="submit" aria-label="Enviar" class="flex-shrink-0 bg-[var(--yanz-primary)] text-white rounded-full p-3 hover:bg-opacity-90 transition-all shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7" /></svg></button></form>`;
             userActions.querySelector('input').focus();
         }
 
         function askForAddress() {
             conversationState = 'getting_address';
             addMessage(`¡Un gusto, ${userData.name}! Ahora, por favor, indícame la dirección completa para la entrega.`);
-            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_address', this.address.value);" class="flex gap-2"><input type="text" name="address" required class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Calle, número, sector..."><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
+            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_address', this.address.value);" class="flex items-center gap-2"><input type="text" name="address" required class="w-full flex-1 bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[var(--yanz-primary)] focus:border-transparent transition" placeholder="Calle, número, sector..."><button type="submit" aria-label="Enviar" class="flex-shrink-0 bg-[var(--yanz-primary)] text-white rounded-full p-3 hover:bg-opacity-90 transition-all shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7" /></svg></button></form>`;
             userActions.querySelector('input').focus();
         }
 
         function askForEmail() {
             conversationState = 'getting_email';
             addMessage('¡Entendido! Si deseas recibir una copia de la factura, puedes darme tu correo electrónico. Es opcional.');
-            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_email', this.email.value);" class="flex gap-2"><input type="email" name="email" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="tu.correo@ejemplo.com (opcional)"><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
+            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_email', this.email.value);" class="flex items-center gap-2"><input type="email" name="email" class="w-full flex-1 bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[var(--yanz-primary)] focus:border-transparent transition" placeholder="tu.correo@ejemplo.com (opcional)"><button type="submit" aria-label="Enviar" class="flex-shrink-0 bg-[var(--yanz-primary)] text-white rounded-full p-3 hover:bg-opacity-90 transition-all shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7" /></svg></button></form>`;
             userActions.querySelector('input').focus();
         }
 
         function askForNotes() {
             conversationState = 'getting_notes';
             addMessage('Perfecto. ¿Hay alguna nota adicional que deba saber sobre tu pedido o la entrega?');
-            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_notes', this.notes.value);" class="flex gap-2"><input type="text" name="notes" class="flex-grow bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-2 px-4 focus:outline-none focus:border-[var(--yanz-primary)]" placeholder="Ej: llamar antes de llegar..."><button type="submit" class="bg-[var(--yanz-primary)] text-white font-bold py-2 px-5 rounded-full">Enviar</button></form>`;
+            userActions.innerHTML = `<form onsubmit="event.preventDefault(); handleAction('submit_notes', this.notes.value);" class="flex items-center gap-2"><input type="text" name="notes" class="w-full flex-1 bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] rounded-full py-3 px-5 focus:outline-none focus:ring-2 focus:ring-[var(--yanz-primary)] focus:border-transparent transition" placeholder="Ej: llamar antes de llegar..."><button type="submit" aria-label="Enviar" class="flex-shrink-0 bg-[var(--yanz-primary)] text-white rounded-full p-3 hover:bg-opacity-90 transition-all shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7-7 7" /></svg></button></form>`;
             userActions.querySelector('input').focus();
         }
         
@@ -411,20 +411,20 @@
 
         function initializePage() {
              if (chatCart.length === 0) {
-                addMessage('¡Hola! Soy Aria. Parece que tu carrito está vacío.');
-                userActions.innerHTML = '<a href="/ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Volver a la tienda</a>';
-                return;
-            }
+                 addMessage('¡Hola! Soy Aria. Parece que tu carrito está vacío.');
+                 userActions.innerHTML = '<a href="/ferreteria.html" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-full">Volver a la tienda</a>';
+                 return;
+             }
             
-            userActions.innerHTML = `
-                <button id="start-chat-btn" class="w-full bg-green-500 text-white font-bold py-4 px-6 rounded-full text-lg animate-pulse">
-                    Hablar con Aria para comenzar
-                </button>
-            `;
-            document.getElementById('start-chat-btn').addEventListener('click', () => {
-                userActions.innerHTML = '<p class="text-center text-sm text-[var(--yanz-text-alt)]">Conectando...</p>';
-                setTimeout(startConversation, 500);
-            }, { once: true });
+             userActions.innerHTML = `
+                 <button id="start-chat-btn" class="w-full bg-green-500 text-white font-bold py-4 px-6 rounded-full text-lg animate-pulse">
+                     Hablar con Aria para comenzar
+                 </button>
+             `;
+             document.getElementById('start-chat-btn').addEventListener('click', () => {
+                 userActions.innerHTML = '<p class="text-center text-sm text-[var(--yanz-text-alt)]">Conectando...</p>';
+                 setTimeout(startConversation, 500);
+             }, { once: true });
         }
         
         window.handleAction = handleAction;
