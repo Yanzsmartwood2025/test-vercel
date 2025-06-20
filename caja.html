@@ -363,10 +363,25 @@
             const quoteItems = chatCart.filter(item => item.type === 'quote');
             let saleTotal = 0;
             if (saleItems.length > 0) saleItems.forEach(item => saleTotal += (item.price * item.quantity));
+            
+            // --- NUEVO CÓDIGO: Obtener y formatear fecha y hora ---
+            const now = new Date();
+            const options = {
+                year: 'numeric', month: 'long', day: 'numeric',
+                hour: '2-digit', minute: '2-digit', hour12: true,
+                timeZone: 'America/Guayaquil' // Zona horaria de Ecuador
+            };
+            const formattedDateTime = now.toLocaleString('es-EC', options);
+            // --- FIN DEL NUEVO CÓDIGO ---
+
             let summaryMessage = '¡Excelente! He procesado toda tu información. Este es el resumen final:<br><br>';
-            let whatsappMessage = `*¡Nuevo Pedido/Cotización desde la Web!* 🤖\n\n*Cliente:* ${userData.name}\n*Dirección:* ${userData.address}\n`;
+            
+            // --- CÓDIGO MODIFICADO: Añadir fecha y hora al mensaje de WhatsApp ---
+            let whatsappMessage = `*¡Nuevo Pedido/Cotización desde la Web!* 🤖\n\n*Fecha del Pedido:* ${formattedDateTime}\n\n*Cliente:* ${userData.name}\n*Dirección:* ${userData.address}\n`;
             if (userData.email) whatsappMessage += `*Email:* ${userData.email}\n`;
             if (userData.notes) whatsappMessage += `*Notas:* ${userData.notes}\n\n`;
+            // --- FIN DE LA MODIFICACIÓN ---
+
             if (saleItems.length > 0) {
                 summaryMessage += `<strong>Productos para Compra Inmediata:</strong><br>`;
                 whatsappMessage += `*Productos para Compra Inmediata:*\n`;
