@@ -275,16 +275,23 @@
             synth.onvoiceschanged = loadVoices;
         }
 
+        // --- CÓDIGO MODIFICADO: Función de hablar mejorada ---
         function speak(text) {
             synth.cancel(); 
             if (isMuted || !text) return;
             
-            const plainText = text.replace(/<[^>]*>/g, ' '); 
+            // Primero, quitar etiquetas HTML para obtener texto plano
+            let plainText = text.replace(/<[^>]*>/g, ' '); 
+            
+            // Reemplazar "1 x" con "1 por" para que suene natural
+            plainText = plainText.replace(/(\d+)\s*x\s+/gi, '$1 por ');
+
             const utterance = new SpeechSynthesisUtterance(plainText);
             if (spanishVoice) utterance.voice = spanishVoice;
             utterance.lang = 'es-ES';
             synth.speak(utterance);
         }
+        // --- FIN DE LA MODIFICACIÓN ---
         
         voiceToggle.addEventListener('click', () => {
             isMuted = !isMuted;
@@ -361,26 +368,29 @@
             conversationState = 'final';
             const saleItems = chatCart.filter(item => item.type === 'sale');
             const quoteItems = chatCart.filter(item => item.type === 'quote');
-            let saleTotal = 0;
-            if (saleItems.length > 0) saleItems.forEach(item => saleTotal += (item.price * item.quantity));
             
-            // --- NUEVO CÓDIGO: Obtener y formatear fecha y hora ---
+            let saleSubtotal = 0;
+            if (saleItems.length > 0) {
+                saleItems.forEach(item => saleSubtotal += (item.price * item.quantity));
+            }
+            
+            const ivaRate = 0.15; // 15% IVA en Ecuador
+            const ivaAmount = saleSubtotal * ivaRate;
+            const finalTotal = saleSubtotal + ivaAmount;
+
             const now = new Date();
             const options = {
                 year: 'numeric', month: 'long', day: 'numeric',
                 hour: '2-digit', minute: '2-digit', hour12: true,
-                timeZone: 'America/Guayaquil' // Zona horaria de Ecuador
+                timeZone: 'America/Guayaquil'
             };
             const formattedDateTime = now.toLocaleString('es-EC', options);
-            // --- FIN DEL NUEVO CÓDIGO ---
 
             let summaryMessage = '¡Excelente! He procesado toda tu información. Este es el resumen final:<br><br>';
             
-            // --- CÓDIGO MODIFICADO: Añadir fecha y hora al mensaje de WhatsApp ---
             let whatsappMessage = `*¡Nuevo Pedido/Cotización desde la Web!* 🤖\n\n*Fecha del Pedido:* ${formattedDateTime}\n\n*Cliente:* ${userData.name}\n*Dirección:* ${userData.address}\n`;
             if (userData.email) whatsappMessage += `*Email:* ${userData.email}\n`;
             if (userData.notes) whatsappMessage += `*Notas:* ${userData.notes}\n\n`;
-            // --- FIN DE LA MODIFICACIÓN ---
 
             if (saleItems.length > 0) {
                 summaryMessage += `<strong>Productos para Compra Inmediata:</strong><br>`;
@@ -389,9 +399,17 @@
                     summaryMessage += `&bull; ${item.quantity} x ${item.name}<br>`;
                     whatsappMessage += `- ${item.quantity} x ${item.name}\n`;
                 });
-                summaryMessage += `<br><strong>Total a Pagar: $${saleTotal.toFixed(2)}</strong><br><br>`;
-                whatsappMessage += `*Total a Pagar: $${saleTotal.toFixed(2)}*\n\n`;
+                summaryMessage += `<br><div class='text-right'>`;
+                summaryMessage += `<strong>Subtotal:</strong> $${saleSubtotal.toFixed(2)}<br>`;
+                summaryMessage += `<strong>IVA (15%):</strong> $${ivaAmount.toFixed(2)}<br>`;
+                summaryMessage += `<strong class='text-lg'>Total a Pagar: $${finalTotal.toFixed(2)}</strong><br><br>`;
+                summaryMessage += `</div>`;
+
+                whatsappMessage += `\n*Subtotal: $${saleSubtotal.toFixed(2)}*\n`;
+                whatsappMessage += `*IVA (15%): $${ivaAmount.toFixed(2)}*\n`;
+                whatsappMessage += `*Total a Pagar: $${finalTotal.toFixed(2)}*\n\n`;
             }
+
             if (quoteItems.length > 0) {
                 summaryMessage += `<strong>Productos para Cotización:</strong><br>`;
                 whatsappMessage += `*Productos para Cotizar:*\n`;
@@ -400,6 +418,7 @@
                     whatsappMessage += `- ${item.quantity} x ${item.name}\n`;
                 });
             }
+
             if(quoteItems.length > 0 && saleItems.length > 0) {
                  summaryMessage += `<br>Para confirmar tu pedido, por favor realiza el pago de los productos de ferretería y envíanos el comprobante por WhatsApp. Uno de nuestros asesores te contactará para la cotización del resto.`;
             } else if (saleItems.length > 0) {
