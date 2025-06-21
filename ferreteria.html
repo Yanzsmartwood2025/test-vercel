@@ -84,7 +84,7 @@
         .panel-productos.open {
              padding-top: 1rem;
              padding-bottom: 1.5rem;
-         }
+       }
         
         #turbo-button {
             background-color: var(--yanz-yellow);
@@ -135,7 +135,8 @@
                      <a href="/caja.html" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Caja</a>
                      <a href="/index.html#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
                  </div>
-                 <div class="flex items-center space-x-2">
+                 <div class="flex items-center space-x-2 sm:space-x-4">
+                     <div id="auth-container" class="flex items-center"></div>
                      <div class="flex items-center space-x-3">
                          <div id="cart-icon-wrapper">
                              <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
@@ -152,11 +153,11 @@
                  </div>
              </nav>
              <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="/index.html#productos" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Productos</a>
-                <a href="/index.html#servicios" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Servicios</a>
-                <a href="/index.html#juegos" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Juegos</a>
-                <a href="/caja.html" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Caja</a>
-                <a href="/index.html#contacto" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Contacto</a>
+                 <a href="/index.html#productos" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Productos</a>
+                 <a href="/index.html#servicios" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Servicios</a>
+                 <a href="/index.html#juegos" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Juegos</a>
+                 <a href="/caja.html" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Caja</a>
+                 <a href="/index.html#contacto" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Contacto</a>
              </div>
         </header>
 
@@ -211,168 +212,316 @@
     </button>
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden"></div>
     <div id="turbo-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden"></div>
+    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden">
+        <div class="w-full max-w-xs bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-8 flex flex-col modal-enter relative text-center">
+             <button id="close-auth-modal-button" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+             </button>
+            <h2 class="text-2xl font-bold text-white mb-2">Welcome</h2>
+            <p class="text-gray-400 mb-6">Sign in or create an account</p>
+            <button id="google-login-button-modal" class="w-full inline-flex items-center justify-center gap-3 px-4 py-2 text-base font-semibold text-gray-700 bg-white border border-transparent rounded-lg shadow-sm hover:bg-gray-200 transition-all">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.574l6.19,5.238C41.38,34.783,44,29.865,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
+                <span>Sign in with Google</span>
+            </button>
+        </div>
+    </div>
     
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-
-        // --- Lógica del Tema y Menú ---
-        const themeToggle=document.getElementById("theme-toggle"),sunIcon=document.getElementById("theme-icon-sun"),moonIcon=document.getElementById("theme-icon-moon");function applyTheme(e){document.documentElement.classList.toggle("dark",e==="dark"),sunIcon&&sunIcon.classList.toggle("hidden",e!=="dark"),moonIcon&&moonIcon.classList.toggle("hidden",e==="dark")}themeToggle.addEventListener("click",()=>{const e=document.documentElement.classList.contains("dark")?"light":"dark";localStorage.setItem("theme",e),applyTheme(e)});
-        const menuButton=document.getElementById("menu-button"),mobileMenu=document.getElementById("mobile-menu");
-        if(menuButton&&mobileMenu){
-            menuButton.addEventListener("click",()=>mobileMenu.classList.toggle("hidden"));
-            const mobileNavLinks=mobileMenu.querySelectorAll(".mobile-nav-link");
-            mobileNavLinks.forEach(e=>{e.addEventListener("click",()=>mobileMenu.classList.add("hidden"))});
-        }
-        const savedTheme=localStorage.getItem("theme")||"dark";applyTheme(savedTheme);
+        const firebaseConfig = {
+            apiKey: "AIzaSyC3ENgMXZWAHu7r8l-0z1Iva8CbML_Z26o",
+            authDomain: "yan-z-smart-wood.firebaseapp.com",
+            projectId: "yan-z-smart-wood",
+            storageBucket: "yan-z-smart-wood.appspot.com",
+            messagingSenderId: "369287615235",
+            appId: "1:369287615235:web:654e1e6fb48b4f634f8f36"
+        };
         
-        // --- Lógica del Pie de Página ---
-        const paymentLogosContainer=document.getElementById("payment-logos");paymentLogosContainer&&[{name:"PeiGo",image:"/assets/images/pago-peigo.png"},{name:"Mastercard",image:"/assets/images/pago-mastercard.png"},{name:"Visa",image:"/assets/images/pago-visa.png"},{name:"American Express",image:"/assets/images/pago-american-express.png"},{name:"Discover",image:"/assets/images/pago-discover.png"},{name:"JCB",image:"/assets/images/pago-jcb.png"},{name:"Diners Club",image:"/assets/images/pago-diners-club.png"},{name:"PayPal",image:"/assets/images/pago-paypal.png"},{name:"Binance Pay",image:"/assets/images/pago-binance-pay.png"},{name:"Banco Guayaquil",image:"/assets/images/pago-banco-guayaquil.png"},{name:"Banco Pichincha",image:"/assets/images/pago-banco-pichincha.png"},{name:"DeUna",image:"/assets/images/pago-deuna.png"}].forEach(e=>{paymentLogosContainer.innerHTML+=`<img src="${e.image}" alt="${e.name}" title="${e.name}" class="h-8 bg-white rounded-md p-1">`});document.getElementById("year").textContent=(new Date).getFullYear();
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const appId = 'yanz-smart-wood-app';
+        const GUEST_CART_KEY = `yanz_guest_cart_${appId}`;
+
+        let currentCart = [];
+        let currentUserId = null;
+        let cartListener = null;
+
+        const authContainer = document.getElementById('auth-container');
+        const authModal = document.getElementById('auth-modal');
+        const closeAuthModalButton = document.getElementById('close-auth-modal-button');
+        const googleLoginButtonModal = document.getElementById('google-login-button-modal');
+
+        const renderLoggedInUI = (user) => {
+            const userImage = user.photoURL ? `<img src="${user.photoURL}" alt="${user.displayName}" class="w-full h-full object-cover">` : `<span class="text-white font-bold text-xl">${user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}</span>`;
+            authContainer.innerHTML = `<div class="relative"><button id="user-menu-button" title="Mi Cuenta" class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-700 overflow-hidden border-2 border-gray-500 hover:border-gray-400">${userImage}</button><div id="user-menu-dropdown" class="hidden absolute top-full right-0 mt-2 w-56 bg-[var(--yanz-header-bg)] rounded-lg shadow-xl z-50"><div class="px-4 py-3 border-b border-gray-700"><p class="text-sm font-semibold text-white truncate">${user.displayName}</p><p class="text-xs text-gray-400 truncate">${user.email}</p></div><div class="py-1"><a href="#" id="logout-button-menu" class="flex items-center w-full px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Cerrar Sesión</a></div></div></div>`;
+            document.getElementById('logout-button-menu').addEventListener('click', (e) => { e.preventDefault(); logout(); });
+            document.getElementById('user-menu-button').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('user-menu-dropdown').classList.toggle('hidden'); });
+        };
+
+        const renderGuestUI = () => {
+            authContainer.innerHTML = `<button id="open-auth-modal-button" title="Acceder" class="w-9 h-9 rounded-full flex items-center justify-center"><video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="/assets/videos/login-icon.mp4" type="video/mp4"></video></button>`;
+            document.getElementById('open-auth-modal-button').addEventListener('click', () => authModal.classList.remove('hidden'));
+        };
+
+        const loginWithGoogle = () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then(() => authModal.classList.add('hidden')).catch(err => console.error(err));
+        };
+        const logout = () => auth.signOut();
+
+        const updateCartIconAndModal = () => {
+            const totalItems = currentCart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCounter = document.getElementById('cart-counter');
+            const cartIconWrapper = document.getElementById('cart-icon-wrapper');
+            if (cartCounter && cartIconWrapper) {
+                cartCounter.textContent = totalItems;
+                cartIconWrapper.classList.toggle('has-items', totalItems > 0);
+                cartCounter.classList.toggle('hidden', totalItems === 0);
+            }
+            if (!document.getElementById('cart-modal').classList.contains('hidden')) {
+                renderCartModal();
+            }
+        };
+
+        const saveCurrentCart = () => {
+            updateCartIconAndModal(); 
+            if (currentUserId) {
+                const cartRef = db.collection('artifacts').doc(appId).collection('carts').doc(currentUserId);
+                cartRef.set({ items: currentCart }).catch(e => console.error("Error Firestore:", e));
+            } else {
+                localStorage.setItem(GUEST_CART_KEY, JSON.stringify(currentCart));
+            }
+        };
+
+        window.addEventListener('click', (event) => {
+            const dropdown = document.getElementById('user-menu-dropdown');
+            const button = document.getElementById('user-menu-button');
+            if (dropdown && !dropdown.classList.contains('hidden') && !button.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        authContainer.innerHTML = `<div class="w-9 h-9 rounded-full bg-gray-700 animate-pulse"></div>`;
+
+        auth.onAuthStateChanged(async (user) => {
+            if (cartListener) cartListener();
+            if (user) {
+                currentUserId = user.uid;
+                renderLoggedInUI(user);
+                const cartRef = db.collection('artifacts').doc(appId).collection('carts').doc(user.uid);
+                try {
+                    const guestCart = JSON.parse(localStorage.getItem(GUEST_CART_KEY)) || [];
+                    const doc = await cartRef.get();
+                    const firestoreCart = doc.exists ? doc.data().items : [];
+                    let finalCart = [...firestoreCart];
+                    if (guestCart.length > 0) {
+                        guestCart.forEach(guestItem => {
+                            const existingItem = finalCart.find(item => item.id === guestItem.id);
+                            if (existingItem) existingItem.quantity += guestItem.quantity;
+                            else finalCart.push(guestItem);
+                        });
+                        localStorage.removeItem(GUEST_CART_KEY);
+                    }
+                    currentCart = finalCart;
+                    await cartRef.set({ items: currentCart });
+                    cartListener = cartRef.onSnapshot(snapshot => {
+                        currentCart = snapshot.exists ? snapshot.data().items : [];
+                        updateCartIconAndModal();
+                        // Actualiza solo los botones del acordeón si está visible
+                        if(document.getElementById('ferreteria-acordeon')) {
+                            updateAccordionButtons();
+                        }
+                    });
+                } catch (error) {
+                    console.error("Error syncing cart:", error);
+                    currentCart = [];
+                    updateCartIconAndModal();
+                }
+            } else {
+                currentUserId = null;
+                renderGuestUI();
+                currentCart = JSON.parse(localStorage.getItem(GUEST_CART_KEY)) || [];
+                updateCartIconAndModal();
+                 if(document.getElementById('ferreteria-acordeon')) {
+                    updateAccordionButtons();
+                }
+            }
+        });
         
-        // --- DATOS DE PRODUCTOS ---
-        const ferreteriaCategorias=[
-            {
-                title:"Herramientas Manuales",
-                products:[
-                    {id:"fer001", name:"Martillo de Carpintero", image:"/assets/images/productos/martillo.jpg", type: 'sale', price: 12.50},
-                    {id:"fer002", name:"Martillo de Goma", image:"/assets/images/productos/martillo_goma.jpg", type: 'sale', price: 8.00},
-                    {id:"fer003", name:"Alicate de Presión 8\"", image:"/assets/images/productos/alicate.jpg", type: 'sale', price: 15.00}
-                ]
-            },
-            {
-                title:"Tornillería y Anclajes",
-                products:[
-                    {id:"fer004", name:"Tornillos para madera (Caja 100u)", image:"/assets/images/productos/tornillos.jpg", type: 'sale', price: 5.50}
-                ]
-            },
-            {title:"Herramientas Eléctricas",products:[]},
-            {title:"Adhesivos y Selladores",products:[]},
-            {title:"Obra Gris y Construcción",products:[]},
-            {title:"Pintura y Acabados",products:[]}
-        ];
+        googleLoginButtonModal.addEventListener('click', loginWithGoogle);
+        closeAuthModalButton.addEventListener('click', () => authModal.classList.add('hidden'));
+        authModal.addEventListener('click', (e) => { if (e.target === authModal) authModal.classList.add('hidden'); });
+        
+        const themeToggle = document.getElementById("theme-toggle"), sunIcon = document.getElementById("theme-icon-sun"), moonIcon = document.getElementById("theme-icon-moon");
+        function applyTheme(e){document.documentElement.classList.toggle("dark",e==="dark"),sunIcon?.classList.toggle("hidden",e!=="dark"),moonIcon?.classList.toggle("hidden",e==="dark")}themeToggle.addEventListener("click",()=>{const e=document.documentElement.classList.contains("dark")?"light":"dark";localStorage.setItem("theme",e),applyTheme(e)});const savedTheme=localStorage.getItem("theme")||"dark";applyTheme(savedTheme);
+        const menuButton=document.getElementById("menu-button"),mobileMenu=document.getElementById("mobile-menu");menuButton&&mobileMenu&&(menuButton.addEventListener("click",()=>mobileMenu.classList.toggle("hidden")),mobileMenu.querySelectorAll(".mobile-nav-link").forEach(e=>{e.addEventListener("click",()=>mobileMenu.classList.add("hidden"))}));
+        const paymentLogosContainer=document.getElementById("payment-logos");paymentLogosContainer&&[{name:"PeiGo",image:"/assets/images/pago-peigo.png"},{name:"Mastercard",image:"/assets/images/pago-mastercard.png"},{name:"Visa",image:"/assets/images/pago-visa.png"},{name:"American Express",image:"/assets/images/pago-american-express.png"},{name:"Discover",image:"/assets/images/pago-discover.png"},{name:"JCB",image:"/assets/images/pago-jcb.png"},{name:"Diners Club",image:"/assets/images/pago-diners-club.png"},{name:"PayPal",image:"/assets/images/pago-paypal.png"},{name:"Binance Pay",image:"/assets/images/pago-binance-pay.png"},{name:"Banco Guayaquil",image:"/assets/images/pago-banco-guayaquil.png"},{name:"Banco Pichincha",image:"/assets/images/pago-banco-pichincha.png"},{name:"DeUna",image:"/assets/images/pago-deuna.png"}].forEach(m=>{paymentLogosContainer.innerHTML+=`<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`});document.getElementById("year").textContent=(new Date).getFullYear();
+        
+        const ferreteriaCategorias=[{title:"Herramientas Manuales",products:[{id:"fer001",name:"Martillo de Carpintero",image:"/assets/images/productos/martillo.jpg",type:"sale",price:12.5},{id:"fer002",name:"Martillo de Goma",image:"/assets/images/productos/martillo_goma.jpg",type:"sale",price:8},{id:"fer003",name:"Alicate de Presión 8\"",image:"/assets/images/productos/alicate.jpg",type:"sale",price:15}]},{title:"Tornillería y Anclajes",products:[{id:"fer004",name:"Tornillos para madera (Caja 100u)",image:"/assets/images/productos/tornillos.jpg",type:"sale",price:5.5}]},{title:"Herramientas Eléctricas",products:[]},{title:"Adhesivos y Selladores",products:[]},{title:"Obra Gris y Construcción",products:[]},{title:"Pintura y Acabados",products:[]}];
+        
+        const openCartButton=document.getElementById("open-cart-button");openCartButton?.addEventListener("click",()=>{renderCartModal();document.getElementById('cart-modal').classList.remove("hidden")});window.closeCartModal=()=>document.getElementById('cart-modal').classList.add("hidden");
+        const turboModal=document.getElementById("turbo-modal"),openTurboButton=document.getElementById("turbo-button");window.closeTurboModal=()=>turboModal?.classList.add("hidden");openTurboButton?.addEventListener("click",()=>{renderTurboModal();turboModal?.classList.remove("hidden")});
+        
+        const acordeonContainer = document.getElementById("ferreteria-acordeon");
+        const ariaInput = document.getElementById("aria-input");
+        const ariaSearchButton = document.getElementById("aria-search-button");
+        const ariaResultsContainer = document.getElementById("aria-results");
 
-        const cartIconWrapper=document.getElementById("cart-icon-wrapper"),cartCounter=document.getElementById("cart-counter"),cartModalContainer=document.getElementById("cart-modal");
-
-        // --- Lógica del Carrito ---
-        function updateCart(productId, change) {
-            let cart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
-            const productIndex = cart.findIndex(item => item.id === productId);
-
-            if (productIndex > -1) {
-                cart[productIndex].quantity += change;
-                if (cart[productIndex].quantity <= 0) {
-                    cart.splice(productIndex, 1);
+        function handleCartUpdate(productId, change, element) {
+            let itemIndex = currentCart.findIndex(item => item.id === productId);
+            if (itemIndex > -1) {
+                currentCart[itemIndex].quantity += change;
+                if (currentCart[itemIndex].quantity <= 0) {
+                    currentCart.splice(itemIndex, 1);
                 }
             } else if (change > 0) {
                 const productToAdd = ferreteriaCategorias.flatMap(cat => cat.products).find(p => p.id === productId);
-                if (productToAdd) {
-                    const cartItem = { 
-                        id: productToAdd.id, 
-                        name: productToAdd.name,
-                        type: productToAdd.type,
-                        quantity: change 
-                    };
-                    if (productToAdd.price) {
-                        cartItem.price = productToAdd.price;
-                    }
-                    if (productToAdd.image) {
-                        cartItem.image = productToAdd.image;
-                    }
-                    cart.push(cartItem);
-                }
+                if (productToAdd) currentCart.push({id:productToAdd.id,name:productToAdd.name,type:productToAdd.type,price:productToAdd.price,image:productToAdd.image,quantity:change});
             }
-            localStorage.setItem("yanz_cart", JSON.stringify(cart));
-            renderAll();
+            // Actualizar solo el botón clickeado en lugar de todo el acordeón
+            updateProductButton(productId);
+            saveCurrentCart();
         }
 
-        const openCartButton=document.getElementById("open-cart-button");openCartButton&&openCartButton.addEventListener("click",()=>{cartModalContainer.classList.remove("hidden")});function closeCartModal(){cartModalContainer&&cartModalContainer.classList.add("hidden")}const turboModal=document.getElementById("turbo-modal"),openTurboButton=document.getElementById("turbo-button");function closeTurboModal(){turboModal&&turboModal.classList.add("hidden")}openTurboButton&&openTurboButton.addEventListener("click",()=>{turboModal.classList.remove("hidden")});const acordeonContainer=document.getElementById("ferreteria-acordeon"),ariaInput=document.getElementById("aria-input"),ariaSearchButton=document.getElementById("aria-search-button"),ariaResultsContainer=document.getElementById("aria-results");
-        
-        function renderAll(){renderAccordion(),renderCartModal(),renderTurboModal(),updateCartIcon()}
-        function updateCartIcon(){const e=JSON.parse(localStorage.getItem("yanz_cart"))||[],t=e.reduce((e,t)=>e+t.quantity,0);cartCounter&&cartIconWrapper&&(cartCounter.textContent=t,cartIconWrapper.classList.toggle("has-items",t>0),cartCounter.classList.toggle("hidden",0===t))}
-        
-        // --- Modal del Carrito Corregido ---
-        function renderCartModal() {
-            const cart = JSON.parse(localStorage.getItem("yanz_cart")) || [];
+        // NUEVA FUNCIÓN: Actualiza solo el botón de un producto específico
+        function updateProductButton(productId) {
+            const productDiv = document.querySelector(`.product-item[data-id="${productId}"]`);
+            if (!productDiv) return;
+
+            const actionContainer = productDiv.querySelector('.action-container');
+            const cartItem = currentCart.find(item => item.id === productId);
             
-            const saleItems = cart.filter(item => item.type === 'sale');
-            let saleTotal = 0;
-            saleItems.forEach(item => saleTotal += (item.price * item.quantity));
-
-            const checkoutButtonHtml = saleItems.length > 0 ? 
-                `<a href="/caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all">
-                    <span>Ir a Pagar ($${saleTotal.toFixed(2)})</span>
-                </a>` : '';
-
-            const quoteMessage = "Hola, me gustaría solicitar una cotización para los siguientes productos:\n" + 
-                cart.map(item => `- ${item.name} (x${item.quantity})`).join("\n");
-            const quoteButtonHtml = cart.length > 0 ?
-                `<a href="https://wa.me/593996480843?text=${encodeURIComponent(quoteMessage)}" target="_blank" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700 transition-all">
-                    <span>Solicitar Cotización de Todo</span>
-                </a>` : '';
-            
-            const cartItemsHtml = cart.length === 0 
-                ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` 
-                : cart.map(item => `
-                    <div class="flex justify-between items-center py-3">
-                        <div>
-                            <span class="text-gray-300 pr-4">${item.name}</span>
-                            ${item.type === 'quote' ? '<span class="text-xs text-blue-400 font-semibold">PARA COTIZAR</span>' : ''}
-                        </div>
-                        <div class="quantity-selector" style="background-color: var(--yanz-bg-alt);">
-                            <button class="quantity-btn text-[var(--yanz-text)]" onclick="updateCart('${item.id}', -1)">-</button>
-                            <span class="quantity-display text-[var(--yanz-text)]">${item.quantity}</span>
-                            <button class="quantity-btn text-[var(--yanz-text)]" onclick="updateCart('${item.id}', 1)">+</button>
-                        </div>
-                    </div>
-                `).join("");
-
-            cartModalContainer.innerHTML=`
-                <div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter">
-                    <div class="text-center mb-6">
-                        <video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video>
-                        <h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2>
-                        <p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. Aquí guardaré tus ideas.</p>
-                    </div>
-                    <div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;">
-                        <div id="cart-items" class="divide-y divide-gray-700 text-left">
-                            ${cartItemsHtml}
-                        </div>
-                    </div>
-                    <div class="mt-auto pt-4 space-y-3">
-                        ${checkoutButtonHtml}
-                        ${quoteButtonHtml}
-                        <button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button>
-                    </div>
+            let buttonHtml;
+            if (cartItem) {
+                 buttonHtml = `<div class="quantity-selector mt-auto">
+                    <button class="quantity-btn minus-btn" data-id="${productId}">-</button>
+                    <span class="quantity-display">${cartItem.quantity}</span>
+                    <button class="quantity-btn plus-btn" data-id="${productId}">+</button>
                 </div>`;
+            } else {
+                 const productData = ferreteriaCategorias.flatMap(c => c.products).find(p => p.id === productId);
+                 buttonHtml = `<button class="add-to-cart-btn mt-auto w-full bg-[var(--yanz-primary)] hover:bg-[var(--yanz-secondary)] text-white font-bold py-2 px-4 rounded-full transition-colors" data-id="${productId}">${productData.type === 'sale' ? 'Agregar a Coti' : 'Agregar para Cotizar'}</button>`;
+            }
+            actionContainer.innerHTML = buttonHtml;
+            
+            // Re-asignar eventos a los nuevos botones
+            actionContainer.querySelectorAll(".add-to-cart-btn, .quantity-btn").forEach(btn => {
+                btn.addEventListener("click", e => {
+                    e.stopPropagation();
+                    const id = e.currentTarget.dataset.id;
+                    const change = e.currentTarget.classList.contains("minus-btn") ? -1 : 1;
+                    handleCartUpdate(id, change);
+                });
+            });
+        }
+
+        // NUEVA FUNCIÓN: Se llama cuando el carrito cambia desde Firestore
+        function updateAccordionButtons() {
+            if (!acordeonContainer) return;
+            acordeonContainer.querySelectorAll('.product-item').forEach(productDiv => {
+                const productId = productDiv.dataset.id;
+                updateProductButton(productId);
+            });
         }
         
-        function renderTurboModal(){turboModal.innerHTML=`
-        <div class="w-full max-w-lg bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center modal-enter">
-            <video autoplay loop muted playsinline class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-[var(--yanz-yellow)] shadow-lg object-cover">
-                <source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4">
-            </video>
-            <h2 class="text-2xl font-bold text-white">¡Hola! ¡Soy Turbo, listo para llevar tus materiales! 🚀</h2>
-            <div class="text-gray-300 text-sm mt-4 text-left space-y-4">
-                <p>Mi misión es entregarte todo lo que necesitas para tu proyecto de la manera más rápida y clara posible. ¡Aquí te explico cómo funciono!</p>
-                <div><h4 class="font-bold text-white">Nota de Transparencia: ¡Te lo consigo!</h4><p>Para darte el catálogo más completo, trabajo con los mejores proveedores. Si un artículo no está en nuestra bodega, me encargo de conseguirlo (usualmente en 48 horas). Siempre te contactaremos por WhatsApp para confirmar el tiempo exacto.</p></div>
-                <div><h4 class="font-bold text-white">Mis Tarifas de Entrega</h4><table class="w-full mt-2 text-xs md:text-sm"><thead class="border-b border-gray-600"><tr><th class="p-2">Zona</th><th class="p-2">Compra</th><th class="p-2">Costo</th></tr></thead><tbody><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">Menor a $50</td><td class="p-2 font-bold">$4.00</td></tr><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">$50 o más</td><td class="p-2 font-bold text-green-400">¡GRATIS!</td></tr><tr class="border-b border-gray-700"><td class="p-2">Valles</td><td class="p-2">Menor a $75</td><td class="p-2 font-bold">$7.00</td></tr><tr><td class="p-2">Valles</td><td class="p-2">$75 o más</td><td class="p-2 font-bold">$3.50</td></tr></tbody></table></div>
-            </div>
-            <div class="mt-6"><button class="w-full bg-[var(--yanz-yellow)] text-gray-900 font-bold py-3 px-5 rounded-lg shadow-sm hover:opacity-90 transition-opacity" onclick="closeTurboModal()">¡Entendido!</button></div>
-        </div>`}
-        
-        function renderAccordion(){if(!acordeonContainer)return;const e=JSON.parse(localStorage.getItem("yanz_cart"))||[];acordeonContainer.innerHTML="",ferreteriaCategorias.forEach((t,a)=>{const n=document.createElement("div");n.className="bg-[var(--yanz-bg-alt)] rounded-lg overflow-hidden border border-[var(--yanz-border)]",n.dataset.categoryIndex=a;const i=document.createElement("button");i.className="acordeon-boton w-full flex justify-between items-center p-4 text-left",i.innerHTML=`<span class="text-lg font-bold">${t.title}</span><div class="bg-[var(--yanz-primary)] text-white text-sm font-semibold py-1 px-4 rounded-full">Ver Productos</div>`;const d=document.createElement("div");d.className="panel-productos grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4",t.products.length>0?t.products.forEach(t=>{const a=e.find(e=>e.id===t.id),n=document.createElement("div");n.className="bg-[var(--yanz-bg)] rounded-lg p-4 text-center shadow-md flex flex-col";
-            let buttonHtml = a ? 
-                `<div class="quantity-selector mt-auto">
-                    <button class="quantity-btn minus-btn" data-id="${t.id}">-</button>
-                    <span class="quantity-display">${a.quantity}</span>
-                    <button class="quantity-btn plus-btn" data-id="${t.id}">+</button>
-                </div>` :
-                (t.type === 'sale' ? 
-                    `<button class="add-to-cart-btn mt-auto w-full bg-[var(--yanz-primary)] hover:bg-[var(--yanz-secondary)] text-white font-bold py-2 px-4 rounded-full transition-colors" data-id="${t.id}">Agregar a Coti</button>` :
-                    `<button class="add-to-cart-btn mt-auto w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors" data-id="${t.id}">Agregar para Cotizar</button>`
-                );
+        function renderCartModal() {
+            const cartModal = document.getElementById('cart-modal');
+            if (!cartModal) return;
+            const saleItems = currentCart.filter(item => item.type === 'sale');
+            let saleTotal = saleItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const checkoutButtonHtml = saleItems.length > 0 ? `<a href="/caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600"><span>Ir a Pagar ($${saleTotal.toFixed(2)})</span></a>` : '';
+            const quoteMessage = "Hola, me gustaría cotizar:\n" + currentCart.map(item => `- ${item.name} (x${item.quantity})`).join("\n");
+            const quoteButtonHtml = currentCart.length > 0 ? `<a href="https://wa.me/593996480843?text=${encodeURIComponent(quoteMessage)}" target="_blank" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700"><span>Solicitar Cotización de Todo</span></a>` : '';
+            const cartItemsHtml = currentCart.length === 0 ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` : currentCart.map(item => `
+                <div class="flex justify-between items-center py-3">
+                    <div><span class="text-gray-300 pr-4">${item.name}</span>${item.type === 'quote' ? '<span class="text-xs text-blue-400 font-semibold">PARA COTIZAR</span>' : ''}</div>
+                    <div class="quantity-selector" style="background-color: var(--yanz-bg-alt);"><button class="quantity-btn text-[var(--yanz-text)]" onclick="handleCartUpdate('${item.id}', -1)">-</button><span class="quantity-display text-[var(--yanz-text)]">${item.quantity}</span><button class="quantity-btn text-[var(--yanz-text)]" onclick="handleCartUpdate('${item.id}', 1)">+</button></div>
+                </div>`).join("");
+            cartModal.innerHTML = `<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter">
+                <div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2><p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. Aquí guardaré tus ideas.</p></div>
+                <div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div>
+                <div class="mt-auto pt-4 space-y-3">${checkoutButtonHtml}${quoteButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div>
+            </div>`;
+        }
 
-            n.innerHTML=`<img src="${t.image}" alt="${t.name}" class="w-full h-32 object-cover rounded-md mb-4"><h4 class="font-semibold mb-2 flex-grow">${t.name}</h4>${t.price ? `<p class="font-bold text-lg text-[var(--yanz-primary)] mb-4">$${t.price.toFixed(2)}</p>` : ''}<div class="action-container">${buttonHtml}</div>`,d.appendChild(n)}):d.innerHTML='<p class="text-[var(--yanz-text-alt)] col-span-full text-center py-4">Productos próximamente...</p>',n.appendChild(i),n.appendChild(d),acordeonContainer.appendChild(n),i.addEventListener("click",()=>{const e=d.classList.contains("open");acordeonContainer.querySelectorAll(".panel-productos.open").forEach(e=>{e.classList.remove("open"),e.style.maxHeight=null}),e||(d.classList.add("open"),d.style.maxHeight=d.scrollHeight+"px")})}),acordeonContainer.querySelectorAll(".add-to-cart-btn, .quantity-btn").forEach(e=>{e.addEventListener("click",t=>{t.stopPropagation();const a=t.currentTarget.dataset.id,n=t.currentTarget.classList.contains("minus-btn")?-1:1;updateCart(a,n)})})}function performSearch(){const e=ariaInput.value.toLowerCase().trim();if(!e)return;ariaResultsContainer.innerHTML='<p class="text-center text-[var(--yanz-text-alt)]">Buscando...</p>';let t={};ferreteriaCategorias.forEach((a,n)=>{a.products.forEach(i=>{i.name.toLowerCase().includes(e)&&(t[n]?t[n].count++:t[n]={count:1,title:a.title})})});let a=Object.keys(t);setTimeout(()=>{if(ariaResultsContainer.innerHTML="",a.length>0)a.forEach(e=>{const a=document.createElement("div");a.className="bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] p-4 rounded-lg mb-2 flex justify-between items-center cursor-pointer hover:border-[var(--yanz-primary)]",a.innerHTML=`<div><span class="font-bold">"${ariaInput.value}"</span><p class="text-sm text-[var(--yanz-text-alt)]">Encontrado en: ${t[e].title} (${t[e].count} ${t[e].count>1?"productos":"producto"})</p></div><span class="text-[var(--yanz-primary)] font-bold">Ver &rarr;</span>`,a.addEventListener("click",()=>{const t=document.querySelector(`[data-category-index='${e}']`);if(t){t.scrollIntoView({behavior:"smooth",block:"center"});const a=t.querySelector("button");a.nextElementSibling.classList.contains("open")||a.click()}}),ariaResultsContainer.appendChild(a)});else ariaResultsContainer.innerHTML=`<p class="text-center text-[var(--yanz-text-alt)]">Lo siento, no encontré nada parecido a "${ariaInput.value}". Puedes pedirle ayuda a Turbo para conseguirlo.</p>`},500)}ariaSearchButton&&ariaSearchButton.addEventListener("click",performSearch),ariaInput&&ariaInput.addEventListener("keypress",e=>{e.key==="Enter"&&performSearch()}),window.updateCart=updateCart,window.closeCartModal=closeCartModal,window.closeTurboModal=closeTurboModal,renderAll()});
+        function renderTurboModal() {
+            if (!turboModal) return;
+            turboModal.innerHTML = `<div class="w-full max-w-lg bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center modal-enter">
+                <video autoplay loop muted playsinline class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-[var(--yanz-yellow)] shadow-lg object-cover"><source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4"></video>
+                <h2 class="text-2xl font-bold text-white">¡Soy Turbo y voy a toda velocidad por tus materiales! 🚀</h2>
+                <div class="text-gray-300 text-sm mt-4 text-left space-y-4">
+                    <p>Mi misión es simple: entregarte lo que necesitas, ¡rapidísimo! Así es como te ayudo:</p>
+                    <div><h4 class="font-bold text-white">Entrega Express (Hasta 8 Horas Laborables)</h4><p>Para ofrecerte el catálogo más completo, algunos productos especializados los traigo de mis socios proveedores. Me muevo rápido y los tengo listos para ti en un máximo de <strong>8 horas laborables</strong>. ¡La velocidad se adapta a ti! Podemos coordinar la entrega en el horario que más te convenga, incluso hasta las 9:00 p.m.</p></div>
+                    <div><h4 class="font-bold text-white">Tarifas de Entrega Claras</h4><table class="w-full mt-2 text-xs md:text-sm"><thead class="border-b border-gray-600"><tr><th class="p-2">Zona</th><th class="p-2">Compra</th><th class="p-2">Costo</th></tr></thead><tbody><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">Menor a $50</td><td class="p-2 font-bold">$4.00</td></tr><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">$50 o más</td><td class="p-2 font-bold text-green-400">¡GRATIS!</td></tr><tr class="border-b border-gray-700"><td class="p-2">Valles</td><td class="p-2">Menor a $75</td><td class="p-2 font-bold">$7.00</td></tr><tr><td class="p-2">Valles</td><td class="p-2">$75 o más</td><td class="p-2 font-bold">$3.50</td></tr></tbody></table></div>
+                </div>
+                <div class="mt-6"><button class="w-full bg-[var(--yanz-yellow)] text-gray-900 font-bold py-3 px-5 rounded-lg shadow-sm hover:opacity-90" onclick="closeTurboModal()">¡Entendido!</button></div>
+            </div>`;
+        }
+        
+        function renderAccordion() {
+            if (!acordeonContainer) return;
+            acordeonContainer.innerHTML = "";
+            ferreteriaCategorias.forEach((category, index) => {
+                const categoryDiv = document.createElement("div");
+                categoryDiv.className = "bg-[var(--yanz-bg-alt)] rounded-lg overflow-hidden border border-[var(--yanz-border)]";
+                categoryDiv.dataset.categoryIndex = index;
+                const button = document.createElement("button");
+                button.className = "acordeon-boton w-full flex justify-between items-center p-4 text-left";
+                button.innerHTML = `<span class="text-lg font-bold">${category.title}</span><div class="bg-[var(--yanz-primary)] text-white text-sm font-semibold py-1 px-4 rounded-full">Ver Productos</div>`;
+                const panel = document.createElement("div");
+                panel.className = "panel-productos grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4";
+                if (category.products.length > 0) {
+                    category.products.forEach(product => {
+                        const productDiv = document.createElement("div");
+                        productDiv.className = "product-item bg-[var(--yanz-bg)] rounded-lg p-4 text-center shadow-md flex flex-col";
+                        productDiv.dataset.id = product.id; // Asignar ID aquí
+                        productDiv.innerHTML = `<img src="${product.image}" alt="${product.name}" class="w-full h-32 object-cover rounded-md mb-4"><h4 class="font-semibold mb-2 flex-grow">${product.name}</h4>${product.price ? `<p class="font-bold text-lg text-[var(--yanz-primary)] mb-4">$${product.price.toFixed(2)}</p>` : ''}<div class="action-container mt-auto"></div>`;
+                        panel.appendChild(productDiv);
+                        updateProductButton(product.id); // Llenar el botón inicial
+                    });
+                } else {
+                    panel.innerHTML = '<p class="text-[var(--yanz-text-alt)] col-span-full text-center py-4">Productos próximamente...</p>';
+                }
+                categoryDiv.appendChild(button);
+                categoryDiv.appendChild(panel);
+                acordeonContainer.appendChild(categoryDiv);
+                button.addEventListener("click", () => {
+                    const isOpen = panel.classList.contains("open");
+                    acordeonContainer.querySelectorAll(".panel-productos.open").forEach(p => {
+                        if (p !== panel) {
+                           p.classList.remove("open");
+                           p.style.maxHeight = null;
+                        }
+                    });
+                    if (!isOpen) {
+                        panel.classList.add("open");
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    } else {
+                        panel.classList.remove("open");
+                        panel.style.maxHeight = null;
+                    }
+                });
+            });
+        }
+
+        function performSearch() {
+            const query=ariaInput.value.toLowerCase().trim();if(!query)return;ariaResultsContainer.innerHTML='<p class="text-center text-[var(--yanz-text-alt)]">Buscando...</p>';let results={};ferreteriaCategorias.forEach((category,index)=>{category.products.forEach(product=>{if(product.name.toLowerCase().includes(query)){if(!results[index])results[index]={count:0,title:category.title};results[index].count++}})});setTimeout(()=>{ariaResultsContainer.innerHTML="";if(Object.keys(results).length>0)Object.keys(results).forEach(index=>{const resultDiv=document.createElement("div");resultDiv.className="bg-[var(--yanz-bg-alt)] border border-[var(--yanz-border)] p-4 rounded-lg mb-2 flex justify-between items-center cursor-pointer hover:border-[var(--yanz-primary)]";resultDiv.innerHTML=`<div><span class="font-bold">"${ariaInput.value}"</span><p class="text-sm text-[var(--yanz-text-alt)]">Encontrado en: ${results[index].title} (${results[index].count} ${results[index].count>1?"productos":"producto"})</p></div><span class="text-[var(--yanz-primary)] font-bold">Ver &rarr;</span>`;resultDiv.addEventListener("click",()=>{const categoryEl=document.querySelector(`[data-category-index='${index}']`);if(categoryEl){categoryEl.scrollIntoView({behavior:"smooth",block:"center"});const btn=categoryEl.querySelector("button");if(!btn.nextElementSibling.classList.contains("open"))btn.click()}});ariaResultsContainer.appendChild(resultDiv)})
+            else ariaResultsContainer.innerHTML=`<p class="text-center text-[var(--yanz-text-alt)]">Lo siento, no encontré nada parecido a "${ariaInput.value}". Puedes pedirle ayuda a Turbo para conseguirlo.</p>`},500)
+        }
+        
+        ariaSearchButton?.addEventListener("click", performSearch);
+        ariaInput?.addEventListener("keypress", e => { if (e.key === "Enter") performSearch(); });
+        
+        window.handleCartUpdate = handleCartUpdate;
+        
+        renderAccordion();
+        renderTurboModal();
+    });
     </script>
 </body>
 </html>
-
