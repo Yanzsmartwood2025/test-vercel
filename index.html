@@ -53,6 +53,17 @@
     </style>
 </head>
 <body class="antialiased">
+    <!-- Velo de carga para la autenticación -->
+    <div id="auth-loading-overlay" class="fixed inset-0 bg-black/80 z-[10001] flex items-center justify-center text-white transition-opacity duration-300">
+        <div class="flex flex-col items-center gap-4 text-center">
+            <svg class="animate-spin h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p class="text-lg font-semibold">Verificando sesión...</p>
+        </div>
+    </div>
+
     <div id="preloader">
         <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain"><source src="assets/videos/intro.mp4" type="video/mp4" onerror="this.parentElement.style.display='none';"></video>
     </div>
@@ -69,7 +80,9 @@
                      <a href="#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
                  </div>
                  <div class="flex items-center space-x-2 sm:space-x-4">
-                     <div id="auth-container" class="flex items-center"></div>
+                     <div id="auth-container" class="flex items-center">
+                        <!-- El botón de login o menú de usuario se renderizará aquí -->
+                     </div>
                      <div class="flex items-center space-x-3">
                          <div id="cart-icon-wrapper">
                              <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
@@ -91,7 +104,7 @@
         </header>
         
         <main>
-            <!-- Hero Section con subtítulo dinámico -->
+            <!-- El resto de tu main no necesita cambios -->
             <section id="hero" class="relative h-screen flex items-center justify-center text-white">
                 <div class="absolute inset-0 bg-black/60 z-10"></div>
                 <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="assets/videos/hero_background.mp4" type="video/mp4"></video>
@@ -139,12 +152,9 @@
 
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- CONFIGURACIÓN DE FIREBASE ---
-            // Se utiliza la configuración proporcionada por el entorno para mayor seguridad y portabilidad.
             const firebaseConfig = typeof __firebase_config !== 'undefined'
                 ? JSON.parse(__firebase_config)
                 : {
-                    // Configuración de respaldo por si el script se ejecuta fuera del entorno esperado.
                     apiKey: "AIzaSyC3ENgMXZWAHu7r8l-0z1Iva8CbML_Z26o",
                     authDomain: "yan-z-smart-wood.firebaseapp.com",
                     projectId: "yan-z-smart-wood",
@@ -154,7 +164,6 @@
                     measurementId: "G-XX963RJLXE"
                 };
             
-            // Identificador único de la aplicación, crucial para la segregación de datos.
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'yanz-smart-wood-app';
 
             // --- INICIALIZACIÓN DE SERVICIOS DE FIREBASE ---
@@ -165,8 +174,8 @@
             // --- ESTADO GLOBAL Y CONSTANTES ---
             let currentCart = [];
             let currentUserId = null;
-            let cartListener = null; // Desuscriptor para el listener de Firestore
-            const GUEST_CART_KEY = `yanz_guest_cart_${appId}`; // Clave de LocalStorage única por app
+            let cartListener = null; 
+            const GUEST_CART_KEY = `yanz_guest_cart_${appId}`;
             const DEFAULT_HERO_SUBTITLE = "Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.";
 
             // --- REFERENCIAS AL DOM ---
@@ -177,6 +186,7 @@
             const cartModalContainer = document.getElementById('cart-modal');
             const openCartButton = document.getElementById('open-cart-button');
             const heroSubtitle = document.getElementById('hero-subtitle');
+            const authLoadingOverlay = document.getElementById('auth-loading-overlay');
 
 
             // =================================================================
@@ -184,9 +194,15 @@
             // =================================================================
 
             const loginWithGoogle = () => {
+                // Muestra el velo de carga justo antes de redirigir
+                authLoadingOverlay.classList.remove('hidden');
                 const provider = new GoogleAuthProvider();
                 provider.setCustomParameters({ prompt: 'select_account' });
-                signInWithRedirect(auth, provider).catch(error => console.error("Error al iniciar redirección de login:", error));
+                signInWithRedirect(auth, provider).catch(error => {
+                    console.error("Error al iniciar redirección de login:", error);
+                    // Oculta el velo si hay un error
+                    authLoadingOverlay.classList.add('hidden');
+                });
             };
 
             const logout = () => {
@@ -194,34 +210,27 @@
             };
             
             getRedirectResult(auth)
-                .then(result => {
-                    if (result && result.user) {
-                        console.log('Inicio de sesión con redirect exitoso:', result.user.displayName);
-                        authModal.classList.add('hidden');
-                    }
-                }).catch(error => console.error("Error en getRedirectResult:", error));
+                .catch(error => {
+                    console.error("Error al obtener resultado de redirección:", error.message);
+                    // Asegúrate de que el velo de carga se oculte si hay un error aquí.
+                     authLoadingOverlay.classList.add('hidden');
+                });
 
 
             // =================================================================
-            // --- GESTIÓN DEL CARRITO DE COMPRAS (UNIFICADO) ---
+            // --- GESTIÓN DEL CARRITO (SIN CAMBIOS) ---
             // =================================================================
             
-            // Función unificada para guardar el carrito. Decide si usar Firestore o LocalStorage.
             const saveCurrentCart = () => {
                 if (currentUserId) {
-                    // El usuario está logueado, se guarda en su documento personal en Firestore.
                     const cartRef = doc(db, 'artifacts', appId, 'carts', currentUserId);
-                    setDoc(cartRef, { items: currentCart }).catch(error => {
-                        console.error("Error al guardar carrito en Firestore:", error);
-                    });
+                    setDoc(cartRef, { items: currentCart }).catch(e => console.error("Error guardando carrito en Firestore:", e));
                 } else {
-                    // El usuario es un invitado, se guarda en el almacenamiento local del navegador.
                     localStorage.setItem(GUEST_CART_KEY, JSON.stringify(currentCart));
                 }
                 updateCartUI();
             };
 
-            // --- Funciones de manipulación del carrito (operan sobre `currentCart` y guardan) ---
             window.increaseQuantity = (itemName) => {
                 const item = currentCart.find(i => i.name === itemName);
                 if (item) { item.quantity = (item.quantity || 1) + 1; saveCurrentCart(); }
@@ -241,7 +250,7 @@
 
 
             // =================================================================
-            // --- ACTUALIZACIÓN DE LA INTERFAZ DE USUARIO (UI) ---
+            // --- ACTUALIZACIÓN DE UI (SIN CAMBIOS) ---
             // =================================================================
 
             const updateCartIcon = () => {
@@ -276,34 +285,26 @@
 
 
             // =================================================================
-            // --- OBSERVADOR DE AUTENTICACIÓN (PUNTO DE CONTROL CENTRAL - REFACTORIZADO) ---
+            // --- OBSERVADOR DE AUTENTICACIÓN (PUNTO DE CONTROL CENTRAL) ---
             // =================================================================
 
             onAuthStateChanged(auth, async (user) => {
-                // 1. Limpiar siempre el listener anterior para evitar fugas y datos cruzados.
                 if (cartListener) {
                     cartListener();
                     cartListener = null;
                 }
                 
-                // 2. Limpiar el estado del carrito local para prevenir CUALQUIER filtración de datos entre sesiones.
                 currentCart = [];
                 
                 if (user) {
-                    // === VISTA PARA USUARIO CONECTADO ===
                     currentUserId = user.uid;
-
-                    // 3. Definir la ruta del carrito en Firestore. Es única por usuario Y por aplicación.
                     const cartRef = doc(db, 'artifacts', appId, 'carts', currentUserId);
                     const guestCart = JSON.parse(localStorage.getItem(GUEST_CART_KEY)) || [];
-
-                    // 4. Obtener el carrito de Firestore una sola vez para la fusión inicial.
-                    const docSnap = await getDoc(cartRef).catch(e => console.error("Error al obtener carrito inicial:", e));
+                    const docSnap = await getDoc(cartRef).catch(e => console.error("Error getting cart:", e));
                     const firestoreCart = (docSnap && docSnap.exists()) ? docSnap.data().items : [];
                     
-                    let finalCart = [...firestoreCart]; // Empezar con el carrito guardado en la nube.
+                    let finalCart = [...firestoreCart];
 
-                    // 5. Si existe un carrito de invitado, fusionarlo.
                     if (guestCart.length > 0) {
                         guestCart.forEach(guestItem => {
                             const existingItemIndex = finalCart.findIndex(item => item.name === guestItem.name);
@@ -313,25 +314,22 @@
                                 finalCart.push(guestItem);
                             }
                         });
-                        // Limpiar el carrito de invitado local, ya que ha sido migrado.
                         localStorage.removeItem(GUEST_CART_KEY);
                     }
 
-                    // 6. Establecer el estado local y consolidar la fusión en Firestore.
                     currentCart = finalCart;
                     await setDoc(cartRef, { items: currentCart });
                     
-                    // 7. Adjuntar el listener para actualizaciones en tiempo real a partir de ahora.
                     cartListener = onSnapshot(cartRef, (doc) => {
                         const updatedItems = (doc.exists() && doc.data().items) ? doc.data().items : [];
-                        // Comprobar si los datos son realmente diferentes para evitar re-renders innecesarios.
                         if (JSON.stringify(currentCart) !== JSON.stringify(updatedItems)) {
-                            currentCart = [...updatedItems]; // Usar siempre una copia para evitar mutaciones inesperadas.
+                            currentCart = [...updatedItems];
                             updateCartUI();
                         }
                     }, error => console.error("Error en listener de carrito:", error));
-
-                    // 8. Renderizar la UI de usuario autenticado.
+                    
+                    // --- Renderizar UI de usuario logueado ---
+                    authModal.classList.add('hidden');
                     const userName = user.displayName.split(' ')[0];
                     heroSubtitle.textContent = `¡Hola de nuevo, ${userName}! Listos para crear tu próximo proyecto?`;
                     const userImage = user.photoURL ? `<img src="${user.photoURL}" alt="Foto de ${user.displayName}" class="w-full h-full object-cover">` : `<span class="text-white font-bold text-xl">${user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}</span>`;
@@ -343,23 +341,21 @@
                     window.addEventListener('click', (event) => { if (userMenuDropdown && !userMenuDropdown.classList.contains('hidden') && !userMenuButton.contains(event.target)) { userMenuDropdown.classList.add('hidden'); } });
 
                 } else {
-                    // === VISTA PARA USUARIO INVITADO ===
+                    // --- Renderizar UI de invitado ---
                     currentUserId = null;
-                    
-                    // Cargar el carrito local de invitado.
                     currentCart = JSON.parse(localStorage.getItem(GUEST_CART_KEY)) || [];
-                    
-                    // Renderizar la UI de invitado.
                     heroSubtitle.textContent = DEFAULT_HERO_SUBTITLE;
                     authContainer.innerHTML = `<button id="open-auth-modal-button" title="Acceder o Registrarse" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm overflow-hidden"><video autoplay loop muted playsinline class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML = '<span class=\\'font-sans text-gray-800 text-lg font-bold\\'>G</span>';"><source src="assets/videos/login-icon.mp4" type="video/mp4"></video></button>`;
                     document.getElementById('open-auth-modal-button').addEventListener('click', () => { authModal.classList.remove('hidden'); });
                 }
                 
-                // Actualizar la UI del carrito por última vez para reflejar el estado final.
                 updateCartUI();
+
+                // Ocultar el velo de carga una vez que toda la lógica ha terminado.
+                authLoadingOverlay.classList.add('hidden');
             });
             
-            // --- LÓGICA DE INICIALIZACIÓN DE LA PÁGINA (sin cambios) ---
+            // --- LÓGICA DE INICIALIZACIÓN (SIN CAMBIOS) ---
             const themeToggle = document.getElementById('theme-toggle'); const sunIcon = document.getElementById('theme-icon-sun'); const moonIcon = document.getElementById('theme-icon-moon'); const applyTheme = (theme) => { document.documentElement.classList.toggle('dark', theme === 'dark'); sunIcon.classList.toggle('hidden', theme !== 'dark'); moonIcon.classList.toggle('hidden', theme === 'dark'); }; themeToggle.addEventListener('click', () => { const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); });
             const createCategoryCard = (category) => { const cardLink = document.createElement('a'); cardLink.href = category.link; cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2"; const mediaWrapper = document.createElement('div'); mediaWrapper.className = "overflow-hidden"; mediaWrapper.innerHTML = `<video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${category.video}" type="video/mp4"></video>`; const textWrapper = document.createElement('div'); textWrapper.className = "p-6 flex flex-col flex-grow"; textWrapper.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`; cardLink.appendChild(mediaWrapper); cardLink.appendChild(textWrapper); return cardLink; }; const productGrid = document.getElementById('product-grid'); const serviceGrid = document.getElementById('service-grid'); const categories = [ { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas.html', type: 'product' }, { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets.html', type: 'product' }, { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas.html', type: 'product' }, { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos.html', type: 'product' }, { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos.html', type: 'product' }, { title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum.html', type: 'product' }, { title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios.html', type: 'product' }, { title: 'Diseño con IA "Aria"', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria.html', type: 'product' }, { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/servicio_renovacion.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' }, { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria.html', type: 'service' }, { title: 'Consultoría e Integración de IA', video: 'assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' } ]; categories.forEach(cat => { const card = createCategoryCard(cat); if (cat.type === 'product' && productGrid) productGrid.appendChild(card); if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card); }); const menuButton = document.getElementById('menu-button'); const mobileMenu = document.getElementById('mobile-menu'); const mobileNavLinks = document.querySelectorAll('.mobile-nav-link'); menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden')); mobileNavLinks.forEach(link => { link.addEventListener('click', () => mobileMenu.classList.add('hidden')) }); const savedTheme = localStorage.getItem('theme') || 'dark'; applyTheme(savedTheme); const paymentLogosContainer = document.getElementById('payment-logos'); if(paymentLogosContainer) { const paymentMethods = [ { name: 'PeiGo', image: 'assets/images/pago-peigo.png' }, { name: 'Mastercard', image: 'assets/images/pago-mastercard.png' }, { name: 'Visa', image: 'assets/images/pago-visa.png' }, { name: 'American Express', image: 'assets/images/pago-american-express.png' }, { name: 'Discover', image: 'assets/images/pago-discover.png' }, { name: 'JCB', image: 'assets/images/pago-jcb.png' }, { name: 'Diners Club', image: 'assets/images/pago-diners-club.png' }, { name: 'PayPal', image: 'assets/images/pago-paypal.png' }, { name: 'Binance Pay', image: 'assets/images/pago-binance-pay.png' }, { name: 'Banco Guayaquil', image: 'assets/images/pago-banco-guayaquil.png' }, { name: 'Banco Pichincha', image: 'assets/images/pago-banco-pichincha.png' }, { name: 'DeUna', image: 'assets/images/pago-deuna.png' } ]; paymentMethods.forEach(m => { paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`; }); } document.getElementById('year').textContent = new Date().getFullYear(); const preloader = document.getElementById('preloader'); const pageContent = document.getElementById('page-content'); const introVideo = document.getElementById('intro-video'); let appStarted = false; function startApp() { if (appStarted) return; appStarted = true; if (preloader) preloader.classList.add('hidden'); if (pageContent) pageContent.classList.add('loaded'); } if (introVideo) { introVideo.addEventListener('ended', startApp); introVideo.addEventListener('error', startApp); setTimeout(startApp, 5000); } else { startApp(); }
         });
