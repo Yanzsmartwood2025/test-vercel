@@ -3,29 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>YAN'Z SMART WOOD - Diseño, Servicios y Tecnología IA</title>
     
-    <!-- Meta tags para SEO y redes sociales -->
     <meta name="description" content="Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno. Explora nuestros productos, servicios y soluciones con IA.">
     <meta property="og:title" content="YAN'Z SMART WOOD - Diseño, Tecnología y Madera">
     <meta property="og:description" content="Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno. Explora nuestros productos y servicios.">
     <meta property="og:image" content="https://yanz-smart-wood.vercel.app/assets/images/yanz-preview.png">
     <meta property="og:url" content="https://yanz-smart-wood.vercel.app">
     <meta property="og:type" content="website">
-    
-    <!-- Manifest PWA y color del tema -->
-    <link rel="manifest" href="/manifest.json">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="YAN'Z SMART WOOD - Diseño, Tecnología y Madera">
+    <meta name="twitter:description" content="Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno. Explora nuestros productos y servicios.">
+    <meta name="twitter:image" content="https://yanz-smart-wood.vercel.app/assets/images/yanz-preview.png">
+
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1A202C">
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
-    
-    <!-- Estilos personalizados -->
     <style>
         :root {
             --yanz-bg: #FFFFFF; --yanz-bg-alt: #F7F8FC; --yanz-text: #2D3748;
@@ -52,71 +50,66 @@
         #page-content.loaded { opacity: 1; }
         .modal-enter { animation: fadeIn 0.3s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2D3748;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translate(-50%, 20px);
+        }
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 <body class="antialiased">
-
     <div id="preloader">
-        <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain">
-            <source src="assets/videos/intro.mp4" type="video/mp4" onerror="this.parentElement.style.display='none';">
-        </video>
+        <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain"><source src="assets/videos/intro.mp4" type="video/mp4"></video>
     </div>
-
     <div id="page-content">
         <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
              <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
-                 <a href="index.html" aria-label="Volver a la página de inicio">
-                     <video autoplay loop muted playsinline class="h-12 w-auto"><source src="assets/videos/videologo-header.mp4" type="video/mp4"></video>
-                 </a>
+                 <a href="index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
                  <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
                      <a href="#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
                      <a href="#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
                      <a href="#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Testimonios</a>
                      <a href="#juegos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Juegos</a>
-                     <a href="caja.html" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Caja</a>
+                     <a href="#caja" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Caja</a>
                      <a href="#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
                  </div>
                  <div class="flex items-center space-x-2 sm:space-x-4">
-                     <!-- El contenedor de autenticación se llenará dinámicamente con JavaScript -->
                      <div id="auth-container" class="flex items-center"></div>
                      <div class="flex items-center space-x-3">
                          <div id="cart-icon-wrapper">
-                             <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300" aria-label="Abrir carrito de compras">
+                             <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
                                  <video autoplay loop muted playsinline class="w-8 h-8"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video>
                              </button>
                          </div>
                          <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
                      </div>
-                     <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700" aria-label="Cambiar tema de color">
+                     <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
                          <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
-                         <svg id="theme-icon-moon" class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                         <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                      </button>
-                     <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button" aria-label="Abrir menú de navegación">
-                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                     </button>
+                     <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
                  </div>
              </nav>
              <div id="mobile-menu" class="hidden md:hidden">
-                 <a href="#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a>
-                 <a href="#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a>
-                 <a href="#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a>
-                 <a href="#juegos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Juegos</a>
-                 <a href="caja.html" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Caja</a>
-                 <a href="#contacto" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contacto</a>
+                 <a href="#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a><a href="#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a><a href="#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a><a href="#juegos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Juegos</a><a href="#caja" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Caja</a><a href="#contacto" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contacto</a>
              </div>
         </header>
         
         <main>
-            <section id="hero" class="relative h-screen flex items-center justify-center text-white">
-                <div class="absolute inset-0 bg-black/60 z-10"></div>
-                <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="assets/videos/hero_background.mp4" type="video/mp4"></video>
-                <div class="relative z-20 text-center px-4">
-                    <video autoplay loop muted playsinline class="w-48 md:w-64 mx-auto mb-6"><source src="assets/videos/videologo-principal.mp4" type="video/mp4"></video>
-                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">YAN'Z SMART WOOD</h1>
-                    <p id="hero-subtitle" class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.</p>
-                </div>
-            </section>
-            
+            <section id="hero" class="relative h-screen flex items-center justify-center text-white"><div class="absolute inset-0 bg-black/60 z-10"></div><video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"><source src="assets/videos/hero_background.mp4" type="video/mp4"></video><div class="relative z-20 text-center px-4"><video autoplay loop muted playsinline class="w-48 md:w-64 mx-auto mb-6"><source src="assets/videos/videologo-principal.mp4" type="video/mp4"></video><h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">YAN'Z SMART WOOD</h1><p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.</p></div></section>
             <section id="productos" class="py-20 section-bg"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Explora Nuestros Productos</h2><div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div></div></section>
             <section id="servicios" class="py-20"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Conoce Nuestros Servicios</h2><div id="service-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div></div></section>
             <section id="testimonios" class="py-20 section-bg"><div class="container mx-auto px-6"><h2 class="text-3xl md:text-4xl font-bold text-center mb-12">La Experiencia de Nuestros Clientes</h2><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col"><svg class="w-8 h-8 text-[var(--yanz-primary)] mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.46 6.33a.75.75 0 00-1.44-.66L3.65 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63zm5.03 0a.75.75 0 00-1.44-.66L8.68 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63z"/></svg><p class="text-[var(--yanz-text-alt)] italic mb-6 flex-grow">"El diseño de mi nueva cocina superó todas mis expectativas. El equipo fue profesional y cuidó cada detalle."</p><h3 class="font-bold text-right">- Carlos R., Cumbayá</h3></div><div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col"><svg class="w-8 h-8 text-[var(--yanz-primary)] mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.46 6.33a.75.75 0 00-1.44-.66L3.65 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63zm5.03 0a.75.75 0 00-1.44-.66L8.68 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63z"/></svg><p class="text-[var(--yanz-text-alt)] italic mb-6 flex-grow">"La instalación del piso SPC fue impecable. Aunque tomó un día más de lo planeado, la calidad del trabajo valió la pena."</p><h3 class="font-bold text-right">- Verónica S., Quito</h3></div><div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg flex flex-col"><svg class="w-8 h-8 text-[var(--yanz-primary)] mb-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.46 6.33a.75.75 0 00-1.44-.66L3.65 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63zm5.03 0a.75.75 0 00-1.44-.66L8.68 11.44a.75.75 0 00.58 1.23h2.34a.75.75 0 00.75-.75V8.25a.75.75 0 01.75-.75h1.63z"/></svg><p class="text-[var(--yanz-text-alt)] italic mb-6 flex-grow">"¡Mi nuevo clóset es un sueño! El espacio está optimizado al máximo. Totalmente recomendados."</p><h3 class="font-bold text-right">- David M., La Carolina</h3></div></div><div class="text-center mt-16"><h3 class="text-2xl font-bold mb-4">¿Te gustó nuestro trabajo?</h3><p class="text-[var(--yanz-text-alt)] max-w-2xl mx-auto mb-8">Tu opinión es muy importante para nosotros. ¡Nos encantaría saber de ti!</p><a href="https://wa.me/593996480843?text=Hola%2C%20quiero%20compartir%20mi%20experiencia%20con%20YAN'Z%20SMART%20WOOD." target="_blank" class="inline-block bg-[var(--yanz-primary)] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[var(--yanz-secondary)] transition-all duration-300 transform hover:scale-105">Comparte tu Experiencia</a></div></div></section>
@@ -124,246 +117,215 @@
             <section id="caja" class="py-20 section-bg"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl md:text-4xl font-bold mb-4">Caja Virtual YAN'Z</h2><p class="max-w-3xl mx-auto text-[var(--yanz-text-alt)] mb-12">Cuando estés listo para hacer realidad tu proyecto, nuestro asistente virtual "Coti" te guiará en un proceso de pago fácil y seguro. Revisa tu lista, elige tu método de pago y déjanos el resto a nosotros.</p><div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-xl hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2"><div class="overflow-hidden"><video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video></div><div class="p-6"><h3 class="text-xl font-bold mb-2">Un Checkout Inteligente</h3><p class="text-sm text-[var(--yanz-text-alt)] mb-4">Revisa tu cotización, confirma tu pedido y prepárate para ver tu visión convertida en realidad. Tu seguridad y confianza son nuestra prioridad.</p><a href="caja.html" class="mt-4 inline-block bg-[var(--yanz-primary)] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[var(--yanz-secondary)] transition-all duration-300 transform hover:scale-105">Ir a la Caja</a></div></div></div></section>
         </main>
         
-        <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8">
-            <div class="container mx-auto px-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left"><div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div><div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div><div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div></div><div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400"><p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p><div class="mt-4 space-x-4"><a href="como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div></div></div>
-        </footer>
+        <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8"><div class="container mx-auto px-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left"><div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div><div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div><div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div></div><div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400"><p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p><div class="mt-4 space-x-4"><a href="como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div></div></div></footer>
     </div>
     
-    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank" aria-label="Contactar por WhatsApp">
-        <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="assets/videos/video-whatsapp.mp4" type="video/mp4"></video>
-    </a>
+    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank"><video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="assets/videos/video-whatsapp.mp4" type="video/mp4"></video></a>
     
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden"></div>
-    
+
     <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden">
         <div class="w-full max-w-xs bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-8 flex flex-col modal-enter relative text-center">
-            <button id="close-auth-modal-button" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors" aria-label="Cerrar modal de autenticación">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </button>
+             <button id="close-auth-modal-button" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+             </button>
             <h2 class="text-2xl font-bold text-white mb-2">Bienvenido</h2>
             <p class="text-gray-400 mb-6">Inicia sesión o crea una cuenta</p>
             
-            <!-- ====== INICIO DEL CAMBIO: Botón de Login con Video ====== -->
             <button id="google-login-button-modal" class="w-full h-auto bg-white rounded-lg shadow-sm hover:bg-gray-200 transition-all flex justify-center items-center p-0 overflow-hidden">
-                <!-- ASEGÚRATE de que la ruta a tu video sea la correcta -->
-                <video autoplay loop muted playsinline class="w-full h-auto" id="google-login-video">
-                    <source src="assets/videos/google-g-video.mp4" type="video/mp4" onerror="this.parentElement.innerHTML = 'Acceder con Google'">
+                <video autoplay loop muted playsinline class="w-full h-auto pointer-events-none">
+                    <source src="assets/videos/google-g-video.mp4" type="video/mp4">
                     Acceder con Google
                 </video>
             </button>
-            <!-- ====== FIN DEL CAMBIO: Botón de Login con Video ====== -->
-            
         </div>
     </div>
     
-    <!-- SCRIPTS DE LA APLICACIÓN -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="/yanz-engine.js"></script>
+    <!-- Librerías de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-check-compat.js"></script>
+
+    <!-- ===== [INICIO] EL CEREBRO DE YAN'Z SMART WOOD (TODO INTEGRADO) ===== -->
     <script>
-    // Este script contiene la lógica original de la página para la UI.
     document.addEventListener('DOMContentLoaded', () => {
-        const themeToggle = document.getElementById('theme-toggle');
-        const sunIcon = document.getElementById('theme-icon-sun');
-        const moonIcon = document.getElementById('theme-icon-moon');
-        const menuButton = document.getElementById('menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const paymentLogosContainer = document.getElementById('payment-logos');
-        const openCartButton = document.getElementById('open-cart-button');
-        const productGrid = document.getElementById('product-grid');
-        const serviceGrid = document.getElementById('service-grid');
 
-        function applyTheme(theme) {
-            document.documentElement.classList.toggle('dark', theme === 'dark');
-            sunIcon?.classList.toggle('hidden', theme !== 'dark');
-            moonIcon?.classList.toggle('hidden', theme === 'dark');
-        }
-
-        themeToggle?.addEventListener('click', () => {
-            const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-            localStorage.setItem('theme', newTheme);
-            applyTheme(newTheme);
-        });
-
-        if (menuButton && mobileMenu) {
-            menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            mobileMenu.querySelectorAll('.mobile-nav-link').forEach(link => {
-                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-            });
-        }
-
-        const categories = [ { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas.html', type: 'product' }, { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets.html', type: 'product' }, { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas.html', type: 'product' }, { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos.html', type: 'product' }, { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos.html', type: 'product' }, { title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum.html', type: 'product' }, { title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios.html', type: 'product' }, { title: 'Diseño con IA "Aria"', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria.html', type: 'product' }, { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/servicio_renovacion.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' }, { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria.html', type: 'service' }, { title: 'Consultoría e Integración de IA', video: 'assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' } ];
-        
-        const createCategoryCard = (category) => {
-            const cardLink = document.createElement('a');
-            cardLink.href = category.link;
-            cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2";
-            cardLink.innerHTML = `<div class="overflow-hidden"><video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${category.video}" type="video/mp4"></video></div><div class="p-6 flex flex-col flex-grow"><div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div></div>`;
-            return cardLink;
+        // --- 1. INICIALIZACIÓN DE FIREBASE ---
+        const firebaseConfig = {
+         apiKey: "AIzaSyC3ENgMXZWAHu7r8l-0z1Iva8CbML_Z26o",
+         authDomain: "yan-z-smart-wood.firebaseapp.com",
+         projectId: "yan-z-smart-wood",
+         storageBucket: "yan-z-smart-wood.appspot.com",
+         messagingSenderId: "369287615235",
+         appId: "1:369287615235:web:654e1e6fb48b4f634f8f36",
+         measurementId: "G-XX963RJLXE"
         };
-        
-        categories.forEach(cat => {
-            const card = createCategoryCard(cat);
-            if (cat.type === 'product' && productGrid) productGrid.appendChild(card);
-            if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card);
-        });
 
-        if (paymentLogosContainer) {
-            [{name:"PeiGo",image:"/assets/images/pago-peigo.png"},{name:"Mastercard",image:"/assets/images/pago-mastercard.png"},{name:"Visa",image:"/assets/images/pago-visa.png"},{name:"American Express",image:"/assets/images/pago-american-express.png"},{name:"Discover",image:"/assets/images/pago-discover.png"},{name:"JCB",image:"/assets/images/pago-jcb.png"},{name:"Diners Club",image:"/assets/images/pago-diners-club.png"},{name:"PayPal",image:"/assets/images/pago-paypal.png"},{name:"Binance Pay",image:"/assets/images/pago-binance-pay.png"},{name:"Banco Guayaquil",image:"/assets/images/pago-banco-guayaquil.png"},{name:"Banco Pichincha",image:"/assets/images/pago-banco-pichincha.png"},{name:"DeUna",image:"/assets/images/pago-deuna.png"}].forEach(m => {
-                paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`;
-            });
-        }
-        document.getElementById("year").textContent = new Date().getFullYear();
-
-        const preloader = document.getElementById('preloader');
-        const pageContent = document.getElementById('page-content');
-        const introVideo = document.getElementById('intro-video');
-        let appStarted = false;
-        function startApp() {
-            if (appStarted) return;
-            appStarted = true;
-            preloader?.classList.add('hidden');
-            pageContent?.classList.add('loaded');
-        }
-        if (introVideo) {
-            introVideo.addEventListener('ended', startApp);
-            introVideo.addEventListener('error', startApp);
-            setTimeout(startApp, 5000); // Fallback
-        } else {
-            startApp();
-        }
-        
-        function renderCartModal() {
-            const cartModal = document.getElementById('cart-modal');
-            if (!cartModal) return;
-            const cart = window.currentCart || [];
-            const saleItems = cart.filter(item => item.type === 'sale');
-            let saleTotal = saleItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-            const checkoutButtonHtml = saleItems.length > 0 ? `<a href="/caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600"><span>Ir a Pagar ($${saleTotal.toFixed(2)})</span></a>` : '';
-            const quoteMessage = "Hola, me gustaría cotizar:\n" + cart.map(item => `- ${item.name} (x${item.quantity})`).join("\n");
-            const quoteButtonHtml = cart.length > 0 ? `<a href="https://wa.me/593996480843?text=${encodeURIComponent(quoteMessage)}" target="_blank" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700"><span>Solicitar Cotización de Todo</span></a>` : '';
-            const cartItemsHtml = cart.length === 0 ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` : cart.map(item => `<div class="flex justify-between items-center py-3"><div><span class="text-gray-300 pr-4">${item.name}</span></div><p class="text-gray-400">x ${item.quantity}</p></div>`).join("");
-            cartModal.innerHTML = `<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2><p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. Aquí guardaré tus ideas.</p></div><div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div><div class="mt-auto pt-4 space-y-3">${checkoutButtonHtml}${quoteButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div></div>`;
+        let app, auth, db;
+        try {
+            app = firebase.initializeApp(firebaseConfig);
+            const appCheck = firebase.appCheck(app);
+            appCheck.activate('6LfW-2crAAAAAMamgQQ_K1J2CHu4AVUejcTHp-x4', true);
+            auth = firebase.auth();
+            db = firebase.firestore();
+            console.log("YAN'Z Engine: Firebase inicializado correctamente.");
+        } catch (error) {
+            console.error("YAN'Z Engine: Error crítico al inicializar Firebase.", error);
+            return; // Detener si Firebase falla
         }
 
-        window.closeCartModal = () => document.getElementById('cart-modal')?.classList.add('hidden');
-        
-        openCartButton?.addEventListener('click', () => {
-            renderCartModal();
-            document.getElementById('cart-modal')?.classList.remove('hidden');
-        });
-        
-        document.addEventListener('cartUpdated', () => {
-            if (!document.getElementById('cart-modal')?.classList.contains('hidden')) {
-                renderCartModal();
-            }
-        });
-
-        // Este evento es disparado por el nuevo script de autenticación de abajo
-        document.addEventListener('authReady', () => {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            applyTheme(savedTheme);
-        });
-    });
-    </script>
-    
-    <!-- ====== INICIO DEL CAMBIO: Script de Autenticación y Corrección de PWA ====== -->
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- Referencias a los elementos del DOM ---
+        // --- 2. LÓGICA DE AUTENTICACIÓN (Solución PWA incluida) ---
         const authContainer = document.getElementById('auth-container');
         const authModal = document.getElementById('auth-modal');
         const closeAuthModalButton = document.getElementById('close-auth-modal-button');
         const googleLoginButtonModal = document.getElementById('google-login-button-modal');
 
-        // --- Funciones para manejar la visibilidad del modal ---
-        const openAuthModal = () => authModal?.classList.remove('hidden');
-        const closeAuthModal = () => authModal?.classList.add('hidden');
-
-        // --- Funciones de autenticación con la corrección para la PWA ---
-        
-        // Iniciar sesión
-        function signInWithGoogle() {
+        const loginWithGoogle = () => {
+            sessionStorage.setItem('yanz_auth_action', 'true');
             const provider = new firebase.auth.GoogleAuthProvider();
-            // Guardamos una bandera en sessionStorage para indicar que una acción de autenticación está en progreso.
-            // Esto es CLAVE para la solución de la pantalla en blanco.
-            sessionStorage.setItem('authActionInProgress', 'true');
-            firebase.auth().signInWithRedirect(provider).catch(error => {
-                console.error("Error durante el inicio de sesión con Google:", error);
-                sessionStorage.removeItem('authActionInProgress'); // Limpiar en caso de error
-            });
-        }
-
-        // Cerrar sesión
-        function signOut() {
-            // Ponemos la misma bandera antes de cerrar sesión.
-            sessionStorage.setItem('authActionInProgress', 'true');
-            firebase.auth().signOut().catch(error => {
-                console.error("Error durante el cierre de sesión:", error);
-                sessionStorage.removeItem('authActionInProgress'); // Limpiar en caso de error
-            });
-        }
-
-        // --- Lógica para renderizar la UI de autenticación ---
+            auth.signInWithRedirect(provider);
+        };
         
-        function renderLoggedInState(user) {
-            if (!authContainer) return;
-            authContainer.innerHTML = `
-                <div class="flex items-center gap-2">
-                    <img src="${user.photoURL}" alt="${user.displayName}" class="w-8 h-8 rounded-full border-2 border-gray-600">
-                    <button id="sign-out-button" class="text-gray-300 text-sm hover:text-[var(--yanz-primary)] transition-colors">Salir</button>
-                </div>
-            `;
-            // Añadimos el listener al nuevo botón de "Salir"
-            document.getElementById('sign-out-button')?.addEventListener('click', signOut);
-            closeAuthModal();
-        }
+        const logout = () => {
+            sessionStorage.setItem('yanz_auth_action', 'true');
+            auth.signOut();
+        };
 
-        function renderLoggedOutState() {
-            if (!authContainer) return;
-            authContainer.innerHTML = `
-                <button id="open-auth-modal-button" class="text-gray-300 text-sm font-semibold hover:text-[var(--yanz-primary)] transition-colors">Acceder</button>
-            `;
-            // Añadimos el listener al nuevo botón de "Acceder"
-            document.getElementById('open-auth-modal-button')?.addEventListener('click', openAuthModal);
-        }
-
-        // --- El observador de estado de Firebase: El núcleo de la solución ---
-
-        firebase.auth().onAuthStateChanged(user => {
-            console.log('Cambio de estado de autenticación detectado.');
-
-            // Comprobamos si teníamos una acción de autenticación en progreso.
-            if (sessionStorage.getItem('authActionInProgress')) {
-                console.log('Acción de autenticación finalizada. Recargando la página para refrescar el estado...');
-                // Limpiamos la bandera.
-                sessionStorage.removeItem('authActionInProgress');
-                // Forzamos una recarga completa de la página.
-                // Esto es lo que soluciona el problema de la pantalla en blanco en la PWA.
+        auth.onAuthStateChanged(user => {
+            if (sessionStorage.getItem('yanz_auth_action')) {
+                console.log("Acción de autenticación detectada. Recargando para refrescar estado.");
+                sessionStorage.removeItem('yanz_auth_action');
                 window.location.reload();
-                return; // Detenemos la ejecución del script aquí para esperar la recarga.
+                return; 
             }
             
-            // Si no había recarga pendiente, actualizamos la UI.
             if (user) {
-                console.log('Usuario conectado:', user.uid);
-                renderLoggedInState(user);
+                const userImage = user.photoURL ? `<img src="${user.photoURL}" alt="Foto de ${user.displayName}" class="w-full h-full object-cover">` : `<span class="text-white font-bold text-xl">${user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}</span>`;
+                authContainer.innerHTML = `<div class="relative"><button id="user-menu-button" title="Mi Cuenta" class="w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-sm overflow-hidden border-2 border-gray-500 hover:border-gray-400 bg-gray-700">${userImage}</button><div id="user-menu-dropdown" class="hidden absolute top-full right-0 mt-2 w-56 bg-[var(--yanz-header-bg)] border border-gray-700 rounded-lg shadow-xl z-50"><div class="px-4 py-3 border-b border-gray-700"><p class="text-sm font-semibold text-white truncate">${user.displayName || 'Usuario'}</p><p class="text-xs text-gray-400 truncate">${user.email || 'Sin email'}</p></div><div class="py-1"><a href="#" id="logout-button-menu" class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"><svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>Cerrar Sesión</a></div></div></div>`;
+                const userMenuButton = document.getElementById('user-menu-button'); const userMenuDropdown = document.getElementById('user-menu-dropdown'); const logoutButtonMenu = document.getElementById('logout-button-menu');
+                userMenuButton.addEventListener('click', (event) => { event.stopPropagation(); userMenuDropdown.classList.toggle('hidden'); });
+                logoutButtonMenu.addEventListener('click', (e) => { e.preventDefault(); userMenuDropdown.classList.add('hidden'); logout(); });
+                window.addEventListener('click', (event) => { if (userMenuDropdown && !userMenuDropdown.classList.contains('hidden') && !userMenuButton.contains(event.target) && !userMenuDropdown.contains(event.target)) { userMenuDropdown.classList.add('hidden'); } });
             } else {
-                console.log('Usuario no conectado.');
-                renderLoggedOutState();
+                authContainer.innerHTML = `<button id="open-auth-modal-button" title="Acceder o Registrarse" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm overflow-hidden"><video autoplay loop muted playsinline class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML = '<span class=\\'font-sans text-gray-800 text-lg font-bold\\'>G</span>';"><source src="assets/videos/login-icon.mp4" type="video/mp4"></video></button>`;
+                document.getElementById('open-auth-modal-button').addEventListener('click', () => { authModal.classList.remove('hidden'); });
             }
-
-            // Disparamos un evento personalizado para que otros scripts sepan
-            // que la autenticación ha sido verificada.
-            document.dispatchEvent(new CustomEvent('authReady'));
+             document.dispatchEvent(new CustomEvent('authReady'));
         });
 
-        // --- Listeners para los botones del modal ---
-        googleLoginButtonModal?.addEventListener('click', signInWithGoogle);
-        closeAuthModalButton?.addEventListener('click', closeAuthModal);
+        googleLoginButtonModal.addEventListener('click', loginWithGoogle);
+        closeAuthModalButton.addEventListener('click', () => authModal.classList.add('hidden'));
+        authModal.addEventListener('click', (event) => { if (event.target === authModal) { authModal.classList.add('hidden'); } });
+
+
+        // --- 3. LÓGICA DEL CARRITO DE COMPRAS ---
+        
+        const showToast = (message) => {
+            let toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        };
+
+        const getCart = () => JSON.parse(localStorage.getItem("yanzCart")) || [];
+        
+        const saveCart = (cart) => {
+            localStorage.setItem("yanzCart", JSON.stringify(cart));
+            updateCartUI();
+        };
+        
+        window.addToCart = (item) => {
+            if (!item || !item.id || !item.name) return;
+            let cart = getCart();
+            const existingItem = cart.find(cartItem => cartItem.id === item.id);
+            if (existingItem) {
+                existingItem.quantity = (existingItem.quantity || 1) + (item.quantity || 1);
+            } else {
+                cart.push({ ...item, quantity: item.quantity || 1 });
+            }
+            saveCart(cart);
+            showToast(`'${item.name}' añadido a tus ideas.`);
+        };
+        
+        const updateCartUI = () => {
+            const cart = getCart();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCounter = document.getElementById('cart-counter');
+            const cartIconWrapper = document.getElementById('cart-icon-wrapper');
+            if (cartCounter) {
+                cartCounter.textContent = totalItems;
+                cartCounter.classList.toggle('hidden', totalItems === 0);
+            }
+            if (cartIconWrapper) {
+                cartIconWrapper.classList.toggle('has-items', totalItems > 0);
+            }
+            if (!document.getElementById('cart-modal').classList.contains('hidden')) {
+                renderCartModal();
+            }
+        };
+
+        window.increaseQuantity = (itemId) => { let cart = getCart(); const item = cart.find(i => i.id === itemId); if (item) { item.quantity++; } saveCart(cart); };
+        window.decreaseQuantity = (itemId) => { let cart = getCart(); const itemIndex = cart.findIndex(i => i.id === itemId); if (itemIndex > -1) { if (cart[itemIndex].quantity > 1) { cart[itemIndex].quantity--; } else { cart.splice(itemIndex, 1); } } saveCart(cart); };
+        window.removeItemFromCart = (itemId) => { let cart = getCart().filter(i => i.id !== itemId); saveCart(cart); };
+        
+        const renderCartModal = () => {
+            const cart = getCart();
+            const cartModalContainer = document.getElementById('cart-modal');
+            const actionButtonHtml = cart.length > 0 ? `<a href="caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600 transition-all"><span>Ir a la Caja</span></a>` : '<a href="#productos" class="w-full block text-center bg-[var(--yanz-primary)] text-white font-bold py-3 px-5 rounded-lg" onclick="closeCartModal()">Explorar productos</a>';
+            const cartItemsHtml = cart.length === 0 ? `<p class="text-gray-400 py-8 text-center">Tu carrito de ideas está vacío.</p>` : cart.map(item => `<div class="flex justify-between items-center py-3"><span class="text-gray-300 pr-2 flex-grow">${item.name}</span><div class="flex items-center gap-2 text-white"><button onclick="decreaseQuantity('${item.id}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">-</button><span class="w-8 text-center">${item.quantity}</span><button onclick="increaseQuantity('${item.id}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">+</button><button onclick="removeItemFromCart('${item.id}')" class="ml-2 text-red-400 hover:text-red-300 transition-colors" aria-label="Eliminar item"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button></div></div>`).join("");
+            cartModalContainer.innerHTML=`<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">Tu Carrito de Ideas</h2></div><div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div id="cart-items" class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div><div class="mt-auto pt-4 space-y-3">${actionButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div></div>`;
+        };
+        
+        window.closeCartModal = () => document.getElementById('cart-modal').classList.add('hidden');
+        document.getElementById('open-cart-button').addEventListener('click', () => { renderCartModal(); document.getElementById('cart-modal').classList.remove('hidden'); });
+
+        // --- 4. LÓGICA DE UI GENERAL (Tema, Carga de datos, etc.) ---
+        const themeToggle = document.getElementById('theme-toggle'); 
+        const sunIcon = document.getElementById('theme-icon-sun'); 
+        const moonIcon = document.getElementById('theme-icon-moon');
+        const applyTheme = (theme) => { document.documentElement.classList.toggle('dark', theme === 'dark'); sunIcon.classList.toggle('hidden', theme !== 'dark'); moonIcon.classList.toggle('hidden', theme === 'dark'); };
+        themeToggle.addEventListener('click', () => { const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'; localStorage.setItem('theme', newTheme); applyTheme(newTheme); });
+        
+        const createCategoryCard = (category) => { const cardLink = document.createElement('a'); cardLink.href = category.link; cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2"; const mediaWrapper = document.createElement('div'); mediaWrapper.className = "overflow-hidden"; mediaWrapper.innerHTML = `<video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${category.video}" type="video/mp4"></video>`; const textWrapper = document.createElement('div'); textWrapper.className = "p-6 flex flex-col flex-grow"; textWrapper.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`; cardLink.appendChild(mediaWrapper); cardLink.appendChild(textWrapper); return cardLink; }; 
+        const productGrid = document.getElementById('product-grid'); 
+        const serviceGrid = document.getElementById('service-grid'); 
+        const categories = [ { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas.html', type: 'product' }, { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets.html', type: 'product' }, { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas.html', type: 'product' }, { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos.html', type: 'product' }, { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos.html', type: 'product' }, { title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum.html', type: 'product' }, { title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios.html', type: 'product' }, { title: 'Diseño con IA "Aria"', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria.html', type: 'product' }, { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/servicio_renovacion.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' }, { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria.html', type: 'service' }, { title: 'Consultoría e Integración de IA', video: 'assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' } ]; 
+        categories.forEach(cat => { const card = createCategoryCard(cat); if (cat.type === 'product' && productGrid) productGrid.appendChild(card); if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card); }); 
+        
+        const menuButton = document.getElementById('menu-button'); 
+        const mobileMenu = document.getElementById('mobile-menu'); 
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link'); 
+        menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden')); 
+        mobileNavLinks.forEach(link => { link.addEventListener('click', () => mobileMenu.classList.add('hidden')) }); 
+        
+        document.addEventListener('authReady', () => {
+             const savedTheme = localStorage.getItem('theme') || 'dark'; applyTheme(savedTheme);
+        });
+        
+        const paymentLogosContainer = document.getElementById('payment-logos'); if(paymentLogosContainer) { const paymentMethods = [ { name: 'PeiGo', image: 'assets/images/pago-peigo.png' }, { name: 'Mastercard', image: 'assets/images/pago-mastercard.png' }, { name: 'Visa', image: 'assets/images/pago-visa.png' }, { name: 'American Express', image: 'assets/images/pago-american-express.png' }, { name: 'Discover', image: 'assets/images/pago-discover.png' }, { name: 'JCB', image: 'assets/images/pago-jcb.png' }, { name: 'Diners Club', image: 'assets/images/pago-diners-club.png' }, { name: 'PayPal', image: 'assets/images/pago-paypal.png' }, { name: 'Binance Pay', image: 'assets/images/pago-binance-pay.png' }, { name: 'Banco Guayaquil', image: 'assets/images/pago-banco-guayaquil.png' }, { name: 'Banco Pichincha', image: 'assets/images/pago-pichincha.png' }, { name: 'DeUna', image: 'assets/images/pago-deuna.png' } ]; paymentMethods.forEach(m => { paymentLogosContainer.innerHTML += `<img src="${m.image}" alt="${m.name}" title="${m.name}" class="h-8 bg-white rounded-md p-1">`; }); } 
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        const preloader = document.getElementById('preloader'); 
+        const pageContent = document.getElementById('page-content'); 
+        const introVideo = document.getElementById('intro-video'); 
+        let appStarted = false; 
+        function startApp() { if (appStarted) return; appStarted = true; if (preloader) preloader.classList.add('hidden'); if (pageContent) pageContent.classList.add('loaded'); } 
+        if (introVideo) { introVideo.addEventListener('ended', startApp); introVideo.addEventListener('error', startApp); setTimeout(startApp, 5000); } else { startApp(); }
+
+        // Carga inicial del carrito
+        updateCartUI();
     });
     </script>
-    <!-- ====== FIN DEL CAMBIO ====== -->
+    <!-- ===== [FIN] EL CEREBRO DE YAN'Z SMART WOOD ===== -->
 </body>
 </html>
