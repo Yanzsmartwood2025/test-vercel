@@ -274,7 +274,7 @@
         };
         const logout = () => auth.signOut();
 
-        const updateCartIconAndModal = () => {
+        const updateCartUI = () => {
             const totalItems = currentCart.reduce((sum, item) => sum + item.quantity, 0);
             const cartCounter = document.getElementById('cart-counter');
             const cartIconWrapper = document.getElementById('cart-icon-wrapper');
@@ -286,16 +286,19 @@
             if (!document.getElementById('cart-modal').classList.contains('hidden')) {
                 renderCartModal();
             }
+            if (typeof updateAccordionButtons === 'function') {
+                updateAccordionButtons();
+            }
         };
 
         const saveCurrentCart = () => {
-            updateCartIconAndModal(); 
             if (currentUserId) {
                 const cartRef = db.collection('artifacts').doc(appId).collection('carts').doc(currentUserId);
                 cartRef.set({ items: currentCart }).catch(e => console.error("Error Firestore:", e));
             } else {
                 localStorage.setItem(GUEST_CART_KEY, JSON.stringify(currentCart));
             }
+            updateCartUI();
         };
 
         window.addEventListener('click', (event) => {
@@ -331,25 +334,18 @@
                     await cartRef.set({ items: currentCart });
                     cartListener = cartRef.onSnapshot(snapshot => {
                         currentCart = snapshot.exists ? snapshot.data().items : [];
-                        updateCartIconAndModal();
-                        // Actualiza solo los botones del acordeón si está visible
-                        if(document.getElementById('ferreteria-acordeon')) {
-                            updateAccordionButtons();
-                        }
+                        updateCartUI();
                     });
                 } catch (error) {
                     console.error("Error syncing cart:", error);
                     currentCart = [];
-                    updateCartIconAndModal();
+                    updateCartUI();
                 }
             } else {
                 currentUserId = null;
                 renderGuestUI();
                 currentCart = JSON.parse(localStorage.getItem(GUEST_CART_KEY)) || [];
-                updateCartIconAndModal();
-                 if(document.getElementById('ferreteria-acordeon')) {
-                    updateAccordionButtons();
-                }
+                updateCartUI();
             }
         });
         
@@ -372,44 +368,32 @@
         const ariaSearchButton = document.getElementById("aria-search-button");
         const ariaResultsContainer = document.getElementById("aria-results");
 
-        function handleCartUpdate(productId, change, element) {
+        function handleCartUpdate(productId, change) {
             let itemIndex = currentCart.findIndex(item => item.id === productId);
             if (itemIndex > -1) {
                 currentCart[itemIndex].quantity += change;
-                if (currentCart[itemIndex].quantity <= 0) {
-                    currentCart.splice(itemIndex, 1);
-                }
+                if (currentCart[itemIndex].quantity <= 0) currentCart.splice(itemIndex, 1);
             } else if (change > 0) {
                 const productToAdd = ferreteriaCategorias.flatMap(cat => cat.products).find(p => p.id === productId);
                 if (productToAdd) currentCart.push({id:productToAdd.id,name:productToAdd.name,type:productToAdd.type,price:productToAdd.price,image:productToAdd.image,quantity:change});
             }
-            // Actualizar solo el botón clickeado en lugar de todo el acordeón
-            updateProductButton(productId);
-            saveCurrentCart();
+            updateProductButton(productId); // Actualiza solo el botón
+            saveCurrentCart(); // Guarda y actualiza el icono del carrito
         }
 
-        // NUEVA FUNCIÓN: Actualiza solo el botón de un producto específico
         function updateProductButton(productId) {
             const productDiv = document.querySelector(`.product-item[data-id="${productId}"]`);
             if (!productDiv) return;
-
             const actionContainer = productDiv.querySelector('.action-container');
             const cartItem = currentCart.find(item => item.id === productId);
-            
             let buttonHtml;
             if (cartItem) {
-                 buttonHtml = `<div class="quantity-selector mt-auto">
-                    <button class="quantity-btn minus-btn" data-id="${productId}">-</button>
-                    <span class="quantity-display">${cartItem.quantity}</span>
-                    <button class="quantity-btn plus-btn" data-id="${productId}">+</button>
-                </div>`;
+                 buttonHtml = `<div class="quantity-selector mt-auto"><button class="quantity-btn minus-btn" data-id="${productId}">-</button><span class="quantity-display">${cartItem.quantity}</span><button class="quantity-btn plus-btn" data-id="${productId}">+</button></div>`;
             } else {
                  const productData = ferreteriaCategorias.flatMap(c => c.products).find(p => p.id === productId);
-                 buttonHtml = `<button class="add-to-cart-btn mt-auto w-full bg-[var(--yanz-primary)] hover:bg-[var(--yanz-secondary)] text-white font-bold py-2 px-4 rounded-full transition-colors" data-id="${productId}">${productData.type === 'sale' ? 'Agregar a Coti' : 'Agregar para Cotizar'}</button>`;
+                 buttonHtml = `<button class="add-to-cart-btn mt-auto w-full bg-[var(--yanz-primary)] hover:bg-[var(--yanz-secondary)] text-white font-bold py-2 px-4 rounded-full" data-id="${productId}">${productData.type === 'sale' ? 'Agregar a Coti' : 'Agregar para Cotizar'}</button>`;
             }
             actionContainer.innerHTML = buttonHtml;
-            
-            // Re-asignar eventos a los nuevos botones
             actionContainer.querySelectorAll(".add-to-cart-btn, .quantity-btn").forEach(btn => {
                 btn.addEventListener("click", e => {
                     e.stopPropagation();
@@ -420,7 +404,6 @@
             });
         }
 
-        // NUEVA FUNCIÓN: Se llama cuando el carrito cambia desde Firestore
         function updateAccordionButtons() {
             if (!acordeonContainer) return;
             acordeonContainer.querySelectorAll('.product-item').forEach(productDiv => {
@@ -451,13 +434,18 @@
 
         function renderTurboModal() {
             if (!turboModal) return;
-            turboModal.innerHTML = `<div class="w-full max-w-lg bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center modal-enter">
+            turboModal.innerHTML = `<div class="w-full max-w-2xl bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center modal-enter">
                 <video autoplay loop muted playsinline class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-[var(--yanz-yellow)] shadow-lg object-cover"><source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4"></video>
-                <h2 class="text-2xl font-bold text-white">¡Soy Turbo y voy a toda velocidad por tus materiales! 🚀</h2>
+                <h2 class="text-2xl font-bold text-white">¡Soy Turbo y tu entrega es mi prioridad! 🚀</h2>
                 <div class="text-gray-300 text-sm mt-4 text-left space-y-4">
-                    <p>Mi misión es simple: entregarte lo que necesitas, ¡rapidísimo! Así es como te ayudo:</p>
-                    <div><h4 class="font-bold text-white">Entrega Express (Hasta 8 Horas Laborables)</h4><p>Para ofrecerte el catálogo más completo, algunos productos especializados los traigo de mis socios proveedores. Me muevo rápido y los tengo listos para ti en un máximo de <strong>8 horas laborables</strong>. ¡La velocidad se adapta a ti! Podemos coordinar la entrega en el horario que más te convenga, incluso hasta las 9:00 p.m.</p></div>
-                    <div><h4 class="font-bold text-white">Tarifas de Entrega Claras</h4><table class="w-full mt-2 text-xs md:text-sm"><thead class="border-b border-gray-600"><tr><th class="p-2">Zona</th><th class="p-2">Compra</th><th class="p-2">Costo</th></tr></thead><tbody><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">Menor a $50</td><td class="p-2 font-bold">$4.00</td></tr><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">$50 o más</td><td class="p-2 font-bold text-green-400">¡GRATIS!</td></tr><tr class="border-b border-gray-700"><td class="p-2">Valles</td><td class="p-2">Menor a $75</td><td class="p-2 font-bold">$7.00</td></tr><tr><td class="p-2">Valles</td><td class="p-2">$75 o más</td><td class="p-2 font-bold">$3.50</td></tr></tbody></table></div>
+                    <p>Mi misión es llevarte tus materiales de forma rápida y segura. Para que todo esté claro, aquí te explico mis tarifas de entrega:</p>
+                    <div><h4 class="font-bold text-white text-lg">Entendiendo el Costo de Envío</h4><p class="mt-1">No es lo mismo llevar una caja de tornillos que varias planchas de gypsum, ¿verdad? Por eso, mis tarifas se ajustan al tamaño y peso de tu pedido.</p></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                         <div class="bg-gray-700/50 p-3 rounded-lg"><h5 class="font-bold text-white">Carga Ligera</h5><p class="text-xs">Herramientas, tornillería, accesorios y artículos pequeños.</p></div>
+                         <div class="bg-gray-700/50 p-3 rounded-lg"><h5 class="font-bold text-white">Carga Pesada</h5><p class="text-xs">Materiales voluminosos como sacos de cemento, planchas de gypsum, tablones, etc.</p></div>
+                    </div>
+                    <div><h4 class="font-bold text-white text-lg">Tarifas de Entrega</h4><table class="w-full mt-2 text-xs md:text-sm text-center"><thead class="border-b-2 border-gray-600"><tr class="text-white"><th class="p-2">Zona</th><th class="p-2">Tipo de Carga</th><th class="p-2">Compra</th><th class="p-2">Costo</th></tr></thead><tbody><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">Carga Ligera</td><td class="p-2">< $50</td><td class="p-2 font-bold">$4.00</td></tr><tr class="border-b border-gray-700"><td class="p-2">Quito Urbano</td><td class="p-2">Carga Ligera</td><td class="p-2">≥ $50</td><td class="p-2 font-bold text-green-400">¡GRATIS!</td></tr><tr class="border-b border-gray-700"><td class="p-2">Valles</td><td class="p-2">Carga Ligera</td><td class="p-2">Cualquier valor</td><td class="p-2 font-bold">$7.00</td></tr><tr class="bg-yellow-500/20"><td class="p-2 font-bold">Todas las Zonas</td><td class="p-2 font-bold">Carga Pesada</td><td class="p-2 font-bold">Cualquier valor</td><td class="p-2 font-bold">A coordinar</td></tr></tbody></table></div>
+                    <div><h4 class="font-bold text-white text-lg">Compromiso Turbo</h4><p class="mt-1">Para productos especiales o pedidos con <strong>Carga Pesada</strong>, te entregaré en un máximo de <strong>8 horas laborables</strong>. Siempre te contactaremos por WhatsApp para confirmar el costo y la hora exacta. ¡La velocidad se adapta a ti! Podemos coordinar la entrega en el horario que más te convenga, incluso hasta las 9:00 p.m.</p></div>
                 </div>
                 <div class="mt-6"><button class="w-full bg-[var(--yanz-yellow)] text-gray-900 font-bold py-3 px-5 rounded-lg shadow-sm hover:opacity-90" onclick="closeTurboModal()">¡Entendido!</button></div>
             </div>`;
@@ -479,10 +467,10 @@
                     category.products.forEach(product => {
                         const productDiv = document.createElement("div");
                         productDiv.className = "product-item bg-[var(--yanz-bg)] rounded-lg p-4 text-center shadow-md flex flex-col";
-                        productDiv.dataset.id = product.id; // Asignar ID aquí
+                        productDiv.dataset.id = product.id;
                         productDiv.innerHTML = `<img src="${product.image}" alt="${product.name}" class="w-full h-32 object-cover rounded-md mb-4"><h4 class="font-semibold mb-2 flex-grow">${product.name}</h4>${product.price ? `<p class="font-bold text-lg text-[var(--yanz-primary)] mb-4">$${product.price.toFixed(2)}</p>` : ''}<div class="action-container mt-auto"></div>`;
                         panel.appendChild(productDiv);
-                        updateProductButton(product.id); // Llenar el botón inicial
+                        updateProductButton(product.id);
                     });
                 } else {
                     panel.innerHTML = '<p class="text-[var(--yanz-text-alt)] col-span-full text-center py-4">Productos próximamente...</p>';
@@ -492,19 +480,9 @@
                 acordeonContainer.appendChild(categoryDiv);
                 button.addEventListener("click", () => {
                     const isOpen = panel.classList.contains("open");
-                    acordeonContainer.querySelectorAll(".panel-productos.open").forEach(p => {
-                        if (p !== panel) {
-                           p.classList.remove("open");
-                           p.style.maxHeight = null;
-                        }
-                    });
-                    if (!isOpen) {
-                        panel.classList.add("open");
-                        panel.style.maxHeight = panel.scrollHeight + "px";
-                    } else {
-                        panel.classList.remove("open");
-                        panel.style.maxHeight = null;
-                    }
+                    acordeonContainer.querySelectorAll(".panel-productos.open").forEach(p => { if (p !== panel) { p.classList.remove("open"); p.style.maxHeight = null; }});
+                    if (!isOpen) { panel.classList.add("open"); panel.style.maxHeight = panel.scrollHeight + "px"; }
+                    else { panel.classList.remove("open"); panel.style.maxHeight = null; }
                 });
             });
         }
