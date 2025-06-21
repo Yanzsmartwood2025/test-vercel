@@ -281,7 +281,7 @@
         window.closeTurboModal = () => turboModal?.classList.add("hidden"); openTurboButton?.addEventListener("click", () => { renderTurboModal(); turboModal?.classList.remove("hidden"); });
         function renderCartModal() { if (!cartModal) return; const cart = getCart(); const saleItems = cart.filter(item => item.type === 'sale'); let saleTotal = saleItems.reduce((total, item) => total + (item.price * item.quantity), 0); const checkoutButtonHtml = saleItems.length > 0 ? `<a href="/caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600"><span>Ir a Pagar ($${saleTotal.toFixed(2)})</span></a>` : ''; const quoteMessage = "Hola, me gustaría cotizar:\n" + cart.map(item => `- ${item.name} (x${item.quantity})`).join("\n"); const quoteButtonHtml = cart.length > 0 ? `<a href="https://wa.me/593996480843?text=${encodeURIComponent(quoteMessage)}" target="_blank" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700"><span>Solicitar Cotización de Todo</span></a>` : ''; const cartItemsHtml = cart.length === 0 ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` : cart.map(item => `<div class="flex justify-between items-center py-3"><span class="text-gray-300 pr-2 flex-grow">${item.name}</span><div class="flex items-center gap-2 text-white"><button onclick="decreaseQuantity('${item.id}', ${JSON.stringify(item)})" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">-</button><span class="w-8 text-center">${item.quantity}</span><button onclick="increaseQuantity('${item.id}', ${JSON.stringify(item)})" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">+</button></div></div>`).join(""); cartModal.innerHTML=`<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2><p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. Aquí guardaré tus ideas.</p></div><div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div><div class="mt-auto pt-4 space-y-3">${checkoutButtonHtml}${quoteButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div></div>`; }
         
-        // =====> INICIO: TEXTO DE TURBO ACTUALIZADO FINAL <=====
+        // =====> INICIO: TEXTO DE TURBO CON NOTA DE PROVEEDORES <=====
         function renderTurboModal() { 
             if (!turboModal) return; 
             turboModal.innerHTML = `<div class="w-full max-w-lg bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center modal-enter">
@@ -290,6 +290,12 @@
                 <p class="text-gray-400 mt-2 mb-6">Nuestras entregas, claras y sin sorpresas:</p>
                 
                 <div class="space-y-4 text-left">
+                    <!-- Nota de Transparencia -->
+                    <div class="bg-blue-900/30 border border-blue-700 p-3 rounded-lg">
+                        <h4 class="font-bold text-white">Nota de Transparencia: ¡Te lo conseguimos!</h4>
+                        <p class="text-sm text-gray-300">Para darte el catálogo más completo, trabajamos con los mejores proveedores. Si un artículo no está en nuestra bodega, ¡no te preocupes! Lo conseguimos para ti y te contactaremos por WhatsApp para confirmar la disponibilidad y el tiempo de entrega exacto.</p>
+                    </div>
+
                     <!-- Sección Envíos Express -->
                     <div class="bg-gray-700/50 p-4 rounded-lg">
                         <h3 class="font-bold text-white text-lg">Envío Express (en Moto 🛵)</h3>
@@ -315,7 +321,7 @@
                 </div>
             </div>`; 
         }
-        // =====> FIN: TEXTO DE TURBO ACTUALIZADO FINAL <=====
+        // =====> FIN: TEXTO DE TURBO CON NOTA DE PROVEEDORES <=====
         
         // --- INICIALIZACIÓN DE LA PÁGINA Y UI GENERAL ---
         const menuButton = document.getElementById("menu-button"); const mobileMenu = document.getElementById("mobile-menu"); menuButton?.addEventListener("click", () => mobileMenu.classList.toggle("hidden")); mobileMenu?.querySelectorAll(".mobile-nav-link").forEach(link => link.addEventListener("click", () => mobileMenu.classList.add("hidden")));
