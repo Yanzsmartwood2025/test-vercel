@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YAN'Z SMART WOOD - Diseño, Servicios y Tecnología IA</title>
     
+    <!-- Meta tags para SEO y redes sociales -->
     <meta name="description" content="Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno. Explora nuestros productos, servicios y soluciones con IA.">
     <meta property="og:title" content="YAN'Z SMART WOOD - Diseño, Tecnología y Madera">
     <meta property="og:description" content="Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno. Explora nuestros productos y servicios.">
@@ -12,14 +13,19 @@
     <meta property="og:url" content="https://yanz-smart-wood.vercel.app">
     <meta property="og:type" content="website">
     
+    <!-- Manifest PWA y color del tema -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#1A202C">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     
+    <!-- Estilos personalizados -->
     <style>
         :root {
             --yanz-bg: #FFFFFF; --yanz-bg-alt: #F7F8FC; --yanz-text: #2D3748;
@@ -49,41 +55,54 @@
     </style>
 </head>
 <body class="antialiased">
+
     <div id="preloader">
-        <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain"><source src="assets/videos/intro.mp4" type="video/mp4" onerror="this.parentElement.style.display='none';"></video>
+        <video id="intro-video" autoplay muted playsinline class="w-full h-full object-contain">
+            <source src="assets/videos/intro.mp4" type="video/mp4" onerror="this.parentElement.style.display='none';">
+        </video>
     </div>
+
     <div id="page-content">
         <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
              <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
-                 <a href="index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
-                 <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
-                     <a href="#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
-                     <a href="#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
-                     <a href="#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Testimonios</a>
-                     <a href="#juegos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Juegos</a>
-                     <a href="caja.html" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Caja</a>
-                     <a href="#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
-                 </div>
-                 <div class="flex items-center space-x-2 sm:space-x-4">
-                     <div id="auth-container" class="flex items-center"></div>
-                     <div class="flex items-center space-x-3">
-                         <div id="cart-icon-wrapper">
-                             <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
-                                 <video autoplay loop muted playsinline class="w-8 h-8"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video>
-                             </button>
-                         </div>
-                         <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
-                     </div>
-                     <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
-                         <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
-                         <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                     </button>
-                     <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-                 </div>
-             </nav>
-             <div id="mobile-menu" class="hidden md:hidden">
-                 <a href="#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a><a href="#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a><a href="#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a><a href="#juegos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Juegos</a><a href="caja.html" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Caja</a><a href="#contacto" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contacto</a>
-             </div>
+                <a href="index.html" aria-label="Volver a la página de inicio">
+                    <video autoplay loop muted playsinline class="h-12 w-auto"><source src="assets/videos/videologo-header.mp4" type="video/mp4"></video>
+                </a>
+                <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                    <a href="#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
+                    <a href="#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
+                    <a href="#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Testimonios</a>
+                    <a href="#juegos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Juegos</a>
+                    <a href="caja.html" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Caja</a>
+                    <a href="#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <div id="auth-container" class="flex items-center"></div>
+                    <div class="flex items-center space-x-3">
+                        <div id="cart-icon-wrapper">
+                            <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300" aria-label="Abrir carrito de compras">
+                                <video autoplay loop muted playsinline class="w-8 h-8"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video>
+                            </button>
+                        </div>
+                        <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
+                    </div>
+                    <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700" aria-label="Cambiar tema de color">
+                        <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
+                        <svg id="theme-icon-moon" class="h-6 w-6" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    </button>
+                    <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button" aria-label="Abrir menú de navegación">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
+                </div>
+            </nav>
+            <div id="mobile-menu" class="hidden md:hidden">
+                <a href="#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a>
+                <a href="#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a>
+                <a href="#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a>
+                <a href="#juegos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Juegos</a>
+                <a href="caja.html" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Caja</a>
+                <a href="#contacto" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contacto</a>
+            </div>
         </header>
         
         <main>
@@ -104,17 +123,22 @@
             <section id="caja" class="py-20 section-bg"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl md:text-4xl font-bold mb-4">Caja Virtual YAN'Z</h2><p class="max-w-3xl mx-auto text-[var(--yanz-text-alt)] mb-12">Cuando estés listo para hacer realidad tu proyecto, nuestro asistente virtual "Coti" te guiará en un proceso de pago fácil y seguro. Revisa tu lista, elige tu método de pago y déjanos el resto a nosotros.</p><div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-xl hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2"><div class="overflow-hidden"><video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="assets/videos/video-carrito.mp4" type="video/mp4"></video></div><div class="p-6"><h3 class="text-xl font-bold mb-2">Un Checkout Inteligente</h3><p class="text-sm text-[var(--yanz-text-alt)] mb-4">Revisa tu cotización, confirma tu pedido y prepárate para ver tu visión convertida en realidad. Tu seguridad y confianza son nuestra prioridad.</p><a href="caja.html" class="mt-4 inline-block bg-[var(--yanz-primary)] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[var(--yanz-secondary)] transition-all duration-300 transform hover:scale-105">Ir a la Caja</a></div></div></div></section>
         </main>
         
-        <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8"><div class="container mx-auto px-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left"><div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div><div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div><div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div></div><div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400"><p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p><div class="mt-4 space-x-4"><a href="como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div></div></div></footer>
+        <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8">
+            <div class="container mx-auto px-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left"><div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div><div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110"><img src="assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div><div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div></div><div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400"><p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p><div class="mt-4 space-x-4"><a href="como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div></div></div>
+        </footer>
     </div>
     
-    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank"><video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="assets/videos/video-whatsapp.mp4" type="video/mp4"></video></a>
+    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 bg-green-500 rounded-full w-16 h-16 shadow-lg hover:bg-green-600 transition-transform hover:scale-110 flex items-center justify-center overflow-hidden" target="_blank" aria-label="Contactar por WhatsApp">
+        <video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="assets/videos/video-whatsapp.mp4" type="video/mp4"></video>
+    </a>
     
     <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden"></div>
+    
     <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden">
         <div class="w-full max-w-xs bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-8 flex flex-col modal-enter relative text-center">
-             <button id="close-auth-modal-button" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
-                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-             </button>
+            <button id="close-auth-modal-button" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors" aria-label="Cerrar modal de autenticación">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
             <h2 class="text-2xl font-bold text-white mb-2">Bienvenido</h2>
             <p class="text-gray-400 mb-6">Inicia sesión o crea una cuenta</p>
             <button id="google-login-button-modal" class="w-full inline-flex items-center justify-center gap-3 px-4 py-2 text-base font-semibold text-gray-700 bg-white border border-transparent rounded-lg shadow-sm hover:bg-gray-200 transition-all">
@@ -124,24 +148,22 @@
         </div>
     </div>
     
+    <!-- SCRIPTS DE LA APLICACIÓN -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    
-    <!-- CONEXIÓN AL MOTOR CENTRAL -->
     <script src="/yanz-engine.js"></script>
-    
-    <!-- SCRIPT ESPECÍFICO DE ESTA PÁGINA -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- Lógica de la interfaz de usuario específica de esta página ---
-        const themeToggle = document.getElementById('theme-toggle'),
-              sunIcon = document.getElementById('theme-icon-sun'),
-              moonIcon = document.getElementById('theme-icon-moon'),
-              menuButton = document.getElementById('menu-button'),
-              mobileMenu = document.getElementById('mobile-menu'),
-              paymentLogosContainer = document.getElementById('payment-logos'),
-              openCartButton = document.getElementById('open-cart-button');
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-icon-sun');
+        const moonIcon = document.getElementById('theme-icon-moon');
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const paymentLogosContainer = document.getElementById('payment-logos');
+        const openCartButton = document.getElementById('open-cart-button');
+        const productGrid = document.getElementById('product-grid');
+        const serviceGrid = document.getElementById('service-grid');
 
         function applyTheme(theme) {
             document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -149,7 +171,7 @@
             moonIcon?.classList.toggle('hidden', theme === 'dark');
         }
 
-        themeToggle.addEventListener('click', () => {
+        themeToggle?.addEventListener('click', () => {
             const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
             localStorage.setItem('theme', newTheme);
             applyTheme(newTheme);
@@ -162,24 +184,16 @@
             });
         }
 
+        const categories = [ { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas.html', type: 'product' }, { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets.html', type: 'product' }, { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas.html', type: 'product' }, { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos.html', type: 'product' }, { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos.html', type: 'product' }, { title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum.html', type: 'product' }, { title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios.html', type: 'product' }, { title: 'Diseño con IA "Aria"', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria.html', type: 'product' }, { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/servicio_renovacion.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' }, { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria.html', type: 'service' }, { title: 'Consultoría e Integración de IA', video: 'assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' } ];
+        
         const createCategoryCard = (category) => {
             const cardLink = document.createElement('a');
             cardLink.href = category.link;
             cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2";
-            const mediaWrapper = document.createElement('div');
-            mediaWrapper.className = "overflow-hidden";
-            mediaWrapper.innerHTML = `<video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${category.video}" type="video/mp4"></video>`;
-            const textWrapper = document.createElement('div');
-            textWrapper.className = "p-6 flex flex-col flex-grow";
-            textWrapper.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`;
-            cardLink.appendChild(mediaWrapper);
-            cardLink.appendChild(textWrapper);
+            cardLink.innerHTML = `<div class="overflow-hidden"><video autoplay loop muted playsinline class="w-full h-48 object-cover"><source src="${category.video}" type="video/mp4"></video></div><div class="p-6 flex flex-col flex-grow"><div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div></div>`;
             return cardLink;
         };
-
-        const productGrid = document.getElementById('product-grid');
-        const serviceGrid = document.getElementById('service-grid');
-        const categories = [ { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas.html', type: 'product' }, { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets.html', type: 'product' }, { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas.html', type: 'product' }, { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos.html', type: 'product' }, { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos.html', type: 'product' }, { title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum.html', type: 'product' }, { title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios.html', type: 'product' }, { title: 'Diseño con IA "Aria"', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria.html', type: 'product' }, { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/servicio_renovacion.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' }, { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria.html', type: 'service' }, { title: 'Consultoría e Integración de IA', video: 'assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' } ];
+        
         categories.forEach(cat => {
             const card = createCategoryCard(cat);
             if (cat.type === 'product' && productGrid) productGrid.appendChild(card);
@@ -193,7 +207,6 @@
         }
         document.getElementById("year").textContent = new Date().getFullYear();
 
-        // --- Lógica del preloader ---
         const preloader = document.getElementById('preloader');
         const pageContent = document.getElementById('page-content');
         const introVideo = document.getElementById('intro-video');
@@ -201,8 +214,8 @@
         function startApp() {
             if (appStarted) return;
             appStarted = true;
-            if (preloader) preloader.classList.add('hidden');
-            if (pageContent) pageContent.classList.add('loaded');
+            preloader?.classList.add('hidden');
+            pageContent?.classList.add('loaded');
         }
         if (introVideo) {
             introVideo.addEventListener('ended', startApp);
@@ -212,45 +225,33 @@
             startApp();
         }
         
-        // --- Lógica del modal del carrito ---
         function renderCartModal() {
             const cartModal = document.getElementById('cart-modal');
             if (!cartModal) return;
-            // Usamos window.currentCart que es establecido por yanz-engine.js
             const cart = window.currentCart || [];
             const saleItems = cart.filter(item => item.type === 'sale');
             let saleTotal = saleItems.reduce((total, item) => total + (item.price * item.quantity), 0);
             const checkoutButtonHtml = saleItems.length > 0 ? `<a href="/caja.html" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-green-500 rounded-lg shadow-sm hover:bg-green-600"><span>Ir a Pagar ($${saleTotal.toFixed(2)})</span></a>` : '';
             const quoteMessage = "Hola, me gustaría cotizar:\n" + cart.map(item => `- ${item.name} (x${item.quantity})`).join("\n");
             const quoteButtonHtml = cart.length > 0 ? `<a href="https://wa.me/593996480843?text=${encodeURIComponent(quoteMessage)}" target="_blank" class="w-full inline-flex items-center justify-center gap-3 px-5 py-3 text-base font-semibold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700"><span>Solicitar Cotización de Todo</span></a>` : '';
-            const cartItemsHtml = cart.length === 0 ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` : cart.map(item => `
-                <div class="flex justify-between items-center py-3">
-                    <div><span class="text-gray-300 pr-4">${item.name}</span></div>
-                    <p class="text-gray-400">x ${item.quantity}</p>
-                </div>`).join("");
+            const cartItemsHtml = cart.length === 0 ? `<p class="text-gray-400 py-8 text-center">Tu carrito está vacío.</p>` : cart.map(item => `<div class="flex justify-between items-center py-3"><div><span class="text-gray-300 pr-4">${item.name}</span></div><p class="text-gray-400">x ${item.quantity}</p></div>`).join("");
             cartModal.innerHTML = `<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2><p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. Aquí guardaré tus ideas.</p></div><div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div><div class="mt-auto pt-4 space-y-3">${checkoutButtonHtml}${quoteButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div></div>`;
         }
 
         window.closeCartModal = () => document.getElementById('cart-modal')?.classList.add('hidden');
+        
         openCartButton?.addEventListener('click', () => {
             renderCartModal();
             document.getElementById('cart-modal')?.classList.remove('hidden');
         });
         
-        // --- Escuchadores de eventos del motor ---
         document.addEventListener('cartUpdated', () => {
-            // El motor se encarga del ícono. Aquí actualizamos el modal si está abierto.
             if (!document.getElementById('cart-modal')?.classList.contains('hidden')) {
                 renderCartModal();
-            }
-            // También actualizamos el ícono
-            if (typeof window.updateCartIcon === 'function') {
-                window.updateCartIcon();
             }
         });
 
         document.addEventListener('authReady', () => {
-            // La UI de auth ya fue renderizada por el motor. Aquí podemos hacer otras cosas si es necesario.
             const savedTheme = localStorage.getItem('theme') || 'dark';
             applyTheme(savedTheme);
         });
@@ -258,13 +259,3 @@
     </script>
 </body>
 </html>
-```
-
-### Resumen y Siguientes Pasos:
-
-1.  **Crea `yanz-engine.js`:** Asegúrate de que este archivo exista en la misma carpeta que tus archivos HTML y que contenga el código que te di en el "Paso 1".
-2.  **Actualiza `ferreteria.html`:** Usa el código que te di para esta página.
-3.  **Actualiza `index.html`:** Usa el código de este mensaje para `index.html`.
-4.  **Actualiza `caja.html` y otras páginas:** Repite el "Paso 3" para todas las demás páginas de tu sitio. El bloque de `<script>` que debes añadir al final es el mismo para todas.
-
-Una vez que hayas hecho esto en todos tus archivos, el carrito tendrá una memoria perfecta y unificada en todo tu sit
