@@ -303,18 +303,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 5. HERO SLIDESHOW ---
     const slideshow = document.getElementById('hero-slideshow');
     if (slideshow) {
-        const slides = slideshow.querySelectorAll('.hero-slide');
-        let currentSlide = 0;
+        const slides = Array.from(slideshow.querySelectorAll('.hero-slide'));
 
         if (slides.length > 0) {
+            // Sort slides based on the number in the src attribute to guarantee order
+            slides.sort((a, b) => {
+                const getNum = (src) => parseInt(src.match(/Presentacion-(\d+)\.jpeg/)?.[1] || 0, 10);
+                return getNum(a.src) - getNum(b.src);
+            });
+
+            // Re-order the slides in the DOM itself to be certain
+            slides.forEach(slide => slideshow.appendChild(slide));
+
             let currentSlide = 0;
-            // Find the initially active slide
-            for (let i = 0; i < slides.length; i++) {
-                if (slides[i].classList.contains('active')) {
-                    currentSlide = i;
-                    break;
-                }
-            }
+
+            // Start with a clean slate, setting only the first slide as active
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
 
             setInterval(() => {
                 slides[currentSlide].classList.remove('active');
