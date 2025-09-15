@@ -299,4 +299,21 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         startApp();
     }
+
+    // --- 5. HERO SLIDESHOW ---
+    const slideshow = document.getElementById('hero-slideshow');
+    if (slideshow) {
+        const slides = slideshow.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+
+        if (slides.length > 0) {
+            slides[currentSlide].classList.add('active');
+
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 5000);
+        }
+    }
 });
