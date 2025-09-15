@@ -307,7 +307,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentSlide = 0;
 
         if (slides.length > 0) {
-            slides[currentSlide].classList.add('active');
+            let currentSlide = 0;
+            // Find the initially active slide
+            for (let i = 0; i < slides.length; i++) {
+                if (slides[i].classList.contains('active')) {
+                    currentSlide = i;
+                    break;
+                }
+            }
 
             setInterval(() => {
                 slides[currentSlide].classList.remove('active');
