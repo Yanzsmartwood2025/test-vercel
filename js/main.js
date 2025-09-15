@@ -19,6 +19,11 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- 0. CONFIGURACIÓN INICIAL ---
+    // Determina la ruta base para los assets dependiendo si estamos en un subdirectorio.
+    const isSubdirectory = window.location.pathname.split('/').length > 2 && !window.location.pathname.endsWith('.html');
+    const basePath = isSubdirectory ? '..' : '.';
+
     // Variables globales para el estado de la aplicación.
     // `auth` y `db` son provistas por firebase-init.js
     let currentUser = null;
@@ -275,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
             logoutButtonMenu.addEventListener('click', (e) => { e.preventDefault(); userMenuDropdown.classList.add('hidden'); auth.signOut().catch(e => console.error(e)); });
             window.addEventListener('click', (event) => { if (userMenuDropdown && !userMenuDropdown.classList.contains('hidden') && !userMenuButton.contains(event.target) && !userMenuDropdown.contains(event.target)) { userMenuDropdown.classList.add('hidden'); } });
         } else {
-            authContainer.innerHTML = `<button id="open-auth-modal-button" title="Acceder o Registrarse" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm overflow-hidden"><video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="/assets/videos/login-icon.mp4" type="video/mp4"></video></button>`;
+            authContainer.innerHTML = `<button id="open-auth-modal-button" title="Acceder o Registrarse" class="w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm overflow-hidden"><video autoplay loop muted playsinline class="w-full h-full object-cover"><source src="${basePath}/assets/videos/login-icon.mp4" type="video/mp4"></video></button>`;
             document.getElementById('open-auth-modal-button').addEventListener('click', () => { const authModal = document.getElementById('auth-modal'); if (authModal) authModal.classList.remove('hidden'); });
         }
     }
@@ -298,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button onclick="decreaseQuantity('${item.id}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">-</button><span class="w-8 text-center">${item.quantity}</span><button onclick="increaseQuantity('${item.id}')" class="w-7 h-7 rounded-full bg-gray-600 hover:bg-gray-500 transition-colors">+</button>
                 </div>
             </div>`).join("");
-        cartModal.innerHTML = `<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="/assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2><p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. Aquí guardaré tus ideas.</p></div><div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div><div class="mt-auto pt-4 space-y-3">${checkoutButtonHtml}${quoteButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div></div>`;
+        cartModal.innerHTML = `<div class="w-full max-w-md bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col modal-enter"><div class="text-center mb-6"><video autoplay loop muted playsinline class="w-24 h-24 mx-auto mb-2 rounded-full border-4 border-[var(--yanz-primary)] shadow-lg"><source src="${basePath}/assets/videos/video-carrito.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">¡Hola, soy Coti!</h2><p class="text-gray-300 text-sm mt-1 px-4">Tu asistente de proyectos. Aquí guardaré tus ideas.</p></div><div class="border-t border-gray-700 pt-4 flex-grow overflow-y-auto" style="max-height: 40vh;"><div class="divide-y divide-gray-700 text-left">${cartItemsHtml}</div></div><div class="mt-auto pt-4 space-y-3">${checkoutButtonHtml}${quoteButtonHtml}<button class="mt-2 text-sm text-gray-400 hover:text-white w-full" onclick="closeCartModal()">Cerrar</button></div></div>`;
     }
     function setupGlobalUIListeners() {
         const googleLoginButtonModal = document.getElementById('google-login-button-modal');
@@ -383,7 +388,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (preloader) preloader.classList.add('hidden');
             if (pageContent) pageContent.classList.add('loaded');
         }
-        if (introVideo) {
+
+        // If running locally via file://, bypass the video timer for tests
+        if (window.location.protocol === 'file:') {
+            console.log('File protocol detected, bypassing video preloader for testing.');
+            setTimeout(startApp, 200); // Short delay to ensure DOM is ready
+        } else if (introVideo) {
             introVideo.addEventListener('ended', startApp);
             introVideo.addEventListener('error', startApp);
             setTimeout(startApp, 5000);
