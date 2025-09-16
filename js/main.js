@@ -1,43 +1,5 @@
 /**
  * =================================================================
- * YAN'Z SMART WOOD - STATE RESTORATION & MAIN ENGINE v4.2
- * =================================================================
- */
-
-// --- LÓGICA DE RESTAURACIÓN DE ESTADO ---
-// Se ejecuta inmediatamente para redirigir al usuario a la última página
-// visitada si es necesario, antes de que el resto de la app cargue.
-(function() {
-    const lastVisitedURL = localStorage.getItem('yanzLastVisitedURL');
-    const isDefaultStartPage = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html');
-
-    // Condición para evitar el bucle de redirección al usar el botón "atrás".
-    // Solo se debe redirigir si la navegación NO proviene de otra página del mismo sitio.
-    // Si document.referrer es del mismo origen, significa que el usuario está navegando
-    // internamente (ej. presionó "atrás"), por lo que no se debe forzar la redirección.
-    const isNavigatingWithinSite = document.referrer && new URL(document.referrer).origin === window.location.origin;
-
-    // Solo redirige si:
-    // 1. Hay una URL guardada.
-    // 2. Estamos en la página de inicio por defecto.
-    // 3. El usuario NO está navegando desde dentro del sitio.
-    // 4. La URL guardada es diferente a la actual.
-    if (lastVisitedURL && isDefaultStartPage && !isNavigatingWithinSite && lastVisitedURL !== window.location.href) {
-        try {
-            const url = new URL(lastVisitedURL);
-            // Por seguridad, confirma que la URL guardada sea del mismo origen.
-            if (url.origin === window.location.origin) {
-                window.location.href = lastVisitedURL;
-            }
-        } catch (e) {
-            console.error("URL guardada inválida, no se pudo redirigir:", e);
-        }
-    }
-})();
-
-
-/**
- * =================================================================
  * YAN'Z SMART WOOD - MAIN ENGINE v4.1 (Consolidated)
  * -----------------------------------------------------------------
  * Este motor unificado centraliza toda la lógica de la aplicación y
@@ -56,9 +18,6 @@
  * =================================================================
  */
 document.addEventListener('DOMContentLoaded', () => {
-    // --- PERSISTENCIA DE ESTADO DE NAVEGACIÓN ---
-    // Guarda la última URL visitada para restaurarla al reabrir la app.
-    localStorage.setItem('yanzLastVisitedURL', window.location.href);
 
     // --- 0. CONFIGURACIÓN INICIAL ---
     // Determina la ruta base para los assets dependiendo si estamos en un subdirectorio.
