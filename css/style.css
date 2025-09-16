@@ -32,9 +32,9 @@ html { scroll-behavior: smooth; }
     height: 100%;
     object-fit: cover;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out; /* Efecto de desvanecimiento */
 }
 
 #hero-slideshow .hero-slide.active {
-    opacity: 1;
+    opacity: 1; /* La imagen activa es la única visible */
 }
