@@ -373,6 +373,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return getNum(a.src) - getNum(b.src);
             });
 
+            slides.forEach(slide => slideshow.appendChild(slide));
+
             let currentSlide = 0;
 
             // Mostrar la primera imagen inmediatamente
