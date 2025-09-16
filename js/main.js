@@ -9,15 +9,23 @@
 // visitada si es necesario, antes de que el resto de la app cargue.
 (function() {
     const lastVisitedURL = localStorage.getItem('yanzLastVisitedURL');
-    // Considera la raíz o 'index.html' como la página de inicio por defecto de la PWA.
     const isDefaultStartPage = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html');
 
-    // Solo redirige si estamos en la página de inicio por defecto Y hay una URL guardada diferente.
-    // Esto evita bucles de redirección y solo actúa cuando la PWA se abre desde el ícono.
-    if (lastVisitedURL && isDefaultStartPage && lastVisitedURL !== window.location.href) {
+    // Condición para evitar el bucle de redirección al usar el botón "atrás".
+    // Solo se debe redirigir si la navegación NO proviene de otra página del mismo sitio.
+    // Si document.referrer es del mismo origen, significa que el usuario está navegando
+    // internamente (ej. presionó "atrás"), por lo que no se debe forzar la redirección.
+    const isNavigatingWithinSite = document.referrer && new URL(document.referrer).origin === window.location.origin;
+
+    // Solo redirige si:
+    // 1. Hay una URL guardada.
+    // 2. Estamos en la página de inicio por defecto.
+    // 3. El usuario NO está navegando desde dentro del sitio.
+    // 4. La URL guardada es diferente a la actual.
+    if (lastVisitedURL && isDefaultStartPage && !isNavigatingWithinSite && lastVisitedURL !== window.location.href) {
         try {
             const url = new URL(lastVisitedURL);
-            // Por seguridad, solo redirige a URLs del mismo origen.
+            // Por seguridad, confirma que la URL guardada sea del mismo origen.
             if (url.origin === window.location.origin) {
                 window.location.href = lastVisitedURL;
             }
