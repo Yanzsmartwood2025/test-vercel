@@ -1,5 +1,35 @@
 /**
  * =================================================================
+ * YAN'Z SMART WOOD - STATE RESTORATION & MAIN ENGINE v4.2
+ * =================================================================
+ */
+
+// --- LÓGICA DE RESTAURACIÓN DE ESTADO ---
+// Se ejecuta inmediatamente para redirigir al usuario a la última página
+// visitada si es necesario, antes de que el resto de la app cargue.
+(function() {
+    const lastVisitedURL = localStorage.getItem('yanzLastVisitedURL');
+    // Considera la raíz o 'index.html' como la página de inicio por defecto de la PWA.
+    const isDefaultStartPage = window.location.pathname === '/' || window.location.pathname.endsWith('/index.html');
+
+    // Solo redirige si estamos en la página de inicio por defecto Y hay una URL guardada diferente.
+    // Esto evita bucles de redirección y solo actúa cuando la PWA se abre desde el ícono.
+    if (lastVisitedURL && isDefaultStartPage && lastVisitedURL !== window.location.href) {
+        try {
+            const url = new URL(lastVisitedURL);
+            // Por seguridad, solo redirige a URLs del mismo origen.
+            if (url.origin === window.location.origin) {
+                window.location.href = lastVisitedURL;
+            }
+        } catch (e) {
+            console.error("URL guardada inválida, no se pudo redirigir:", e);
+        }
+    }
+})();
+
+
+/**
+ * =================================================================
  * YAN'Z SMART WOOD - MAIN ENGINE v4.1 (Consolidated)
  * -----------------------------------------------------------------
  * Este motor unificado centraliza toda la lógica de la aplicación y
@@ -18,6 +48,9 @@
  * =================================================================
  */
 document.addEventListener('DOMContentLoaded', () => {
+    // --- PERSISTENCIA DE ESTADO DE NAVEGACIÓN ---
+    // Guarda la última URL visitada para restaurarla al reabrir la app.
+    localStorage.setItem('yanzLastVisitedURL', window.location.href);
 
     // --- 0. CONFIGURACIÓN INICIAL ---
     // Determina la ruta base para los assets dependiendo si estamos en un subdirectorio.
