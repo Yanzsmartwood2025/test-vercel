@@ -358,41 +358,35 @@ document.addEventListener('DOMContentLoaded', () => {
     setupGlobalUIListeners();
     initializeFerreteriaPage();
 
-    // --- Lógica para el Slideshow del Hero Banner ---
-    if (document.getElementById('hero-slideshow')) {
-        const slideshow = document.getElementById('hero-slideshow');
+// --- Lógica para el Slideshow del Hero Banner (VERSIÓN DEFINITIVA) ---
+if (document.getElementById('hero-slideshow')) {
+    const slideshow = document.getElementById('hero-slideshow');
+    const slides = Array.from(slideshow.querySelectorAll('.hero-slide'));
 
-        // Obtener todas las imágenes y convertirlas a un array para poder ordenarlas
-        const slides = Array.from(slideshow.querySelectorAll('.hero-slide'));
+    if (slides.length > 0) {
+        // Ordenar el array de imágenes numéricamente
+        slides.sort((a, b) => {
+            const getNum = (src) => parseInt(src.match(/Presentacion-(\d+)\.jpeg/)?.[1] || 0, 10);
+            return getNum(a.src) - getNum(b.src);
+        });
 
-        if (slides.length > 0) {
-            // --- ESTA ES LA PARTE IMPORTANTE: Ordenar las imágenes ---
-            // Se asegura de que se muestren en el orden 1, 2, 3... 10
-            slides.sort((a, b) => {
-                const getNum = (src) => parseInt(src.match(/Presentacion-(\d+)\.jpeg/)?.[1] || 0, 10);
-                return getNum(a.src) - getNum(b.src);
-            });
+        let currentSlide = 0;
 
-            slides.forEach(slide => slideshow.appendChild(slide));
+        // --- CAMBIO CLAVE: Forzar el estado inicial ---
+        // 1. Primero, nos aseguramos de que NINGUNA imagen esté activa.
+        slides.forEach(slide => slide.classList.remove('active'));
 
-            let currentSlide = 0;
+        // 2. Luego, activamos ÚNICAMENTE la primera imagen del array ya ordenado.
+        slides[0].classList.add('active');
 
-            // Mostrar la primera imagen inmediatamente
-            slides.forEach((slide, index) => slide.classList.toggle('active', index === currentSlide));
-
-            // Iniciar el intervalo para cambiar de imagen cada 4 segundos
-            setInterval(() => {
-                // Ocultar la imagen actual
-                slides[currentSlide].classList.remove('active');
-
-                // Calcular el índice de la siguiente imagen, volviendo al inicio si es necesario
-                currentSlide = (currentSlide + 1) % slides.length;
-
-                // Mostrar la nueva imagen
-                slides[currentSlide].classList.add('active');
-            }, 4000); // 4000 milisegundos = 4 segundos
-        }
+        // Iniciar el intervalo para cambiar de imagen cada 4 segundos
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 4000);
     }
+}
     if (document.getElementById('preloader')) {
         const preloader = document.getElementById('preloader');
         const pageContent = document.getElementById('page-content');
