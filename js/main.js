@@ -418,63 +418,83 @@ if (document.getElementById('hero-slideshow')) {
         }
     }
     if (document.getElementById('product-grid')) {
-         const productGrid = document.getElementById('product-grid');
-         const serviceGrid = document.getElementById('service-grid');
-         const createCategoryCard = (category) => {
-             const cardLink = document.createElement('a');
-             cardLink.href = category.link;
-             cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2";
+        const productGrid = document.getElementById('product-grid');
+        const serviceGrid = document.getElementById('service-grid');
+        const videosToLazyLoad = []; // Array to hold videos for the observer
 
-             const videoContainer = document.createElement('div');
-             videoContainer.className = "overflow-hidden";
+        const createCategoryCard = (category) => {
+            const cardLink = document.createElement('a');
+            cardLink.href = category.link;
+            cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2";
 
-             const video = document.createElement('video');
-             video.className = "w-full h-48 object-cover";
-             video.loop = true;
-             video.muted = true;
-             video.playsInline = true;
+            const videoContainer = document.createElement('div');
+            videoContainer.className = "overflow-hidden";
 
-             const source = document.createElement('source');
-             source.src = category.video; // Reverted to eager loading
-             source.type = "video/mp4";
+            const video = document.createElement('video');
+            video.className = "w-full h-48 object-cover lazy-video";
+            video.loop = true;
+            video.muted = true;
+            video.playsInline = true;
 
-             video.appendChild(source);
-             videoContainer.appendChild(video);
+            const source = document.createElement('source');
+            source.setAttribute('data-src', category.video);
+            source.type = "video/mp4";
 
-             const playVideo = () => {
-                 if (video.paused) {
-                     video.play().catch(error => {
-                         console.warn(`Video play failed for ${category.title}:`, error);
-                     });
-                 }
-             };
+            video.appendChild(source);
+            videoContainer.appendChild(video);
 
-             video.addEventListener('canplay', playVideo);
-             cardLink.addEventListener('mouseenter', playVideo);
-             cardLink.addEventListener('mouseleave', () => {
-                 if (!video.paused) {
-                     video.pause();
-                 }
-             });
+            videosToLazyLoad.push(video);
 
-             const cardBody = document.createElement('div');
-             cardBody.className = "p-6 flex flex-col flex-grow";
-             cardBody.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`;
+            const cardBody = document.createElement('div');
+            cardBody.className = "p-6 flex flex-col flex-grow";
+            cardBody.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`;
 
-             cardLink.appendChild(videoContainer);
-             cardLink.appendChild(cardBody);
+            cardLink.appendChild(videoContainer);
+            cardLink.appendChild(cardBody);
 
-             return cardLink;
-         };
-         // Using the corrected lowercase filenames
-         const categories = [ { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas/', type: 'product' }, { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets/', type: 'product' }, { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas/', type: 'product' }, { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos/', type: 'product' }, { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos/', type: 'product' }, { title: 'Gypsum y Luz', video: 'assets/videos/perrito_en_moto.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum/', type: 'product' }, { title: 'Accesorios y Organizadores', video: 'assets/videos/perrito_en_moto.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios/', type: 'product' }, { title: 'Diseño con IA "Aria"', video: 'assets/videos/perrito_en_moto.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria/', type: 'product' }, { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/perrito_en_moto.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' }, { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/perrito_en_moto.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria/', type: 'service' }, { title: 'Consultoría e Integración de IA', video: 'assets/videos/perrito_en_moto.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' } ];
+            return cardLink;
+        };
 
-         categories.forEach(cat => {
-             const card = createCategoryCard(cat);
-             if (cat.type === 'product' && productGrid) productGrid.appendChild(card);
-             if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card);
-         });
-    }
+        const categories = [ { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas/', type: 'product' }, { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets/', type: 'product' }, { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas/', type: 'product' }, { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos/', type: 'product' }, { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos/', type: 'product' }, { title: 'Gypsum y Luz', video: 'assets/videos/perrito_en_moto.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum/', type: 'product' }, { title: 'Accesorios y Organizadores', video: 'assets/videos/perrito_en_moto.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios/', type: 'product' }, { title: 'Diseño con IA "Aria"', video: 'assets/videos/perrito_en_moto.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria/', type: 'product' }, { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/perrito_en_moto.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' }, { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/perrito_en_moto.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria/', type: 'service' }, { title: 'Consultoría e Integración de IA', video: 'assets/videos/perrito_en_moto.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' } ];
+
+        categories.forEach(cat => {
+            const card = createCategoryCard(cat);
+            if (cat.type === 'product' && productGrid) productGrid.appendChild(card);
+            if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card);
+        });
+
+       // --- Intersection Observer for Lazy Loading Videos ---
+       const videoObserver = new IntersectionObserver((entries, observer) => {
+           entries.forEach(entry => {
+               if (entry.isIntersecting) {
+                   const video = entry.target;
+                   const source = video.querySelector('source');
+
+                   if (source.dataset.src) {
+                       // Define the play function
+                       const playVideo = () => {
+                           if (video.paused) {
+                               video.play().catch(error => console.warn("Video play failed:", error));
+                           }
+                       };
+
+                       // Add a one-time listener for when the video can play
+                       video.addEventListener('canplay', playVideo, { once: true });
+
+                       // Set the source and load the video
+                       source.src = source.dataset.src;
+                       video.load();
+
+                       // Stop observing the video once it's been triggered
+                       observer.unobserve(video);
+                   }
+               }
+           });
+       }, { rootMargin: '0px 0px 50px 0px', threshold: 0.01 });
+
+       // Observe all the videos collected earlier
+       videosToLazyLoad.forEach(video => videoObserver.observe(video));
+   }
 
     // Bienvenida de Aria (si aplica)
     if (document.getElementById('aria-search')) {
