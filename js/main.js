@@ -21,9 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 0. CONFIGURACIÓN INICIAL ---
     // Determina la ruta base para los assets dependiendo si estamos en un subdirectorio.
-    // Lógica corregida para detectar subdirectorios de forma más robusta.
-    const pathSegments = window.location.pathname.split('/').filter(Boolean);
-    const isSubdirectory = pathSegments.length > 1 || (pathSegments.length === 1 && !pathSegments[0].endsWith('.html'));
+    const isSubdirectory = window.location.pathname.split('/').length > 2 && !window.location.pathname.endsWith('.html');
     const basePath = isSubdirectory ? '..' : '.';
 
     // Variables globales para el estado de la aplicación.
@@ -439,8 +437,7 @@ if (document.getElementById('hero-slideshow')) {
             video.playsInline = true;
 
             const source = document.createElement('source');
-            const videoSrc = `${basePath}/${category.video}`;
-            source.setAttribute('data-src', videoSrc);
+            source.setAttribute('data-src', category.video);
             source.type = "video/mp4";
 
             video.appendChild(source);
@@ -463,8 +460,8 @@ if (document.getElementById('hero-slideshow')) {
             { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas/', type: 'product' },
             { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets/', type: 'product' },
             { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas/', type: 'product' },
-            { title: 'Pisos de Madera Sintética', video: 'assets/videos/cocinas.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos/', type: 'product' },
-            { title: 'Muebles de Baño', video: 'assets/videos/cocinas.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos/', type: 'product' },
+            { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos/', type: 'product' },
+            { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos/', type: 'product' },
             // Placeholder videos for categories without a specific one yet
             { title: 'Gypsum y Luz', video: 'assets/videos/videologo4segundos.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum/', type: 'product' },
             { title: 'Accesorios y Organizadores', video: 'assets/videos/videologo4segundos.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios/', type: 'product' },
