@@ -463,12 +463,12 @@ if (document.getElementById('hero-slideshow')) {
             { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos/', type: 'product' },
             { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos/', type: 'product' },
             // Placeholder videos for categories without a specific one yet
-            { title: 'Gypsum y Luz', video: 'assets/videos/gypsum.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum/', type: 'product' },
-            { title: 'Accesorios y Organizadores', video: 'assets/videos/accesorios.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios/', type: 'product' },
-            { title: 'Diseño con IA "Aria"', video: 'assets/videos/diseno_ia.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria/', type: 'product' },
-            { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/servicio_renovacion.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' },
-            { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/ferreteria.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria/', type: 'service' },
-            { title: 'Consultoría e Integración de IA', video: 'assets/videos/servicio_ia.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' }
+            { title: 'Gypsum y Luz', video: 'assets/videos/videologo4segundos.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum/', type: 'product' },
+            { title: 'Accesorios y Organizadores', video: 'assets/videos/videologo4segundos.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios/', type: 'product' },
+            { title: 'Diseño con IA "Aria"', video: 'assets/videos/videologo4segundos.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria/', type: 'product' },
+            { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/videologo4segundos.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' },
+            { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/videologo4segundos.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria/', type: 'service' },
+            { title: 'Consultoría e Integración de IA', video: 'assets/videos/videologo4segundos.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' }
         ];
 
         categories.forEach(cat => {
