@@ -21,7 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 0. CONFIGURACIÓN INICIAL ---
     // Determina la ruta base para los assets dependiendo si estamos en un subdirectorio.
-    const isSubdirectory = window.location.pathname.split('/').length > 2 && !window.location.pathname.endsWith('.html');
+    // Lógica corregida para detectar subdirectorios de forma más robusta.
+    const pathSegments = window.location.pathname.split('/').filter(Boolean);
+    const isSubdirectory = pathSegments.length > 1 || (pathSegments.length === 1 && !pathSegments[0].endsWith('.html'));
     const basePath = isSubdirectory ? '..' : '.';
 
     // Variables globales para el estado de la aplicación.
