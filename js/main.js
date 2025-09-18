@@ -437,7 +437,6 @@ if (document.getElementById('hero-slideshow')) {
             video.playsInline = true;
 
             const source = document.createElement('source');
-            // --- FIX: Use basePath to construct the correct video path ---
             const videoSrc = `${basePath}/${category.video}`;
             source.setAttribute('data-src', videoSrc);
             source.type = "video/mp4";
