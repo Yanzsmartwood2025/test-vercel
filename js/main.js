@@ -463,37 +463,42 @@ if (document.getElementById('hero-slideshow')) {
             if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card);
         });
 
-       // --- Intersection Observer for Lazy Loading Videos ---
-       const videoObserver = new IntersectionObserver((entries, observer) => {
-           entries.forEach(entry => {
-               if (entry.isIntersecting) {
-                   const video = entry.target;
-                   const source = video.querySelector('source');
+// --- Intersection Observer for Lazy Loading Videos (VERSIÓN CORREGIDA) ---
+const videoObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const video = entry.target;
+            const source = video.querySelector('source');
 
-                   if (source.dataset.src) {
-                       // Define the play function
-                       const playVideo = () => {
-                           if (video.paused) {
-                               video.play().catch(error => console.warn("Video play failed:", error));
-                           }
-                       };
+            if (source && source.dataset.src) {
+                // Función que intenta reproducir el video
+                const playVideo = () => {
+                    // El video debe estar silenciado para autoplay
+                    video.muted = true;
+                    const promise = video.play();
+                    if (promise !== undefined) {
+                        promise.catch(error => {
+                            console.warn("Autoplay fue prevenido:", error);
+                        });
+                    }
+                };
 
-                       // Add a one-time listener for when the video can play
-                       video.addEventListener('canplay', playVideo, { once: true });
+                // Escuchar el evento 'loadeddata' que indica que el video está listo
+                video.addEventListener('loadeddata', playVideo, { once: true });
 
-                       // Set the source and load the video
-                       source.src = source.dataset.src;
-                       video.load();
+                // Asignar la fuente y cargar el video
+                source.src = source.dataset.src;
+                video.load();
 
-                       // Stop observing the video once it's been triggered
-                       observer.unobserve(video);
-                   }
-               }
-           });
-       }, { rootMargin: '0px 0px 50px 0px', threshold: 0.01 });
+                // Dejar de observar el video una vez que se ha iniciado la carga
+                observer.unobserve(video);
+            }
+        }
+    });
+}, { rootMargin: '0px 0px 100px 0px', threshold: 0.01 });
 
-       // Observe all the videos collected earlier
-       videosToLazyLoad.forEach(video => videoObserver.observe(video));
+// El resto del código que observa los videos se mantiene igual
+videosToLazyLoad.forEach(video => videoObserver.observe(video));
    }
 
     // Bienvenida de Aria (si aplica)
