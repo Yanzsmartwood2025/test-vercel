@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Granitos y Mesones - YAN'Z SMART WOOD</title>
+    <title>Granitos y Mesones a Medida - YAN'Z SMART WOOD</title>
 
     <link rel="manifest" href="../manifest.json">
     <meta name="theme-color" content="#1A202C">
@@ -51,7 +51,7 @@
         <main>
             <section class="relative h-[50vh] flex items-center justify-center text-white">
                 <div class="absolute inset-0 bg-black/60 z-10"></div>
-                <img src="https://placehold.co/1200x600/1a202c/e2e8f0?text=Granito" alt="[Banner de un meson de granito]" class="absolute inset-0 w-full h-full object-cover">
+                <img src="https://placehold.co/1200x600/5d4037/ffffff?text=Meson+de+Granito" alt="[Banner de un elegante meson de granito en una cocina]" class="absolute inset-0 w-full h-full object-cover">
                 <div class="relative z-20 text-center px-4">
                     <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Granitos y Mesones</h1>
                     <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90 mt-4">Superficies que combinan belleza natural y resistencia para tu hogar.</p>
@@ -62,15 +62,62 @@
                 <div class="container mx-auto px-6">
                     <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Nuestros Proyectos</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <img src="https://placehold.co/600x400/2d3748/ffffff?text=Proyecto+1" alt="[Foto de un meson de granito]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="https://placehold.co/600x400/718096/ffffff?text=Proyecto+2" alt="[Foto de un meson de cuarzo]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="https://placehold.co/600x400/4a5568/ffffff?text=Proyecto+3" alt="[Foto de detalle de acabados de meson]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/3e2723/ffffff?text=Proyecto+Granito+1" alt="[Foto de un meson de granito oscuro]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/a1887f/ffffff?text=Proyecto+Cuarzo+1" alt="[Foto de un meson de cuarzo claro]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/795548/ffffff?text=Detalle+de+Acabado" alt="[Foto de detalle de los bordes de un meson]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="mt-16 text-center">
+                        <h3 class="text-2xl font-bold mb-6">Explora en Movimiento</h3>
+                        <video autoplay loop muted playsinline class="rounded-lg shadow-xl w-full max-w-4xl mx-auto">
+                            <source src="../assets/videos/videologo4segundos.mp4" type="video/mp4">
+                            Tu navegador no soporta el video.
+                        </video>
+                    </div>
+                </div>
+            </section>
+
+            <section id="materiales" class="py-20 section-bg">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Tipos de Mesones</h2>
+
+                    <div id="tabs-container" class="flex flex-wrap justify-center gap-2 mb-8">
+                        <button class="tab-button active py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="granito">Granito</button>
+                        <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="cuarzo">Cuarzo</button>
+                    </div>
+
+                    <div class="max-w-4xl mx-auto">
+                        <div id="granito" class="tab-content active">
+                            <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
+                                <h3 class="text-2xl font-bold mb-4">Granito: Belleza Natural Única</h3>
+                                <p class="text-[var(--yanz-text-alt)] mb-4">El granito es una piedra 100% natural, extraída directamente de canteras. Cada plancha es única, con vetas y patrones irrepetibles. Es conocido por su extrema dureza y resistencia al calor, lo que lo hace ideal para cocinas de alto tráfico.</p>
+                                <h4 class="font-bold mt-6 mb-2">Cuidados y Mantenimiento:</h4>
+                                <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
+                                    <li>Requiere un sellado periódico (generalmente anual) para protegerlo de manchas.</li>
+                                    <li>Limpiar derrames, especialmente de ácidos (vino, limón), rápidamente.</li>
+                                    <li>Utilizar tablas de cortar para proteger tanto el mesón como sus cuchillos.</li>
+                                    <li>Limpieza diaria con agua y jabón neutro.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="cuarzo" class="tab-content">
+                            <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
+                                <h3 class="text-2xl font-bold mb-4">Cuarzo: Ingeniería y Durabilidad</h3>
+                                <p class="text-[var(--yanz-text-alt)] mb-4">El cuarzo es un material de ingeniería compuesto por aproximadamente 93% de cuarzo natural y 7% de resinas y pigmentos. Esto le confiere una superficie no porosa, extremadamente resistente a las manchas y a los rayones. Ofrece una consistencia de color y patrón que no se encuentra en la piedra natural.</p>
+                                <h4 class="font-bold mt-6 mb-2">Cuidados y Mantenimiento:</h4>
+                                <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
+                                    <li>No requiere sellado. Su superficie no porosa previene el crecimiento de bacterias.</li>
+                                    <li>Muy fácil de limpiar, solo necesita agua y jabón.</li>
+                                    <li>Aunque es resistente al calor, se recomienda usar protectores para objetos muy calientes.</li>
+                                    <li>Evitar productos químicos muy agresivos o abrasivos.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
         </main>
 
-        <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8"><div class="container mx-auto px-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left"><div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div><div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank"="transition-transform hover:scale-110"><img src="../assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div><div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div></div><div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400"><p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p><div class="mt-4 space-x-4"><a href="/como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="/privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="/terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div></div></div></footer>
+        <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8"><div class="container mx-auto px-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left"><div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div><div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div><div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div></div><div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400"><p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p><div class="mt-4 space-x-4"><a href="/como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="/privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="/terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div></div></div></footer>
     </div>
 
     <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 transition-transform hover:scale-110" target="_blank">
@@ -104,5 +151,23 @@
 
     <!-- Main Application Engine -->
     <script src="../js/main.js"></script>
+
+    <script>
+        // Custom script for tab functionality on this page
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    button.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
