@@ -477,39 +477,48 @@ if (document.getElementById('hero-slideshow')) {
             if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card);
         });
         
-// --- Intersection Observer for Lazy Loading Videos (VERSIÓN CORREGIDA) ---
+// --- Intersection Observer for Lazy Loading Videos (VERSIÓN CORREGIDA Y MEJORADA) ---
 const videoObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const video = entry.target;
-            const source = video.querySelector('source');
+        const video = entry.target;
+        const source = video.querySelector('source');
 
-            if (source && source.dataset.src) {
-                // Función que intenta reproducir el video
-                const playVideo = () => {
-                    // El video debe estar silenciado para autoplay
-                    video.muted = true;
+        if (entry.isIntersecting) {
+            // Si el video no tiene la fuente real, cárgala
+            if (source && source.dataset.src && !video.currentSrc) {
+                const playVideoOnReady = () => {
+                    video.muted = true; // Esencial para autoplay en la mayoría de navegadores
                     const promise = video.play();
                     if (promise !== undefined) {
                         promise.catch(error => {
-                            console.warn("Autoplay fue prevenido:", error);
+                            // No es un error crítico, el usuario puede darle play manualmente.
+                            console.warn("Autoplay fue prevenido por el navegador:", error);
+                            // Opcional: mostrar un ícono de play sobre el video
                         });
                     }
                 };
 
-                // Escuchar el evento 'loadeddata' que indica que el video está listo
-                video.addEventListener('loadeddata', playVideo, { once: true });
+                // Una vez que los datos del video están listos, intenta reproducirlo.
+                video.addEventListener('loadeddata', playVideoOnReady, { once: true });
 
-                // Asignar la fuente y cargar el video
+                // Asigna el src y carga el video
                 source.src = source.dataset.src;
                 video.load();
-
-                // Dejar de observar el video una vez que se ha iniciado la carga
-                observer.unobserve(video);
+            } else if (video.currentSrc) {
+                // Si el video ya está cargado y vuelve a ser visible, simplemente reprodúcelo.
+                video.play().catch(e => console.warn("Play on re-intersection failed:", e));
+            }
+        } else {
+            // Si el video no está visible y ya se ha cargado, páusalo.
+            if (video.currentSrc && !video.paused) {
+                video.pause();
             }
         }
     });
-}, { rootMargin: '0px 0px 100px 0px', threshold: 0.01 });
+}, {
+    rootMargin: '0px 0px 100px 0px', // Pre-carga videos que están a 100px de entrar en el viewport
+    threshold: 0.01 // Se activa apenas un 1% del video es visible
+});
 
 // El resto del código que observa los videos se mantiene igual
 videosToLazyLoad.forEach(video => videoObserver.observe(video));
