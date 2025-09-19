@@ -421,36 +421,56 @@ if (document.getElementById('hero-slideshow')) {
         const productGrid = document.getElementById('product-grid');
         const serviceGrid = document.getElementById('service-grid');
         const videosToLazyLoad = [];
+        const slideshowsToInitialize = []; // Array to hold slideshow containers
 
         const createCategoryCard = (category) => {
             const cardLink = document.createElement('a');
             cardLink.href = category.link;
             cardLink.className = "block bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col group hover:-translate-y-2";
 
-            const videoContainer = document.createElement('div');
-            videoContainer.className = "overflow-hidden h-48 bg-gray-900"; // Placeholder color
+            const mediaContainer = document.createElement('div');
+            // Add 'relative' for absolute positioning of slides
+            mediaContainer.className = "overflow-hidden h-48 bg-gray-900 relative";
 
-            const video = document.createElement('video');
-            video.className = "w-full h-full object-cover lazy-video"; // Removed h-48
-            video.loop = true;
-            video.muted = true;
-            video.playsInline = true;
+            if (category.images && category.images.length > 0) {
+                // This category has images, so create a slideshow
+                category.images.forEach((imageSrc, index) => {
+                    const img = document.createElement('img');
+                    img.src = imageSrc;
+                    img.alt = `${category.title} image ${index + 1}`;
+                    // Add a common class for all slides and an 'active' class for the first one
+                    img.className = 'category-slide';
+                    if (index === 0) {
+                        img.classList.add('active');
+                    }
+                    mediaContainer.appendChild(img);
+                });
+                // Add the container to a list to be initialized later
+                slideshowsToInitialize.push(mediaContainer);
+            } else {
+                // This category has a video
+                const video = document.createElement('video');
+                video.className = "w-full h-full object-cover lazy-video";
+                video.loop = true;
+                video.muted = true;
+                video.playsInline = true;
 
-            const source = document.createElement('source');
-            source.setAttribute('data-src', category.video);
-            source.type = "video/mp4";
+                const source = document.createElement('source');
+                source.setAttribute('data-src', category.video);
+                source.type = "video/mp4";
 
-            video.appendChild(source);
-            videoContainer.appendChild(video);
-            
-            // Collect video for the observer
-            videosToLazyLoad.push(video);
+                video.appendChild(source);
+                mediaContainer.appendChild(video);
+
+                // Collect video for the lazy load observer
+                videosToLazyLoad.push(video);
+            }
 
             const cardBody = document.createElement('div');
             cardBody.className = "p-6 flex flex-col flex-grow";
             cardBody.innerHTML = `<div class="flex-grow"><h3 class="text-xl font-bold mb-2">${category.title}</h3><p class="text-sm text-[var(--yanz-text-alt)]">${category.description}</p></div><div class="mt-6 w-full text-center bg-[var(--yanz-primary)] text-white text-sm font-semibold py-2 px-4 rounded-full group-hover:bg-[var(--yanz-secondary)] transition-colors">Explorar Categoría</div>`;
             
-            cardLink.appendChild(videoContainer);
+            cardLink.appendChild(mediaContainer);
             cardLink.appendChild(cardBody);
 
             return cardLink;
@@ -464,7 +484,25 @@ if (document.getElementById('hero-slideshow')) {
             { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos/', type: 'product' },
             // Placeholder videos for categories without a specific one yet
             { title: 'Gypsum y Luz', video: 'assets/videos/gypsum-luz.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum/', type: 'product' },
-            { title: 'Accesorios y Organizadores', video: 'assets/videos/videologo4segundos.mp4', description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.', link: 'accesorios/', type: 'product' },
+            {
+                title: 'Accesorios y Organizadores',
+                images: [
+                    'assets/images/Accesorios/Accesorio-1.jpg',
+                    'assets/images/Accesorios/Accesorio-2.webp',
+                    'assets/images/Accesorios/Accesorio-3.jpg',
+                    'assets/images/Accesorios/Accesorio-4.png',
+                    'assets/images/Accesorios/Accesorio-5.webp',
+                    'assets/images/Accesorios/Accesorio-6.webp',
+                    'assets/images/Accesorios/Accesorio-7.webp',
+                    'assets/images/Accesorios/Accesorio-8.webp',
+                    'assets/images/Accesorios/Accesorio-9.webp',
+                    'assets/images/Accesorios/Accesorio-10.webp',
+                    'assets/images/Accesorios/Accesorio-11.webp'
+                ],
+                description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.',
+                link: 'accesorios/',
+                type: 'product'
+            },
             { title: 'Diseño con IA "Aria"', video: 'assets/videos/videologo4segundos.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria/', type: 'product' },
             { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/videologo4segundos.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' },
             { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/videologo4segundos.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria/', type: 'service' },
@@ -477,6 +515,19 @@ if (document.getElementById('hero-slideshow')) {
             if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card);
         });
         
+        // Initialize all the slideshows we created
+        slideshowsToInitialize.forEach(slideshowContainer => {
+            const slides = slideshowContainer.querySelectorAll('.category-slide');
+            if (slides.length > 1) {
+                let currentSlideIndex = 0;
+                setInterval(() => {
+                    slides[currentSlideIndex].classList.remove('active');
+                    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                    slides[currentSlideIndex].classList.add('active');
+                }, 4000); // Change image every 4 seconds
+            }
+        });
+
 // --- Intersection Observer for Lazy Loading Videos (VERSIÓN REVISADA) ---
 const videoObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
