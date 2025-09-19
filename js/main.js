@@ -477,47 +477,35 @@ if (document.getElementById('hero-slideshow')) {
             if (cat.type === 'service' && serviceGrid) serviceGrid.appendChild(card);
         });
         
-// --- Intersection Observer for Lazy Loading Videos (VERSIÓN CORREGIDA Y MEJORADA) ---
+// --- Intersection Observer for Lazy Loading Videos (VERSIÓN REVISADA) ---
 const videoObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
         const video = entry.target;
-        const source = video.querySelector('source');
-
         if (entry.isIntersecting) {
-            // Si el video no tiene la fuente real, cárgala
+            const source = video.querySelector('source');
+            // Si el video tiene un data-src y no una fuente real, es la primera vez que se ve.
             if (source && source.dataset.src && !video.currentSrc) {
-                const playVideoOnReady = () => {
-                    video.muted = true; // Esencial para autoplay en la mayoría de navegadores
-                    const promise = video.play();
-                    if (promise !== undefined) {
-                        promise.catch(error => {
-                            // No es un error crítico, el usuario puede darle play manualmente.
-                            console.warn("Autoplay fue prevenido por el navegador:", error);
-                            // Opcional: mostrar un ícono de play sobre el video
-                        });
-                    }
-                };
-
-                // Una vez que los datos del video están listos, intenta reproducirlo.
-                video.addEventListener('loadeddata', playVideoOnReady, { once: true });
-
-                // Asigna el src y carga el video
+                // Asignar la fuente para empezar la carga
                 source.src = source.dataset.src;
                 video.load();
-            } else if (video.currentSrc) {
-                // Si el video ya está cargado y vuelve a ser visible, simplemente reprodúcelo.
-                video.play().catch(e => console.warn("Play on re-intersection failed:", e));
+                // El atributo 'autoplay' es una señal más fuerte para el navegador.
+                // El video ya tiene 'muted' y 'playsinline' desde su creación.
+                video.setAttribute('autoplay', '');
             }
+            // Intenta reproducir el video. Esto funcionará si ya está cargado
+            // o si el navegador permite el autoplay después de `load()`.
+            // El catch previene errores en la consola si el autoplay es bloqueado.
+            video.play().catch(e => console.warn("El autoplay fue prevenido por el navegador.", e));
         } else {
-            // Si el video no está visible y ya se ha cargado, páusalo.
+            // Si el video no está visible y ya tiene una fuente cargada, páusalo.
             if (video.currentSrc && !video.paused) {
                 video.pause();
             }
         }
     });
 }, {
-    rootMargin: '0px 0px 100px 0px', // Pre-carga videos que están a 100px de entrar en el viewport
-    threshold: 0.01 // Se activa apenas un 1% del video es visible
+    rootMargin: '0px 0px 200px 0px', // Pre-cargar videos un poco antes para una experiencia más fluida
+    threshold: 0.01
 });
 
 // El resto del código que observa los videos se mantiene igual
