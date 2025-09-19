@@ -38,3 +38,19 @@ html { scroll-behavior: smooth; }
 #hero-slideshow .hero-slide.active {
     opacity: 1; /* La imagen activa es la única visible */
 }
+
+/* Category Slideshow Styles */
+.category-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.category-slide.active {
+    opacity: 1;
+}
