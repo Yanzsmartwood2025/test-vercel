@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Granitos y Mesones - YAN'Z SMART WOOD</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#1A202C">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="antialiased">
+    <div id="page-content">
+        <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
+             <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
+                 <a href="../index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="../assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
+                 <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                     <a href="../#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
+                     <a href="../#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
+                     <a href="../#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Testimonios</a>
+                     <a href="../#juegos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Juegos</a>
+                     <a href="../caja/" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Caja</a>
+                     <a href="../#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
+                 </div>
+                 <div class="flex items-center space-x-2 sm:space-x-4">
+                     <div id="auth-container" class="flex items-center"></div>
+                     <div class="flex items-center space-x-3">
+                          <div id="cart-icon-wrapper">
+                              <button id="open-cart-button" class="relative p-1 rounded-full text-gray-300">
+                                  <video autoplay loop muted playsinline class="w-8 h-8"><source src="../assets/videos/video-carrito.mp4" type="video/mp4"></video>
+                              </button>
+                          </div>
+                          <span id="cart-counter" class="text-2xl font-bold text-white hidden">0</span>
+                     </div>
+                     <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
+                         <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
+                         <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                     </button>
+                     <button class="ml-2 md:hidden text-gray-300 p-2" id="menu-button"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+                 </div>
+             </nav>
+             <div id="mobile-menu" class="hidden md:hidden">
+                 <a href="../#productos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Productos</a><a href="../#servicios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Servicios</a><a href="../#testimonios" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Testimonios</a><a href="../#juegos" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Juegos</a><a href="../caja/" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Caja</a><a href="../#contacto" class="mobile-nav-link block py-2 px-6 text-sm text-gray-300 hover:bg-gray-700">Contacto</a>
+             </div>
+        </header>
+
+        <main>
+            <section class="relative h-[50vh] flex items-center justify-center text-white">
+                <div class="absolute inset-0 bg-black/60 z-10"></div>
+                <img src="https://placehold.co/1200x600/1a202c/e2e8f0?text=Granito" alt="[Banner de un meson de granito]" class="absolute inset-0 w-full h-full object-cover">
+                <div class="relative z-20 text-center px-4">
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Granitos y Mesones</h1>
+                    <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90 mt-4">Superficies que combinan belleza natural y resistencia para tu hogar.</p>
+                </div>
+            </section>
+
+            <section id="galeria" class="py-20">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Nuestros Proyectos</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <img src="https://placehold.co/600x400/2d3748/ffffff?text=Proyecto+1" alt="[Foto de un meson de granito]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/718096/ffffff?text=Proyecto+2" alt="[Foto de un meson de cuarzo]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/4a5568/ffffff?text=Proyecto+3" alt="[Foto de detalle de acabados de meson]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer id="contacto" class="bg-gray-800 dark:bg-black text-gray-300 pt-16 pb-8"><div class="container mx-auto px-6"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left"><div><h3 class="text-2xl font-bold text-white mb-4">Contáctanos</h3><p class="text-gray-400">Quito, Ecuador</p><p class="mt-2"><strong>Email:</strong> <a href="mailto:yanzsmartwood@gmail.com" class="text-teal-400 hover:underline">yanzsmartwood@gmail.com</a></p><p><strong>WhatsApp:</strong> <a href="https://wa.me/593996480843" target="_blank" class="text-teal-400 hover:underline">+593 99 648 0843</a></p></div><div><h3 class="text-2xl font-bold text-white mb-4">Síguenos</h3><div class="flex justify-center md:justify-start space-x-4"><a href="https://www.facebook.com/share/19jF7zJMsk/" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-facebook.png" alt="Facebook Logo" class="h-6 w-auto"></a><a href="https://www.tiktok.com/@yanz.smart.wood" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-tiktok.png" alt="TikTok Logo" class="h-6 w-auto"></a><a href="https://www.instagram.com/yanz_smart_wood" target="_blank" class="transition-transform hover:scale-110"><img src="../assets/images/icono-instagram.png" alt="Instagram Logo" class="h-6 w-auto"></a><a href="https://youtube.com/@yanzsmartwood" target="_blank"="transition-transform hover:scale-110"><img src="../assets/images/icono-youtube.png" alt="YouTube Logo" class="h-6 w-auto"></a></div></div><div><h3 class="text-2xl font-bold text-white mb-4">Formas de Pago</h3><div id="payment-logos" class="flex justify-center md:justify-start flex-wrap items-center gap-4 mb-2"></div><p class="text-xs text-gray-400">Coordina tu pago directamente con nosotros.</p></div></div><div class="border-t border-gray-700 py-6 mt-8 text-center text-xs text-gray-400"><p>&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p><div class="mt-4 space-x-4"><a href="/como-trabajamos.html" class="text-teal-400 hover:underline">Cómo Trabajamos y Tiempos de Entrega</a><span class="text-gray-500">|</span><a href="/privacidad.html" class="text-teal-400 hover:underline">Políticas de Privacidad</a><span class="text-gray-500">|</span><a href="/terminos.html" class="text-teal-400 hover:underline">Términos de Servicio</a></div></div></div></footer>
+    </div>
+
+    <a href="https://wa.me/593996480843?text=Hola%2C%20estoy%20interesado%20en%20sus%20productos." class="fixed bottom-6 right-6 z-50 transition-transform hover:scale-110" target="_blank">
+        <img src="https://raw.githubusercontent.com/Yanzsmartwood2025/test-vercel/3f88d2114d6fa8db1eb71afb8b753dcf819785ae/assets/images/WhatsApp-logo2.png" alt="WhatsApp" class="w-14 h-14">
+    </a>
+
+    <div id="cart-modal" class="fixed inset-0 z-50 flex items-end sm:items-center sm:justify-end p-4 bg-black/70 backdrop-blur-sm hidden"></div>
+
+    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden">
+        <div class="w-full max-w-xs bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-8 flex flex-col modal-enter relative text-center">
+             <button id="close-auth-modal-button" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+             </button>
+            <h2 class="text-2xl font-bold text-white mb-2">Welcome</h2>
+            <p class="text-gray-400 mb-6">Sign in or create an account</p>
+
+            <button id="google-login-button-modal" class="w-full inline-flex items-center justify-center gap-3 px-4 py-2 text-base font-semibold text-gray-700 bg-white border border-transparent rounded-lg shadow-sm hover:bg-gray-200 transition-all">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.574l6.19,5.238C41.38,34.783,44,29.865,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg>
+                <span>Sign in with Google</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- SDK de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Initializer (The Brain) -->
+    <script src="../firebase-init.js"></script>
+
+    <!-- Main Application Engine -->
+    <script src="../js/main.js"></script>
+</body>
+</html>

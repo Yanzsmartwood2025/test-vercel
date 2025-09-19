@@ -478,6 +478,7 @@ if (document.getElementById('hero-slideshow')) {
 
         const categories = [
             { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas/', type: 'product' },
+            { title: 'Granitos o Mesones', video: 'assets/videos/videologo4segundos.mp4', description: 'Superficies que combinan belleza natural y resistencia para tu hogar.', link: 'granitos/', type: 'product' },
             { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets/', type: 'product' },
             { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas/', type: 'product' },
             { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos/', type: 'product' },
