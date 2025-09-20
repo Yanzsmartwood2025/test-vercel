@@ -54,3 +54,13 @@ html { scroll-behavior: smooth; }
 .category-slide.active {
     opacity: 1;
 }
+
+/* Tab Styles */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
+}
