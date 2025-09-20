@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 </head>
 <body class="antialiased">
     <div id="page-content">
@@ -49,123 +50,124 @@
         </header>
 
         <main>
-            <!-- Hero Section para Clósets -->
-            <section class="relative h-[50vh] flex items-center justify-center text-white">
-                <div class="absolute inset-0 bg-black/60 z-10"></div>
-                <img src="assets/imagenes/closet1.jpg" alt="[Banner de un clóset a medida bien organizado]" class="absolute inset-0 w-full h-full object-cover">
-                <div class="relative z-20 text-center px-4">
-                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Clósets y Vestidores</h1>
-                    <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90 mt-4">Soluciones de almacenamiento que combinan orden, estilo y personalidad.</p>
-                </div>
+            <section class="relative w-full h-screen">
+                <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover">
+                    <source src="../assets/videos/closets.mp4" type="video/mp4">
+                    Tu navegador no soporta el video.
+                </video>
             </section>
 
-            <!-- Galería de Fotos y Videos -->
             <section id="galeria" class="py-20">
                 <div class="container mx-auto px-6">
                     <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Nuestros Diseños</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <img src="assets/imagenes/closet2.jpg" alt="[Foto de un vestidor walk-in]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet3.jpg" alt="[Foto de un clóset con puertas de espejo]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet4.jpg" alt="[Foto de detalle de organizadores de clóset]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet5.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet6.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet7.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet8.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet9.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet10.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet11.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet12.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet13.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet14.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet15.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet16.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet17.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet18.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet19.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet20.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet21.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet22.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet23.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/closet24.jpg" alt="[Foto de un closet]" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="mt-16 text-center">
-                        <h3 class="text-2xl font-bold mb-6">Detalles en Movimiento</h3>
-                        <video autoplay loop muted playsinline class="rounded-lg shadow-xl w-full max-w-4xl mx-auto">
-                            <source src="../assets/videos/Closets.mp4" type="video/mp4">
-                            Tu navegador no soporta el video.
-                        </video>
+                    <!-- Slider main container -->
+                    <div class="swiper mySwiper" style="height: 500px;">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
+                            <div class="swiper-slide"><img src="assets/imagenes/closet1.jpg" alt="Closet 1" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet2.jpg" alt="Closet 2" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet3.jpg" alt="Closet 3" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet4.jpg" alt="Closet 4" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet5.jpg" alt="Closet 5" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet6.jpg" alt="Closet 6" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet7.jpg" alt="Closet 7" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet8.jpg" alt="Closet 8" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet9.jpg" alt="Closet 9" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet10.jpg" alt="Closet 10" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet11.jpg" alt="Closet 11" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet12.jpg" alt="Closet 12" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet13.jpg" alt="Closet 13" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet14.jpg" alt="Closet 14" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet15.jpg" alt="Closet 15" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet16.jpg" alt="Closet 16" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet17.jpg" alt="Closet 17" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet18.jpg" alt="Closet 18" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet19.jpg" alt="Closet 19" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet20.jpg" alt="Closet 20" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet21.jpg" alt="Closet 21" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet22.jpg" alt="Closet 22" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet23.jpg" alt="Closet 23" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/closet24.jpg" alt="Closet 24" class="w-full h-full object-cover"></div>
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                        <!-- Add Navigation -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- Sección de Materiales -->
             <section id="materiales" class="py-20 section-bg">
                 <div class="container mx-auto px-6">
-                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Materiales y Acabados</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Materiales con los que Trabajamos</h2>
 
                     <div id="tabs-container" class="flex flex-wrap justify-center gap-2 mb-8">
                         <button class="tab-button active py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="melaminico">Melamínico</button>
                         <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="mdf">MDF Lacado</button>
-                        <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="enchapado">MDF Enchapado</button>
-                        <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="accesorios">Accesorios</button>
+                        <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="termoformado">Termoformado</button>
+                        <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="mesones">Mesones</button>
                     </div>
 
                     <div class="max-w-4xl mx-auto">
                         <div id="melaminico" class="tab-content active">
                             <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
-                                <h3 class="text-2xl font-bold mb-4">Melamínico: Versatilidad y Durabilidad</h3>
-                                <p class="text-[var(--yanz-text-alt)] mb-4">Ideal para las estructuras internas y externas de los clósets. Ofrece una superficie resistente a rayones y humedad, disponible en una vasta gama de colores y texturas, incluyendo imitaciones de madera muy realistas.</p>
-                                <h4 class="font-bold mt-6 mb-2">Ventajas:</h4>
+                                <h3 class="text-2xl font-bold mb-4">Melamínico de Alta Resistencia</h3>
+                                <p class="text-[var(--yanz-text-alt)] mb-4">La melamina es un tablero de partículas de madera (aglomerado o MDF) recubierto por una lámina decorativa que simula maderas, colores sólidos o texturas. Es la opción más popular por su increíble balance entre durabilidad, variedad de diseños y costo.</p>
+                                <h4 class="font-bold mt-6 mb-2">Cuidados y Mantenimiento:</h4>
                                 <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
-                                    <li>Excelente relación calidad-precio.</li>
-                                    <li>Fácil de limpiar y mantener.</li>
-                                    <li>Gran variedad de acabados para cualquier estilo.</li>
+                                    <li>Limpiar con un paño suave y húmedo con agua y jabón neutro.</li>
+                                    <li>Secar inmediatamente para evitar que la humedad penetre en las juntas.</li>
+                                    <li>No utilizar productos abrasivos, ceras o aerosoles.</li>
+                                    <li>Evitar el contacto directo con objetos muy calientes.</li>
                                 </ul>
                             </div>
                         </div>
                         <div id="mdf" class="tab-content">
                             <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
-                                <h3 class="text-2xl font-bold mb-4">MDF Lacado: Elegancia Pura</h3>
-                                <p class="text-[var(--yanz-text-alt)] mb-4">Perfecto para puertas y frentes visibles, el lacado sobre MDF proporciona un acabado sedoso, uniforme y de alta gama. Permite una personalización de color infinita y acabados que van desde el mate profundo hasta el alto brillo.</p>
-                                 <h4 class="font-bold mt-6 mb-2">Ventajas:</h4>
+                                <h3 class="text-2xl font-bold mb-4">MDF Lacado: Acabado Premium</h3>
+                                <p class="text-[var(--yanz-text-alt)] mb-4">El MDF (tablero de fibra de densidad media) es una base excelente para la pintura lacada. Este proceso consiste en aplicar múltiples capas de laca de alta calidad para lograr una superficie perfectamente lisa, uniforme y de gran elegancia. Permite cualquier color y acabado (mate, satinado o brillante).</p>
+                                <h4 class="font-bold mt-6 mb-2">Cuidados y Mantenimiento:</h4>
                                 <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
-                                    <li>Superficie lisa y sin poros, de estética minimalista.</li>
-                                    <li>Posibilidad de crear diseños con molduras y bajo relieves.</li>
-                                    <li>Tacto suave y aspecto lujoso.</li>
+                                    <li>Usar un paño de microfibra suave, ligeramente humedecido.</li>
+                                    <li>Evitar golpes y rayones, ya que la reparación es más compleja.</li>
+                                    <li>No usar limpiadores con alcohol, amoníaco o disolventes.</li>
+                                    <li>El color puede ser sensible a la exposición prolongada a la luz solar directa.</li>
                                 </ul>
                             </div>
                         </div>
-                        <div id="enchapado" class="tab-content">
+                        <div id="termoformado" class="tab-content">
                             <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
-                                <h3 class="text-2xl font-bold mb-4">MDF Enchapado: La Calidez de la Madera</h3>
-                                <p class="text-[var(--yanz-text-alt)] mb-4">Combina lo mejor de dos mundos: la estabilidad del tablero MDF con la belleza y calidez de una fina lámina de madera natural. Cada chapa es única, ofreciendo la veta y el carácter de la madera real a un costo más accesible.</p>
-                                 <h4 class="font-bold mt-6 mb-2">Ventajas:</h4>
+                                <h3 class="text-2xl font-bold mb-4">Termoformado: Diseño Sin Juntas</h3>
+                                <p class="text-[var(--yanz-text-alt)] mb-4">Este material consiste en un folio de PVC que se calienta y se adhiere al vacío sobre un tablero de MDF. Su gran ventaja es que recubre las caras y los cantos en una sola pieza, eliminando las juntas y creando un acabado continuo, moderno y muy fácil de limpiar.</p>
+                                <h4 class="font-bold mt-6 mb-2">Cuidados y Mantenimiento:</h4>
                                 <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
-                                    <li>Apariencia y tacto de madera maciza.</li>
-                                    <li>Más estable que la madera maciza, resistiendo mejor los cambios de temperatura.</li>
-                                    <li>Opción sostenible que aprovecha mejor el recurso maderero.</li>
+                                    <li>Limpieza sencilla con agua y jabón.</li>
+                                    <li>Muy resistente a la humedad y las manchas.</li>
+                                    <li>Evitar fuentes de calor excesivo y directo (como tostadoras u ollas calientes) que podrían dañar el PVC.</li>
+                                    <li>Resistente a los productos de limpieza habituales, pero evitar abrasivos.</li>
                                 </ul>
                             </div>
                         </div>
-                        <div id="accesorios" class="tab-content">
+                        <div id="mesones" class="tab-content">
                             <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
-                                <h3 class="text-2xl font-bold mb-4">Accesorios y Herrajes: La Magia Interior</h3>
-                                <p class="text-[var(--yanz-text-alt)] mb-4">Un gran clóset se define por su funcionalidad. Integramos soluciones inteligentes para maximizar cada centímetro: sistemas de colgado, pantaloneras extraíbles, zapateras, organizadores de joyas, e iluminación LED integrada con sensores que hacen tu vida más fácil.</p>
-                                 <h4 class="font-bold mt-6 mb-2">Ventajas:</h4>
+                                <h3 class="text-2xl font-bold mb-4">Mesones: Granito y Cuarzo</h3>
+                                <p class="text-[var(--yanz-text-alt)] mb-4">La superficie de trabajo es clave. Ofrecemos los dos materiales más demandados: el **Granito**, una piedra natural única, duradera y resistente al calor; y el **Cuarzo**, un material de ingeniería extremadamente duro, no poroso y con una consistencia de color y patrón superior.</p>
+                                 <h4 class="font-bold mt-6 mb-2">Cuidados y Mantenimiento:</h4>
                                 <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
-                                    <li>Optimización máxima del espacio de almacenamiento.</li>
-                                    <li>Acceso fácil y cómodo a todas tus pertenencias.</li>
-                                    <li>Herrajes de alta calidad (bisagras y rieles con cierre suave) que garantizan durabilidad y un uso silencioso.</li>
+                                    <li>**Granito:** Requiere sellado periódico (anual) para evitar manchas. Limpiar derrames rápidamente.</li>
+                                    <li>**Cuarzo:** No requiere sellado. Muy resistente a las manchas y las bacterias.</li>
+                                    <li>Ambos se limpian fácilmente con agua y jabón.</li>
+                                    <li>Usar siempre tablas de cortar para proteger la superficie y sus cuchillos.</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
                     <div class="mt-12 p-4 bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 rounded-lg text-center max-w-4xl mx-auto">
                         <p class="font-semibold">Nota Importante Sobre los Colores:</p>
                         <p class="text-sm">Las muestras de colores y texturas de nuestros materiales son una guía de referencia. Debido a variaciones naturales en la madera y procesos de fabricación, los tonos pueden cambiar ligeramente con el tiempo o entre diferentes lotes. Recomendamos ver muestras físicas para la selección final.</p>
                     </div>
-
                 </div>
             </section>
         </main>
@@ -205,6 +207,7 @@
     <!-- Main Application Engine -->
     <script src="../js/main.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
     <script>
         // Custom script for tab functionality on this page
         document.addEventListener('DOMContentLoaded', () => {
@@ -219,6 +222,22 @@
                     button.classList.add('active');
                     document.getElementById(tabId).classList.add('active');
                 });
+            });
+
+            const swiper = new Swiper('.mySwiper', {
+              loop: true,
+              autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+              },
+              pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+              },
+              navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+              },
             });
         });
     </script>
