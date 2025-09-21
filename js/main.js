@@ -324,6 +324,83 @@ document.addEventListener('DOMContentLoaded', () => {
              turboModal.innerHTML = `<div class="w-full max-w-lg bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 flex flex-col text-center modal-enter"><video autoplay loop muted playsinline class="w-32 h-32 mx-auto mb-4 rounded-full border-4 border-[var(--yanz-yellow)] shadow-lg object-cover"><source src="/assets/videos/perrito_en_moto.mp4" type="video/mp4"></video><h2 class="text-2xl font-bold text-white">¡Hola! Soy Turbo y llevo tu proyecto a la velocidad de la luz 🚀</h2><p class="text-gray-400 mt-2 mb-6">Nuestras entregas, claras y sin sorpresas:</p><div class="space-y-4 text-left"><div class="bg-blue-900/30 border border-blue-700 p-3 rounded-lg"><h4 class="font-bold text-white">Nota de Transparencia: ¡Te lo conseguimos!</h4><p class="text-sm text-gray-300">Para darte el catálogo más completo, trabajamos con los mejores proveedores. Si un artículo no está en nuestra bodega, ¡no te preocupes! Lo conseguimos para ti y te contactaremos por WhatsApp para confirmar la disponibilidad y el tiempo de entrega exacto.</p></div><div class="bg-gray-700/50 p-4 rounded-lg"><h3 class="font-bold text-white text-lg">Envío Express (en Moto 🛵)</h3><p class="text-sm text-gray-400 mb-2">Ideal para pedidos pequeños y urgentes (menores a $300).</p><ul class="text-sm space-y-1"><li><span class="font-semibold text-white">Quito Urbano:</span> $4.00 (<span class="text-green-400 font-bold">GRATIS</span> en compras +$60)</li><li><span class="font-semibold text-white">Valles:</span> $7.00 (<span class="text-green-400 font-bold">GRATIS</span> en compras +$60)</li></ul><p class="text-xs text-gray-400 mt-2">Tiempo de entrega: Menos de 8 horas laborables.</p></div><div class="bg-gray-700/50 p-4 rounded-lg"><h3 class="font-bold text-white text-lg">Carga Pesada (en Camioneta/Camión 🚚)</h3><p class="text-sm text-gray-400 mb-2">Para esos grandes proyectos (pedidos de ferretería de $300 o más).</p><p class="text-lg font-bold text-green-400">¡EL ENVÍO VA POR NUESTRA CUENTA!</p><p class="text-xs text-gray-400 mt-1">Nos contactaremos por WhatsApp para coordinar la logística perfecta para ti.</p></div></div><div class="mt-6"><button class="w-full bg-[var(--yanz-yellow)] text-gray-900 font-bold py-3 px-5 rounded-lg shadow-sm hover:opacity-90" onclick="closeTurboModal()">¡Entendido!</button></div></div>`;
              if(turboModal) turboModal.classList.remove("hidden");
         });
+
+        const openPreciosButton = document.getElementById("precios-button");
+        const preciosModal = document.getElementById("precios-modal");
+        window.closePreciosModal = () => { if(preciosModal) preciosModal.classList.add("hidden"); };
+        if (openPreciosButton) {
+            openPreciosButton.addEventListener("click", () => {
+                if (!preciosModal) return;
+                preciosModal.innerHTML = `
+                    <div class="w-full max-w-3xl bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 md:p-8 flex flex-col modal-enter relative text-white">
+                        <button onclick="closePreciosModal()" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                        <div class="overflow-y-auto pr-4" style="max-height: 80vh;">
+                            <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-yellow-400">Tu Cocina a tu Medida y Presupuesto</h2>
+                            <p class="text-center text-gray-300 mb-6">En YAN'Z SMART WOOD, la transparencia es la base de cada proyecto. Entendemos que el precio es un factor clave, y queremos darte puntos de partida claros y honestos para que planifiques la cocina de tus sueños sin sorpresas.</p>
+
+                            <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">Nuestros Puntos de Partida: Calidad y Funcionalidad</h3>
+                            <div class="space-y-4 text-left">
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">Opción 1: Muebles Bajos con Bastidor - Desde $90/ML</h4>
+                                    <p class="text-sm text-gray-300">La solución más económica. Optimizamos al máximo tu presupuesto con una estructura de bastidor para tus muebles bajos. Esta técnica inteligente utiliza un marco resistente con puertas, reduciendo costos de material sin sacrificar la apariencia frontal.</p>
+                                </div>
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">Opción 2: Muebles en Melamina Blanca - Desde $110/ML</h4>
+                                    <p class="text-sm text-gray-300">Versatilidad y luminosidad. La opción más popular para lograr espacios modernos y atemporales con un mueble 100% funcional y de cajón completo.</p>
+                                </div>
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">Opción 3: Muebles con Frentes Maderados - Desde $140/ML</h4>
+                                    <p class="text-sm text-gray-300">Un toque de calidez y diseño. Mantenemos la estructura en melamina blanca para optimizar el costo y revestimos los frentes (puertas y cajones) en tu tono maderado preferido.</p>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">Da el Salto a Acabados Premium</h3>
+                             <div class="space-y-4 text-left">
+                                <div class="bg-blue-900/30 border border-blue-700 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">Opción 4: Muebles en High Gloss (Alto Brillo) - Desde $220/ML</h4>
+                                    <p class="text-sm text-gray-300">El look más moderno y reflectante. El High Gloss ofrece una superficie perfectamente lisa y brillante que amplifica la luz y crea una sensación de lujo y amplitud.</p>
+                                    <p class="text-xs text-gray-400 mt-2"><strong>Nota:</strong> Este es un precio base. El valor final puede variar según el color y la marca. Te asesoraremos en detalle.</p>
+                                </div>
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">Otras Opciones de Alta Gama</h4>
+                                    <p class="text-sm text-gray-300">Si buscas aún más personalización, podemos cotizar tu proyecto en otros materiales premium como Melaminas de Colección (con texturas y colores especiales), MDF Lacado o Termoformado. ¡Las posibilidades son infinitas!</p>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">¿Qué Incluye Siempre Nuestro Precio Base?</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                                <li>Estructura Completa y Sólida (excepto en la opción de bastidor).</li>
+                                <li>Herrajes Funcionales de Calidad: Bisagras rectas y rieles de extensión.</li>
+                                <li>Haladeras Estándar: Una selección de modelos modernos incluidos.</li>
+                                <li>Instalación Profesional.</li>
+                            </ul>
+                            <p class="text-xs text-gray-400 mt-2"><strong>Nota Importante:</strong> Mejoras como bisagras de cierre suave, herrajes de alta gama (Blum), iluminación LED, accesorios internos y el mesón se cotizan por separado.</p>
+
+                             <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">El Diseño 3D: Visualiza tu Proyecto</h3>
+                            <div class="bg-green-900/30 border border-green-700 p-4 rounded-lg text-center">
+                                <p class="text-gray-300">El costo para iniciar tu diseño 3D fotorrealista es de <span class="font-bold text-white">$60</span>.</p>
+                                <p class="font-bold text-green-400 text-lg">¡Este valor es 100% REEMBOLSABLE!</p>
+                                <p class="text-sm text-gray-300">Se descuenta del abono inicial si decides realizar el proyecto con nosotros.</p>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <button class="w-full bg-yellow-500 text-white font-bold py-3 px-5 rounded-lg shadow-sm hover:bg-yellow-600" onclick="closePreciosModal()">¡Entendido!</button>
+                        </div>
+                    </div>
+                `;
+                if(preciosModal) preciosModal.classList.remove("hidden");
+            });
+        }
         const menuButton = document.getElementById("menu-button");
         const mobileMenu = document.getElementById("mobile-menu");
         if(menuButton) menuButton.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
