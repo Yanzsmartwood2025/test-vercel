@@ -501,13 +501,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
                             <h3 class="text-xl font-bold mb-4">Nuestra Estructura de Precios: Transparencia y Ahorro</h3>
                             <div class="space-y-4 text-left">
-                                <div class="bg-blue-900/30 border border-blue-700 p-4 rounded-lg">
-                                    <h4 class="font-bold text-white">1. Para Proyectos de Renovación (3 o más puertas) - Desde $200 c/u</h4>
-                                    <p class="text-sm text-gray-300">Este es nuestro precio preferencial, pensado para proyectos de renovación de varios ambientes o construcciones nuevas. Al optimizar la producción y la logística para un conjunto de puertas, podemos transferirte esos ahorros directamente a ti.</p>
-                                </div>
                                 <div class="bg-gray-700/50 p-4 rounded-lg">
-                                    <h4 class="font-bold text-white">2. Para una Sola Puerta - $320 c/u</h4>
-                                    <p class="text-sm text-gray-300">Este precio aplica cuando necesitas una única puerta a medida. Cubre los costos de diseño, producción y logística individualizados para una sola unidad.</p>
+                                    <h4 class="font-bold text-white">Puertas en Melamina o MDF Lacado</h4>
+                                    <p class="text-sm text-gray-300 mb-2">Ideal para interiores modernos con acabados lisos y personalizables.</p>
+                                    <p class="text-base font-semibold">1. Para Proyectos de Renovación (3+ puertas): <span class="text-yellow-400">Desde $200 c/u</span></p>
+                                    <p class="text-base font-semibold">2. Para una Sola Puerta: <span class="text-yellow-400">$320 c/u</span></p>
+                                </div>
+                                <div class="bg-blue-900/30 border border-blue-700 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">Opción Premium: Puertas de Madera Maciza</h4>
+                                    <p class="text-sm text-gray-300 mb-2">Para un acabado clásico y de máxima durabilidad. Su precio puede variar según el tipo de madera, secado y laca.</p>
+                                    <p class="text-base font-semibold">Precio a consultar (<span class="text-yellow-400">Referencial desde $250 por puerta</span>)</p>
+                                    <p class="text-xs text-gray-400 mt-1">Contáctanos para una cotización precisa y personalizada.</p>
                                 </div>
                             </div>
 
