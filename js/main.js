@@ -505,7 +505,7 @@ if (document.getElementById('hero-slideshow')) {
                 type: 'product'
             },
             { title: 'Diseño con IA "Aria"', video: 'assets/videos/Asistente.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria/', type: 'product' },
-            { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/videologo4segundos.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: '#contacto', type: 'service' },
+            { title: 'Renovación y Cuidado del Hogar', video: 'assets/videos/videologo4segundos.mp4', description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.', link: 'renovacion/', type: 'service' },
             { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/videologo4segundos.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria/', type: 'service' },
             { title: 'Consultoría e Integración de IA', video: 'assets/videos/videologo4segundos.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: '#contacto', type: 'service' }
         ];
