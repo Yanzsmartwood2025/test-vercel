@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 </head>
 <body class="antialiased">
     <div id="page-content">
@@ -49,11 +50,13 @@
         </header>
 
         <main>
-            <!-- Hero Section para Puertas -->
-            <section class="relative h-[50vh] flex items-center justify-center text-white">
+            <section class="relative w-full h-screen">
+                <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover">
+                    <source src="../assets/videos/puertas.mp4" type="video/mp4">
+                    Tu navegador no soporta el video.
+                </video>
                 <div class="absolute inset-0 bg-black/60 z-10"></div>
-                <img src="https://placehold.co/1200x600/1A202C/FFFFFF?text=Puerta+Imponente" alt="[Banner de una puerta principal moderna y segura]" class="absolute inset-0 w-full h-full object-cover">
-                <div class="relative z-20 text-center px-4">
+                <div class="relative z-20 flex flex-col items-center justify-center h-full text-white text-center px-4">
                     <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Puertas que Inspiran</h1>
                     <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90 mt-4">La primera impresión de tu hogar. Combinamos diseño, elegancia y la máxima seguridad.</p>
                 </div>
@@ -63,35 +66,33 @@
             <section id="galeria" class="py-20">
                 <div class="container mx-auto px-6">
                     <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Nuestros Trabajos</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <img src="assets/imagenes/puerta-1.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-2.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-3.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-4.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-5.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-6.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-7.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-8.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-9.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-10.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-11.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-12.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-13.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-14.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-15.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-16.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-17.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-18.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-19.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-20.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                        <img src="assets/imagenes/puerta-21.jpg" alt="Puerta de madera moderna" class="rounded-lg shadow-lg w-full h-auto object-cover hover:scale-105 transition-transform duration-300">
-                    </div>
-                    <div class="mt-16 text-center">
-                        <h3 class="text-2xl font-bold mb-6">Detalles en Movimiento</h3>
-                        <video autoplay loop muted playsinline class="rounded-lg shadow-xl w-full max-w-4xl mx-auto">
-                            <source src="../assets/videos/Puertas.mp4" type="video/mp4">
-                            Tu navegador no soporta el video.
-                        </video>
+                    <div class="swiper mySwiper" style="height: 500px;">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-1.jpg" alt="Puerta 1" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-2.jpg" alt="Puerta 2" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-3.jpg" alt="Puerta 3" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-4.jpg" alt="Puerta 4" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-5.jpg" alt="Puerta 5" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-6.jpg" alt="Puerta 6" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-7.jpg" alt="Puerta 7" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-8.jpg" alt="Puerta 8" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-9.jpg" alt="Puerta 9" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-10.jpg" alt="Puerta 10" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-11.jpg" alt="Puerta 11" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-12.jpg" alt="Puerta 12" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-13.jpg" alt="Puerta 13" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-14.jpg" alt="Puerta 14" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-15.jpg" alt="Puerta 15" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-16.jpg" alt="Puerta 16" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-17.jpg" alt="Puerta 17" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-18.jpg" alt="Puerta 18" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-19.jpg" alt="Puerta 19" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-20.jpg" alt="Puerta 20" class="w-full h-full object-cover"></div>
+                            <div class="swiper-slide"><img src="assets/imagenes/puerta-21.jpg" alt="Puerta 21" class="w-full h-full object-cover"></div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
                     </div>
                 </div>
             </section>
@@ -99,11 +100,13 @@
             <!-- Sección de Materiales y Tipos -->
             <section id="materiales" class="py-20 section-bg">
                 <div class="container mx-auto px-6">
-                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Tipos de Puertas y Seguridad</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Materiales, Tipos y Seguridad</h2>
 
                     <div id="tabs-container" class="flex flex-wrap justify-center gap-2 mb-8">
                         <button class="tab-button active py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="maciza">Madera Maciza</button>
                         <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="tamboradas">Tamboradas</button>
+                        <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="mdf">MDF</button>
+                        <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="aglomerado">Aglomerado</button>
                         <button class="tab-button py-2 px-5 rounded-full bg-[var(--yanz-bg)] hover:bg-[var(--yanz-primary)] hover:text-white transition-colors" data-tab="seguridad">Tecnología y Seguridad</button>
                     </div>
 
@@ -131,6 +134,32 @@
                                     <li>Más ligeras y estables dimensionalmente que la madera maciza.</li>
                                     <li>Ofrecen una excelente relación entre calidad, estética y precio.</li>
                                     <li>Permiten una gran variedad de acabados modernos y minimalistas.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- MDF -->
+                        <div id="mdf" class="tab-content">
+                            <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
+                                <h3 class="text-2xl font-bold mb-4">MDF (Tablero de Fibra de Densidad Media)</h3>
+                                <p class="text-[var(--yanz-text-alt)] mb-4">El MDF es un tablero de ingeniería fabricado a partir de fibras de madera y resinas sintéticas. Su superficie lisa y uniforme lo hace ideal para puertas con acabados pintados o lacados, permitiendo diseños modernos y precisos. Es una base excelente para enchapes de madera natural, ofreciendo la belleza de la madera con mayor estabilidad.</p>
+                                <h4 class="font-bold mt-6 mb-2">Ventajas y Usos:</h4>
+                                <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
+                                    <li>Acabados perfectos: Ideal para lacados de cualquier color, logrando superficies sedosas.</li>
+                                    <li>Estabilidad: Menos propenso a deformarse o agrietarse que la madera maciza.</li>
+                                    <li>Versatilidad: Permite routeados y diseños personalizados en la superficie de la puerta.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Aglomerado -->
+                        <div id="aglomerado" class="tab-content">
+                            <div class="bg-[var(--yanz-bg)] p-8 rounded-lg shadow-lg">
+                                <h3 class="text-2xl font-bold mb-4">Aglomerado y Melamina</h3>
+                                <p class="text-[var(--yanz-text-alt)] mb-4">El aglomerado es un tablero de partículas de madera. Para puertas, se utiliza principalmente recubierto con melamina, una lámina decorativa muy resistente que ofrece una inmensa variedad de colores, texturas y diseños (maderas, sólidos, etc.). Es una opción muy popular para puertas de interior por su durabilidad y excelente relación costo-beneficio.</p>
+                                <h4 class="font-bold mt-6 mb-2">Ventajas y Usos:</h4>
+                                <ul class="list-disc list-inside text-[var(--yanz-text-alt)] space-y-1">
+                                    <li>Costo-Beneficio: La opción más económica para puertas de interior modernas.</li>
+                                    <li>Durabilidad: La melamina ofrece una gran protección contra rayones y manchas.</li>
+                                    <li>Variedad de Diseños: Cientos de acabados disponibles para combinar con cualquier estilo.</li>
                                 </ul>
                             </div>
                         </div>
@@ -188,6 +217,7 @@
     <!-- Main Application Engine -->
     <script src="../js/main.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
     <script>
         // Custom script for tab functionality on this page
         document.addEventListener('DOMContentLoaded', () => {
@@ -202,6 +232,22 @@
                     button.classList.add('active');
                     document.getElementById(tabId).classList.add('active');
                 });
+            });
+
+            const swiper = new Swiper('.mySwiper', {
+              loop: true,
+              autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+              },
+              pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+              },
+              navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+              },
             });
         });
     </script>
