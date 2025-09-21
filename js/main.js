@@ -401,6 +401,86 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(preciosModal) preciosModal.classList.remove("hidden");
             });
         }
+
+        const openClosetsPreciosButton = document.getElementById("closets-precios-button");
+        const closetsPreciosModal = document.getElementById("closets-precios-modal");
+        window.closeClosetsPreciosModal = () => { if(closetsPreciosModal) closetsPreciosModal.classList.add("hidden"); };
+        if (openClosetsPreciosButton) {
+            openClosetsPreciosButton.addEventListener("click", () => {
+                if (!closetsPreciosModal) return;
+                closetsPreciosModal.innerHTML = `
+                    <div class="w-full max-w-3xl bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 md:p-8 flex flex-col modal-enter relative text-white">
+                        <button onclick="closeClosetsPreciosModal()" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                        <div class="overflow-y-auto pr-4" style="max-height: 80vh;">
+                            <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-yellow-400">Optimiza tu Espacio con Estilo: Nuestra Guía de Precios para Clósets</h2>
+                            <p class="text-center text-gray-300 mb-6">Un clóset bien diseñado es una inversión en tu comodidad diaria. En YAN'Z SMART WOOD, creamos soluciones a medida que se adaptan a tu espacio y presupuesto. Para darte la máxima transparencia, nuestra guía de precios se basa en el metro cuadrado (m²), calculado multiplicando el alto por el ancho de tu clóset.</p>
+
+                            <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">Línea Esencial y Diseño (Acabados en Melamina)</h3>
+                            <div class="space-y-4 text-left">
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">1. Solo Interior (Estructura Blanca) - Desde $95 por m²</h4>
+                                    <p class="text-sm text-gray-300">Perfecto si ya tienes puertas o buscas una solución abierta tipo walk-in closet. Incluye la estructura interna completa (maletero, divisiones, base) en melamina blanca de alta calidad, con su distribución básica. No incluye puertas.</p>
+                                </div>
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">2. Clóset Completo Blanco - Desde $110 por m²</h4>
+                                    <p class="text-sm text-gray-300">La opción más luminosa y versátil. Incluye la estructura modular completa en melamina blanca y puertas abatibles o corredizas en el mismo material.</p>
+                                </div>
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">3. Clóset Completo Color (Maderado) - Desde $140 por m²</h4>
+                                    <p class="text-sm text-gray-300">Calidez y diseño para tu habitación. Incluye la estructura modular completa y puertas en una amplia gama de colores y texturas maderadas.</p>
+                                </div>
+                                 <div class="bg-blue-900/30 border border-blue-700 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">Opción Económica en Color: Bastidor Maderado - Desde $120 por m²</h4>
+                                    <p class="text-sm text-gray-300">¡Diseño a un precio optimizado! Utilizamos una estructura de bastidor (marco frontal) con puertas en el color maderado que elijas. Una solución inteligente para lograr un gran look con un menor costo.</p>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">Línea Premium (Acabados en High Gloss)</h3>
+                             <div class="space-y-4 text-left">
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">1. High Gloss con Bastidor - Desde $200 por m²</h4>
+                                    <p class="text-sm text-gray-300">El look de alta gama, optimizado. Combinamos la elegancia de las puertas en High Gloss (alto brillo) con una estructura de bastidor para ofrecerte un acabado de lujo a un precio más accesible.</p>
+                                </div>
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">2. High Gloss con Cuerpo Completo - Desde $240 por m²</h4>
+                                    <p class="text-sm text-gray-300">La experiencia premium total. Tanto la estructura interna como las puertas se fabrican para un acabado cohesivo y de máximo impacto visual con el brillo y la perfección del High Gloss.</p>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-2"><strong>Nota Importante sobre High Gloss:</strong> Estos precios son un punto de partida. El valor final puede variar según el color, la marca y los detalles del diseño. Te recomendamos una consulta para darte una cotización exacta.</p>
+                            </div>
+
+                            <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">¿Qué Incluye Siempre Nuestro Precio Base?</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                                <li>Distribución Básica Funcional: Un tubo para colgar ropa y de 3 a 4 repisas por cada cuerpo del clóset.</li>
+                                <li>Herrajes Estándar: Bisagras rectas y haladeras funcionales.</li>
+                                <li>Instalación Profesional: Dejamos tu clóset listo para usar.</li>
+                            </ul>
+                            <p class="text-xs text-gray-400 mt-2">Accesorios como cajoneras, zapateras, iluminación LED o herrajes de cierre suave se cotizan por separado para que personalices tu clóset a tu gusto.</p>
+
+                             <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">El Diseño 3D: Visualiza tu Clóset Ideal</h3>
+                            <div class="bg-green-900/30 border border-green-700 p-4 rounded-lg text-center">
+                                <p class="text-gray-300">El costo para iniciar tu diseño 3D fotorrealista es de <span class="font-bold text-white">$60</span>.</p>
+                                <p class="font-bold text-green-400 text-lg">¡Este valor es 100% REEMBOLSABLE!</p>
+                                <p class="text-sm text-gray-300">Se descuenta del abono inicial si decides realizar el proyecto con nosotros.</p>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <button class="w-full bg-yellow-500 text-white font-bold py-3 px-5 rounded-lg shadow-sm hover:bg-yellow-600" onclick="closeClosetsPreciosModal()">¡Entendido!</button>
+                        </div>
+                    </div>
+                `;
+                if(closetsPreciosModal) closetsPreciosModal.classList.remove("hidden");
+            });
+        }
         const menuButton = document.getElementById("menu-button");
         const mobileMenu = document.getElementById("mobile-menu");
         if(menuButton) menuButton.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
