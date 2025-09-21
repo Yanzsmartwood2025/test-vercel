@@ -481,6 +481,64 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(closetsPreciosModal) closetsPreciosModal.classList.remove("hidden");
             });
         }
+
+        const openPuertasPreciosButton = document.getElementById("puertas-precios-button");
+        const puertasPreciosModal = document.getElementById("puertas-precios-modal");
+        window.closePuertasPreciosModal = () => { if(puertasPreciosModal) puertasPreciosModal.classList.add("hidden"); };
+        if (openPuertasPreciosButton) {
+            openPuertasPreciosButton.addEventListener("click", () => {
+                if (!puertasPreciosModal) return;
+                puertasPreciosModal.innerHTML = `
+                    <div class="w-full max-w-3xl bg-[var(--yanz-header-bg)] rounded-2xl shadow-2xl p-6 md:p-8 flex flex-col modal-enter relative text-white">
+                        <button onclick="closePuertasPreciosModal()" class="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                        <div class="overflow-y-auto pr-4" style="max-height: 80vh;">
+                            <h2 class="text-2xl md:text-3xl font-bold text-center mb-4 text-yellow-400">Puertas que Definen tu Estilo: Nuestra Guía de Precios</h2>
+                            <p class="text-center text-gray-300 mb-6">La puerta es la primera impresión de cualquier espacio. En YAN'Z SMART WOOD, diseñamos y fabricamos puertas modernas a medida en materiales de alta durabilidad como Melamina y MDF, que se integran perfectamente con tu decoración y garantizan un acabado impecable.</p>
+
+                            <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">Nuestra Estructura de Precios: Transparencia y Ahorro</h3>
+                            <div class="space-y-4 text-left">
+                                <div class="bg-blue-900/30 border border-blue-700 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">1. Para Proyectos de Renovación (3 o más puertas) - Desde $200 c/u</h4>
+                                    <p class="text-sm text-gray-300">Este es nuestro precio preferencial, pensado para proyectos de renovación de varios ambientes o construcciones nuevas. Al optimizar la producción y la logística para un conjunto de puertas, podemos transferirte esos ahorros directamente a ti.</p>
+                                </div>
+                                <div class="bg-gray-700/50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-white">2. Para una Sola Puerta - $320 c/u</h4>
+                                    <p class="text-sm text-gray-300">Este precio aplica cuando necesitas una única puerta a medida. Cubre los costos de diseño, producción y logística individualizados para una sola unidad.</p>
+                                </div>
+                            </div>
+
+                            <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">¿Qué Incluye Siempre Nuestro Precio Estándar?</h3>
+                            <ul class="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                                <li>Hoja de Puerta y Marco: Fabricados a medida en el material y color que elijas.</li>
+                                <li>Herrajes Estándar: Bisagras de alta calidad y cerradura funcional.</li>
+                                <li>Instalación Profesional.</li>
+                            </ul>
+
+                            <div class="border-t border-gray-700 my-4"></div>
+
+                            <h3 class="text-xl font-bold mb-4">Personaliza tu Puerta a tu Gusto (Se Cotiza por Separado)</h3>
+                            <p class="text-sm text-gray-300 mb-4">El precio base cubre una puerta funcional y elegante, pero puedes llevarla al siguiente nivel con personalizaciones:</p>
+                             <ul class="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                                <li>Herrajes de Diseño: Chapas, cerraduras y manijas de alta gama o más económicas.</li>
+                                <li>Incrustaciones de Vidrio: Paneles de vidrio esmerilado, transparente, etc.</li>
+                                <li>Diseños Especiales: Ranuras, detalles decorativos y más.</li>
+                            </ul>
+
+                        </div>
+                        <div class="mt-6">
+                            <button class="w-full bg-yellow-500 text-white font-bold py-3 px-5 rounded-lg shadow-sm hover:bg-yellow-600" onclick="closePuertasPreciosModal()">¡Entendido!</button>
+                        </div>
+                    </div>
+                `;
+                if(puertasPreciosModal) puertasPreciosModal.classList.remove("hidden");
+            });
+        }
         const menuButton = document.getElementById("menu-button");
         const mobileMenu = document.getElementById("mobile-menu");
         if(menuButton) menuButton.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
