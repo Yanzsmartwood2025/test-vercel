@@ -338,6 +338,36 @@ document.addEventListener('DOMContentLoaded', () => {
         if(yearSpan) yearSpan.textContent = new Date().getFullYear();
     }
 
+    function setupTabbedInterfaces() {
+        const tabContainers = document.querySelectorAll('#tabs-container');
+        if (!tabContainers.length) return;
+
+        tabContainers.forEach(container => {
+            const tabButtons = container.querySelectorAll('.tab-button');
+            const contentContainer = container.nextElementSibling; // Assumes content follows tabs
+            if (!contentContainer) return;
+            const tabContents = contentContainer.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent any default button action
+                    const tabId = button.dataset.tab;
+
+                    // Remove active class from all buttons and content panes within this specific tab system
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to the clicked button and corresponding content
+                    button.classList.add('active');
+                    const activeContent = document.getElementById(tabId);
+                    if (activeContent) {
+                        activeContent.classList.add('active');
+                    }
+                });
+            });
+        });
+    }
+
     function speakText(text, lang = 'es-LA') {
         if ('speechSynthesis' in window) {
             const cleanText = text.replace(/[,.]/g, ' ');
@@ -357,6 +387,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- PUNTO DE ENTRADA Y EJECUCIÓN ---
     setupGlobalUIListeners();
     initializeFerreteriaPage();
+    setupTabbedInterfaces();
+
+    function initializeSwiperCarousels() {
+        const swiperContainer = document.querySelector('.mySwiper');
+        if (swiperContainer && typeof Swiper !== 'undefined') {
+            const swiper = new Swiper('.mySwiper', {
+                loop: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        }
+    }
+    initializeSwiperCarousels();
 
 // --- Lógica para el Slideshow del Hero Banner (VERSIÓN DEFINITIVA) ---
 if (document.getElementById('hero-slideshow')) {
