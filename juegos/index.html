@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegos - YAN'Z SMART WOOD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="antialiased">
+    <header id="main-header" class="sticky top-0 left-0 right-0 z-40">
+         <nav class="container mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
+             <a href="../index.html"><video autoplay loop muted playsinline class="h-12 w-auto"><source src="../assets/videos/videologo-header.mp4" type="video/mp4"></video></a>
+             <div class="hidden md:flex items-center space-x-6 text-sm font-semibold">
+                 <a href="../index.html#productos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Productos</a>
+                 <a href="../index.html#servicios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Servicios</a>
+                 <a href="../index.html#testimonios" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Testimonios</a>
+                 <a href="../index.html#juegos" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Juegos</a>
+                 <a href="../index.html#caja" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Caja</a>
+                 <a href="../index.html#contacto" class="text-gray-300 hover:text-[var(--yanz-primary)] transition-colors">Contacto</a>
+             </div>
+             <div class="flex items-center space-x-2 sm:space-x-4">
+                 <button id="theme-toggle" class="p-2 rounded-full text-gray-300 hover:bg-gray-700">
+                     <svg id="theme-icon-sun" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414 8.486l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"/></svg>
+                     <svg id="theme-icon-moon" class="h-6 w-6 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                 </button>
+             </div>
+         </nav>
+    </header>
+    <main>
+        <section class="py-20 section-bg">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-12">Elige tu Aventura</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                    <!-- Juego 1: Construye tu Casa (Habilitado) -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-xl hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Construye tu Casa</h3>
+                            <p class="text-sm text-[var(--yanz-text-alt)] mb-4">Diseña y construye la casa de tus sueños desde cero.</p>
+                            <a href="#" class="mt-4 inline-block bg-[var(--yanz-primary)] text-white font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-[var(--yanz-secondary)] transition-all duration-300 transform hover:scale-105">Jugar Ahora</a>
+                        </div>
+                    </div>
+
+                    <!-- Juego 2: Game (Deshabilitado) -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-xl transition-all duration-300 opacity-50">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Game</h3>
+                            <p class="text-sm text-[var(--yanz-text-alt)] mb-4">Un desafío de habilidad y rapidez. ¿Estás listo?</p>
+                            <a href="#" class="mt-4 inline-block bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-semibold py-2 px-6 rounded-full cursor-not-allowed">Próximamente</a>
+                        </div>
+                    </div>
+
+                    <!-- Juego 3: Remodela tu Espacio (Deshabilitado) -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden border border-[var(--yanz-border)] shadow-xl transition-all duration-300 opacity-50">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Remodela tu Espacio</h3>
+                            <p class="text-sm text-[var(--yanz-text-alt)] mb-4">Toma un espacio existente y dale una nueva vida con tu estilo.</p>
+                            <a href="#" class="mt-4 inline-block bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-semibold py-2 px-6 rounded-full cursor-not-allowed">Próximamente</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-gray-800 dark:bg-black text-gray-300 pt-12 pb-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-xs text-gray-400">&copy; <span id="year"></span> YAN'Z SMART WOOD. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script>
+        // Simple script to set the current year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Theme toggling logic
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('theme-icon-sun');
+        const moonIcon = document.getElementById('theme-icon-moon');
+
+        // Check for saved theme in localStorage
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            moonIcon.classList.remove('hidden');
+        } else {
+            sunIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            sunIcon.classList.toggle('hidden');
+            moonIcon.classList.toggle('hidden');
+            // Save theme preference
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
+</body>
+</html>
