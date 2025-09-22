@@ -271,8 +271,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const authContainer = document.getElementById('auth-container');
         if (!authContainer) return;
         if (user) {
-            const userImage = user.photoURL ? `<img src="${user.photoURL}" alt="${user.displayName}" class="w-full h-full object-cover">` : `<span class="text-white font-bold text-xl">${user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}</span>`;
-            authContainer.innerHTML = `<div class="relative"><button id="user-menu-button" title="Mi Cuenta" class="w-9 h-9 rounded-full flex items-center justify-center transition-transform hover:scale-110 shadow-sm overflow-hidden border-2 border-gray-500 hover:border-gray-400 bg-gray-700">${userImage}</button><div id="user-menu-dropdown" class="hidden absolute top-full right-0 mt-2 w-56 bg-[var(--yanz-header-bg)] border border-gray-700 rounded-lg shadow-xl z-50"><div class="px-4 py-3 border-b border-gray-700"><p class="text-sm font-semibold text-white truncate">${user.displayName || 'Usuario'}</p><p class="text-xs text-gray-400 truncate">${user.email || 'Sin email'}</p></div><div class="py-1"><a href="#" id="logout-button-menu" class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"><svg class="w-4 h-4 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>Cerrar Sesión</a></div></div></div>`;
+            // --- Logic for Premium Avatar Ring ---
+            const providerId = user.providerData?.[0]?.providerId || '';
+            const ringClasses = {
+                'google.com': 'google-ring',
+                'facebook.com': 'facebook-ring',
+                'apple.com': 'apple-ring'
+            };
+            const ringClass = ringClasses[providerId] || ''; // Default to no ring
+
+            const userImage = user.photoURL
+                ? `<img src="${user.photoURL}" alt="${user.displayName}">`
+                : `<span>${user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}</span>`;
+
+            authContainer.innerHTML = `
+                <div class="relative">
+                    <button id="user-menu-button" title="Mi Cuenta" class="user-avatar-ring-container transition-transform hover:scale-110 ${ringClass}">
+                        ${userImage}
+                    </button>
+                    <div id="user-menu-dropdown" class="hidden absolute top-full right-0 mt-2 w-56 bg-[var(--yanz-header-bg)] border border-gray-700 rounded-lg shadow-xl z-50">
+                        <div class="px-4 py-3 border-b border-gray-700">
+                            <p class="text-sm font-semibold text-white truncate">${user.displayName || 'Usuario'}</p>
+                            <p class="text-xs text-gray-400 truncate">${user.email || 'Sin email'}</p>
+                        </div>
+                        <div class="py-1">
+                            <a href="#" id="logout-button-menu" class="flex items-center w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">
+                                <svg class="w-4 h-4 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                                Cerrar Sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>`;
+
             const userMenuButton = document.getElementById('user-menu-button');
             const userMenuDropdown = document.getElementById('user-menu-dropdown');
             const logoutButtonMenu = document.getElementById('logout-button-menu');
