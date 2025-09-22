@@ -888,7 +888,7 @@ if (document.getElementById('hero-slideshow')) {
                 link: 'ferreteria/',
                 type: 'service'
             },
-            { title: 'Consultoría e Integración de IA', video: 'assets/videos/videologo4segundos.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: 'ia-consulting/', type: 'service' }
+            { title: 'Consultoría e Integración de IA', video: 'assets/videos/Asistente-IA.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: 'ia-consulting/', type: 'service' }
         ];
 
         categories.forEach(cat => {
