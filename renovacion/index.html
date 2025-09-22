@@ -12,6 +12,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body class="antialiased">
     <div id="page-content">
@@ -49,113 +64,15 @@
         </header>
 
         <main>
-            <!-- HERO SECTION PARA RENOVACIÓN -->
-            <section id="hero-renovacion" class="relative h-[50vh] flex items-center justify-center text-white">
-                <div class="absolute inset-0 bg-black/60 z-10"></div>
-                <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-                    <source src="../assets/videos/videologo4segundos.mp4" type="video/mp4">
-                    Tu navegador no soporta videos.
-                </video>
-                <div class="relative z-20 text-center px-4">
-                    <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">Servicio de Renovación y Cuidado del Hogar</h1>
-                    <p class="max-w-2xl mx-auto text-lg md:text-xl opacity-90">Devolvemos el valor, la funcionalidad y la belleza a cada rincón de tu casa.</p>
-                </div>
-            </section>
-
-            <!-- CONTENIDO DE LA PÁGINA -->
-            <section id="contenido-renovacion" class="py-20 section-bg">
-                <div class="container mx-auto px-6">
-                    <div class="max-w-4xl mx-auto text-left">
-                        <p class="text-lg text-[var(--yanz-text-alt)] mb-6">Con el tiempo, es natural que los espacios que amamos muestren signos de uso y desgaste. Un mueble que necesita un ajuste, una pared que pide un nuevo color, o esa lámpara que siempre quisiste instalar. Para todas esas tareas, grandes y pequeñas, YAN'Z SMART WOOD te ofrece un servicio integral de mantenimiento y renovación.</p>
-                        <p class="text-lg text-[var(--yanz-text-alt)] font-semibold mb-12">Dejamos de lado las complicaciones de buscar a un especialista para cada cosa. Nosotros somos tu único punto de contacto para un hogar siempre impecable.</p>
-
-                        <h2 class="text-3xl md:text-4xl font-bold text-left mb-8">Nuestros Servicios de Mantenimiento Incluyen:</h2>
-
-                        <div class="space-y-10">
-                            <div>
-                                <h3 class="text-2xl font-bold text-[var(--yanz-primary)] mb-4">Muebles y Carpintería:</h3>
-                                <ul class="list-disc list-inside space-y-2 text-[var(--yanz-text-alt)]">
-                                    <li>Ajuste y reparación de bisagras y rieles en clósets y cocinas.</li>
-                                    <li>Reparación de rayones, golpes o acabados desgastados.</li>
-                                    <li>Ensamblaje e instalación de muebles nuevos.</li>
-                                    <li>Reforzamiento de estructuras y mantenimiento general.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-[var(--yanz-primary)] mb-4">Electricidad e Iluminación:</h3>
-                                <ul class="list-disc list-inside space-y-2 text-[var(--yanz-text-alt)]">
-                                    <li>Instalación de todo tipo de lámparas: colgantes, de techo, spots, y tiras LED.</li>
-                                    <li>Cambio e instalación de interruptores y tomacorrientes.</li>
-                                    <li>Revisión y solución de problemas eléctricos menores.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-[var(--yanz-primary)] mb-4">Pisos y Revestimientos:</h3>
-                                <ul class="list-disc list-inside space-y-2 text-[var(--yanz-text-alt)]">
-                                    <li>Reparación y reemplazo de piezas sueltas o dañadas en piso flotante y SPC.</li>
-                                    <li>Mantenimiento y sellado de juntas.</li>
-                                    <li>Instalación de zócalos y barridos.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-[var(--yanz-primary)] mb-4">Pintura y Acabados:</h3>
-                                <ul class="list-disc list-inside space-y-2 text-[var(--yanz-text-alt)]">
-                                    <li>Retoque de paredes, tumbados y superficies.</li>
-                                    <li>Servicios de pintura para habitaciones y espacios completos.</li>
-                                    <li>Reparación de pequeñas fisuras y preparación de superficies.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h3 class="text-2xl font-bold text-[var(--yanz-primary)] mb-4">Instalaciones Varias (Handyman):</h3>
-                                <ul class="list-disc list-inside space-y-2 text-[var(--yanz-text-alt)]">
-                                    <li>Colocación de cuadros, espejos, repisas y estanterías.</li>
-                                    <li>Instalación de soportes para TV.</li>
-                                    <li>Montaje de cortinas y persianas.</li>
-                                    <li>Pequeñas reparaciones de plomería (cambio de grifos, solución de fugas menores).</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="mt-16 p-8 bg-gray-800 rounded-lg border border-[var(--yanz-border)]">
-                             <h2 class="text-3xl font-bold text-center mb-6">Nuestro Proceso: Simple y Transparente</h2>
-                             <ol class="relative border-l border-gray-700">
-                                <li class="mb-10 ml-6">
-                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-900 rounded-full -left-3 ring-8 ring-gray-900">
-                                        <svg class="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    </span>
-                                    <h3 class="flex items-center mb-1 text-lg font-semibold text-white">Contacto y Evaluación</h3>
-                                    <p class="text-base font-normal text-gray-400">Cuéntanos qué necesitas. Agendamos una visita a tu domicilio en Quito para evaluar el trabajo y entender tus requerimientos.</p>
-                                </li>
-                                <li class="mb-10 ml-6">
-                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-900 rounded-full -left-3 ring-8 ring-gray-900">
-                                        <svg class="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    </span>
-                                    <h3 class="mb-1 text-lg font-semibold text-white">Cotización Clara</h3>
-                                    <p class="text-base font-normal text-gray-400">Recibirás una cotización detallada con el costo de los materiales y la mano de obra. Sin sorpresas.</p>
-                                </li>
-                                <li class="mb-10 ml-6">
-                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-900 rounded-full -left-3 ring-8 ring-gray-900">
-                                        <svg class="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    </span>
-                                    <h3 class="mb-1 text-lg font-semibold text-white">Ejecución Profesional</h3>
-                                    <p class="text-base font-normal text-gray-400">Nuestro equipo de técnicos calificados realiza el trabajo en la fecha acordada, con eficiencia, limpieza y el máximo respeto por tu hogar.</p>
-                                </li>
-                                <li class="ml-6">
-                                    <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-900 rounded-full -left-3 ring-8 ring-gray-900">
-                                        <svg class="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                    </span>
-                                    <h3 class="mb-1 text-lg font-semibold text-white">Verificación y Satisfacción</h3>
-                                    <p class="text-base font-normal text-gray-400">Nos aseguramos de que quedes 100% satisfecho con el resultado final.</p>
-                                </li>
-                            </ol>
-                        </div>
-
-                        <div class="text-center mt-16">
-                            <h2 class="text-3xl font-bold mb-4">¿Listo para devolverle el brillo a tu hogar?</h2>
-                            <p class="text-[var(--yanz-text-alt)] max-w-2xl mx-auto mb-8">Dale a tus espacios el cuidado profesional que merecen. Contáctanos hoy mismo y solicita una visita de evaluación.</p>
-                            <a href="../#contacto" class="inline-block bg-[var(--yanz-primary)] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[var(--yanz-secondary)] transition-all duration-300 transform hover:scale-105">Solicitar una Visita</a>
-                        </div>
-                    </div>
+            <section id="hero" class="relative h-screen flex items-center justify-center text-white">
+                <div id="hero-slideshow" class="absolute inset-0 w-full h-full">
+                    <img src="../assets/images/renovacion/renovacion1.jpeg" alt="Renovacion 1" class="hero-slide">
+                    <img src="../assets/images/renovacion/renovacion2.jpeg" alt="Renovacion 2" class="hero-slide">
+                    <img src="../assets/images/renovacion/renovacion3.jpeg" alt="Renovacion 3" class="hero-slide">
+                    <img src="../assets/images/renovacion/renovacion4.jpeg" alt="Renovacion 4" class="hero-slide">
+                    <img src="../assets/images/renovacion/renovacion5.jpeg" alt="Renovacion 5" class="hero-slide">
+                    <img src="../assets/images/renovacion/renovacion6.jpeg" alt="Renovacion 6" class="hero-slide">
+                    <img src="../assets/images/renovacion/renovacion7.jpeg" alt="Renovacion 7" class="hero-slide">
                 </div>
             </section>
         </main>
@@ -194,5 +111,20 @@
 
     <!-- Main Application Engine -->
     <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slideshow = document.getElementById('hero-slideshow');
+            const slides = Array.from(slideshow.querySelectorAll('.hero-slide'));
+            if (slides.length > 0) {
+                let currentSlide = 0;
+                slides[0].classList.add('active');
+                setInterval(() => {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }, 4000);
+            }
+        });
+    </script>
 </body>
 </html>
