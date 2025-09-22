@@ -604,9 +604,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- PUNTO DE ENTRADA Y EJECUCIÓN ---
+    function renderPaymentLogos() {
+        const paymentLogoContainers = document.querySelectorAll('#payment-logos');
+        if (paymentLogoContainers.length === 0) return;
+
+        const paymentMethods = [
+            'pago-visa.png', 'pago-mastercard.png', 'pago-american-express.png', 'pago-diners-club.png',
+            'pago-discover.png', 'pago-jcb.png', 'pago-paypal.png', 'pago-binance-pay.png',
+            'pago-banco-pichincha.png', 'pago-banco-guayaquil.png', 'pago-deuna.png', 'pago-peigo.png'
+        ];
+
+        const logoPath = `${basePath}/assets/images/metodos-pago/`;
+
+        paymentLogoContainers.forEach(container => {
+            container.innerHTML = ''; // Clear any existing content
+            paymentMethods.forEach(logoFile => {
+                const img = document.createElement('img');
+                img.src = `${logoPath}${logoFile}`;
+                img.alt = `Logo de ${logoFile.replace('pago-', '').replace('.png', '')}`;
+                img.className = "h-6 w-auto object-contain transition-transform hover:scale-110";
+                img.loading = 'lazy';
+                container.appendChild(img);
+            });
+        });
+    }
+
     setupGlobalUIListeners();
     initializeFerreteriaPage();
     setupTabbedInterfaces();
+    renderPaymentLogos();
 
     function initializeSwiperCarousels() {
         const swiperContainer = document.querySelector('.mySwiper');
