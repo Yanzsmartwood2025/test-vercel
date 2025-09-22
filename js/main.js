@@ -818,7 +818,26 @@ if (document.getElementById('hero-slideshow')) {
                 link: 'renovacion/',
                 type: 'service'
             },
-            { title: 'Herrajes y Ferretería Profesional', video: 'assets/videos/videologo4segundos.mp4', description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.', link: 'ferreteria/', type: 'service' },
+            {
+                title: 'Herrajes y Ferretería Profesional',
+                images: [
+                    'assets/images/Ferreteria/ferreteria-1.jpg',
+                    'assets/images/Ferreteria/ferreteria-2.webp',
+                    'assets/images/Ferreteria/ferreteria-3.jpg',
+                    'assets/images/Ferreteria/ferreteria-4.jpeg',
+                    'assets/images/Ferreteria/ferreteria-5.jpg',
+                    'assets/images/Ferreteria/ferreteria-6.jpg',
+                    'assets/images/Ferreteria/ferreteria-7.jpg',
+                    'assets/images/Ferreteria/ferreteria-8.jpg',
+                    'assets/images/Ferreteria/ferreteria-9.jpg',
+                    'assets/images/Ferreteria/ferreteria-10.jpeg',
+                    'assets/images/Ferreteria/ferreteria-11.jpeg',
+                    'assets/images/Ferreteria/ferreteria-12.jpg'
+                ],
+                description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.',
+                link: 'ferreteria/',
+                type: 'service'
+            },
             { title: 'Consultoría e Integración de IA', video: 'assets/videos/videologo4segundos.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: 'ia-consulting/', type: 'service' }
         ];
 
