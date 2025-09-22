@@ -239,10 +239,56 @@
         // --- Global Variables & State ---
         let scene, camera, renderer, cssRenderer, clock;
         let character, cameraPivot;
-        let tvStandPosition = new THREE.Vector3();
-        let tvInteractionButton, xboxInteractionButton;
-        const roomSize = { width: 10, height: 3.5, depth: 12 };
+        // let tvStandPosition = new THREE.Vector3(); // DEPRECATED
+        // let tvInteractionButton, xboxInteractionButton; // DEPRECATED
         const characterRadius = 0.3;
+        const wallHeight = 3.5;
+        const wallThickness = 0.2;
+
+        const apartmentLayout = {
+            floorSize: { width: 16, depth: 16 },
+            walls: [
+                // Outer Walls (with gaps for entrance)
+                { x1: -8, z1: -8, x2: 8, z2: -8 },     // Back
+                { x1: -8, z1: 8, x2: 8, z2: 8 },       // Front
+                { x1: -8, z1: -8, x2: -8, z2: 8 },     // Left
+                { x1: 8, z1: -8, x2: 8, z2: 1 },       // Right (upper part)
+                { x1: 8, z1: 3, x2: 8, z2: 8 },       // Right (lower part)
+
+                // Bedrooms
+                { x1: -8, z1: -4, x2: -5, z2: -4 },    // Top-bed bottom wall 1
+                { x1: -4.5, z1: -4, x2: -4, z2: -4 },  // Top-bed bottom wall 2
+                { x1: -4, z1: -8, x2: -4, z2: -4 },    // Top-bed right wall
+                { x1: -8, z1: 0, x2: -5, z2: 0 },      // Mid-bed bottom wall 1
+                { x1: -4.5, z1: 0, x2: -4, z2: 0 },    // Mid-bed bottom wall 2
+                { x1: -4, z1: -4, x2: -4, z2: 0 },    // Mid-bed right wall
+                { x1: -8, z1: 4, x2: -5, z2: 4 },      // Master-bed bottom wall 1
+                { x1: -4.5, z1: 4, x2: -4, z2: 4 },    // Master-bed bottom wall 2
+                { x1: -4, z1: 0, x2: -4, z2: 4 },      // Master-bed right wall
+
+                // Bathrooms
+                { x1: -4, z1: 5, x2: 0, z2: 5 },       // Small bath bottom wall
+                { x1: 0, z1: 5, x2: 0, z2: 8 },        // Small bath right wall
+                { x1: -4, z1: 4, x2: -4, z2: 8 },      // Left wall of bath area
+                { x1: -8, z1: -4.5, x2: -7, z2: -4.5}, // Vacio room bottom wall
+                { x1: -7, z1: -4.5, x2: -7, z2: -2},   // Vacio room right wall
+
+                // Kitchen
+                { x1: 2, z1: -8, x2: 2, z2: -5 },      // Kitchen left wall
+                { x1: 2, z1: -5, x2: 8, z2: -5 },      // Kitchen bottom wall
+
+                // Stairs Block (visual only for now)
+                { x1: 4, z1: 4, x2: 8, z2: 4 },
+                { x1: 4, z1: 4, x2: 4, z2: 8 },
+            ],
+            doors: [
+                { x: -4.75, z: -4, width: 0.9, height: 2.2, orientation: 'vertical' },
+                { x: -4.75, z: 0, width: 0.9, height: 2.2, orientation: 'vertical' },
+                { x: -4.75, z: 4, width: 0.9, height: 2.2, orientation: 'vertical' },
+                { x: -7, z: -3.25, width: 0.9, height: 2.2, orientation: 'horizontal' },
+                { x: -3, z: 5, width: 0.9, height: 2.2, orientation: 'horizontal' },
+            ]
+        };
 
         const joystickLeft = { x: 0, y: 0, active: false, pointerId: -1 };
         const joystickRight = { x: 0, y: 0, active: false, pointerId: -1 };
@@ -254,19 +300,13 @@
         const gravity = -4.8;
         const jumpStrength = 2.4;
 
-        let bedMinX, bedMaxX, bedMinZ, bedMaxZ, bedTopY;
+        // let bedMinX, bedMaxX, bedMinZ, bedMaxZ, bedTopY; // DEPRECATED
 
         const interactionState = {
-            isXboxOn: false, isTvOn: false, currentChannel: 0, showRemote: false,
-            interactionDistance: 3.5
+            // isXboxOn: false, isTvOn: false, currentChannel: 0, showRemote: false, // DEPRECATED for now
+            interactionDistance: 1.5 // Reduced distance for doors
         };
-        const videoChannels = [
-            'https://cdn.coverr.co/videos/coverr-a-gamer-playing-a-first-person-shooter-game-4835/1080p.mp4',
-            'https://cdn.coverr.co/videos/coverr-a-man-playing-a-video-game-on-a-playstation-6105/1080p.mp4',
-            'https://cdn.coverr.co/videos/coverr-a-man-and-a-woman-in-a-movie-theater-4213/1080p.mp4',
-            'https://cdn.coverr.co/videos/coverr-a-person-playing-a-nintendo-switch-4694/1080p.mp4',
-            'https://cdn.coverr.co/videos/coverr-a-view-of-a-beautiful-waterfall-in-the-mountains-5120/1080p.mp4'
-        ];
+        // const videoChannels = []; // DEPRECATED
 
         let vibrationAllowed = false;
 
@@ -280,8 +320,8 @@
                 this.INTENSITY = { SPOTLIGHTS: 0.8, LED_STRIPS: 0.9, AMBIENT: 0.1 };
                 this.materials = {};
                 this.characterParts = {};
-                this.tvScreenSurface = null;
-                this.roomObjects = { walls: [], tv_stand: [] };
+                this.doorInteractionButton = null;
+                this.roomObjects = { walls: [], doors: [], floor: null, ceiling: null };
                 
                 try {
                     this.init();
@@ -294,8 +334,9 @@
             init() {
                 clock = new THREE.Clock();
                 this.setupScene();
+                this.setupUI(); // <-- NEW
                 this.createMaterials();
-                this.createRoom();
+                this.createApartmentLayout(); // <-- NEW
                 this.createCharacter();
                 this.setupEventListeners();
                 this.updateRoomLighting();
@@ -318,312 +359,99 @@
                 scene.add(this.hemisphereLight);
                 scene.add(new THREE.AmbientLight(0xffffff, this.INTENSITY.AMBIENT));
             }
+
+            setupUI() {
+                const buttonEl = document.createElement('button');
+                buttonEl.className = 'interaction-button';
+                this.doorInteractionButton = new CSS3DObject(buttonEl);
+                this.doorInteractionButton.element.style.display = 'none';
+                scene.add(this.doorInteractionButton);
+            }
             
             createMaterials() {
                 const textureLoader = new THREE.TextureLoader();
                 const woodTextureLight = textureLoader.load('https://threejs.org/examples/textures/hardwood2_diffuse.jpg');
-                const woodTextureDark = textureLoader.load('https://threejs.org/examples/textures/wood/hardwood2_dark.jpg');
-                const concreteTexture = textureLoader.load('https://threejs.org/examples/textures/hardwood2_diffuse.jpg');
-                const tilesTexture = textureLoader.load('https://threejs.org/examples/textures/tiles/tiles_diffuse.jpg');
-                tilesTexture.wrapS = THREE.RepeatWrapping;
-                tilesTexture.wrapT = THREE.RepeatWrapping;
-                tilesTexture.repeat.set(4, 4);
+                woodTextureLight.wrapS = THREE.RepeatWrapping;
+                woodTextureLight.wrapT = THREE.RepeatWrapping;
+                woodTextureLight.repeat.set(4, 4);
 
                 this.materials = {
                     floor: new THREE.MeshStandardMaterial({ color: 0x4a3f35, roughness: 0.8 }),
                     wall: new THREE.MeshStandardMaterial({ color: 0xf0f0f0, roughness: 0.9 }),
                     ceiling: new THREE.MeshStandardMaterial({ color: 0xffffff }),
                     door: new THREE.MeshStandardMaterial({ color: 0x6f4e37, roughness: 0.6 }),
-                    tvStand: new THREE.MeshStandardMaterial({ color: 0x212121, roughness: 0.4 }),
                     wood_light: new THREE.MeshStandardMaterial({ map: woodTextureLight, roughness: 0.8 }),
-                    wood_dark: new THREE.MeshStandardMaterial({ map: woodTextureDark, roughness: 0.8 }),
-                    floor_tiles_light: new THREE.MeshStandardMaterial({ map: tilesTexture, roughness: 0.6 }),
-                    floor_carpet_dark: new THREE.MeshStandardMaterial({ color: 0x36454F, roughness: 0.9 }),
-                    wall_blue: new THREE.MeshStandardMaterial({ color: 0xa7c4cc, roughness: 0.9 }),
-                    wall_beige: new THREE.MeshStandardMaterial({ color: 0xe3d9c6, roughness: 0.9 }),
-                    wall_green_pastel: new THREE.MeshStandardMaterial({ color: 0xB2D8B2, roughness: 0.9 }),
-                    wall_dark_grey: new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.9 }),
-                    tv_stand_white: new THREE.MeshStandardMaterial({ color: 0xe0e0e0, roughness: 0.4 }),
-                    tv_stand_wood: new THREE.MeshStandardMaterial({ color: 0x6f4e37, roughness: 0.5 }),
-                    tv_stand_metal: new THREE.MeshStandardMaterial({ color: 0xA9A9A9, roughness: 0.2, metalness: 0.8 }),
-                    tv_stand_glass: new THREE.MeshStandardMaterial({ color: 0xADD8E6, transparent: true, opacity: 0.7, roughness: 0.1 }),
-                    door_black: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.6 }),
-                    door_white: new THREE.MeshStandardMaterial({ color: 0xf5f5f5, roughness: 0.6 }),
-                    door_glass: new THREE.MeshStandardMaterial({ color: 0xADD8E6, transparent: true, opacity: 0.7, roughness: 0.1 }),
-                    door_metal: new THREE.MeshStandardMaterial({ color: 0x708090, roughness: 0.3, metalness: 0.7 }),
-                    ceiling_dark: new THREE.MeshStandardMaterial({ color: 0x555555 }),
-                    ceiling_light_blue: new THREE.MeshStandardMaterial({ color: 0xADD8E6 }),
-                    ceiling_wood_light: new THREE.MeshStandardMaterial({ map: woodTextureLight, roughness: 0.8 }),
-                    ceiling_concrete: new THREE.MeshStandardMaterial({ map: concreteTexture, roughness: 0.9 }),
-                    ceiling_dark_wood: new THREE.MeshStandardMaterial({ color: 0x4a2c00, roughness: 0.8 }),
-                    bedFrame: new THREE.MeshStandardMaterial({ color: 0xdddddd }),
-                    mattress: new THREE.MeshStandardMaterial({ color: 0xfafafa }),
-                    blackMatte: new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.4 }),
-                    lightWood: new THREE.MeshStandardMaterial({ color: 0x9c7b61, roughness: 0.8 }),
-                    darkWood: new THREE.MeshStandardMaterial({ color: 0x3d2d1d, roughness: 0.8 }),
-                    marble: new THREE.MeshStandardMaterial({ color: 0xacacac, roughness: 0.2, metalness: 0.1 }),
-                    lightOff: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, emissive: 0x000000 }),
-                    lightOn: new THREE.MeshStandardMaterial({ color: 0xFFFF8D, emissive: 0xFFFF8D, emissiveIntensity: 2 }),
-                    ledOff: new THREE.MeshStandardMaterial({ color: 0x080808, emissive: 0x000000 }),
-                    ledOn: new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 1.5 }),
-                    xboxOn: new THREE.MeshStandardMaterial({ color: 0x10de10, emissive: 0x10de10, emissiveIntensity: 2 }),
                     character: new THREE.MeshStandardMaterial({ color: 0x335599, roughness: 0.7 })
                 };
             }
 
-            createRoom() {
-                const { width, height, depth } = roomSize;
-                const floor = new THREE.Mesh(new THREE.PlaneGeometry(width, depth), this.materials.floor);
+            createApartmentLayout() {
+                const { width, depth } = apartmentLayout.floorSize;
+                const floor = new THREE.Mesh(new THREE.PlaneGeometry(width, depth), this.materials.wood_light);
                 floor.rotation.x = -Math.PI / 2;
                 floor.receiveShadow = true;
                 scene.add(floor);
                 this.roomObjects.floor = floor;
 
-                const ceiling = new THREE.Mesh(new THREE.BoxGeometry(width, 0.2, depth), this.materials.ceiling);
-                ceiling.position.y = height - 0.1;
-                ceiling.receiveShadow = true;
+                const ceiling = new THREE.Mesh(new THREE.BoxGeometry(width, wallThickness, depth), this.materials.ceiling);
+                ceiling.position.y = wallHeight;
                 scene.add(ceiling);
                 this.roomObjects.ceiling = ceiling;
 
-                const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, height, depth), this.materials.wall);
-                leftWall.position.set(-width / 2, height / 2, 0);
-                leftWall.receiveShadow = true;
-                scene.add(leftWall);
-                this.roomObjects.walls.push(leftWall);
+                apartmentLayout.walls.forEach(wallDef => {
+                    this.createWall(wallDef);
+                });
 
-                this.createFrontWallWithBed();
-                this.createBackWallWithDoor();
-                this.createDecorativeWall();
-                this.createTVStandAndTV();
-            }
-            
-            createDecorativeWall() {
-                const { height, depth, width } = roomSize;
-                const wallGroup = new THREE.Group();
-                const wallX = width / 2 - 1;
-                const baseWall = new THREE.Mesh(new THREE.BoxGeometry(0.05, height, depth), this.materials.darkWood);
-                baseWall.position.set(wallX, height / 2, 0);
-                baseWall.receiveShadow = true;
-                wallGroup.add(baseWall);
-                for (let i = 0; i < 40; i++) {
-                    const panelHeight = Math.random() * 1.5 + 0.4;
-                    const panelWidth = Math.random() * 1.0 + 0.5;
-                    const panelDepth = Math.random() * 0.2 + 0.1;
-                    const panel = new THREE.Mesh(new THREE.BoxGeometry(panelDepth, panelHeight, panelWidth), this.materials.darkWood);
-                    panel.position.set(wallX + panelDepth / 2, Math.random() * height, (Math.random() - 0.5) * depth);
-                    panel.castShadow = true;
-                    panel.receiveShadow = true;
-                    wallGroup.add(panel);
-                }
-                scene.add(wallGroup);
-            }
-
-            createTVStandAndTV() {
-                const { width, depth } = roomSize;
-                const tvStandGroup = new THREE.Group();
-                const standDepth = 0.8, standHeight = 1.0, standWidth = 5.5;
-                const doorW = 1.5, doorG = 0.6, closetWX = width / 2 - 1;
-                const doorCX = closetWX - doorG - (doorW / 2);
-                const doorLeftEdge = doorCX - doorW / 2;
-                const spaceLeftOfDoor = doorLeftEdge - (-width / 2);
-                const standCenterX = (-width / 2) + (spaceLeftOfDoor / 2);
-                tvStandPosition.set(standCenterX, standHeight / 2, depth / 2 - standDepth / 2);
-                tvStandGroup.position.copy(tvStandPosition);
-                tvStandGroup.rotation.y = Math.PI;
-                scene.add(tvStandGroup);
-
-                const centerSectionWidth = 1.5;
-                const sideSectionWidth = (standWidth - centerSectionWidth) / 2;
-                const leftSection = new THREE.Mesh(new THREE.BoxGeometry(sideSectionWidth, standHeight, standDepth), this.materials.tvStand);
-                leftSection.position.x = - (standWidth / 2) + (sideSectionWidth / 2);
-                leftSection.castShadow = true;
-                tvStandGroup.add(leftSection);
-                this.roomObjects.tv_stand.push(leftSection);
-
-                const rightSection = new THREE.Mesh(new THREE.BoxGeometry(sideSectionWidth, standHeight, standDepth), this.materials.tvStand);
-                rightSection.position.x = (standWidth / 2) - (sideSectionWidth / 2);
-                rightSection.castShadow = true;
-                tvStandGroup.add(rightSection);
-                this.roomObjects.tv_stand.push(rightSection);
-
-                const xboxWidth = 0.151 * 1.8, xboxHeight = 0.301 * 1.8, xboxDepth = 0.151 * 1.8;
-                const xbox = new THREE.Mesh(new THREE.BoxGeometry(xboxWidth, xboxHeight, xboxDepth), this.materials.blackMatte);
-                xbox.position.set(0, -standHeight/2 + 0.05 + xboxHeight/2, 0);
-                xbox.castShadow = true;
-                tvStandGroup.add(xbox);
-                this.xboxPowerLight = new THREE.Mesh(new THREE.SphereGeometry(0.02, 16, 16), this.materials.lightOff);
-                this.xboxPowerLight.position.set(0, 0.2, xboxDepth / 2 + 0.01);
-                xbox.add(this.xboxPowerLight);
-
-                const tvGroup = new THREE.Group();
-                tvGroup.position.y = standHeight / 2 + 0.95;
-                tvStandGroup.add(tvGroup);
-                
-                const tvWidth = 5.0, tvHeight = 1.70;
-                const casingDepth = 0.08, bezelSize = 0.04;
-
-                const tvCasing = new THREE.Mesh(new THREE.BoxGeometry(tvWidth, tvHeight, casingDepth), this.materials.blackMatte);
-                tvGroup.add(tvCasing);
-
-                this.tvScreenSurface = new THREE.Mesh(new THREE.BoxGeometry(tvWidth - bezelSize, tvHeight - bezelSize, 0.01), this.materials.blackMatte);
-                this.tvScreenSurface.position.z = casingDepth / 2;
-                tvGroup.add(this.tvScreenSurface);
-
-                const videoDiv = document.getElementById('tv-screen-content');
-                const cssScreen = new CSS3DObject(videoDiv);
-                cssScreen.position.z = casingDepth / 2 + 0.01;	
-                const scale = tvWidth / videoDiv.offsetWidth;
-                cssScreen.scale.set(scale, scale, scale);
-                tvGroup.add(cssScreen);
-
-                const tvButtonEl = document.createElement('button');
-                tvButtonEl.textContent = 'Usar TV';
-                tvButtonEl.className = 'interaction-button';
-                tvButtonEl.onclick = () => {
-                    interactionState.showRemote = true;
-                    if (!interactionState.isTvOn) this.toggleTvPower();
-                };
-                tvInteractionButton = new CSS3DObject(tvButtonEl);
-                tvInteractionButton.position.z = casingDepth / 2 + 0.2;
-                tvInteractionButton.scale.set(0.005, 0.005, 0.005);
-                tvGroup.add(tvInteractionButton);
-
-                const xboxButtonEl = document.createElement('button');
-                xboxButtonEl.textContent = 'Encender Xbox';
-                xboxButtonEl.className = 'interaction-button';
-                xboxButtonEl.onclick = () => this.toggleXboxPower();
-                xboxInteractionButton = new CSS3DObject(xboxButtonEl);
-                xboxInteractionButton.position.copy(xbox.position);
-                xboxInteractionButton.position.z += xboxDepth / 2 + 0.2;
-                xboxInteractionButton.scale.set(0.005, 0.005, 0.005);
-                tvStandGroup.add(xboxInteractionButton);
-            }
-
-            createFrontWallWithBed() {
-                const { width, height, depth } = roomSize;
-                const frontWallGroup = new THREE.Group();
-                frontWallGroup.position.z = -depth / 2;
-                scene.add(frontWallGroup);
-                const backWall = new THREE.Mesh(new THREE.BoxGeometry(width, height, 0.2), this.materials.wall);
-                backWall.position.y = height/2;
-                backWall.receiveShadow = true;
-                frontWallGroup.add(backWall);
-                this.roomObjects.walls.push(backWall);
-
-                const panelWidth = width - 1;
-                const panelX = ((-width/2) + (width/2 - 1)) / 2;
-                const mainPanel = new THREE.Group();
-                mainPanel.position.x = panelX;
-                frontWallGroup.add(mainPanel);
-                const p1 = new THREE.Mesh(new THREE.BoxGeometry(panelWidth, 1.2, 0.08), this.materials.lightWood);
-                p1.position.set(0, height - 0.6, 0.15);
-                mainPanel.add(p1);
-                const p2 = new THREE.Mesh(new THREE.BoxGeometry(panelWidth, 1.0, 0.08), this.materials.marble);
-                p2.position.set(0, p1.position.y - 1.1, 0.15);
-                mainPanel.add(p2);
-                const p3_height = height - p1.geometry.parameters.height - p2.geometry.parameters.height;
-                const p3 = new THREE.Mesh(new THREE.BoxGeometry(panelWidth, p3_height, 0.08), this.materials.lightWood);
-                p3.position.set(0, p2.position.y - (p2.geometry.parameters.height/2 + p3_height/2), 0.15);
-                mainPanel.add(p3);
-
-                const bedWidth = 5, bedLength = 5;
-                const bedGroup = new THREE.Group();
-                bedGroup.position.set(panelX, 0, -depth/2 + bedLength/2 + 0.2);
-                scene.add(bedGroup);
-
-                const base = new THREE.Mesh(new THREE.BoxGeometry(bedWidth, 0.3, bedLength), this.materials.bedFrame);
-                base.position.y = 0.15;
-                base.castShadow = true;
-                bedGroup.add(base);
-
-                const mattress = new THREE.Mesh(new THREE.BoxGeometry(bedWidth - 0.1, 0.2, bedLength - 0.1), this.materials.mattress);
-                mattress.position.y = base.position.y + 0.3/2 + 0.2/2;
-                mattress.castShadow = true;
-                bedGroup.add(mattress);
-
-                bedMinX = bedGroup.position.x - bedWidth / 2;
-                bedMaxX = bedGroup.position.x + bedWidth / 2;
-                bedMinZ = bedGroup.position.z - bedLength / 2;
-                bedMaxZ = bedGroup.position.z + bedLength / 2;
-                bedTopY = bedGroup.position.y + 0.15 + 0.3 + 0.2;
-
-                this.createModernLedStrips(height, -depth/2, panelWidth, panelX);
-            }
-
-            createBackWallWithDoor() {
-                const { width, height, depth } = roomSize;
-                const doorWidth = 1.5, doorHeight = 2.1, doorGap = 0.6;
-                const closetWallX = width / 2 - 1;
-                const doorCenterX = closetWallX - doorGap - (doorWidth / 2);
-                const frontWall = new THREE.Group();
-                frontWall.position.z = depth/2;
-                scene.add(frontWall);
-                const leftWallWidth = width / 2 + doorCenterX - doorWidth / 2;
-                const wallLeft = new THREE.Mesh(new THREE.BoxGeometry(leftWallWidth, height, 0.2), this.materials.wall);
-                wallLeft.position.set((-width/2 + leftWallWidth/2), height / 2, 0);
-                wallLeft.receiveShadow = true;
-                frontWall.add(wallLeft);
-                this.roomObjects.walls.push(wallLeft);
-
-                const rightWallWidth = width/2 - (doorCenterX + doorWidth/2);
-                const wallRight = new THREE.Mesh(new THREE.BoxGeometry(rightWallWidth, height, 0.2), this.materials.wall);
-                wallRight.position.set((width/2 - rightWallWidth/2), height / 2, 0);
-                wallRight.receiveShadow = true;
-                frontWall.add(wallRight);
-                this.roomObjects.walls.push(wallRight);
-
-                const wallTop = new THREE.Mesh(new THREE.BoxGeometry(doorWidth, height - doorHeight, 0.2), this.materials.wall);
-                wallTop.position.set(doorCenterX, doorHeight + (height - doorHeight) / 2, 0);
-                wallTop.receiveShadow = true;
-                frontWall.add(wallTop);
-                this.roomObjects.walls.push(wallTop);
-
-                const doorPanel = new THREE.Mesh(new THREE.BoxGeometry(doorWidth, doorHeight, 0.08), this.materials.door);
-                doorPanel.position.set(doorCenterX, doorHeight / 2, 0);
-                doorPanel.castShadow = true;
-                frontWall.add(doorPanel);
-                this.roomObjects.door = doorPanel;
-
-                this.createBlackSpotlights(height, depth/2);
-            }
-
-            createBlackSpotlights(height, z) {
-                const { width } = roomSize;
-                const fixtureRadius = 0.25, fixtureHeight = 0.05, bulbRadius = 0.1;
-                const lightPositions = [{x: -width/4, z: z - 3}, {x: width/4, z: z - 3}];
-                const fixtureMaterial = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.4 });
-                const y = height - 0.2;
-                lightPositions.forEach(pos => {
-                    const fixture = new THREE.Mesh(new THREE.CylinderGeometry(fixtureRadius, fixtureRadius, fixtureHeight, 32), fixtureMaterial);
-                    fixture.position.set(pos.x, y - fixtureHeight / 2, pos.z);
-                    fixture.castShadow = true;
-                    scene.add(fixture);
-                    const bulb = new THREE.Mesh(new THREE.SphereGeometry(bulbRadius, 16, 8), this.materials.lightOff);
-                    bulb.position.set(pos.x, y - fixtureHeight + 0.01, pos.z);
-                    scene.add(bulb);
-                    this.spotlightBulbs.push(bulb);
+                apartmentLayout.doors.forEach(doorDef => {
+                    this.createDoor(doorDef);
                 });
             }
-            
-            createModernLedStrips(height, z, panelWidth, panelX) {
-                const stripWidth = 0.05;
-                const y = height - 0.2;
-                const stripGroup = new THREE.Group();
-                const pW_half = panelWidth / 2;
-                const pX = panelX;
-                const points = [ [pX - pW_half + 0.5, y, z + 1.5], [pX + pW_half - 0.5, y, z + 1.5], [pX + pW_half - 0.5, y, z + 3.5], [pX, y, z + 3.5], [pX, y, z + 5.5], [pX - pW_half + 0.5, y, z + 5.5] ];
-                for (let i = 0; i < points.length - 1; i++) {
-                    const start = new THREE.Vector3(...points[i]);
-                    const end = new THREE.Vector3(...points[i+1]);
-                    const length = start.distanceTo(end);
-                    const center = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
-                    const strip = new THREE.Mesh(new THREE.BoxGeometry(stripWidth, stripWidth, length), this.materials.ledOff);
-                    strip.position.copy(center);
-                    strip.lookAt(end);
-                    stripGroup.add(strip);
-                    this.ledStrips.push(strip);
-                }
-                scene.add(stripGroup);
+
+            createWall(wallDef) {
+                const { x1, z1, x2, z2 } = wallDef;
+                const wallVector = new THREE.Vector2(x2 - x1, z2 - z1);
+                const wallLength = wallVector.length();
+                
+                const wall = new THREE.Mesh(
+                    new THREE.BoxGeometry(wallLength, wallHeight, wallThickness),
+                    this.materials.wall
+                );
+
+                wall.position.set(x1 + wallVector.x / 2, wallHeight / 2, z1 + wallVector.y / 2);
+                wall.rotation.y = Math.atan2(wallVector.y, wallVector.x);
+
+                wall.castShadow = true;
+                wall.receiveShadow = true;
+                scene.add(wall);
+                this.roomObjects.walls.push(wall);
+            }
+
+            createDoor(doorDef) {
+                const { x, z, width, height, orientation } = doorDef;
+
+                const doorPanel = new THREE.Mesh(
+                    new THREE.BoxGeometry(width, height, wallThickness * 0.8), // Doors are slightly thinner than walls
+                    this.materials.door
+                );
+
+                const doorPivot = new THREE.Group();
+                doorPivot.position.set(x, height / 2, z);
+
+                const initialRotation = (orientation === 'horizontal') ? Math.PI / 2 : 0;
+                doorPivot.rotation.y = initialRotation;
+
+                doorPanel.position.x = width / 2;
+                doorPivot.add(doorPanel);
+
+                doorPanel.castShadow = true;
+                doorPanel.receiveShadow = true;
+
+                scene.add(doorPivot);
+                this.roomObjects.doors.push({
+                    pivot: doorPivot,
+                    isOpen: false,
+                    initialRotation: initialRotation
+                });
             }
 
             createCharacter() {
@@ -661,51 +489,8 @@
             }
 
             // --- Interactions & State ---
-            toggleXboxPower() {
-                interactionState.isXboxOn = !interactionState.isXboxOn;
-                this.xboxPowerLight.material = interactionState.isXboxOn ? this.materials.xboxOn : this.materials.lightOff;
-                xboxInteractionButton.element.textContent = interactionState.isXboxOn ? 'Apagar Xbox' : 'Encender Xbox';
-            }
-            toggleTvPower() {
-                interactionState.isTvOn = !interactionState.isTvOn;
-                this.updateTvScreen();
-            }
-            changeChannel(direction) {
-                if (!interactionState.isTvOn) return;
-                interactionState.currentChannel = (interactionState.currentChannel + direction + videoChannels.length) % videoChannels.length;
-                this.updateTvScreen();
-            }
-            updateTvScreen() {
-                const videoEl = document.getElementById('tv-video');
-                const screenEl = document.getElementById('tv-screen-content');
-                if (interactionState.isTvOn) {
-                    videoEl.src = videoChannels[interactionState.currentChannel];
-                    videoEl.play().catch(e => console.warn("Video play interrupted."));
-                    screenEl.style.display = 'block';
-                } else {
-                    videoEl.pause();
-                    videoEl.src = '';
-                    screenEl.style.display = 'none';
-                    interactionState.showRemote = false; // Hide remote when TV is turned off
-                }
-            }
             updateRoomLighting() {
-                let totalIntensity = this.INTENSITY.AMBIENT;
-                if (this.lightState.spotlights) {
-                    totalIntensity += this.INTENSITY.SPOTLIGHTS;
-                }
-                if (this.lightState.ledStrips) {
-                    totalIntensity += this.INTENSITY.LED_STRIPS;
-                    this.hemisphereLight.color.set(this.lightState.ledColor);
-                    this.materials.ledOn.color.set(this.lightState.ledColor);
-                    this.materials.ledOn.emissive.set(this.lightState.ledColor);
-                } else {
-                    this.hemisphereLight.color.set(0xffffff);
-                }
-
-                this.hemisphereLight.intensity = totalIntensity;
-                this.spotlightBulbs.forEach(bulb => bulb.material = this.lightState.spotlights ? this.materials.lightOn : this.materials.lightOff);
-                this.ledStrips.forEach(strip => strip.material = this.lightState.ledStrips ? this.materials.ledOn : this.materials.ledOff);
+                // This function is kept for light controls, but they are not part of the new layout yet.
             }
 
             toggleCameraMode() {
@@ -736,26 +521,8 @@
 
             // --- Event Listeners & Controls ---
             setupEventListeners() {
-                document.getElementById('menu-toggle').onclick = () => {
-                    document.getElementById('customization-panel').classList.toggle('visible');
-                };
-
-                document.getElementById('customization-panel').onclick = (e) => {
-                    if (e.target.classList.contains('swatch')) {
-                        const targetName = e.target.parentElement.dataset.target;
-                        const materialName = e.target.dataset.material;
-                        const newMaterial = this.materials[materialName];
-                        if (!targetName || !newMaterial) return;
-
-                        const targetObject = this.roomObjects[targetName];
-                        if (Array.isArray(targetObject)) {
-                            targetObject.forEach(mesh => mesh.material = newMaterial);
-                        } else if (targetObject) {
-                            targetObject.material = newMaterial;
-                        }
-                        document.getElementById('customization-panel').classList.remove('visible');
-                    }
-                };
+                 // Customization panel is disabled for now as it targets old objects
+                document.getElementById('menu-toggle').style.display = 'none';
 
                 const uiContainer = document.getElementById('containerUI');
                 uiContainer.addEventListener('pointerdown', e => this.handlePointerDown(e));
@@ -764,35 +531,9 @@
                 window.addEventListener('pointercancel', e => this.handlePointerUp(e));
                 window.addEventListener('resize', () => this.onWindowResize());
 
-                document.getElementById('spotlights-toggle').onclick = () => {
-                    this.lightState.spotlights = !this.lightState.spotlights;
-                    document.getElementById('spotlights-toggle').classList.toggle('active', this.lightState.spotlights);
-                    this.updateRoomLighting();
-                };
-
-                document.getElementById('led-strips-toggle').onclick = () => {
-                    const palette = document.getElementById('color-palette');
-                    const isActive = palette.style.display === 'flex';
-                    palette.style.display = isActive ? 'none' : 'flex';
-                    document.getElementById('led-strips-toggle').classList.toggle('active', !isActive);
-                };
-                
-                // --- MEJORA --- Paleta de colores ya no se cierra sola.
-                document.getElementById('color-palette').onclick = (e) => {
-                    if (e.target.classList.contains('color-swatch')) {
-                        const color = e.target.dataset.color;
-                        this.lightState.ledStrips = (color !== 'off');
-                        if (this.lightState.ledStrips) {
-                            this.lightState.ledColor = color;
-                        }
-                        this.updateRoomLighting();
-                    }
-                };
-
-                document.getElementById('vibration-button').onclick = () => this.toggleVibration();
-                document.getElementById('power-button').onclick = () => this.toggleTvPower();
-                document.getElementById('prev-channel-button').onclick = () => this.changeChannel(-1);
-                document.getElementById('next-channel-button').onclick = () => this.changeChannel(1);
+                // Light and TV controls are disabled for now
+                document.getElementById('light-controls').style.display = 'none';
+                document.getElementById('remote-control').style.display = 'none';
 
                 document.getElementById('joystick-handle-left').addEventListener('pointerup', (e) => {
                     if (Math.abs(joystickLeft.x) < 0.1 && Math.abs(joystickLeft.y) < 0.1) this.toggleCameraMode();
@@ -813,17 +554,16 @@
             resetJoystick(joystick, handle) { joystick.active = false; joystick.pointerId = -1; joystick.x = 0; joystick.y = 0; handle.style.transform = 'translate(0, 0)'; }
             onWindowResize() { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); cssRenderer.setSize(window.innerWidth, window.innerHeight); }
 
-            // --- Game Loop (REFACTORIZADO) ---
             animate() {
                 requestAnimationFrame(() => this.animate());
                 const delta = clock.getDelta();
                 const time = clock.getElapsedTime();
 
                 this.updateCharacterMovement(delta, time);
+                this.updateDoorAnimations(delta);
                 this.handleCollisions();
                 this.updateCamera();
                 this.updateUI();
-
                 renderer.render(scene, camera);
                 cssRenderer.render(scene, camera);
             }
@@ -859,45 +599,86 @@
             }
 
             handleCollisions() {
-                const { width, depth } = roomSize;
-                const halfWidth = width / 2;
-                const halfDepth = depth / 2;
-                
-                character.position.x = Math.max(-halfWidth + characterRadius, Math.min(halfWidth - characterRadius, character.position.x));
-                character.position.z = Math.max(-halfDepth + characterRadius, Math.min(halfDepth - characterRadius, character.position.z));
-                
-                const standWidth = 5.5, standDepthVal = 0.8;
-                const tvStandFrontZ = tvStandPosition.z - standDepthVal / 2;
-                const tvStandBackZ = tvStandPosition.z + standDepthVal / 2;
-                const tvStandLeftX = tvStandPosition.x - standWidth / 2;
-                const tvStandRightX = tvStandPosition.x + standWidth / 2;
+                const characterBox = new THREE.Box3().setFromObject(character);
 
-                if (character.position.x > tvStandLeftX - characterRadius && character.position.x < tvStandRightX + characterRadius) {
-                    if (character.position.z > tvStandFrontZ - characterRadius && character.position.z < tvStandFrontZ) character.position.z = tvStandFrontZ - characterRadius;
-                    else if (character.position.z < tvStandBackZ + characterRadius && character.position.z > tvStandBackZ) character.position.z = tvStandBackZ + characterRadius;
-                }
+                const checkAndResolveCollision = (object) => {
+                    const objectBox = new THREE.Box3().setFromObject(object);
+                    if (characterBox.intersectsBox(objectBox)) {
+                        const penetration = new THREE.Vector3();
+                        const charCenter = new THREE.Vector3();
+                        const objCenter = new THREE.Vector3();
+                        characterBox.getCenter(charCenter);
+                        objectBox.getCenter(objCenter);
 
-                const isOverlappingX = character.position.x + characterRadius > bedMinX && character.position.x - characterRadius < bedMaxX;
-                const isOverlappingZ = character.position.z + characterRadius > bedMinZ && character.position.z - characterRadius < bedMaxZ;
+                        const charSize = new THREE.Vector3();
+                        const objSize = new THREE.Vector3();
+                        characterBox.getSize(charSize);
+                        objectBox.getSize(objSize);
 
-                if (isOverlappingX && isOverlappingZ && character.position.y < bedTopY) {
-                    if (isJumping && verticalVelocity < 0 && character.position.y < bedTopY + 0.1) {
-                        character.position.y = bedTopY;
-                        isJumping = false;
-                        verticalVelocity = 0;
-                    } else if (!isJumping) {
-                        const overlapX1 = (character.position.x + characterRadius) - bedMinX;
-                        const overlapX2 = bedMaxX - (character.position.x - characterRadius);
-                        const overlapZ1 = (character.position.z + characterRadius) - bedMinZ;
-                        const overlapZ2 = bedMaxZ - (character.position.z - characterRadius);
-                        const minOverlap = Math.min(overlapX1, overlapX2, overlapZ1, overlapZ2);
+                        const overlapX = (charSize.x + objSize.x) / 2 - Math.abs(charCenter.x - objCenter.x);
+                        const overlapZ = (charSize.z + objSize.z) / 2 - Math.abs(charCenter.z - objCenter.z);
 
-                        if (minOverlap === overlapX1) character.position.x = bedMinX - characterRadius;
-                        else if (minOverlap === overlapX2) character.position.x = bedMaxX + characterRadius;
-                        else if (minOverlap === overlapZ1) character.position.z = bedMinZ - characterRadius;
-                        else if (minOverlap === overlapZ2) character.position.z = bedMaxZ + characterRadius;
+                        if (overlapX < overlapZ) {
+                            character.position.x += overlapX * Math.sign(charCenter.x - objCenter.x);
+                        } else {
+                            character.position.z += overlapZ * Math.sign(charCenter.z - objCenter.z);
+                        }
+                         // Re-compute character box after adjustment
+                        characterBox.setFromObject(character);
                     }
+                };
+
+                // Check wall collisions
+                this.roomObjects.walls.forEach(wall => checkAndResolveCollision(wall));
+
+                // Check closed door collisions
+                this.roomObjects.doors.forEach(door => {
+                    if (!door.isOpen) {
+                        const doorPanel = door.pivot.children[0];
+                        checkAndResolveCollision(doorPanel);
+                    }
+                });
+
+                // Final boundary check
+                const { width, depth } = apartmentLayout.floorSize;
+                const halfWidth = width / 2 - characterRadius;
+                const halfDepth = depth / 2 - characterRadius;
+                character.position.x = Math.max(-halfWidth, Math.min(halfWidth, character.position.x));
+                character.position.z = Math.max(-halfDepth, Math.min(halfDepth, character.position.z));
+            }
+
+            updateDoorAnimations(delta) {
+                this.roomObjects.doors.forEach(door => {
+                    const openRotation = door.initialRotation + Math.PI / 2;
+                    const targetRotation = door.isOpen ? openRotation : door.initialRotation;
+                    door.pivot.rotation.y = THREE.MathUtils.lerp(door.pivot.rotation.y, targetRotation, delta * 5);
+                });
+            }
+
+            updateUI() {
+                let closestDoor = null;
+                let minDistance = Infinity;
+
+                this.roomObjects.doors.forEach(door => {
+                    const distance = character.position.distanceTo(door.pivot.position);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestDoor = door;
+                    }
+                });
+
+                if (closestDoor && minDistance < interactionState.interactionDistance) {
+                    this.doorInteractionButton.element.style.display = 'block';
+                    this.doorInteractionButton.element.textContent = closestDoor.isOpen ? 'Cerrar Puerta' : 'Abrir Puerta';
+                    this.doorInteractionButton.position.copy(closestDoor.pivot.position).add(new THREE.Vector3(0, 1.5, 0));
+                    this.doorInteractionButton.element.onclick = () => this.toggleDoorState(closestDoor);
+                } else {
+                    this.doorInteractionButton.element.style.display = 'none';
                 }
+            }
+
+            toggleDoorState(door) {
+                door.isOpen = !door.isOpen;
             }
             
             updateCamera() {
@@ -912,11 +693,12 @@
                 const cameraWorldPos = new THREE.Vector3();
                 camera.getWorldPosition(cameraWorldPos);
 
-                const { width, height, depth } = roomSize;
+                // Simplified camera collision for now
+                const { width, depth } = apartmentLayout.floorSize;
                 const buffer = 0.1;
                 const roomBounds = new THREE.Box3(
                     new THREE.Vector3(-width/2 + buffer, buffer, -depth/2 + buffer),
-                    new THREE.Vector3(width/2 - buffer, height - buffer, depth/2 - buffer)
+                    new THREE.Vector3(width/2 - buffer, wallHeight - buffer, depth/2 - buffer)
                 );
                 
                 if (!roomBounds.containsPoint(cameraWorldPos)) {
@@ -926,19 +708,6 @@
                     const newDistance = pivotWorldPos.distanceTo(clampedPos);
                     camera.position.z = Math.min(effectiveDistance, newDistance);
                 }
-            }
-
-            updateUI() {
-                const distToTv = character.position.distanceTo(tvStandPosition);
-                const canInteract = distToTv < interactionState.interactionDistance;
-                tvInteractionButton.element.classList.toggle('visible', canInteract);
-                xboxInteractionButton.element.classList.toggle('visible', canInteract);
-                
-                // --- MEJORA --- Si la TV está encendida, el control remoto se queda.
-                if (!canInteract && !interactionState.isTvOn) {
-                    interactionState.showRemote = false;
-                }
-                document.getElementById('remote-control').style.display = interactionState.showRemote ? 'flex' : 'none';
             }
         }
 
