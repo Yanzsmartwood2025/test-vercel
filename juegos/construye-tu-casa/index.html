@@ -304,7 +304,7 @@
 
         const interactionState = {
             // isXboxOn: false, isTvOn: false, currentChannel: 0, showRemote: false, // DEPRECATED for now
-            interactionDistance: 1.5 // Reduced distance for doors
+            interactionDistance: 2.5 // Increased distance for doors
         };
         // const videoChannels = []; // DEPRECATED
 
@@ -322,7 +322,7 @@
                 this.characterParts = {};
                 this.doorInteractionButton = null;
                 this.roomObjects = { walls: [], doors: [], floor: null, ceiling: null };
-                
+
                 try {
                     this.init();
                 } catch (error) {
@@ -334,9 +334,10 @@
             init() {
                 clock = new THREE.Clock();
                 this.setupScene();
-                this.setupUI(); // <-- NEW
+                this.setupUI();
                 this.createMaterials();
-                this.createApartmentLayout(); // <-- NEW
+                this.createLights(); // <-- NEW
+                this.createApartmentLayout();
                 this.createCharacter();
                 this.setupEventListeners();
                 this.updateRoomLighting();
@@ -364,10 +365,11 @@
                 const buttonEl = document.createElement('button');
                 buttonEl.className = 'interaction-button';
                 this.doorInteractionButton = new CSS3DObject(buttonEl);
+                this.doorInteractionButton.scale.set(0.005, 0.005, 0.005);
                 this.doorInteractionButton.element.style.display = 'none';
                 scene.add(this.doorInteractionButton);
             }
-            
+
             createMaterials() {
                 const textureLoader = new THREE.TextureLoader();
                 const woodTextureLight = textureLoader.load('https://threejs.org/examples/textures/hardwood2_diffuse.jpg');
@@ -411,7 +413,7 @@
                 const { x1, z1, x2, z2 } = wallDef;
                 const wallVector = new THREE.Vector2(x2 - x1, z2 - z1);
                 const wallLength = wallVector.length();
-                
+
                 const wall = new THREE.Mesh(
                     new THREE.BoxGeometry(wallLength, wallHeight, wallThickness),
                     this.materials.wall
@@ -489,8 +491,29 @@
             }
 
             // --- Interactions & State ---
+            createLights() {
+                // Main living room lights
+                const light1 = new THREE.PointLight(0xffffff, 0, 10);
+                light1.position.set(-2, wallHeight - 0.5, -2);
+                light1.castShadow = true;
+                scene.add(light1);
+
+                const light2 = new THREE.PointLight(0xffffff, 0, 10);
+                light2.position.set(4, wallHeight - 0.5, -2);
+                light2.castShadow = true;
+                scene.add(light2);
+
+                this.spotlightBulbs.push(light1, light2); // Reusing spotlightBulbs array
+            }
+
             updateRoomLighting() {
-                // This function is kept for light controls, but they are not part of the new layout yet.
+                const mainLightIntensity = this.lightState.spotlights ? 0.8 : 0;
+                this.spotlightBulbs.forEach(light => {
+                    light.intensity = mainLightIntensity;
+                });
+                // For now, the second button does nothing, but we keep the state change
+                 document.getElementById('spotlights-toggle').classList.toggle('active', this.lightState.spotlights);
+                 document.getElementById('led-strips-toggle').classList.toggle('active', this.lightState.ledStrips);
             }
 
             toggleCameraMode() {
@@ -524,16 +547,27 @@
                  // Customization panel is disabled for now as it targets old objects
                 document.getElementById('menu-toggle').style.display = 'none';
 
-                const uiContainer = document.getElementById('containerUI');
-                uiContainer.addEventListener('pointerdown', e => this.handlePointerDown(e));
+                document.getElementById('joystick-zone-left').addEventListener('pointerdown', e => this.handlePointerDown(e));
+                document.getElementById('joystick-zone-right').addEventListener('pointerdown', e => this.handlePointerDown(e));
                 window.addEventListener('pointermove', e => this.handlePointerMove(e));
                 window.addEventListener('pointerup', e => this.handlePointerUp(e));
                 window.addEventListener('pointercancel', e => this.handlePointerUp(e));
                 window.addEventListener('resize', () => this.onWindowResize());
 
-                // Light and TV controls are disabled for now
-                document.getElementById('light-controls').style.display = 'none';
+                // Re-enable light controls, keep remote disabled
+                document.getElementById('light-controls').style.display = 'flex';
                 document.getElementById('remote-control').style.display = 'none';
+
+                document.getElementById('spotlights-toggle').onclick = () => {
+                    this.lightState.spotlights = !this.lightState.spotlights;
+                    this.updateRoomLighting();
+                };
+                 document.getElementById('led-strips-toggle').onclick = () => {
+                    this.lightState.ledStrips = !this.lightState.ledStrips;
+                    this.updateRoomLighting();
+                };
+                document.getElementById('vibration-button').onclick = () => this.toggleVibration();
+
 
                 document.getElementById('joystick-handle-left').addEventListener('pointerup', (e) => {
                     if (Math.abs(joystickLeft.x) < 0.1 && Math.abs(joystickLeft.y) < 0.1) this.toggleCameraMode();
@@ -547,11 +581,59 @@
                     }
                 });
             }
-            handlePointerDown(e) { if (e.target.closest('.joystick-zone')) { e.preventDefault(); e.target.releasePointerCapture(e.pointerId); if (e.clientX < window.innerWidth / 2) { joystickLeft.active = true; joystickLeft.pointerId = e.pointerId; } else { joystickRight.active = true; joystickRight.pointerId = e.pointerId; } } this.activePointers.set(e.pointerId, {x: e.clientX, y: e.clientY}); }
-            handlePointerMove(e) { if (joystickLeft.active && e.pointerId === joystickLeft.pointerId) this.updateJoystick(e, joystickLeft, document.getElementById('joystick-base-left')); if (joystickRight.active && e.pointerId === joystickRight.pointerId) this.updateJoystick(e, joystickRight, document.getElementById('joystick-base-right')); }
-            handlePointerUp(e) { if (e.pointerId === joystickLeft.pointerId) this.resetJoystick(joystickLeft, document.getElementById('joystick-handle-left')); if (e.pointerId === joystickRight.pointerId) this.resetJoystick(joystickRight, document.getElementById('joystick-handle-right')); this.activePointers.delete(e.pointerId); }
-            updateJoystick(e, joystick, base) { const rect = base.getBoundingClientRect(); const maxDist = rect.width / 2; const x = e.clientX - rect.left - maxDist; const y = e.clientY - rect.top - maxDist; const dist = Math.min(maxDist, Math.sqrt(x * x + y * y)); const angle = Math.atan2(y, x); joystick.x = (Math.cos(angle) * dist) / maxDist; joystick.y = (Math.sin(angle) * dist) / maxDist; base.firstElementChild.style.transform = `translate(${joystick.x * maxDist}px, ${joystick.y * maxDist}px)`; }
-            resetJoystick(joystick, handle) { joystick.active = false; joystick.pointerId = -1; joystick.x = 0; joystick.y = 0; handle.style.transform = 'translate(0, 0)'; }
+
+            handlePointerDown(e) {
+                if (!e.target.closest('.joystick-zone')) return;
+                e.preventDefault();
+                if (e.currentTarget.id === 'joystick-zone-left') {
+                    joystickLeft.active = true;
+                    joystickLeft.pointerId = e.pointerId;
+                } else {
+                    joystickRight.active = true;
+                    joystickRight.pointerId = e.pointerId;
+                }
+                this.activePointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
+            }
+
+            handlePointerMove(e) {
+                if (joystickLeft.active && e.pointerId === joystickLeft.pointerId) {
+                    this.updateJoystick(e, joystickLeft, document.getElementById('joystick-base-left'));
+                }
+                if (joystickRight.active && e.pointerId === joystickRight.pointerId) {
+                    this.updateJoystick(e, joystickRight, document.getElementById('joystick-base-right'));
+                }
+            }
+
+            handlePointerUp(e) {
+                if (e.pointerId === joystickLeft.pointerId) {
+                    this.resetJoystick(joystickLeft, document.getElementById('joystick-handle-left'));
+                }
+                if (e.pointerId === joystickRight.pointerId) {
+                    this.resetJoystick(joystickRight, document.getElementById('joystick-handle-right'));
+                }
+                this.activePointers.delete(e.pointerId);
+            }
+
+            updateJoystick(e, joystick, base) {
+                const rect = base.getBoundingClientRect();
+                const maxDist = rect.width / 2;
+                const x = e.clientX - rect.left - maxDist;
+                const y = e.clientY - rect.top - maxDist;
+                const dist = Math.min(maxDist, Math.sqrt(x * x + y * y));
+                const angle = Math.atan2(y, x);
+                joystick.x = (Math.cos(angle) * dist) / maxDist;
+                joystick.y = (Math.sin(angle) * dist) / maxDist;
+                base.firstElementChild.style.transform = `translate(${joystick.x * maxDist}px, ${joystick.y * maxDist}px)`;
+            }
+
+            resetJoystick(joystick, handle) {
+                joystick.active = false;
+                joystick.pointerId = -1;
+                joystick.x = 0;
+                joystick.y = 0;
+                handle.style.transform = 'translate(0, 0)';
+            }
+
             onWindowResize() { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); cssRenderer.setSize(window.innerWidth, window.innerHeight); }
 
             animate() {
@@ -680,12 +762,12 @@
             toggleDoorState(door) {
                 door.isOpen = !door.isOpen;
             }
-            
+
             updateCamera() {
                 const delta = clock.getDelta();
                 cameraPivot.rotation.x -= joystickRight.y * 2.5 * delta;
                 cameraPivot.rotation.x = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, cameraPivot.rotation.x));
-                
+
                 let effectiveDistance = isFirstPerson ? 0.01 : desiredThirdPersonCameraDistance;
                 camera.position.set(0, 0, effectiveDistance);
                 camera.updateMatrixWorld();
@@ -700,7 +782,7 @@
                     new THREE.Vector3(-width/2 + buffer, buffer, -depth/2 + buffer),
                     new THREE.Vector3(width/2 - buffer, wallHeight - buffer, depth/2 - buffer)
                 );
-                
+
                 if (!roomBounds.containsPoint(cameraWorldPos)) {
                     const clampedPos = cameraWorldPos.clone().clamp(roomBounds.min, roomBounds.max);
                     const pivotWorldPos = new THREE.Vector3();
