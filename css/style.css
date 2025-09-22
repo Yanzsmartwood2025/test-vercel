@@ -91,6 +91,13 @@ html { scroll-behavior: smooth; }
 .google-ring .user-avatar-ring {
     background: conic-gradient(#4285F4, #DB4437, #F4B400, #0F9D58, #4285F4);
     animation: subtle-rotate 4s linear infinite;
+    /* 3D/Glow Effect */
+    box-shadow:
+        /* Outer glow */
+        0 0 8px 2px rgba(76, 175, 80, 0.6),
+        /* Inner bevel for 3D effect */
+        inset 0 2px 2px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 2px rgba(0, 0, 0, 0.4);
 }
 
 .facebook-ring .user-avatar-ring {

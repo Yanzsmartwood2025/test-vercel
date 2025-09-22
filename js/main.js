@@ -338,7 +338,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function setupGlobalUIListeners() {
         const googleLoginButtonModal = document.getElementById('google-login-button-modal');
-        if(googleLoginButtonModal) googleLoginButtonModal.addEventListener('click', () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e => console.error(e)));
+        if(googleLoginButtonModal) googleLoginButtonModal.addEventListener('click', () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e => console.error("Google Sign-In Error:", e)));
+
+        const facebookLoginButtonModal = document.getElementById('facebook-login-button-modal');
+        if(facebookLoginButtonModal) facebookLoginButtonModal.addEventListener('click', () => {
+            console.log("Attempting Facebook login...");
+            auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).catch(e => {
+                console.error("Facebook Sign-In Error:", e);
+                alert("El inicio de sesión con Facebook no está configurado. Por favor, contacta al administrador del sitio.");
+            });
+        });
+
+        const appleLoginButtonModal = document.getElementById('apple-login-button-modal');
+        if(appleLoginButtonModal) appleLoginButtonModal.addEventListener('click', () => {
+            console.log("Attempting Apple login...");
+            auth.signInWithPopup(new firebase.auth.OAuthProvider('apple.com')).catch(e => {
+                console.error("Apple Sign-In Error:", e);
+                alert("El inicio de sesión con Apple no está configurado. Por favor, contacta al administrador del sitio.");
+            });
+        });
+
         const authModal = document.getElementById('auth-modal');
         const closeAuthModalButton = document.getElementById('close-auth-modal-button');
         if(closeAuthModalButton) closeAuthModalButton.addEventListener('click', () => authModal.classList.add('hidden'));
