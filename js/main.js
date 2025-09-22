@@ -287,6 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
             authContainer.innerHTML = `
                 <div class="relative">
                     <button id="user-menu-button" title="Mi Cuenta" class="user-avatar-ring-container transition-transform hover:scale-110 ${ringClass}">
+                        <div class="user-avatar-ring"></div>
                         ${userImage}
                     </button>
                     <div id="user-menu-dropdown" class="hidden absolute top-full right-0 mt-2 w-56 bg-[var(--yanz-header-bg)] border border-gray-700 rounded-lg shadow-xl z-50">
