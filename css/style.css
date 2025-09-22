@@ -64,3 +64,59 @@ html { scroll-behavior: smooth; }
     display: block;
     animation: fadeIn 0.5s ease-in-out;
 }
+
+/* =================================================================
+   User Avatar Premium Ring Styles
+   ================================================================= */
+
+@keyframes subtle-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.user-avatar-ring-container {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 2px; /* This padding creates the space for the ring's thickness */
+    border-radius: 9999px; /* Make the container circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Google Ring --- */
+.google-ring { /* Apply gradient and animation directly to the container */
+    background: conic-gradient(
+        #4285F4, #DB4437, #F4B400, #0F9D58, #4285F4
+    );
+    animation: subtle-rotate 4s linear infinite;
+}
+
+/* --- Facebook Ring (Future) --- */
+.facebook-ring {
+    background: #1877F2;
+}
+
+/* --- Apple Ring (Future) --- */
+.apple-ring {
+    background: #FFFFFF;
+}
+
+/* The actual image or span inside the container */
+.user-avatar-ring-container img,
+.user-avatar-ring-container span {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    object-fit: cover;
+    background-color: var(--yanz-header-bg); /* Match header to hide the ring behind */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* The image sits on top of the container's background */
+}
