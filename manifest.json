@@ -4,19 +4,19 @@
   "description": "Diseño, tecnología y la nobleza de la madera para un estilo de vida moderno.",
   "icons": [
     {
-      "src": "/assets/images/icon-192.png",
+      "src": "/assets/images/pwa/icon-192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any"
     },
     {
-      "src": "/assets/images/icon-512.png",
+      "src": "/assets/images/pwa/icon-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"
     },
     {
-      "src": "/assets/images/icon-maskable.png",
+      "src": "/assets/images/pwa/icon-maskable.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "maskable"
