@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>Simulador de Habitación 3D v9 (Revisado)</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000; font-family: sans-serif; }
+        #container3d, #containerUI { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; }
+        #containerUI { pointer-events: none; }
+        #containerUI > div, #containerUI > button { pointer-events: auto; }
+        .joystick-zone { position: absolute; bottom: 5%; width: 50%; height: 220px; display: flex; justify-content: center; align-items: center; -webkit-user-select: none; user-select: none; }
+        #joystick-zone-left { left: 0; }
+        #joystick-zone-right { right: 0; }
+        .joystick-base { width: 120px; height: 120px; background-color: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 50%; position: relative; backdrop-filter: blur(5px); }
+        .joystick-handle { width: 60px; height: 60px; background-color: rgba(255, 255, 255, 0.35); border-radius: 50%; position: absolute; top: 30px; left: 30px; cursor: grab; touch-action: none; }
+        #light-controls { position: absolute; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 10; }
+        .control-button { /* Unified style for light and vibration buttons */
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+        }
+        .control-button.active {
+            background-color: rgba(255, 255, 150, 0.8); /* Yellow for active lights */
+            border-color: rgba(255, 255, 150, 1);
+        }
+        #vibration-button.active { /* Green for active vibration */
+            background-color: rgba(40, 167, 69, 0.8);
+            border-color: rgba(40, 167, 69, 1);
+        }
+        .control-button svg { width: 28px; height: 28px; color: rgba(255, 255, 255, 0.7); pointer-events: none; }
+        .control-button.active svg { color: #000; }
+        #color-palette { background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); border-radius: 10px; padding: 10px; display: none; flex-direction: column; gap: 8px; z-index: 10; }
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.2s;
+        }
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+        .color-swatch.off {
+            background-color: #333;
+            position: relative;
+        }
+        .color-swatch.off::before {
+            content: 'X';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .interaction-button { background-color: rgba(0, 123, 255, 0.8); color: white; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; border: 1px solid rgba(255, 255, 255, 0.5); transition: opacity 0.3s; opacity: 0; pointer-events: none; }
+        .interaction-button.visible { opacity: 1; pointer-events: auto; }
+        #remote-control { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: rgba(30, 30, 30, 0.9); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 15px; display: none; flex-direction: column; gap: 10px; align-items: center; z-index: 100; width: 150px; backdrop-filter: blur(10px); }
+        #remote-control button { width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer; color: white; font-size: 24px; background-color: #444; }
+        #power-button { background-color: #d9534f; }
+        .channel-controls { display: flex; gap: 10px; }
+        #tv-screen-content { width: 500px; height: 281px; background-color: black; display: none; }
+        #tv-screen-content video { width: 100%; height: 100%; }
+
+        /* --- Customization Menu Styles --- */
+        #menu-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 101;
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #customization-panel {
+            position: fixed;
+            top: 0;
+            left: -320px; /* Hidden by default */
+            width: 300px;
+            height: 100%;
+            background-color: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 10px;
+            z-index: 100;
+            transition: left 0.3s ease-in-out;
+            overflow-y: auto;
+        }
+        #customization-panel.visible {
+            left: 0;
+        }
+        #customization-panel h2 {
+            text-align: center;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+        }
+        .customization-section {
+            margin-top: 20px;
+        }
+        .customization-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #ccc;
+        }
+        .swatches {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #fff;
+            transition: transform 0.2s;
+        }
+        .swatch:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="container3d"></div>
+    <div id="containerUI">
+        <button id="menu-toggle">☰</button>
+        <div id="customization-panel">
+            <h2>Personalizar</h2>
+            <div class="customization-section">
+                <h3>Piso</h3>
+                <div class="swatches" data-target="floor">
+                    <div class="swatch" data-material="floor" style="background-color: #4a3f35;"></div>
+                    <div class="swatch" data-material="wood_light" style="background-color: #D2B48C;"></div>
+                    <div class="swatch" data-material="wood_dark" style="background-color: #8B4513;"></div>
+                    <div class="swatch" data-material="floor_tiles_light" style="background-color: #D3D3D3;"></div>
+                    <div class="swatch" data-material="floor_carpet_dark" style="background-color: #36454F;"></div>
+                </div>
+            </div>
+            <div class="customization-section">
+                <h3>Paredes</h3>
+                <div class="swatches" data-target="walls">
+                    <div class="swatch" data-material="wall" style="background-color: #f0f0f0;"></div>
+                    <div class="swatch" data-material="wall_blue" style="background-color: #a7c4cc;"></div>
+                    <div class="swatch" data-material="wall_beige" style="background-color: #e3d9c6;"></div>
+                    <div class="swatch" data-material="wall_green_pastel" style="background-color: #B2D8B2;"></div>
+                    <div class="swatch" data-material="wall_dark_grey" style="background-color: #444444;"></div>
+                </div>
+            </div>
+            <div class="customization-section">
+                <h3>Mueble TV</h3>
+                <div class="swatches" data-target="tv_stand">
+                    <div class="swatch" data-material="tvStand" style="background-color: #212121;"></div>
+                    <div class="swatch" data-material="tv_stand_white" style="background-color: #e0e0e0;"></div>
+                    <div class="swatch" data-material="tv_stand_wood" style="background-color: #6f4e37;"></div>
+                    <div class="swatch" data-material="tv_stand_metal" style="background-color: #A9A9A9;"></div>
+                    <div class="swatch" data-material="tv_stand_glass" style="background-color: #ADD8E6; opacity: 0.7;"></div>
+                </div>
+            </div>
+            <div class="customization-section">
+                <h3>Puerta</h3>
+                <div class="swatches" data-target="door">
+                    <div class="swatch" data-material="door" style="background-color: #6f4e37;"></div>
+                    <div class="swatch" data-material="door_black" style="background-color: #1a1a1a;"></div>
+                    <div class="swatch" data-material="door_white" style="background-color: #f5f5f5;"></div>
+                    <div class="swatch" data-material="door_glass" style="background-color: #ADD8E6; opacity: 0.7;"></div>
+                    <div class="swatch" data-material="door_metal" style="background-color: #708090;"></div>
+                </div>
+            </div>
+             <div class="customization-section">
+                <h3>Techo</h3>
+                <div class="swatches" data-target="ceiling">
+                    <div class="swatch" data-material="ceiling" style="background-color: #ffffff;"></div>
+                    <div class="swatch" data-material="ceiling_dark" style="background-color: #555555;"></div>
+                    <div class="swatch" data-material="ceiling_light_blue" style="background-color: #ADD8E6;"></div>
+                    <div class="swatch" data-material="ceiling_wood_light" style="background-color: #D2B48C;"></div>
+                    <div class="swatch" data-material="ceiling_concrete" style="background-color: #808080;"></div>
+                    <div class="swatch" data-material="ceiling_dark_wood" style="background-color: #4a2c00;"></div>
+                </div>
+            </div>
+        </div>
+        <div id="joystick-zone-left" class="joystick-zone">
+            <div id="joystick-base-left" class="joystick-base">
+                <div id="joystick-handle-left" class="joystick-handle"></div>
+            </div>
+        </div>
+        <div id="joystick-zone-right" class="joystick-zone"><div id="joystick-base-right" class="joystick-base"><div id="joystick-handle-right" class="joystick-handle"></div></div></div>
+        <div id="light-controls">
+            <button id="spotlights-toggle" class="control-button" title="Focos"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.512 1.424l-1.128 1.581a2.25 2.25 0 00-.34 1.536V21a2.25 2.25 0 002.25 2.25h3.375c1.24 0 2.25-1.01 2.25-2.25v-5.642a2.25 2.25 0 00-.34-1.536l-1.128-1.581a2.25 2.25 0 01-.512-1.424V3.104a2.25 2.25 0 00-3.375 0z" /></svg></button>
+            <button id="led-strips-toggle" class="control-button" title="Tiras LED"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" /></svg></svg></button>
+            <button id="vibration-button" class="control-button" title="Vibración">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25A9.75 9.75 0 0 0 2.25 12c0 5.385 4.365 9.75 9.75 9.75s9.75-4.365 9.75-9.75S17.625 2.25 12 2.25a9.75 9.75 0 0 0-1.875 0ZM12 17.25V12h.75a.75.75 0 0 1 .75.75v.75a.75.75 0 0 0 .75.75h.75a.75.75 0 0 0 .75-.75v-.75a.75.75 0 0 1 .75-.75h.75a.75.75 0 0 1 .75.75v.75c0 .414.336.75.75.75h.75a.75.75 0 0 0 .75-.75V12a9.75 9.75 0 0 0-9.75-9.75Z" />
+                </svg>
+            </button>
+            <div id="color-palette">
+                <div class="color-swatch" style="background-color: #ffffff;" data-color="#ffffff"></div>
+                <div class="color-swatch" style="background-color: #ffff8d;" data-color="#ffff8d"></div>
+                <div class="color-swatch" style="background-color: #8dff8d;" data-color="#8dff8d"></div>
+                <div class="color-swatch" style="background-color: #8dc4ff;" data-color="#8dc4ff"></div>
+                <div class="color-swatch" style="background-color: #ff8d8d;" data-color="#ff8d8d"></div>
+                <div class="color-swatch off" data-color="off"></div>
+            </div>
+        </div>
+        <div id="remote-control">
+            <button id="power-button">⏻</button>
+            <div class="channel-controls"><button id="prev-channel-button">◄</button><button id="next-channel-button">►</button></div>
+        </div>
+    </div>
+    <div id="tv-screen-content"><video id="tv-video" loop muted playsinline></video></div>
+
+    <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
+
+        // --- Global Variables & State ---
+        let scene, camera, renderer, cssRenderer, clock;
+        let character, cameraPivot;
+        let tvStandPosition = new THREE.Vector3();
+        let tvInteractionButton, xboxInteractionButton;
+        const roomSize = { width: 10, height: 3.5, depth: 12 };
+        const characterRadius = 0.3;
+
+        const joystickLeft = { x: 0, y: 0, active: false, pointerId: -1 };
+        const joystickRight = { x: 0, y: 0, active: false, pointerId: -1 };
+        let desiredThirdPersonCameraDistance = 2.5;
+        let isFirstPerson = false;
+
+        let isJumping = false;
+        let verticalVelocity = 0;
+        const gravity = -4.8;
+        const jumpStrength = 2.4;
+
+        let bedMinX, bedMaxX, bedMinZ, bedMaxZ, bedTopY;
+
+        const interactionState = {
+            isXboxOn: false, isTvOn: false, currentChannel: 0, showRemote: false,
+            interactionDistance: 3.5
+        };
+        const videoChannels = [
+            'https://cdn.coverr.co/videos/coverr-a-gamer-playing-a-first-person-shooter-game-4835/1080p.mp4',
+            'https://cdn.coverr.co/videos/coverr-a-man-playing-a-video-game-on-a-playstation-6105/1080p.mp4',
+            'https://cdn.coverr.co/videos/coverr-a-man-and-a-woman-in-a-movie-theater-4213/1080p.mp4',
+            'https://cdn.coverr.co/videos/coverr-a-person-playing-a-nintendo-switch-4694/1080p.mp4',
+            'https://cdn.coverr.co/videos/coverr-a-view-of-a-beautiful-waterfall-in-the-mountains-5120/1080p.mp4'
+        ];
+
+        let vibrationAllowed = false;
+
+        // --- Main App Class ---
+        class RoomSimulator {
+            constructor() {
+                this.activePointers = new Map();
+                this.lightState = { spotlights: false, ledStrips: false, ledColor: '#ffffff' };
+                this.spotlightBulbs = [];
+                this.ledStrips = [];
+                this.INTENSITY = { SPOTLIGHTS: 0.8, LED_STRIPS: 0.9, AMBIENT: 0.1 };
+                this.materials = {};
+                this.characterParts = {};
+                this.tvScreenSurface = null;
+                this.roomObjects = { walls: [], tv_stand: [] };
+                
+                try {
+                    this.init();
+                } catch (error) {
+                    console.error("Error al inicializar la simulación:", error);
+                    document.body.innerHTML = `<div style="color: white; padding: 20px;">Error al iniciar. Revisa la consola (F12).</div>`;
+                }
+            }
+
+            init() {
+                clock = new THREE.Clock();
+                this.setupScene();
+                this.createMaterials();
+                this.createRoom();
+                this.createCharacter();
+                this.setupEventListeners();
+                this.updateRoomLighting();
+                this.animate();
+                this.updateVibrationButtonState();
+            }
+
+            setupScene() {
+                scene = new THREE.Scene();
+                scene.background = new THREE.Color(0x101010);
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.shadowMap.enabled = true;
+                document.getElementById('container3d').appendChild(renderer.domElement);
+                cssRenderer = new CSS3DRenderer();
+                cssRenderer.setSize(window.innerWidth, window.innerHeight);
+                document.getElementById('containerUI').appendChild(cssRenderer.domElement);
+                this.hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0);
+                scene.add(this.hemisphereLight);
+                scene.add(new THREE.AmbientLight(0xffffff, this.INTENSITY.AMBIENT));
+            }
+            
+            createMaterials() {
+                const textureLoader = new THREE.TextureLoader();
+                const woodTextureLight = textureLoader.load('https://threejs.org/examples/textures/hardwood2_diffuse.jpg');
+                const woodTextureDark = textureLoader.load('https://threejs.org/examples/textures/wood/hardwood2_dark.jpg');
+                const concreteTexture = textureLoader.load('https://threejs.org/examples/textures/hardwood2_diffuse.jpg');
+                const tilesTexture = textureLoader.load('https://threejs.org/examples/textures/tiles/tiles_diffuse.jpg');
+                tilesTexture.wrapS = THREE.RepeatWrapping;
+                tilesTexture.wrapT = THREE.RepeatWrapping;
+                tilesTexture.repeat.set(4, 4);
+
+                this.materials = {
+                    floor: new THREE.MeshStandardMaterial({ color: 0x4a3f35, roughness: 0.8 }),
+                    wall: new THREE.MeshStandardMaterial({ color: 0xf0f0f0, roughness: 0.9 }),
+                    ceiling: new THREE.MeshStandardMaterial({ color: 0xffffff }),
+                    door: new THREE.MeshStandardMaterial({ color: 0x6f4e37, roughness: 0.6 }),
+                    tvStand: new THREE.MeshStandardMaterial({ color: 0x212121, roughness: 0.4 }),
+                    wood_light: new THREE.MeshStandardMaterial({ map: woodTextureLight, roughness: 0.8 }),
+                    wood_dark: new THREE.MeshStandardMaterial({ map: woodTextureDark, roughness: 0.8 }),
+                    floor_tiles_light: new THREE.MeshStandardMaterial({ map: tilesTexture, roughness: 0.6 }),
+                    floor_carpet_dark: new THREE.MeshStandardMaterial({ color: 0x36454F, roughness: 0.9 }),
+                    wall_blue: new THREE.MeshStandardMaterial({ color: 0xa7c4cc, roughness: 0.9 }),
+                    wall_beige: new THREE.MeshStandardMaterial({ color: 0xe3d9c6, roughness: 0.9 }),
+                    wall_green_pastel: new THREE.MeshStandardMaterial({ color: 0xB2D8B2, roughness: 0.9 }),
+                    wall_dark_grey: new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.9 }),
+                    tv_stand_white: new THREE.MeshStandardMaterial({ color: 0xe0e0e0, roughness: 0.4 }),
+                    tv_stand_wood: new THREE.MeshStandardMaterial({ color: 0x6f4e37, roughness: 0.5 }),
+                    tv_stand_metal: new THREE.MeshStandardMaterial({ color: 0xA9A9A9, roughness: 0.2, metalness: 0.8 }),
+                    tv_stand_glass: new THREE.MeshStandardMaterial({ color: 0xADD8E6, transparent: true, opacity: 0.7, roughness: 0.1 }),
+                    door_black: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.6 }),
+                    door_white: new THREE.MeshStandardMaterial({ color: 0xf5f5f5, roughness: 0.6 }),
+                    door_glass: new THREE.MeshStandardMaterial({ color: 0xADD8E6, transparent: true, opacity: 0.7, roughness: 0.1 }),
+                    door_metal: new THREE.MeshStandardMaterial({ color: 0x708090, roughness: 0.3, metalness: 0.7 }),
+                    ceiling_dark: new THREE.MeshStandardMaterial({ color: 0x555555 }),
+                    ceiling_light_blue: new THREE.MeshStandardMaterial({ color: 0xADD8E6 }),
+                    ceiling_wood_light: new THREE.MeshStandardMaterial({ map: woodTextureLight, roughness: 0.8 }),
+                    ceiling_concrete: new THREE.MeshStandardMaterial({ map: concreteTexture, roughness: 0.9 }),
+                    ceiling_dark_wood: new THREE.MeshStandardMaterial({ color: 0x4a2c00, roughness: 0.8 }),
+                    bedFrame: new THREE.MeshStandardMaterial({ color: 0xdddddd }),
+                    mattress: new THREE.MeshStandardMaterial({ color: 0xfafafa }),
+                    blackMatte: new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.4 }),
+                    lightWood: new THREE.MeshStandardMaterial({ color: 0x9c7b61, roughness: 0.8 }),
+                    darkWood: new THREE.MeshStandardMaterial({ color: 0x3d2d1d, roughness: 0.8 }),
+                    marble: new THREE.MeshStandardMaterial({ color: 0xacacac, roughness: 0.2, metalness: 0.1 }),
+                    lightOff: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, emissive: 0x000000 }),
+                    lightOn: new THREE.MeshStandardMaterial({ color: 0xFFFF8D, emissive: 0xFFFF8D, emissiveIntensity: 2 }),
+                    ledOff: new THREE.MeshStandardMaterial({ color: 0x080808, emissive: 0x000000 }),
+                    ledOn: new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 1.5 }),
+                    xboxOn: new THREE.MeshStandardMaterial({ color: 0x10de10, emissive: 0x10de10, emissiveIntensity: 2 }),
+                    character: new THREE.MeshStandardMaterial({ color: 0x335599, roughness: 0.7 })
+                };
+            }
+
+            createRoom() {
+                const { width, height, depth } = roomSize;
+                const floor = new THREE.Mesh(new THREE.PlaneGeometry(width, depth), this.materials.floor);
+                floor.rotation.x = -Math.PI / 2;
+                floor.receiveShadow = true;
+                scene.add(floor);
+                this.roomObjects.floor = floor;
+
+                const ceiling = new THREE.Mesh(new THREE.BoxGeometry(width, 0.2, depth), this.materials.ceiling);
+                ceiling.position.y = height - 0.1;
+                ceiling.receiveShadow = true;
+                scene.add(ceiling);
+                this.roomObjects.ceiling = ceiling;
+
+                const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, height, depth), this.materials.wall);
+                leftWall.position.set(-width / 2, height / 2, 0);
+                leftWall.receiveShadow = true;
+                scene.add(leftWall);
+                this.roomObjects.walls.push(leftWall);
+
+                this.createFrontWallWithBed();
+                this.createBackWallWithDoor();
+                this.createDecorativeWall();
+                this.createTVStandAndTV();
+            }
+            
+            createDecorativeWall() {
+                const { height, depth, width } = roomSize;
+                const wallGroup = new THREE.Group();
+                const wallX = width / 2 - 1;
+                const baseWall = new THREE.Mesh(new THREE.BoxGeometry(0.05, height, depth), this.materials.darkWood);
+                baseWall.position.set(wallX, height / 2, 0);
+                baseWall.receiveShadow = true;
+                wallGroup.add(baseWall);
+                for (let i = 0; i < 40; i++) {
+                    const panelHeight = Math.random() * 1.5 + 0.4;
+                    const panelWidth = Math.random() * 1.0 + 0.5;
+                    const panelDepth = Math.random() * 0.2 + 0.1;
+                    const panel = new THREE.Mesh(new THREE.BoxGeometry(panelDepth, panelHeight, panelWidth), this.materials.darkWood);
+                    panel.position.set(wallX + panelDepth / 2, Math.random() * height, (Math.random() - 0.5) * depth);
+                    panel.castShadow = true;
+                    panel.receiveShadow = true;
+                    wallGroup.add(panel);
+                }
+                scene.add(wallGroup);
+            }
+
+            createTVStandAndTV() {
+                const { width, depth } = roomSize;
+                const tvStandGroup = new THREE.Group();
+                const standDepth = 0.8, standHeight = 1.0, standWidth = 5.5;
+                const doorW = 1.5, doorG = 0.6, closetWX = width / 2 - 1;
+                const doorCX = closetWX - doorG - (doorW / 2);
+                const doorLeftEdge = doorCX - doorW / 2;
+                const spaceLeftOfDoor = doorLeftEdge - (-width / 2);
+                const standCenterX = (-width / 2) + (spaceLeftOfDoor / 2);
+                tvStandPosition.set(standCenterX, standHeight / 2, depth / 2 - standDepth / 2);
+                tvStandGroup.position.copy(tvStandPosition);
+                tvStandGroup.rotation.y = Math.PI;
+                scene.add(tvStandGroup);
+
+                const centerSectionWidth = 1.5;
+                const sideSectionWidth = (standWidth - centerSectionWidth) / 2;
+                const leftSection = new THREE.Mesh(new THREE.BoxGeometry(sideSectionWidth, standHeight, standDepth), this.materials.tvStand);
+                leftSection.position.x = - (standWidth / 2) + (sideSectionWidth / 2);
+                leftSection.castShadow = true;
+                tvStandGroup.add(leftSection);
+                this.roomObjects.tv_stand.push(leftSection);
+
+                const rightSection = new THREE.Mesh(new THREE.BoxGeometry(sideSectionWidth, standHeight, standDepth), this.materials.tvStand);
+                rightSection.position.x = (standWidth / 2) - (sideSectionWidth / 2);
+                rightSection.castShadow = true;
+                tvStandGroup.add(rightSection);
+                this.roomObjects.tv_stand.push(rightSection);
+
+                const xboxWidth = 0.151 * 1.8, xboxHeight = 0.301 * 1.8, xboxDepth = 0.151 * 1.8;
+                const xbox = new THREE.Mesh(new THREE.BoxGeometry(xboxWidth, xboxHeight, xboxDepth), this.materials.blackMatte);
+                xbox.position.set(0, -standHeight/2 + 0.05 + xboxHeight/2, 0);
+                xbox.castShadow = true;
+                tvStandGroup.add(xbox);
+                this.xboxPowerLight = new THREE.Mesh(new THREE.SphereGeometry(0.02, 16, 16), this.materials.lightOff);
+                this.xboxPowerLight.position.set(0, 0.2, xboxDepth / 2 + 0.01);
+                xbox.add(this.xboxPowerLight);
+
+                const tvGroup = new THREE.Group();
+                tvGroup.position.y = standHeight / 2 + 0.95;
+                tvStandGroup.add(tvGroup);
+                
+                const tvWidth = 5.0, tvHeight = 1.70;
+                const casingDepth = 0.08, bezelSize = 0.04;
+
+                const tvCasing = new THREE.Mesh(new THREE.BoxGeometry(tvWidth, tvHeight, casingDepth), this.materials.blackMatte);
+                tvGroup.add(tvCasing);
+
+                this.tvScreenSurface = new THREE.Mesh(new THREE.BoxGeometry(tvWidth - bezelSize, tvHeight - bezelSize, 0.01), this.materials.blackMatte);
+                this.tvScreenSurface.position.z = casingDepth / 2;
+                tvGroup.add(this.tvScreenSurface);
+
+                const videoDiv = document.getElementById('tv-screen-content');
+                const cssScreen = new CSS3DObject(videoDiv);
+                cssScreen.position.z = casingDepth / 2 + 0.01;	
+                const scale = tvWidth / videoDiv.offsetWidth;
+                cssScreen.scale.set(scale, scale, scale);
+                tvGroup.add(cssScreen);
+
+                const tvButtonEl = document.createElement('button');
+                tvButtonEl.textContent = 'Usar TV';
+                tvButtonEl.className = 'interaction-button';
+                tvButtonEl.onclick = () => {
+                    interactionState.showRemote = true;
+                    if (!interactionState.isTvOn) this.toggleTvPower();
+                };
+                tvInteractionButton = new CSS3DObject(tvButtonEl);
+                tvInteractionButton.position.z = casingDepth / 2 + 0.2;
+                tvInteractionButton.scale.set(0.005, 0.005, 0.005);
+                tvGroup.add(tvInteractionButton);
+
+                const xboxButtonEl = document.createElement('button');
+                xboxButtonEl.textContent = 'Encender Xbox';
+                xboxButtonEl.className = 'interaction-button';
+                xboxButtonEl.onclick = () => this.toggleXboxPower();
+                xboxInteractionButton = new CSS3DObject(xboxButtonEl);
+                xboxInteractionButton.position.copy(xbox.position);
+                xboxInteractionButton.position.z += xboxDepth / 2 + 0.2;
+                xboxInteractionButton.scale.set(0.005, 0.005, 0.005);
+                tvStandGroup.add(xboxInteractionButton);
+            }
+
+            createFrontWallWithBed() {
+                const { width, height, depth } = roomSize;
+                const frontWallGroup = new THREE.Group();
+                frontWallGroup.position.z = -depth / 2;
+                scene.add(frontWallGroup);
+                const backWall = new THREE.Mesh(new THREE.BoxGeometry(width, height, 0.2), this.materials.wall);
+                backWall.position.y = height/2;
+                backWall.receiveShadow = true;
+                frontWallGroup.add(backWall);
+                this.roomObjects.walls.push(backWall);
+
+                const panelWidth = width - 1;
+                const panelX = ((-width/2) + (width/2 - 1)) / 2;
+                const mainPanel = new THREE.Group();
+                mainPanel.position.x = panelX;
+                frontWallGroup.add(mainPanel);
+                const p1 = new THREE.Mesh(new THREE.BoxGeometry(panelWidth, 1.2, 0.08), this.materials.lightWood);
+                p1.position.set(0, height - 0.6, 0.15);
+                mainPanel.add(p1);
+                const p2 = new THREE.Mesh(new THREE.BoxGeometry(panelWidth, 1.0, 0.08), this.materials.marble);
+                p2.position.set(0, p1.position.y - 1.1, 0.15);
+                mainPanel.add(p2);
+                const p3_height = height - p1.geometry.parameters.height - p2.geometry.parameters.height;
+                const p3 = new THREE.Mesh(new THREE.BoxGeometry(panelWidth, p3_height, 0.08), this.materials.lightWood);
+                p3.position.set(0, p2.position.y - (p2.geometry.parameters.height/2 + p3_height/2), 0.15);
+                mainPanel.add(p3);
+
+                const bedWidth = 5, bedLength = 5;
+                const bedGroup = new THREE.Group();
+                bedGroup.position.set(panelX, 0, -depth/2 + bedLength/2 + 0.2);
+                scene.add(bedGroup);
+
+                const base = new THREE.Mesh(new THREE.BoxGeometry(bedWidth, 0.3, bedLength), this.materials.bedFrame);
+                base.position.y = 0.15;
+                base.castShadow = true;
+                bedGroup.add(base);
+
+                const mattress = new THREE.Mesh(new THREE.BoxGeometry(bedWidth - 0.1, 0.2, bedLength - 0.1), this.materials.mattress);
+                mattress.position.y = base.position.y + 0.3/2 + 0.2/2;
+                mattress.castShadow = true;
+                bedGroup.add(mattress);
+
+                bedMinX = bedGroup.position.x - bedWidth / 2;
+                bedMaxX = bedGroup.position.x + bedWidth / 2;
+                bedMinZ = bedGroup.position.z - bedLength / 2;
+                bedMaxZ = bedGroup.position.z + bedLength / 2;
+                bedTopY = bedGroup.position.y + 0.15 + 0.3 + 0.2;
+
+                this.createModernLedStrips(height, -depth/2, panelWidth, panelX);
+            }
+
+            createBackWallWithDoor() {
+                const { width, height, depth } = roomSize;
+                const doorWidth = 1.5, doorHeight = 2.1, doorGap = 0.6;
+                const closetWallX = width / 2 - 1;
+                const doorCenterX = closetWallX - doorGap - (doorWidth / 2);
+                const frontWall = new THREE.Group();
+                frontWall.position.z = depth/2;
+                scene.add(frontWall);
+                const leftWallWidth = width / 2 + doorCenterX - doorWidth / 2;
+                const wallLeft = new THREE.Mesh(new THREE.BoxGeometry(leftWallWidth, height, 0.2), this.materials.wall);
+                wallLeft.position.set((-width/2 + leftWallWidth/2), height / 2, 0);
+                wallLeft.receiveShadow = true;
+                frontWall.add(wallLeft);
+                this.roomObjects.walls.push(wallLeft);
+
+                const rightWallWidth = width/2 - (doorCenterX + doorWidth/2);
+                const wallRight = new THREE.Mesh(new THREE.BoxGeometry(rightWallWidth, height, 0.2), this.materials.wall);
+                wallRight.position.set((width/2 - rightWallWidth/2), height / 2, 0);
+                wallRight.receiveShadow = true;
+                frontWall.add(wallRight);
+                this.roomObjects.walls.push(wallRight);
+
+                const wallTop = new THREE.Mesh(new THREE.BoxGeometry(doorWidth, height - doorHeight, 0.2), this.materials.wall);
+                wallTop.position.set(doorCenterX, doorHeight + (height - doorHeight) / 2, 0);
+                wallTop.receiveShadow = true;
+                frontWall.add(wallTop);
+                this.roomObjects.walls.push(wallTop);
+
+                const doorPanel = new THREE.Mesh(new THREE.BoxGeometry(doorWidth, doorHeight, 0.08), this.materials.door);
+                doorPanel.position.set(doorCenterX, doorHeight / 2, 0);
+                doorPanel.castShadow = true;
+                frontWall.add(doorPanel);
+                this.roomObjects.door = doorPanel;
+
+                this.createBlackSpotlights(height, depth/2);
+            }
+
+            createBlackSpotlights(height, z) {
+                const { width } = roomSize;
+                const fixtureRadius = 0.25, fixtureHeight = 0.05, bulbRadius = 0.1;
+                const lightPositions = [{x: -width/4, z: z - 3}, {x: width/4, z: z - 3}];
+                const fixtureMaterial = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.4 });
+                const y = height - 0.2;
+                lightPositions.forEach(pos => {
+                    const fixture = new THREE.Mesh(new THREE.CylinderGeometry(fixtureRadius, fixtureRadius, fixtureHeight, 32), fixtureMaterial);
+                    fixture.position.set(pos.x, y - fixtureHeight / 2, pos.z);
+                    fixture.castShadow = true;
+                    scene.add(fixture);
+                    const bulb = new THREE.Mesh(new THREE.SphereGeometry(bulbRadius, 16, 8), this.materials.lightOff);
+                    bulb.position.set(pos.x, y - fixtureHeight + 0.01, pos.z);
+                    scene.add(bulb);
+                    this.spotlightBulbs.push(bulb);
+                });
+            }
+            
+            createModernLedStrips(height, z, panelWidth, panelX) {
+                const stripWidth = 0.05;
+                const y = height - 0.2;
+                const stripGroup = new THREE.Group();
+                const pW_half = panelWidth / 2;
+                const pX = panelX;
+                const points = [ [pX - pW_half + 0.5, y, z + 1.5], [pX + pW_half - 0.5, y, z + 1.5], [pX + pW_half - 0.5, y, z + 3.5], [pX, y, z + 3.5], [pX, y, z + 5.5], [pX - pW_half + 0.5, y, z + 5.5] ];
+                for (let i = 0; i < points.length - 1; i++) {
+                    const start = new THREE.Vector3(...points[i]);
+                    const end = new THREE.Vector3(...points[i+1]);
+                    const length = start.distanceTo(end);
+                    const center = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
+                    const strip = new THREE.Mesh(new THREE.BoxGeometry(stripWidth, stripWidth, length), this.materials.ledOff);
+                    strip.position.copy(center);
+                    strip.lookAt(end);
+                    stripGroup.add(strip);
+                    this.ledStrips.push(strip);
+                }
+                scene.add(stripGroup);
+            }
+
+            createCharacter() {
+                character = new THREE.Group();
+                scene.add(character);
+                const torso = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.6, 0.25), this.materials.character);
+                torso.position.y = 1.1;
+                torso.castShadow = true;
+                character.add(torso);
+                this.characterParts.torso = torso;
+                const head = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.3, 0.3), this.materials.character);
+                head.position.y = 0.45;
+                torso.add(head);
+                this.characterParts.head = head;
+                const arm_L = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.5, 0.15), this.materials.character);
+                arm_L.position.set(0.275, 0.2, 0);
+                torso.add(arm_L);
+                this.characterParts.arm_L = arm_L;
+                const arm_R = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.5, 0.15), this.materials.character);
+                arm_R.position.set(-0.275, 0.2, 0);
+                torso.add(arm_R);
+                this.characterParts.arm_R = arm_R;
+                const leg_L = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.6, 0.2), this.materials.character);
+                leg_L.position.set(0.1, -0.6, 0);
+                torso.add(leg_L);
+                this.characterParts.leg_L = leg_L;
+                const leg_R = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.6, 0.2), this.materials.character);
+                leg_R.position.set(-0.1, -0.6, 0);
+                torso.add(leg_R);
+                this.characterParts.leg_R = leg_R;
+                cameraPivot = new THREE.Object3D();
+                head.add(cameraPivot);
+                cameraPivot.position.y = 0.1;
+                cameraPivot.add(camera);
+            }
+
+            // --- Interactions & State ---
+            toggleXboxPower() {
+                interactionState.isXboxOn = !interactionState.isXboxOn;
+                this.xboxPowerLight.material = interactionState.isXboxOn ? this.materials.xboxOn : this.materials.lightOff;
+                xboxInteractionButton.element.textContent = interactionState.isXboxOn ? 'Apagar Xbox' : 'Encender Xbox';
+            }
+            toggleTvPower() {
+                interactionState.isTvOn = !interactionState.isTvOn;
+                this.updateTvScreen();
+            }
+            changeChannel(direction) {
+                if (!interactionState.isTvOn) return;
+                interactionState.currentChannel = (interactionState.currentChannel + direction + videoChannels.length) % videoChannels.length;
+                this.updateTvScreen();
+            }
+            updateTvScreen() {
+                const videoEl = document.getElementById('tv-video');
+                const screenEl = document.getElementById('tv-screen-content');
+                if (interactionState.isTvOn) {
+                    videoEl.src = videoChannels[interactionState.currentChannel];
+                    videoEl.play().catch(e => console.warn("Video play interrupted."));
+                    screenEl.style.display = 'block';
+                } else {
+                    videoEl.pause();
+                    videoEl.src = '';
+                    screenEl.style.display = 'none';
+                    interactionState.showRemote = false; // Hide remote when TV is turned off
+                }
+            }
+            updateRoomLighting() {
+                let totalIntensity = this.INTENSITY.AMBIENT;
+                if (this.lightState.spotlights) {
+                    totalIntensity += this.INTENSITY.SPOTLIGHTS;
+                }
+                if (this.lightState.ledStrips) {
+                    totalIntensity += this.INTENSITY.LED_STRIPS;
+                    this.hemisphereLight.color.set(this.lightState.ledColor);
+                    this.materials.ledOn.color.set(this.lightState.ledColor);
+                    this.materials.ledOn.emissive.set(this.lightState.ledColor);
+                } else {
+                    this.hemisphereLight.color.set(0xffffff);
+                }
+
+                this.hemisphereLight.intensity = totalIntensity;
+                this.spotlightBulbs.forEach(bulb => bulb.material = this.lightState.spotlights ? this.materials.lightOn : this.materials.lightOff);
+                this.ledStrips.forEach(strip => strip.material = this.lightState.ledStrips ? this.materials.ledOn : this.materials.ledOff);
+            }
+
+            toggleCameraMode() {
+                isFirstPerson = !isFirstPerson;
+                character.visible = !isFirstPerson;
+            }
+
+            toggleVibration() {
+                const vibrationButton = document.getElementById('vibration-button');
+                if ('vibrate' in navigator) {
+                    vibrationAllowed = !vibrationAllowed;
+                    vibrationButton.classList.toggle('active', vibrationAllowed);
+                    if (vibrationAllowed) navigator.vibrate(200);
+                    else navigator.vibrate(0);
+                }
+            }
+
+            updateVibrationButtonState() {
+                const vibrationButton = document.getElementById('vibration-button');
+                if ('vibrate' in navigator) {
+                    vibrationButton.classList.toggle('active', vibrationAllowed);
+                } else {
+                    vibrationButton.classList.remove('active');
+                    vibrationButton.disabled = true;
+                    vibrationButton.title = 'Vibración no soportada';
+                }
+            }
+
+            // --- Event Listeners & Controls ---
+            setupEventListeners() {
+                document.getElementById('menu-toggle').onclick = () => {
+                    document.getElementById('customization-panel').classList.toggle('visible');
+                };
+
+                document.getElementById('customization-panel').onclick = (e) => {
+                    if (e.target.classList.contains('swatch')) {
+                        const targetName = e.target.parentElement.dataset.target;
+                        const materialName = e.target.dataset.material;
+                        const newMaterial = this.materials[materialName];
+                        if (!targetName || !newMaterial) return;
+
+                        const targetObject = this.roomObjects[targetName];
+                        if (Array.isArray(targetObject)) {
+                            targetObject.forEach(mesh => mesh.material = newMaterial);
+                        } else if (targetObject) {
+                            targetObject.material = newMaterial;
+                        }
+                        document.getElementById('customization-panel').classList.remove('visible');
+                    }
+                };
+
+                const uiContainer = document.getElementById('containerUI');
+                uiContainer.addEventListener('pointerdown', e => this.handlePointerDown(e));
+                window.addEventListener('pointermove', e => this.handlePointerMove(e));
+                window.addEventListener('pointerup', e => this.handlePointerUp(e));
+                window.addEventListener('pointercancel', e => this.handlePointerUp(e));
+                window.addEventListener('resize', () => this.onWindowResize());
+
+                document.getElementById('spotlights-toggle').onclick = () => {
+                    this.lightState.spotlights = !this.lightState.spotlights;
+                    document.getElementById('spotlights-toggle').classList.toggle('active', this.lightState.spotlights);
+                    this.updateRoomLighting();
+                };
+
+                document.getElementById('led-strips-toggle').onclick = () => {
+                    const palette = document.getElementById('color-palette');
+                    const isActive = palette.style.display === 'flex';
+                    palette.style.display = isActive ? 'none' : 'flex';
+                    document.getElementById('led-strips-toggle').classList.toggle('active', !isActive);
+                };
+                
+                // --- MEJORA --- Paleta de colores ya no se cierra sola.
+                document.getElementById('color-palette').onclick = (e) => {
+                    if (e.target.classList.contains('color-swatch')) {
+                        const color = e.target.dataset.color;
+                        this.lightState.ledStrips = (color !== 'off');
+                        if (this.lightState.ledStrips) {
+                            this.lightState.ledColor = color;
+                        }
+                        this.updateRoomLighting();
+                    }
+                };
+
+                document.getElementById('vibration-button').onclick = () => this.toggleVibration();
+                document.getElementById('power-button').onclick = () => this.toggleTvPower();
+                document.getElementById('prev-channel-button').onclick = () => this.changeChannel(-1);
+                document.getElementById('next-channel-button').onclick = () => this.changeChannel(1);
+
+                document.getElementById('joystick-handle-left').addEventListener('pointerup', (e) => {
+                    if (Math.abs(joystickLeft.x) < 0.1 && Math.abs(joystickLeft.y) < 0.1) this.toggleCameraMode();
+                });
+
+                document.getElementById('joystick-handle-right').addEventListener('pointerup', (e) => {
+                    if (!isJumping && Math.abs(joystickRight.x) < 0.1 && Math.abs(joystickRight.y) < 0.1) {
+                        isJumping = true;
+                        verticalVelocity = jumpStrength;
+                        if (vibrationAllowed && 'vibrate' in navigator) navigator.vibrate(50);
+                    }
+                });
+            }
+            handlePointerDown(e) { if (e.target.closest('.joystick-zone')) { e.preventDefault(); e.target.releasePointerCapture(e.pointerId); if (e.clientX < window.innerWidth / 2) { joystickLeft.active = true; joystickLeft.pointerId = e.pointerId; } else { joystickRight.active = true; joystickRight.pointerId = e.pointerId; } } this.activePointers.set(e.pointerId, {x: e.clientX, y: e.clientY}); }
+            handlePointerMove(e) { if (joystickLeft.active && e.pointerId === joystickLeft.pointerId) this.updateJoystick(e, joystickLeft, document.getElementById('joystick-base-left')); if (joystickRight.active && e.pointerId === joystickRight.pointerId) this.updateJoystick(e, joystickRight, document.getElementById('joystick-base-right')); }
+            handlePointerUp(e) { if (e.pointerId === joystickLeft.pointerId) this.resetJoystick(joystickLeft, document.getElementById('joystick-handle-left')); if (e.pointerId === joystickRight.pointerId) this.resetJoystick(joystickRight, document.getElementById('joystick-handle-right')); this.activePointers.delete(e.pointerId); }
+            updateJoystick(e, joystick, base) { const rect = base.getBoundingClientRect(); const maxDist = rect.width / 2; const x = e.clientX - rect.left - maxDist; const y = e.clientY - rect.top - maxDist; const dist = Math.min(maxDist, Math.sqrt(x * x + y * y)); const angle = Math.atan2(y, x); joystick.x = (Math.cos(angle) * dist) / maxDist; joystick.y = (Math.sin(angle) * dist) / maxDist; base.firstElementChild.style.transform = `translate(${joystick.x * maxDist}px, ${joystick.y * maxDist}px)`; }
+            resetJoystick(joystick, handle) { joystick.active = false; joystick.pointerId = -1; joystick.x = 0; joystick.y = 0; handle.style.transform = 'translate(0, 0)'; }
+            onWindowResize() { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); cssRenderer.setSize(window.innerWidth, window.innerHeight); }
+
+            // --- Game Loop (REFACTORIZADO) ---
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                const delta = clock.getDelta();
+                const time = clock.getElapsedTime();
+
+                this.updateCharacterMovement(delta, time);
+                this.handleCollisions();
+                this.updateCamera();
+                this.updateUI();
+
+                renderer.render(scene, camera);
+                cssRenderer.render(scene, camera);
+            }
+
+            updateCharacterMovement(delta, time) {
+                const moveDirection = new THREE.Vector3(joystickLeft.x, 0, joystickLeft.y);
+                character.rotation.y -= joystickRight.x * 2.5 * delta;
+                character.position.addScaledVector(moveDirection.applyAxisAngle(new THREE.Vector3(0,1,0), character.rotation.y), 4.0 * delta);
+
+                if (isJumping) {
+                    character.position.y += verticalVelocity * delta;
+                    verticalVelocity += gravity * delta;
+                    if (character.position.y <= 0) {
+                        character.position.y = 0;
+                        isJumping = false;
+                        verticalVelocity = 0;
+                    }
+                }
+
+                const moveSpeed = moveDirection.length();
+                if (moveSpeed > 0.1) {
+                    const walkCycle = time * 8;
+                    const swingAmount = 0.4;
+                    this.characterParts.arm_R.rotation.x = Math.sin(walkCycle) * swingAmount;
+                    this.characterParts.arm_L.rotation.x = Math.sin(walkCycle + Math.PI) * swingAmount;
+                    this.characterParts.leg_R.rotation.x = Math.sin(walkCycle + Math.PI) * swingAmount * 1.2;
+                    this.characterParts.leg_L.rotation.x = Math.sin(walkCycle) * swingAmount * 1.2;
+                } else {
+                    Object.values(this.characterParts).forEach(part => {
+                        if (part.rotation.x !== 0) part.rotation.x = THREE.MathUtils.lerp(part.rotation.x, 0, 0.1);
+                    });
+                }
+            }
+
+            handleCollisions() {
+                const { width, depth } = roomSize;
+                const halfWidth = width / 2;
+                const halfDepth = depth / 2;
+                
+                character.position.x = Math.max(-halfWidth + characterRadius, Math.min(halfWidth - characterRadius, character.position.x));
+                character.position.z = Math.max(-halfDepth + characterRadius, Math.min(halfDepth - characterRadius, character.position.z));
+                
+                const standWidth = 5.5, standDepthVal = 0.8;
+                const tvStandFrontZ = tvStandPosition.z - standDepthVal / 2;
+                const tvStandBackZ = tvStandPosition.z + standDepthVal / 2;
+                const tvStandLeftX = tvStandPosition.x - standWidth / 2;
+                const tvStandRightX = tvStandPosition.x + standWidth / 2;
+
+                if (character.position.x > tvStandLeftX - characterRadius && character.position.x < tvStandRightX + characterRadius) {
+                    if (character.position.z > tvStandFrontZ - characterRadius && character.position.z < tvStandFrontZ) character.position.z = tvStandFrontZ - characterRadius;
+                    else if (character.position.z < tvStandBackZ + characterRadius && character.position.z > tvStandBackZ) character.position.z = tvStandBackZ + characterRadius;
+                }
+
+                const isOverlappingX = character.position.x + characterRadius > bedMinX && character.position.x - characterRadius < bedMaxX;
+                const isOverlappingZ = character.position.z + characterRadius > bedMinZ && character.position.z - characterRadius < bedMaxZ;
+
+                if (isOverlappingX && isOverlappingZ && character.position.y < bedTopY) {
+                    if (isJumping && verticalVelocity < 0 && character.position.y < bedTopY + 0.1) {
+                        character.position.y = bedTopY;
+                        isJumping = false;
+                        verticalVelocity = 0;
+                    } else if (!isJumping) {
+                        const overlapX1 = (character.position.x + characterRadius) - bedMinX;
+                        const overlapX2 = bedMaxX - (character.position.x - characterRadius);
+                        const overlapZ1 = (character.position.z + characterRadius) - bedMinZ;
+                        const overlapZ2 = bedMaxZ - (character.position.z - characterRadius);
+                        const minOverlap = Math.min(overlapX1, overlapX2, overlapZ1, overlapZ2);
+
+                        if (minOverlap === overlapX1) character.position.x = bedMinX - characterRadius;
+                        else if (minOverlap === overlapX2) character.position.x = bedMaxX + characterRadius;
+                        else if (minOverlap === overlapZ1) character.position.z = bedMinZ - characterRadius;
+                        else if (minOverlap === overlapZ2) character.position.z = bedMaxZ + characterRadius;
+                    }
+                }
+            }
+            
+            updateCamera() {
+                const delta = clock.getDelta();
+                cameraPivot.rotation.x -= joystickRight.y * 2.5 * delta;
+                cameraPivot.rotation.x = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, cameraPivot.rotation.x));
+                
+                let effectiveDistance = isFirstPerson ? 0.01 : desiredThirdPersonCameraDistance;
+                camera.position.set(0, 0, effectiveDistance);
+                camera.updateMatrixWorld();
+
+                const cameraWorldPos = new THREE.Vector3();
+                camera.getWorldPosition(cameraWorldPos);
+
+                const { width, height, depth } = roomSize;
+                const buffer = 0.1;
+                const roomBounds = new THREE.Box3(
+                    new THREE.Vector3(-width/2 + buffer, buffer, -depth/2 + buffer),
+                    new THREE.Vector3(width/2 - buffer, height - buffer, depth/2 - buffer)
+                );
+                
+                if (!roomBounds.containsPoint(cameraWorldPos)) {
+                    const clampedPos = cameraWorldPos.clone().clamp(roomBounds.min, roomBounds.max);
+                    const pivotWorldPos = new THREE.Vector3();
+                    cameraPivot.getWorldPosition(pivotWorldPos);
+                    const newDistance = pivotWorldPos.distanceTo(clampedPos);
+                    camera.position.z = Math.min(effectiveDistance, newDistance);
+                }
+            }
+
+            updateUI() {
+                const distToTv = character.position.distanceTo(tvStandPosition);
+                const canInteract = distToTv < interactionState.interactionDistance;
+                tvInteractionButton.element.classList.toggle('visible', canInteract);
+                xboxInteractionButton.element.classList.toggle('visible', canInteract);
+                
+                // --- MEJORA --- Si la TV está encendida, el control remoto se queda.
+                if (!canInteract && !interactionState.isTvOn) {
+                    interactionState.showRemote = false;
+                }
+                document.getElementById('remote-control').style.display = interactionState.showRemote ? 'flex' : 'none';
+            }
+        }
+
+        window.onload = () => { new RoomSimulator(); };
+    </script>
+</body>
+</html>
