@@ -282,11 +282,11 @@
                 { x1: 4, z1: 4, x2: 4, z2: 8 },
             ],
             doors: [
-                { x: -4.75, z: -4, width: 0.9, height: 2.2, orientation: 'vertical' },
-                { x: -4.75, z: 0, width: 0.9, height: 2.2, orientation: 'vertical' },
-                { x: -4.75, z: 4, width: 0.9, height: 2.2, orientation: 'vertical' },
-                { x: -7, z: -3.25, width: 0.9, height: 2.2, orientation: 'horizontal' },
-                { x: -3, z: 5, width: 0.9, height: 2.2, orientation: 'horizontal' },
+                { x: -4.75, z: -4, width: 1.0, height: 2.4, orientation: 'vertical' },
+                { x: -4.75, z: 0, width: 1.0, height: 2.4, orientation: 'vertical' },
+                { x: -4.75, z: 4, width: 1.0, height: 2.4, orientation: 'vertical' },
+                { x: -7, z: -3.25, width: 1.0, height: 2.4, orientation: 'horizontal' },
+                { x: -3, z: 5, width: 1.0, height: 2.4, orientation: 'horizontal' },
             ]
         };
 
@@ -492,18 +492,20 @@
 
             // --- Interactions & State ---
             createLights() {
-                // Main living room lights
-                const light1 = new THREE.PointLight(0xffffff, 0, 10);
-                light1.position.set(-2, wallHeight - 0.5, -2);
-                light1.castShadow = true;
-                scene.add(light1);
+                this.spotlightBulbs = []; // Clear existing lights
+                const bedroomLightPositions = [
+                    { x: -6, z: -6 }, // Top Bedroom
+                    { x: -6, z: -2 }, // Middle Bedroom
+                    { x: -6, z: 2 },  // Master Bedroom
+                ];
 
-                const light2 = new THREE.PointLight(0xffffff, 0, 10);
-                light2.position.set(4, wallHeight - 0.5, -2);
-                light2.castShadow = true;
-                scene.add(light2);
-
-                this.spotlightBulbs.push(light1, light2); // Reusing spotlightBulbs array
+                bedroomLightPositions.forEach(pos => {
+                    const light = new THREE.PointLight(0xffffff, 0, 10, 2); // color, intensity, distance, decay
+                    light.position.set(pos.x, wallHeight - 0.5, pos.z);
+                    light.castShadow = true;
+                    scene.add(light);
+                    this.spotlightBulbs.push(light);
+                });
             }
 
             updateRoomLighting() {
@@ -749,13 +751,13 @@
                     }
                 });
 
-                if (closestDoor && minDistance < interactionState.interactionDistance) {
-                    this.doorInteractionButton.element.style.display = 'block';
+                const shouldBeVisible = closestDoor && minDistance < interactionState.interactionDistance;
+                this.doorInteractionButton.element.classList.toggle('visible', shouldBeVisible);
+
+                if (shouldBeVisible) {
                     this.doorInteractionButton.element.textContent = closestDoor.isOpen ? 'Cerrar Puerta' : 'Abrir Puerta';
                     this.doorInteractionButton.position.copy(closestDoor.pivot.position).add(new THREE.Vector3(0, 1.5, 0));
                     this.doorInteractionButton.element.onclick = () => this.toggleDoorState(closestDoor);
-                } else {
-                    this.doorInteractionButton.element.style.display = 'none';
                 }
             }
 
