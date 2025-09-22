@@ -66,57 +66,54 @@ html { scroll-behavior: smooth; }
 }
 
 /* =================================================================
-   User Avatar Premium Ring Styles
+   User Avatar Premium Ring Styles (v2)
    ================================================================= */
 
 @keyframes subtle-rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .user-avatar-ring-container {
     position: relative;
-    width: 40px;
-    height: 40px;
-    padding: 2px; /* This padding creates the space for the ring's thickness */
-    border-radius: 9999px; /* Make the container circular */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 44px; /* Increased size for a thicker ring */
+    height: 44px;
 }
 
-/* --- Google Ring --- */
-.google-ring { /* Apply gradient and animation directly to the container */
-    background: conic-gradient(
-        #4285F4, #DB4437, #F4B400, #0F9D58, #4285F4
-    );
+.user-avatar-ring {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+}
+
+/* Apply animation ONLY to the ring div */
+.google-ring .user-avatar-ring {
+    background: conic-gradient(#4285F4, #DB4437, #F4B400, #0F9D58, #4285F4);
     animation: subtle-rotate 4s linear infinite;
 }
 
-/* --- Facebook Ring (Future) --- */
-.facebook-ring {
+.facebook-ring .user-avatar-ring {
     background: #1877F2;
 }
 
-/* --- Apple Ring (Future) --- */
-.apple-ring {
+.apple-ring .user-avatar-ring {
     background: #FFFFFF;
 }
 
-/* The actual image or span inside the container */
+/* The image sits on top of the ring */
 .user-avatar-ring-container img,
 .user-avatar-ring-container span {
-    width: 100%;
-    height: 100%;
-    border-radius: 9999px;
+    position: absolute;
+    /* Inset by 4px to make the ring 4px thick */
+    top: 4px;
+    left: 4px;
+    width: calc(100% - 8px); /* 44px - 8px = 36px */
+    height: calc(100% - 8px);
+    border-radius: 50%;
     object-fit: cover;
-    background-color: var(--yanz-header-bg); /* Match header to hide the ring behind */
+    background-color: var(--yanz-header-bg);
     display: flex;
     align-items: center;
     justify-content: center;
-    /* The image sits on top of the container's background */
 }
