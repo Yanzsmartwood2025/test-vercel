@@ -71,8 +71,16 @@ document.addEventListener('DOMContentLoaded', () => {
     auth.onAuthStateChanged(async (user) => {
         if (cartUnsubscribe) { cartUnsubscribe(); cartUnsubscribe = null; }
         currentUser = user;
+        const profilePicContainer = document.getElementById('ipad-profile-pic');
+
         if (user) {
             renderAuthUI(user);
+
+            // Logic for iPad profile picture
+            if (profilePicContainer && user.photoURL) {
+                profilePicContainer.innerHTML = `<img src="${user.photoURL}" alt="Foto de perfil">`;
+            }
+
             const cartRef = db.collection('userCarts').doc(user.uid);
             const guestCart = JSON.parse(localStorage.getItem('yanzGuestCart') || '[]');
             if (guestCart.length > 0) {
@@ -97,6 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
             window.firestoreCart = [];
             renderAuthUI(null);
             loadLocalCart();
+            // Clear profile picture on logout
+            if (profilePicContainer) {
+                profilePicContainer.innerHTML = '';
+            }
         }
     });
 
@@ -944,6 +956,51 @@ const videoObserver = new IntersectionObserver((entries, observer) => {
 // El resto del código que observa los videos se mantiene igual
 videosToLazyLoad.forEach(video => videoObserver.observe(video));
     }
+
+    // --- Lógica del carrusel y foto de perfil sobre el video de Caja ---
+    function initializeVideoOverlays() {
+        const carouselContainer = document.getElementById('computer-screen-carousel');
+        if (!carouselContainer) return;
+
+        const socialIconsPath = `${basePath}/assets/images/iconos-sociales/`;
+        const paymentIconsPath = `${basePath}/assets/images/metodos-pago/`;
+
+        const images = [
+            `${socialIconsPath}icono-facebook.png`,
+            `${socialIconsPath}icono-instagram.png`,
+            `${socialIconsPath}icono-tiktok.png`,
+            `${socialIconsPath}icono-youtube.png`,
+            `${paymentIconsPath}pago-visa.png`,
+            `${paymentIconsPath}pago-mastercard.png`,
+            `${paymentIconsPath}pago-american-express.png`,
+            `${paymentIconsPath}pago-paypal.png`,
+            `${paymentIconsPath}pago-banco-pichincha.png`,
+            `${paymentIconsPath}pago-banco-guayaquil.png`
+        ];
+
+        let currentImageIndex = 0;
+        const imgElement = document.createElement('img');
+        carouselContainer.appendChild(imgElement);
+
+        const updateImage = () => {
+            imgElement.classList.remove('fade-in'); // Start fade-out
+
+            setTimeout(() => {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                imgElement.src = images[currentImageIndex];
+                imgElement.classList.add('fade-in'); // Start fade-in
+            }, 500); // Wait for fade-out to complete
+        };
+
+        // Initial load
+        imgElement.src = images[currentImageIndex];
+        setTimeout(() => imgElement.classList.add('fade-in'), 100);
+
+
+        setInterval(updateImage, 2500); // Interval should be fade time + display time
+    }
+
+    initializeVideoOverlays();
 
     // Bienvenida de Aria (si aplica)
     if (document.getElementById('aria-search')) {
