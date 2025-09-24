@@ -970,11 +970,11 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
 
             // Define scale factors based on the original image's proportions
             const monitor = {
-                top: 0.43, left: 0.49, width: 0.38, height: 0.24,
+                top: 0.626, left: 0.33, width: 0.246, height: 0.24,
                 perspective: 500, rotateY: 2, rotateX: -2, skewX: -2
             };
             const ipad = {
-                bottom: 0.12, left: 0.5, width: 0.25, height: 0.16
+                bottom: 0.06, left: 0.665, width: 0.166, height: 0.342
             };
 
             // Apply styles to Monitor
