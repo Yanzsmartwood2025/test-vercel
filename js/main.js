@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     auth.onAuthStateChanged(async (user) => {
         if (cartUnsubscribe) { cartUnsubscribe(); cartUnsubscribe = null; }
         currentUser = user;
-        const profilePicContainer = document.getElementById('ipad-profile-pic');
+        const profilePicContainer = document.getElementById('ipad-overlay');
 
         if (user) {
             renderAuthUI(user);
@@ -959,7 +959,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
 
     // --- Lógica del carrusel y foto de perfil sobre el video de Caja ---
     function initializeVideoOverlays() {
-        const carouselContainer = document.getElementById('computer-screen-carousel');
+        const carouselContainer = document.getElementById('monitor-overlay');
         if (!carouselContainer) return;
 
         const socialIconsPath = `${basePath}/assets/images/iconos-sociales/`;
