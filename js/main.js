@@ -974,7 +974,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
                 perspective: 500, rotateY: 2, rotateX: -2, skewX: -2
             };
             const ipad = {
-                top: 0.3071, left: 0.6189, width: 0.1337, height: 0.1191
+                top: 0.598, left: 0.665, width: 0.166, height: 0.342
             };
 
             // Apply styles to Monitor
