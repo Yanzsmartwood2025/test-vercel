@@ -974,7 +974,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
                 perspective: 500, rotateY: 2, rotateX: -2, skewX: -2
             };
             const ipad = {
-                top: 0.625, left: 0.675, width: 0.155, height: 0.342
+                bottom: 0.06, left: 0.665, width: 0.166, height: 0.342
             };
 
             // Apply styles to Monitor
@@ -985,7 +985,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             monitorOverlay.style.transform = `translateX(-50%) perspective(${monitor.perspective}px) rotateY(${monitor.rotateY}deg) rotateX(${monitor.rotateX}deg) skewX(${monitor.skewX}deg)`;
 
             // Apply styles to iPad
-            ipadOverlay.style.top = `${containerHeight * ipad.top}px`;
+            ipadOverlay.style.bottom = `${containerHeight * ipad.bottom}px`;
             ipadOverlay.style.left = `${containerWidth * ipad.left}px`;
             ipadOverlay.style.width = `${containerWidth * ipad.width}px`;
             ipadOverlay.style.height = `${containerHeight * ipad.height}px`;
