@@ -148,6 +148,61 @@ html { scroll-behavior: smooth; }
     transition: opacity 0.5s ease-in-out;
 }
 
+/* --- Estilos para Overlays de Video en 3D --- */
+#monitor-overlay, #ipad-overlay {
+    background: rgba(10, 10, 25, 0.6); /* Fondo oscuro semitransparente */
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        inset 0 0 15px rgba(0, 0, 0, 0.8), /* Sombra interna para profundidad */
+        0 10px 25px rgba(0, 0, 0, 0.5);   /* Sombra externa para flotar */
+    overflow: hidden;
+    position: absolute;
+    backdrop-filter: blur(3px); /* Efecto de cristal esmerilado */
+    -webkit-backdrop-filter: blur(3px);
+}
+
+#monitor-overlay {
+    border-radius: 12px; /* Bordes ligeramente redondeados para el monitor */
+}
+
+#ipad-overlay {
+    border-radius: 24px; /* Bordes más redondeados para el iPad */
+    border-width: 3px;
+    border-color: rgba(200, 200, 220, 0.25);
+}
+
+/* --- Luces y Efectos Fosforescentes --- */
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.7); }
+    50% { box-shadow: 0 0 15px 5px rgba(255, 255, 255, 1); }
+}
+
+#monitor-overlay::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 2px;
+    animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+#ipad-overlay::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 3px rgba(255, 255, 255, 0.8);
+}
+
 #monitor-overlay img.fade-in {
     opacity: 1;
 }
