@@ -957,47 +957,71 @@ const videoObserver = new IntersectionObserver((entries, observer) => {
 videosToLazyLoad.forEach(video => videoObserver.observe(video));
     }
 
-    // --- Lógica del carrusel y foto de perfil sobre el video de Caja ---
     function initializeVideoOverlays() {
-        const carouselContainer = document.getElementById('monitor-overlay');
-        if (!carouselContainer) return;
+        const videoContainer = document.querySelector('#caja .overflow-hidden');
+        const monitorOverlay = document.getElementById('monitor-overlay');
+        const ipadOverlay = document.getElementById('ipad-overlay');
 
+        if (!videoContainer || !monitorOverlay || !ipadOverlay) return;
+
+        function positionOverlays() {
+            const containerWidth = videoContainer.offsetWidth;
+            const containerHeight = videoContainer.offsetHeight;
+
+            // Define scale factors based on the original image's proportions
+            const monitor = {
+                top: 0.42, left: 0.49, width: 0.36, height: 0.2025,
+                perspective: 500, rotateY: 2, rotateX: -2, skewX: -2
+            };
+            const ipad = {
+                bottom: 0.12, left: 0.5, width: 0.25, height: 0.16
+            };
+
+            // Apply styles to Monitor
+            monitorOverlay.style.top = `${containerHeight * monitor.top}px`;
+            monitorOverlay.style.left = `${containerWidth * monitor.left}px`;
+            monitorOverlay.style.width = `${containerWidth * monitor.width}px`;
+            monitorOverlay.style.height = `${containerHeight * monitor.height}px`;
+            monitorOverlay.style.transform = `translateX(-50%) perspective(${monitor.perspective}px) rotateY(${monitor.rotateY}deg) rotateX(${monitor.rotateX}deg) skewX(${monitor.skewX}deg)`;
+
+            // Apply styles to iPad
+            ipadOverlay.style.bottom = `${containerHeight * ipad.bottom}px`;
+            ipadOverlay.style.left = `${containerWidth * ipad.left}px`;
+            ipadOverlay.style.width = `${containerWidth * ipad.width}px`;
+            ipadOverlay.style.height = `${containerHeight * ipad.height}px`;
+            ipadOverlay.style.transform = `translateX(-50%)`;
+        }
+
+        // Initial positioning
+        positionOverlays();
+
+        // Reposition on window resize
+        window.addEventListener('resize', positionOverlays);
+
+        // Carousel Logic
         const socialIconsPath = `${basePath}/assets/images/iconos-sociales/`;
         const paymentIconsPath = `${basePath}/assets/images/metodos-pago/`;
-
         const images = [
-            `${socialIconsPath}icono-facebook.png`,
-            `${socialIconsPath}icono-instagram.png`,
-            `${socialIconsPath}icono-tiktok.png`,
-            `${socialIconsPath}icono-youtube.png`,
-            `${paymentIconsPath}pago-visa.png`,
-            `${paymentIconsPath}pago-mastercard.png`,
-            `${paymentIconsPath}pago-american-express.png`,
-            `${paymentIconsPath}pago-paypal.png`,
-            `${paymentIconsPath}pago-banco-pichincha.png`,
-            `${paymentIconsPath}pago-banco-guayaquil.png`
+            `${socialIconsPath}icono-facebook.png`, `${socialIconsPath}icono-instagram.png`, `${socialIconsPath}icono-tiktok.png`, `${socialIconsPath}icono-youtube.png`,
+            `${paymentIconsPath}pago-visa.png`, `${paymentIconsPath}pago-mastercard.png`, `${paymentIconsPath}pago-american-express.png`,
+            `${paymentIconsPath}pago-paypal.png`, `${paymentIconsPath}pago-banco-pichincha.png`, `${paymentIconsPath}pago-banco-guayaquil.png`
         ];
-
         let currentImageIndex = 0;
         const imgElement = document.createElement('img');
-        carouselContainer.appendChild(imgElement);
+        monitorOverlay.appendChild(imgElement);
 
         const updateImage = () => {
-            imgElement.classList.remove('fade-in'); // Start fade-out
-
+            imgElement.classList.remove('fade-in');
             setTimeout(() => {
                 currentImageIndex = (currentImageIndex + 1) % images.length;
                 imgElement.src = images[currentImageIndex];
-                imgElement.classList.add('fade-in'); // Start fade-in
-            }, 500); // Wait for fade-out to complete
+                imgElement.classList.add('fade-in');
+            }, 500);
         };
 
-        // Initial load
         imgElement.src = images[currentImageIndex];
         setTimeout(() => imgElement.classList.add('fade-in'), 100);
-
-
-        setInterval(updateImage, 2500); // Interval should be fade time + display time
+        setInterval(updateImage, 2500);
     }
 
     initializeVideoOverlays();

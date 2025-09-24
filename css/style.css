@@ -126,6 +126,7 @@ html { scroll-behavior: smooth; }
 }
 
 /* Video Overlay Styles */
+/* Positioning and sizing are now handled by JavaScript for precision */
 #monitor-overlay, #ipad-overlay {
     position: absolute;
     display: flex;
@@ -136,20 +137,7 @@ html { scroll-behavior: smooth; }
 }
 
 #monitor-overlay {
-    top: 42%; /* Adjusted position */
-    left: 49%;
-    width: 36%; /* Made smaller and rectangular */
-    height: 20.25%; /* 16:9 aspect ratio */
     transform-origin: center center;
-    transform: translateX(-50%) perspective(500px) rotateY(2deg) rotateX(-2deg) skewX(-2deg);
-}
-
-#ipad-overlay {
-    bottom: 12%;
-    left: 50%;
-    width: 25%;
-    height: 16%;
-    transform: translateX(-50%);
 }
 
 #monitor-overlay img {
