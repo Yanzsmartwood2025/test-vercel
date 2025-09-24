@@ -958,7 +958,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
     }
 
     function initializeVideoOverlays() {
-        const videoContainer = document.querySelector('#caja .overflow-hidden');
+        const videoContainer = document.querySelector('#caja video');
         const monitorOverlay = document.getElementById('monitor-overlay');
         const ipadOverlay = document.getElementById('ipad-overlay');
 
@@ -970,7 +970,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
 
             // Define scale factors based on the original image's proportions
             const monitor = {
-                top: 0.42, left: 0.49, width: 0.36, height: 0.2025,
+                top: 0.43, left: 0.49, width: 0.38, height: 0.24,
                 perspective: 500, rotateY: 2, rotateX: -2, skewX: -2
             };
             const ipad = {
