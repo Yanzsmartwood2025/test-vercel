@@ -126,43 +126,46 @@ html { scroll-behavior: smooth; }
 }
 
 /* Video Overlay Styles */
-#computer-screen-carousel, #ipad-profile-pic {
+#monitor-overlay, #ipad-overlay {
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-color: #000; /* Black screen background */
+    background-color: #000;
 }
 
-#computer-screen-carousel {
-    top: 15%; /* Moved up */
-    left: 17.5%;
-    width: 19%; /* Halved */
-    height: 24%; /* Halved */
-}
-
-#ipad-profile-pic {
-    top: 41%; /* Moved up */
-    left: 61%;
-    width: 13%;
+#monitor-overlay {
+    top: 38%;
+    left: 49%;
+    width: 38%;
     height: 24%;
+    transform-origin: center center;
+    transform: translateX(-50%) perspective(500px) rotateY(2deg) rotateX(-2deg) skewX(-2deg);
 }
 
-#computer-screen-carousel img {
-    width: 60%;  /* Uniform size */
-    height: 60%; /* Uniform size */
+#ipad-overlay {
+    bottom: 12%;
+    left: 50%;
+    width: 25%;
+    height: 16%;
+    transform: translateX(-50%);
+}
+
+#monitor-overlay img {
+    width: 60%;
+    height: 60%;
     object-fit: contain;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
 }
 
-#computer-screen-carousel img.fade-in {
+#monitor-overlay img.fade-in {
     opacity: 1;
 }
 
-#ipad-profile-pic img {
+#ipad-overlay img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Changed to cover for a better fit */
+    object-fit: cover;
 }
