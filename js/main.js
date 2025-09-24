@@ -1024,7 +1024,99 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
         setInterval(updateImage, 2500);
     }
 
-    initializeVideoOverlays();
+    // --- EDITOR MODE ---
+    function initializeEditorMode() {
+        const videoContainer = document.querySelector('#caja video');
+        if (!videoContainer) return;
+
+        // Create a display panel for coordinates
+        const coordsDisplay = document.createElement('div');
+        coordsDisplay.style.position = 'fixed';
+        coordsDisplay.style.bottom = '10px';
+        coordsDisplay.style.left = '10px';
+        coordsDisplay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+        coordsDisplay.style.color = 'white';
+        coordsDisplay.style.padding = '10px';
+        coordsDisplay.style.borderRadius = '5px';
+        coordsDisplay.style.fontFamily = 'monospace';
+        coordsDisplay.style.zIndex = '10001';
+        document.body.appendChild(coordsDisplay);
+
+        function updateCoords(target) {
+            const containerRect = videoContainer.getBoundingClientRect();
+
+            const relativeTop = (target.offsetTop) / containerRect.height;
+            const relativeLeft = (target.offsetLeft) / containerRect.width;
+            const relativeWidth = target.offsetWidth / containerRect.width;
+            const relativeHeight = target.offsetHeight / containerRect.height;
+
+            coordsDisplay.innerHTML = `
+                <strong>${target.id}</strong><br>
+                top: <code>${(relativeTop * 100).toFixed(1)}%</code><br>
+                left: <code>${(relativeLeft * 100).toFixed(1)}%</code><br>
+                width: <code>${(relativeWidth * 100).toFixed(1)}%</code><br>
+                height: <code>${(relativeHeight * 100).toFixed(1)}%</code>
+            `;
+        }
+
+        // Initial setup
+        ['monitor-overlay', 'ipad-overlay'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) {
+                el.style.top = '0px';
+                el.style.left = '0px';
+                el.style.width = '100px'; // Initial size
+                el.style.height = '100px'; // Initial size
+                updateCoords(el);
+            }
+        });
+
+        interact('.editor-box')
+            .draggable({
+                listeners: {
+                    move(event) {
+                        const target = event.target;
+                        const newTop = target.offsetTop + event.dy;
+                        const newLeft = target.offsetLeft + event.dx;
+
+                        target.style.top = `${newTop}px`;
+                        target.style.left = `${newLeft}px`;
+
+                        updateCoords(target);
+                    }
+                },
+            })
+            .resizable({
+                edges: { left: true, right: true, bottom: true, top: true },
+                listeners: {
+                    move(event) {
+                        const target = event.target;
+
+                        // Update size
+                        target.style.width = `${event.rect.width}px`;
+                        target.style.height = `${event.rect.height}px`;
+
+                        // Update position
+                        const newTop = target.offsetTop + event.deltaRect.top;
+                        const newLeft = target.offsetLeft + event.deltaRect.left;
+                        target.style.top = `${newTop}px`;
+                        target.style.left = `${newLeft}px`;
+
+                        updateCoords(target);
+                    }
+                }
+            });
+    }
+
+    // Check for a URL parameter to activate editor mode, e.g., ?editor=true
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('editor') === 'true') {
+        document.getElementById('monitor-overlay').classList.add('editor-box');
+        document.getElementById('ipad-overlay').classList.add('editor-box');
+        initializeEditorMode();
+    } else {
+        initializeVideoOverlays();
+    }
 
     // Bienvenida de Aria (si aplica)
     if (document.getElementById('aria-search')) {
