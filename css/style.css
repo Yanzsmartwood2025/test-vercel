@@ -136,14 +136,14 @@ html { scroll-behavior: smooth; }
 }
 
 #computer-screen-carousel {
-    top: 17%;
+    top: 15%; /* Moved up */
     left: 17.5%;
-    width: 38%;
-    height: 48%;
+    width: 19%; /* Halved */
+    height: 24%; /* Halved */
 }
 
 #ipad-profile-pic {
-    top: 43%;
+    top: 41%; /* Moved up */
     left: 61%;
     width: 13%;
     height: 24%;
