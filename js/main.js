@@ -974,7 +974,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
                 perspective: 500, rotateY: 2, rotateX: -2, skewX: -2
             };
             const ipad = {
-                bottom: 0.06, left: 0.665, width: 0.166, height: 0.342
+                top: 0.3071, left: 0.6189, width: 0.1337, height: 0.1191
             };
 
             // Apply styles to Monitor
@@ -985,12 +985,11 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             monitorOverlay.style.transform = `translateX(-50%) perspective(${monitor.perspective}px) rotateY(${monitor.rotateY}deg) rotateX(${monitor.rotateX}deg) skewX(${monitor.skewX}deg)`;
 
             // Apply styles to iPad
-            // Comentado para la herramienta de ajuste interactivo
-            // ipadOverlay.style.bottom = `${containerHeight * ipad.bottom}px`;
-            // ipadOverlay.style.left = `${containerWidth * ipad.left}px`;
-            // ipadOverlay.style.width = `${containerWidth * ipad.width}px`;
-            // ipadOverlay.style.height = `${containerHeight * ipad.height}px`;
-            // ipadOverlay.style.transform = `translateX(-50%)`;
+            ipadOverlay.style.top = `${containerHeight * ipad.top}px`;
+            ipadOverlay.style.left = `${containerWidth * ipad.left}px`;
+            ipadOverlay.style.width = `${containerWidth * ipad.width}px`;
+            ipadOverlay.style.height = `${containerHeight * ipad.height}px`;
+            ipadOverlay.style.transform = `translateX(-50%)`;
         }
 
         // Initial positioning
@@ -1037,110 +1036,4 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             speakText(welcomeMessage);
         }, 1500);
     }
-
-    function makeIpadOverlayInteractive() {
-        const videoContainer = document.querySelector('#caja .overflow-hidden');
-        const targetElement = document.getElementById('ipad-overlay');
-
-        if (!interact || !targetElement || !videoContainer) {
-            console.log("Herramienta interactiva no iniciada: Elementos faltantes (interact.js, #ipad-overlay, o video container).");
-            return;
-        }
-
-        const valTop = document.getElementById('val-top');
-        const valLeft = document.getElementById('val-left');
-        const valWidth = document.getElementById('val-width');
-        const valHeight = document.getElementById('val-height');
-        const copyBtn = document.getElementById('copy-values-btn');
-
-        // Establecer un estilo inicial para que el elemento sea visible y manipulable
-        Object.assign(targetElement.style, {
-            top: '50%',
-            left: '50%',
-            width: '25%',
-            height: '40%',
-            transform: 'translate(-50%, -50%)',
-            border: '2px dashed #00f',
-            touchAction: 'none'
-        });
-
-        function updateDisplay() {
-            const containerRect = videoContainer.getBoundingClientRect();
-            const targetRect = targetElement.getBoundingClientRect();
-
-            const top = targetRect.top - containerRect.top;
-            const left = targetRect.left - containerRect.left;
-            const width = targetRect.width;
-            const height = targetRect.height;
-
-            valTop.textContent = (top / containerRect.height).toFixed(4);
-            valLeft.textContent = (left / containerRect.width).toFixed(4);
-            valWidth.textContent = (width / containerRect.width).toFixed(4);
-            valHeight.textContent = (height / containerRect.height).toFixed(4);
-        }
-
-        interact(targetElement)
-            .draggable({
-                listeners: {
-                    move(event) {
-                        const target = event.target;
-                        const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-                        const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-                        target.style.transform = `translate(${x}px, ${y}px)`;
-                        target.setAttribute('data-x', x);
-                        target.setAttribute('data-y', y);
-
-                        updateDisplay();
-                    }
-                },
-                modifiers: [
-                    interact.modifiers.restrictRect({
-                        restriction: 'parent',
-                    })
-                ],
-                inertia: false
-            })
-            .resizable({
-                edges: { left: true, right: true, bottom: true, top: true },
-                listeners: {
-                    move(event) {
-                        const target = event.target;
-                        let x = (parseFloat(target.getAttribute('data-x')) || 0);
-                        let y = (parseFloat(target.getAttribute('data-y')) || 0);
-
-                        target.style.width = `${event.rect.width}px`;
-                        target.style.height = `${event.rect.height}px`;
-
-                        x += event.deltaRect.left;
-                        y += event.deltaRect.top;
-
-                        target.style.transform = `translate(${x}px, ${y}px)`;
-                        target.setAttribute('data-x', x);
-                        target.setAttribute('data-y', y);
-
-                        updateDisplay();
-                    }
-                },
-                modifiers: [
-                    interact.modifiers.restrictEdges({
-                        outer: 'parent'
-                    }),
-                ],
-                inertia: false
-            });
-
-        updateDisplay();
-
-        copyBtn.addEventListener('click', () => {
-            const values = `top: ${valTop.textContent},\nleft: ${valLeft.textContent},\nwidth: ${valWidth.textContent},\nheight: ${valHeight.textContent}`;
-            navigator.clipboard.writeText(values);
-            copyBtn.textContent = '¡Copiado!';
-            setTimeout(() => { copyBtn.textContent = 'Copiar Valores'; }, 1500);
-        });
-
-        console.log("Herramienta interactiva para #ipad-overlay iniciada.");
-    }
-
-    makeIpadOverlayInteractive();
 });
