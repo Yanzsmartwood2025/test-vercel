@@ -28,7 +28,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 </head>
 <body class="antialiased">
     <div id="preloader">
@@ -151,17 +150,5 @@
 
     <!-- Main Application Engine -->
     <script src="js/main.js?v=2"></script>
-
-    <!-- Panel de control interactivo para desarrollador -->
-    <div id="interactive-panel" style="position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.8); color: white; padding: 15px; border-radius: 8px; z-index: 10000; font-family: monospace; font-size: 14px; border: 1px solid #444; backdrop-filter: blur(5px);">
-        <h4 style="margin: 0 0 10px 0; font-weight: bold; border-bottom: 1px solid #555; padding-bottom: 5px;">Valores Proporcionales</h4>
-        <div style="display: grid; grid-template-columns: 80px 1fr; gap: 5px;">
-            <strong>Top:</strong> <span id="val-top">0</span>
-            <strong>Left:</strong> <span id="val-left">0</span>
-            <strong>Width:</strong> <span id="val-width">0</span>
-            <strong>Height:</strong> <span id="val-height">0</span>
-        </div>
-        <button id="copy-values-btn" style="margin-top: 15px; width: 100%; padding: 8px 10px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Copiar Valores</button>
-    </div>
 </body>
 </html>

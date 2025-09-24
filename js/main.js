@@ -974,7 +974,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
                 perspective: 500, rotateY: 2, rotateX: -2, skewX: -2
             };
             const ipad = {
-                bottom: 0.06, left: 0.665, width: 0.166, height: 0.342
+                bottom: 0.06, left: 0.6111, width: 0.1613, height: 0.2969
             };
 
             // Apply styles to Monitor
@@ -985,12 +985,11 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             monitorOverlay.style.transform = `translateX(-50%) perspective(${monitor.perspective}px) rotateY(${monitor.rotateY}deg) rotateX(${monitor.rotateX}deg) skewX(${monitor.skewX}deg)`;
 
             // Apply styles to iPad
-            // Comentado para la herramienta de ajuste interactivo
-            // ipadOverlay.style.bottom = `${containerHeight * ipad.bottom}px`;
-            // ipadOverlay.style.left = `${containerWidth * ipad.left}px`;
-            // ipadOverlay.style.width = `${containerWidth * ipad.width}px`;
-            // ipadOverlay.style.height = `${containerHeight * ipad.height}px`;
-            // ipadOverlay.style.transform = `translateX(-50%)`;
+            ipadOverlay.style.bottom = `${containerHeight * ipad.bottom}px`;
+            ipadOverlay.style.left = `${containerWidth * ipad.left}px`;
+            ipadOverlay.style.width = `${containerWidth * ipad.width}px`;
+            ipadOverlay.style.height = `${containerHeight * ipad.height}px`;
+            ipadOverlay.style.transform = `translateX(-50%)`;
         }
 
         // Initial positioning
@@ -1027,121 +1026,6 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
 
     initializeVideoOverlays();
 
-    function makeIpadOverlayInteractive() {
-        const videoContainer = document.querySelector('#caja video');
-        const targetElement = document.getElementById('ipad-overlay');
-        if (!interact || !targetElement || !videoContainer) {
-            console.log("Herramienta interactiva no iniciada: Elementos faltantes (interact.js, #ipad-overlay, o video).");
-            return;
-        }
-
-        const valTop = document.getElementById('val-top');
-        const valLeft = document.getElementById('val-left');
-        const valWidth = document.getElementById('val-width');
-        const valHeight = document.getElementById('val-height');
-        const copyBtn = document.getElementById('copy-values-btn');
-
-        // Establecer un estilo inicial para que el elemento sea visible y manipulable
-        Object.assign(targetElement.style, {
-            top: '10%',
-            left: '50%',
-            width: '20%',
-            height: '30%',
-            transform: 'translateX(-50%)',
-            border: '2px dashed #00f',
-            touchAction: 'none' // recomendado por interact.js
-        });
-
-        function updateDisplay(x, y, w, h) {
-            const containerRect = videoContainer.getBoundingClientRect();
-            const topRatio = y / containerRect.height;
-            const leftRatio = x / containerRect.width;
-            const widthRatio = w / containerRect.width;
-            const heightRatio = h / containerRect.height;
-
-            valTop.textContent = topRatio.toFixed(4);
-            valLeft.textContent = leftRatio.toFixed(4);
-            valWidth.textContent = widthRatio.toFixed(4);
-            valHeight.textContent = heightRatio.toFixed(4);
-        }
-
-        // Inicializar los valores en el panel
-        const initialRect = targetElement.getBoundingClientRect();
-        const containerRect = videoContainer.getBoundingClientRect();
-        updateDisplay(
-            initialRect.left - containerRect.left,
-            initialRect.top - containerRect.top,
-            initialRect.width,
-            initialRect.height
-        );
-
-        interact(targetElement)
-            .draggable({
-                listeners: {
-                    move(event) {
-                        const target = event.target;
-                        const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-                        const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-                        target.style.transform = `translate(${x}px, ${y}px)`;
-                        target.setAttribute('data-x', x);
-                        target.setAttribute('data-y', y);
-
-                        const newRect = target.getBoundingClientRect();
-                        updateDisplay(newRect.left - containerRect.left, newRect.top - containerRect.top, newRect.width, newRect.height);
-                    }
-                },
-                modifiers: [
-                    interact.modifiers.restrictRect({
-                        restriction: 'parent',
-                        endOnly: true
-                    })
-                ],
-                inertia: true
-            })
-            .resizable({
-                edges: { left: true, right: true, bottom: true, top: true },
-                listeners: {
-                    move(event) {
-                        let { x, y } = event.target.dataset;
-                        x = (parseFloat(x) || 0);
-                        y = (parseFloat(y) || 0);
-
-                        Object.assign(event.target.style, {
-                            width: `${event.rect.width}px`,
-                            height: `${event.rect.height}px`,
-                        });
-
-                        const newRect = event.target.getBoundingClientRect();
-                        updateDisplay(newRect.left - containerRect.left, newRect.top - containerRect.top, newRect.width, newRect.height);
-                    }
-                },
-                modifiers: [
-                    interact.modifiers.restrictEdges({
-                        outer: 'parent'
-                    }),
-                    interact.modifiers.restrictSize({
-                        min: { width: 50, height: 50 }
-                    })
-                ],
-                inertia: true
-            });
-
-        copyBtn.addEventListener('click', () => {
-            const values = `
-                top: ${valTop.textContent},
-                left: ${valLeft.textContent},
-                width: ${valWidth.textContent},
-                height: ${valHeight.textContent}
-            `;
-            navigator.clipboard.writeText(values.trim().replace(/\\s+/g, ' '));
-            copyBtn.textContent = '¡Copiado!';
-            setTimeout(() => { copyBtn.textContent = 'Copiar Valores'; }, 1500);
-        });
-
-        console.log("Herramienta interactiva para #ipad-overlay iniciada.");
-    }
-
     // Bienvenida de Aria (si aplica)
     if (document.getElementById('aria-search')) {
         if ('speechSynthesis' in window && window.speechSynthesis.onvoiceschanged !== undefined) {
@@ -1152,7 +1036,4 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             speakText(welcomeMessage);
         }, 1500);
     }
-
-    // Iniciar la herramienta interactiva
-    makeIpadOverlayInteractive();
 });
