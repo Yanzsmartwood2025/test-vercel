@@ -71,14 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
     auth.onAuthStateChanged(async (user) => {
         if (cartUnsubscribe) { cartUnsubscribe(); cartUnsubscribe = null; }
         currentUser = user;
-        const profilePicContainer = document.getElementById('ipad-overlay');
+        const ipadScreen = document.querySelector('#ipad-overlay .ipad-screen');
 
         if (user) {
             renderAuthUI(user);
 
             // Logic for iPad profile picture
-            if (profilePicContainer && user.photoURL) {
-                profilePicContainer.innerHTML = `<img src="${user.photoURL}" alt="Foto de perfil">`;
+            if (ipadScreen && user.photoURL) {
+                ipadScreen.innerHTML = `<img src="${user.photoURL}" alt="Foto de perfil" style="width:100%; height:100%; object-fit:cover;">`;
             }
 
             const cartRef = db.collection('userCarts').doc(user.uid);
@@ -105,9 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.firestoreCart = [];
             renderAuthUI(null);
             loadLocalCart();
-            // Clear profile picture on logout
-            if (profilePicContainer) {
-                profilePicContainer.innerHTML = '';
+            // Show "Joziel" name when logged out
+            if (ipadScreen) {
+                ipadScreen.innerHTML = `
+                    <div style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; background-color:#000;">
+                        <div style="color:white; font-size:1.5rem; font-weight:bold; text-shadow: 0 0 15px rgba(255,255,255,0.8); animation: pulse-text 2s infinite ease-in-out;">Joziel</div>
+                    </div>
+                `;
             }
         }
     });
@@ -974,7 +978,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
                 perspective: 500, rotateY: 2, rotateX: -2, skewX: -2
             };
             const ipad = {
-                top: 0.625, left: 0.675, width: 0.155, height: 0.342
+                bottom: 0.06, left: 0.665, width: 0.166, height: 0.342
             };
 
             // Apply styles to Monitor
@@ -985,7 +989,7 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             monitorOverlay.style.transform = `translateX(-50%) perspective(${monitor.perspective}px) rotateY(${monitor.rotateY}deg) rotateX(${monitor.rotateX}deg) skewX(${monitor.skewX}deg)`;
 
             // Apply styles to iPad
-            ipadOverlay.style.top = `${containerHeight * ipad.top}px`;
+            ipadOverlay.style.bottom = `${containerHeight * ipad.bottom}px`;
             ipadOverlay.style.left = `${containerWidth * ipad.left}px`;
             ipadOverlay.style.width = `${containerWidth * ipad.width}px`;
             ipadOverlay.style.height = `${containerHeight * ipad.height}px`;
