@@ -155,7 +155,7 @@ html { scroll-behavior: smooth; }
     top: 0;
     left: 0;
     background-color: #000;
-    padding: 8px;
+    padding: 4px; /* Reducimos el grosor del marco */
     box-sizing: border-box;
 }
 
@@ -173,14 +173,14 @@ html { scroll-behavior: smooth; }
 .ipad-frame::before {
     content: '';
     position: absolute;
-    top: 2px; /* Movemos la luz al marco superior */
+    top: 1px; /* Ajustamos la posición de la luz */
     left: 50%;
     transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
+    width: 3px; /* Reducimos el tamaño de la luz */
+    height: 3px;
     background-color: #fff;
     border-radius: 50%;
-    box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 3px 1px rgba(255, 255, 255, 0.7);
 }
 
 /* Luz del Monitor (fuera del marco) */

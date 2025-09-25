@@ -1006,27 +1006,58 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
         // Carousel Logic
         const socialIconsPath = `${basePath}/assets/images/iconos-sociales/`;
         const paymentIconsPath = `${basePath}/assets/images/metodos-pago/`;
-        const images = [
-            `${socialIconsPath}icono-facebook.png`, `${socialIconsPath}icono-instagram.png`, `${socialIconsPath}icono-tiktok.png`, `${socialIconsPath}icono-youtube.png`,
-            `${paymentIconsPath}pago-visa.png`, `${paymentIconsPath}pago-mastercard.png`, `${paymentIconsPath}pago-american-express.png`,
-            `${paymentIconsPath}pago-paypal.png`, `${paymentIconsPath}pago-banco-pichincha.png`, `${paymentIconsPath}pago-banco-guayaquil.png`
+        const items = [
+            { type: 'social', src: `${socialIconsPath}icono-facebook.png`, href: 'https://www.facebook.com/share/19jF7zJMsk/' },
+            { type: 'social', src: `${socialIconsPath}icono-instagram.png`, href: 'https://www.instagram.com/yanz_smart_wood' },
+            { type: 'social', src: `${socialIconsPath}icono-tiktok.png`, href: 'https://www.tiktok.com/@yanz.smart.wood' },
+            { type: 'social', src: `${socialIconsPath}icono-youtube.png`, href: 'https://youtube.com/@yanzsmartwood' },
+            { type: 'payment', src: `${paymentIconsPath}pago-visa.png` },
+            { type: 'payment', src: `${paymentIconsPath}pago-mastercard.png` },
+            { type: 'payment', src: `${paymentIconsPath}pago-american-express.png` },
+            { type: 'payment', src: `${paymentIconsPath}pago-paypal.png` },
+            { type: 'payment', src: `${paymentIconsPath}pago-banco-pichincha.png` },
+            { type: 'payment', src: `${paymentIconsPath}pago-banco-guayaquil.png` }
         ];
-        let currentImageIndex = 0;
-        const imgElement = document.createElement('img');
-        monitorOverlay.appendChild(imgElement);
+        let currentItemIndex = 0;
 
-        const updateImage = () => {
-            imgElement.classList.remove('fade-in');
+        const updateCarouselItem = () => {
+            monitorOverlay.innerHTML = ''; // Clear previous item
+            const item = items[currentItemIndex];
+
+            const element = item.href
+                ? document.createElement('a')
+                : document.createElement('img');
+
+            if (item.href) {
+                element.href = item.href;
+                element.target = '_blank';
+                const img = document.createElement('img');
+                img.src = item.src;
+                img.style.width = '60%';
+                img.style.height = '60%';
+                img.style.objectFit = 'contain';
+                element.appendChild(img);
+            } else {
+                element.src = item.src;
+                element.style.width = '60%';
+                element.style.height = '60%';
+                element.style.objectFit = 'contain';
+            }
+
+            monitorOverlay.appendChild(element);
+
+            // Fade-in effect
+            element.style.opacity = 0;
+            element.style.transition = 'opacity 0.5s ease-in-out';
             setTimeout(() => {
-                currentImageIndex = (currentImageIndex + 1) % images.length;
-                imgElement.src = images[currentImageIndex];
-                imgElement.classList.add('fade-in');
-            }, 500);
+                element.style.opacity = 1;
+            }, 100);
+
+            currentItemIndex = (currentItemIndex + 1) % items.length;
         };
 
-        imgElement.src = images[currentImageIndex];
-        setTimeout(() => imgElement.classList.add('fade-in'), 100);
-        setInterval(updateImage, 2500);
+        setInterval(updateCarouselItem, 2500);
+        updateCarouselItem(); // Initial call
     }
 
     initializeVideoOverlays();
