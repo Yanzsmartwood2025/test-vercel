@@ -173,7 +173,7 @@ html { scroll-behavior: smooth; }
 .ipad-frame::before {
     content: '';
     position: absolute;
-    top: 8px; /* Posición dentro del marco */
+    top: 2px; /* Movemos la luz al marco superior */
     left: 50%;
     transform: translateX(-50%);
     width: 6px;
