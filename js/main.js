@@ -105,11 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
             window.firestoreCart = [];
             renderAuthUI(null);
             loadLocalCart();
-            // Show "Joziel" name when logged out
+            // Show "Joziel" profile when logged out
             if (ipadScreen) {
                 ipadScreen.innerHTML = `
-                    <div style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; background-color:#000;">
-                        <div style="color:white; font-size:1.5rem; font-weight:bold; text-shadow: 0 0 15px rgba(255,255,255,0.8); animation: pulse-text 2s infinite ease-in-out;">Joziel</div>
+                    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; background-color:#000; padding: 5px; box-sizing: border-box; border-radius: 10px;">
+                        <img id="ipad-user-pic" src="assets/images/logos/Logo-redes.jpg" alt="Foto de Joziel" style="border-radius: 50%; object-fit: cover;">
+                        <div id="ipad-user-name" style="color:white; font-weight:bold;">Joziel</div>
                     </div>
                 `;
             }

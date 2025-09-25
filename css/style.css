@@ -215,3 +215,15 @@ html { scroll-behavior: smooth; }
     object-fit: cover;
     border-radius: 10px; /* Mantener bordes redondeados para el contenido */
 }
+
+/* Ajuste para que la imagen del usuario quepa en el marco */
+#ipad-user-pic {
+    width: 35px;  /* Reducimos el tamaño de la foto de 40px a 35px */
+    height: 35px;
+    margin-bottom: 3px; /* Reducimos el espacio de abajo */
+}
+
+/* Ajuste para que el nombre del usuario se vea completo */
+#ipad-user-name {
+    font-size: 10px; /* Reducimos ligeramente el tamaño de la letra */
+}
