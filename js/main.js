@@ -1024,46 +1024,38 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
         let touchStartX = 0;
 
         const showItem = (index) => {
-            // Ensure index wraps around correctly
             currentItemIndex = (index + items.length) % items.length;
             const item = items[currentItemIndex];
+            monitorOverlay.innerHTML = '';
 
-            monitorOverlay.innerHTML = ''; // Clear previous content
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.style.width = '60%';
+            img.style.height = '60%';
+            img.style.objectFit = 'contain';
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.5s ease-in-out';
 
-            const element = item.href
-                ? document.createElement('a')
-                : document.createElement('img');
-
+            let finalElement;
             if (item.href) {
-                element.href = item.href;
-                element.target = '_blank';
-                // Style the anchor to fill the container and center the image
-                element.style.display = 'flex';
-                element.style.justifyContent = 'center';
-                element.style.alignItems = 'center';
-                element.style.width = '100%';
-                element.style.height = '100%';
-
-                const img = document.createElement('img');
-                img.src = item.src;
-                img.style.width = '60%';
-                img.style.height = '60%';
-                img.style.objectFit = 'contain';
-                element.appendChild(img);
+                const anchor = document.createElement('a');
+                anchor.href = item.href;
+                anchor.target = '_blank';
+                anchor.style.display = 'flex';
+                anchor.style.justifyContent = 'center';
+                anchor.style.alignItems = 'center';
+                anchor.style.width = '100%';
+                anchor.style.height = '100%';
+                anchor.appendChild(img);
+                finalElement = anchor;
             } else {
-                element.src = item.src;
-                element.style.width = '60%';
-                element.style.height = '60%';
-                element.style.objectFit = 'contain';
+                finalElement = img;
             }
 
-            monitorOverlay.appendChild(element);
+            monitorOverlay.appendChild(finalElement);
 
-            // Fade-in effect
-            element.style.opacity = '0';
-            element.style.transition = 'opacity 0.5s ease-in-out';
             setTimeout(() => {
-                element.style.opacity = '1';
+                img.style.opacity = '1';
             }, 100);
         };
 
@@ -1071,10 +1063,9 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             if (carouselInterval) clearInterval(carouselInterval);
             carouselInterval = setInterval(() => {
                 showItem(currentItemIndex + 1);
-            }, 3000); // User requested 3 seconds
+            }, 3000);
         };
 
-        // Add touch controls for swipe
         monitorOverlay.addEventListener('touchstart', (e) => {
             clearInterval(carouselInterval);
             touchStartX = e.touches[0].clientX;
@@ -1082,20 +1073,16 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
 
         monitorOverlay.addEventListener('touchend', (e) => {
             const touchEndX = e.changedTouches[0].clientX;
-            const swipeThreshold = 50; // Min pixels for a swipe
+            const swipeThreshold = 50;
 
             if (touchStartX - touchEndX > swipeThreshold) {
-                // Swiped left (next)
                 showItem(currentItemIndex + 1);
             } else if (touchEndX - touchStartX > swipeThreshold) {
-                // Swiped right (previous)
                 showItem(currentItemIndex - 1);
             }
-
-            startCarousel(); // Restart carousel after interaction
+            startCarousel();
         });
 
-        // Initial call
         showItem(0);
         startCarousel();
     }
