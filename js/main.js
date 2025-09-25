@@ -1018,11 +1018,17 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             { type: 'payment', src: `${paymentIconsPath}pago-banco-pichincha.png` },
             { type: 'payment', src: `${paymentIconsPath}pago-banco-guayaquil.png` }
         ];
-        let currentItemIndex = 0;
 
-        const updateCarouselItem = () => {
-            monitorOverlay.innerHTML = ''; // Clear previous item
+        let currentItemIndex = 0;
+        let carouselInterval;
+        let touchStartX = 0;
+
+        const showItem = (index) => {
+            // Ensure index wraps around correctly
+            currentItemIndex = (index + items.length) % items.length;
             const item = items[currentItemIndex];
+
+            monitorOverlay.innerHTML = ''; // Clear previous content
 
             const element = item.href
                 ? document.createElement('a')
@@ -1031,6 +1037,13 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             if (item.href) {
                 element.href = item.href;
                 element.target = '_blank';
+                // Style the anchor to fill the container and center the image
+                element.style.display = 'flex';
+                element.style.justifyContent = 'center';
+                element.style.alignItems = 'center';
+                element.style.width = '100%';
+                element.style.height = '100%';
+
                 const img = document.createElement('img');
                 img.src = item.src;
                 img.style.width = '60%';
@@ -1047,17 +1060,44 @@ videosToLazyLoad.forEach(video => videoObserver.observe(video));
             monitorOverlay.appendChild(element);
 
             // Fade-in effect
-            element.style.opacity = 0;
+            element.style.opacity = '0';
             element.style.transition = 'opacity 0.5s ease-in-out';
             setTimeout(() => {
-                element.style.opacity = 1;
+                element.style.opacity = '1';
             }, 100);
-
-            currentItemIndex = (currentItemIndex + 1) % items.length;
         };
 
-        setInterval(updateCarouselItem, 2500);
-        updateCarouselItem(); // Initial call
+        const startCarousel = () => {
+            if (carouselInterval) clearInterval(carouselInterval);
+            carouselInterval = setInterval(() => {
+                showItem(currentItemIndex + 1);
+            }, 3000); // User requested 3 seconds
+        };
+
+        // Add touch controls for swipe
+        monitorOverlay.addEventListener('touchstart', (e) => {
+            clearInterval(carouselInterval);
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        monitorOverlay.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const swipeThreshold = 50; // Min pixels for a swipe
+
+            if (touchStartX - touchEndX > swipeThreshold) {
+                // Swiped left (next)
+                showItem(currentItemIndex + 1);
+            } else if (touchEndX - touchStartX > swipeThreshold) {
+                // Swiped right (previous)
+                showItem(currentItemIndex - 1);
+            }
+
+            startCarousel(); // Restart carousel after interaction
+        });
+
+        // Initial call
+        showItem(0);
+        startCarousel();
     }
 
     initializeVideoOverlays();
