@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Logic for iPad profile picture
             if (ipadScreen && user.photoURL) {
-                ipadScreen.innerHTML = `<img src="${user.photoURL}" alt="Foto de perfil" style="width:100%; height:100%; object-fit:cover;">`;
+                ipadScreen.innerHTML = `<img src="${user.photoURL}" alt="Foto de perfil" style="width:100%; height:100%; object-fit:cover; border-radius: 10px;">`;
             }
 
             const cartRef = db.collection('userCarts').doc(user.uid);
