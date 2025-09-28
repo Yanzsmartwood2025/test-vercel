@@ -842,14 +842,14 @@ if (document.getElementById('hero-slideshow')) {
         };
 
         const categories = [
-            { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas/', type: 'product' },
-            { title: 'Granitos y Mesones', video: 'assets/videos/Granito.mp4', description: 'Superficies que combinan belleza natural y resistencia para tu hogar.', link: 'granitos/', type: 'product' },
-            { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets/', type: 'product' },
-            { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas/', type: 'product' },
-            { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos/', type: 'product' },
-            { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos/', type: 'product' },
+            { title: 'Cocinas de Vanguardia', video: 'assets/videos/cocinas.mp4', description: 'El corazón de tu hogar, rediseñado con funcionalidad y un estilo que enamora.', link: 'cocinas/index.html', type: 'product' },
+            { title: 'Granitos y Mesones', video: 'assets/videos/Granito.mp4', description: 'Superficies que combinan belleza natural y resistencia para tu hogar.', link: 'granitos/index.html', type: 'product' },
+            { title: 'Clósets', video: 'assets/videos/closets.mp4', description: 'Transformamos el orden en un arte, creando soluciones de almacenamiento que se adaptan a tu vida.', link: 'closets/index.html', type: 'product' },
+            { title: 'Puertas Modernas', video: 'assets/videos/puertas.mp4', description: 'La primera impresión es inolvidable. Crea una bienvenida espectacular con nuestros diseños.', link: 'puertas/index.html', type: 'product' },
+            { title: 'Pisos de Madera Sintética', video: 'assets/videos/pisos.mp4', description: 'La calidez de la madera con una resistencia y durabilidad que superan la prueba del tiempo.', link: 'pisos/index.html', type: 'product' },
+            { title: 'Muebles de Baño', video: 'assets/videos/banos.mp4', description: 'Convierte tu baño en un santuario de relajación y elegancia con nuestros muebles a medida.', link: 'banos/index.html', type: 'product' },
             // Placeholder videos for categories without a specific one yet
-            { title: 'Gypsum y Luz', video: 'assets/videos/gypsum-luz.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum/', type: 'product' },
+            { title: 'Gypsum y Luz', video: 'assets/videos/gypsum-luz.mp4', description: 'Esculpe tus techos y paredes con luz, creando ambientes únicos y atmósferas envolventes.', link: 'gypsum/index.html', type: 'product' },
             {
                 title: 'Accesorios y Organizadores',
                 images: [
@@ -866,10 +866,10 @@ if (document.getElementById('hero-slideshow')) {
                     'assets/images/Accesorios/Accesorio-11.webp'
                 ],
                 description: 'Los detalles marcan la diferencia. Optimiza cada rincón con nuestras soluciones inteligentes.',
-                link: 'accesorios/',
+                link: 'accesorios/index.html',
                 type: 'product'
             },
-            { title: 'Diseño con IA "Aria"', video: 'assets/videos/Asistente.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria/', type: 'product' },
+            { title: 'Diseño con IA "Aria"', video: 'assets/videos/Asistente.mp4', description: '¿No tienes claro tu diseño? Deja que nuestra Inteligencia Artificial visualice tu espacio ideal.', link: 'aria/index.html', type: 'product' },
             {
                 title: 'Renovación y Cuidado del Hogar',
                 images: [
@@ -882,7 +882,7 @@ if (document.getElementById('hero-slideshow')) {
                     'assets/images/renovacion/renovacion7.jpeg'
                 ],
                 description: 'Devolvemos la vida y el brillo a tus espacios. Un servicio integral para que luzcan como nuevos.',
-                link: 'renovacion/',
+                link: 'renovacion/index.html',
                 type: 'service'
             },
             {
@@ -902,10 +902,10 @@ if (document.getElementById('hero-slideshow')) {
                     'assets/images/Ferreteria/ferreteria-12.jpg'
                 ],
                 description: 'La base de un gran proyecto. Encuentra la más alta calidad en materiales para tus creaciones.',
-                link: 'ferreteria/',
+                link: 'ferreteria/index.html',
                 type: 'service'
             },
-            { title: 'Consultoría e Integración de IA', video: 'assets/videos/Asistente-IA.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: 'ia-consulting/', type: 'service' }
+            { title: 'Consultoría e Integración de IA', video: 'assets/videos/Asistente-IA.mp4', description: 'Lleva tu negocio al siguiente nivel. Implementamos asistentes de IA para potenciar tus ventas.', link: 'ia-consulting/index.html', type: 'service' }
         ];
 
         categories.forEach(cat => {
